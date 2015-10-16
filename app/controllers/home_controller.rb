@@ -1,0 +1,10 @@
+class HomeController < ApplicationController
+  before_filter :authenticate_user!
+  respond_to :html, :json
+
+  layout 'application'
+
+  def index
+  end
+
+end
