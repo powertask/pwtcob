@@ -1,3 +1,72 @@
 pt-BR:
   sign_in_now: "Por favor, informe seus dados de acesso"
   sign_in: Acessar minha conta
+  corporation: Powertask
+
+  menu:
+    home: Home
+    main: Cadastros
+    unit: Empresa
+    employee: Colaborador
+    client: Federação
+    taxpayer: Contribuinte
+    user: Usuários
+    myuser: Meus Dados
+    edit: Editar
+    show: Detalhes
+    search: Filtrar
+    clean: Limpar Filtros
+    create: Criar
+    cancel: Cancelar
+    save: Salvar Dados
+    saving: Salvando...
+    remove: Apagar
+
+  comum:
+    zipcode: Cep
+    state: Estado
+    city: Cidade
+    address: Logradouro
+    complement: Complemento
+    neighborhood: Bairro
+    email: Endereço de E-mail
+    phone: Número do Telefone
+    cnpj: Número do Cnpj
+
+  unit:
+    title: Cadastro do Empresa
+    new: Nova Empresa
+    edit: Editar Dados da Empresa
+    index: Listar Todas as Empresas
+    create: Gravar Dados da Empresa
+    show: Detalhes da Empresa
+    name: Razão Social
+
+employee:
+    title: Cadastro de Colaborador
+    new: Novo Colaborador
+    edit: Editar Dados do Colaborador
+    index: Listar Todos os Colaboradores
+    create: Gravar Dados do Colaborador
+    show: Detalhes do Colaborador
+    name: Nome do Colaborador
+    fee: Percentual de Comissão
+
+client:
+    title: Cadastro do Empresa
+    new: Nova Empresa
+    edit: Editar Dados da Empresa
+    index: Listar Todas as Empresas
+    create: Gravar Dados da Empresa
+    show: Detalhes da Empresa
+    name: Razão Social
+    fee: Taxa de Intermediação
+
+taxpayer:
+    title: Cadastro de Contribuinte
+    new: Novo Contribuinte
+    edit: Editar Dados do Contribuinte
+    index: Listar Todos os Contribuintes
+    create: Gravar Dados do Contribuinte
+    show: Detalhes do Contribuinte
+    name: Nome do Contribuinte

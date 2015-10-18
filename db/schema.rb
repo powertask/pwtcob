@@ -11,10 +11,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016040612) do
+ActiveRecord::Schema.define(version: 20151018214241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clients", force: :cascade do |t|
+    t.string  "name"
+    t.string  "cnpj"
+    t.string  "zipcode"
+    t.string  "state"
+    t.string  "city"
+    t.string  "address"
+    t.string  "complement"
+    t.string  "neighborhood"
+    t.decimal "fee",          precision: 5, scale: 2
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string  "name"
+    t.string  "email"
+    t.string  "phone"
+    t.decimal "fee",   precision: 5, scale: 2
+  end
+
+  create_table "taxpayers", force: :cascade do |t|
+    t.string "name"
+    t.string "cpf"
+    t.string "zipcode"
+    t.string "state"
+    t.string "city"
+    t.string "address"
+    t.string "complement"
+    t.string "neighborhood"
+  end
+
+  create_table "units", force: :cascade do |t|
+    t.string "name"
+    t.string "cnpj"
+    t.string "zipcode"
+    t.string "state"
+    t.string "city"
+    t.string "address"
+    t.string "complement"
+    t.string "neighborhood"
+    t.string "email"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
