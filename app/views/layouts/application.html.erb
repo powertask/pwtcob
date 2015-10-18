@@ -6,12 +6,16 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+	<body>
 
-<%= yield %>
+		<% unless user_signed_in?  %>
+			<%= render "layouts/tabless" %>
+		<% else %>
+			<%= render 'layouts/header' %>
+			<%= render "layouts/tabbed" %>
+		<% end %>
 
-</body>
+	</body>
+
 </html>

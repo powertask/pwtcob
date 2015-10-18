@@ -18,6 +18,8 @@ gem 'simple_form'
 gem 'unicorn'
 gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'cancancan', '~> 1.10'
+gem 'responders'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
