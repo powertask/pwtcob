@@ -4,4 +4,5 @@ class Unit < ActiveRecord::Base
   usar_como_cnpj :cnpj
 
   has_many :users
+  has_many :clients
 end

@@ -6,6 +6,7 @@ class HomeController < ApplicationController
 
   def index
   	session[:unit_id] = current_user.unit.id
+  	session[:unit_name] = current_user.unit.name
   end
 
 end

@@ -4,16 +4,16 @@
 	<div class='section'>
 		<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 		  <div class="form-inputs">
-		    <%= f.input :email, required: false, autofocus: true, input_html:{:class => 'form-control'} %>
-		    <%= f.input :password, required: false %>
-		    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+		    <%= f.input :email, :label => t('email'), required: false, autofocus: true, input_html:{:class => 'form-control'} %>
+		    <%= f.input :password, :label => t('password'), required: false %>
+		    <%= f.input :remember_me, as: :boolean, :label => t('remember_me') if devise_mapping.rememberable? %>
 		  </div>
-		  <div class="form-actions">
-		    <%= f.button :submit, "Log in" %>
+	  
+      <div class="form-actions">
+		    <%= f.button :submit, t('log_in'), class: 'btn-primary' %>
 		  </div>
+      <br>
+      <%= render "devise/shared/links" %>
 		<% end %>
 	</div>
 </div>
-
-
-<%= render "devise/shared/links" %>

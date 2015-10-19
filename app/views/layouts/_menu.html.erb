@@ -1,0 +1,14 @@
+<ul class="nav navbar-nav">  			
+  <li><%= link_to(t("menu.home"), root_path ) %></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros<span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li><%= link_to(t("menu.unit"), units_path ) %></li>
+      <li><%= link_to(t("menu.client"), clients_path ) %></li>
+      <li><%= link_to(t("menu.taxpayer"), '#') %></li>
+      <li class="divider"></li>
+      <li><%= link_to(t("menu.myuser"), '#') %></li>
+      <li><%= link_to(t("menu.employee"), '#') %></li>
+    </ul>
+  </li>
+</ul>

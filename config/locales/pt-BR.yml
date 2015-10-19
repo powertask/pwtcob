@@ -1,6 +1,7 @@
 pt-BR:
   sign_in_now: "Por favor, informe seus dados de acesso"
   sign_in: Acessar minha conta
+  log_in: Acessar Sistema de Cobrança
   corporation: Powertask
 
   zipcode: CEP
@@ -12,6 +13,8 @@ pt-BR:
   email: Endereço de E-mail
   phone: Número do Telefone
   cnpj: Número do Cnpj
+  password: Senha
+  remember_me: Lembrar Senha
 
   menu:
     home: Home
@@ -32,6 +35,16 @@ pt-BR:
     saving: Salvando...
     remove: Apagar
 
+  client:
+    title: Cadastro de Federações
+    new: Nova Federação
+    edit: Editar Dados da Federação
+    index: Listar Todas as Federações
+    create: Gravar Dados da Federação
+    show: Detalhes da Federação
+    name: Razão Social
+    fee: Taxa de Intermediação
+    search: Procurar Federação
 
   unit:
     title: Cadastro do Empresa
@@ -42,25 +55,17 @@ pt-BR:
     show: Detalhes da Empresa
     name: Razão Social
 
-employee:
-    title: Cadastro de Colaborador
-    new: Novo Colaborador
-    edit: Editar Dados do Colaborador
-    index: Listar Todos os Colaboradores
-    create: Gravar Dados do Colaborador
-    show: Detalhes do Colaborador
-    name: Nome do Colaborador
-    fee: Percentual de Comissão
+  employee:
+      title: Cadastro de Colaborador
+      new: Novo Colaborador
+      edit: Editar Dados do Colaborador
+      index: Listar Todos os Colaboradores
+      create: Gravar Dados do Colaborador
+      show: Detalhes do Colaborador
+      name: Nome do Colaborador
+      fee: Percentual de Comissão
 
-client:
-    title: Cadastro do Empresa
-    new: Nova Empresa
-    edit: Editar Dados da Empresa
-    index: Listar Todas as Empresas
-    create: Gravar Dados da Empresa
-    show: Detalhes da Empresa
-    name: Razão Social
-    fee: Taxa de Intermediação
+
 
 taxpayer:
     title: Cadastro de Contribuinte

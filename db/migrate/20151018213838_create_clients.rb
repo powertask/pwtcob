@@ -9,6 +9,8 @@ class CreateClients < ActiveRecord::Migration
       t.string :address
       t.string :complement
       t.string :neighborhood
+      t.string :phone
+      t.string :email
       t.decimal :fee, precision: 5, scale: 2
 
       t.references :unit

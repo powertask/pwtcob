@@ -21,6 +21,7 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'cancancan', '~> 1.10'
 gem 'responders'
 gem 'brazilian-rails'
+gem 'will_paginate'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'

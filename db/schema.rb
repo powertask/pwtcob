@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20151018214241) do
     t.string   "address"
     t.string   "complement"
     t.string   "neighborhood"
+    t.string   "phone"
+    t.string   "email"
     t.decimal  "fee",          precision: 5, scale: 2
     t.integer  "unit_id"
     t.datetime "created_at",                           null: false
