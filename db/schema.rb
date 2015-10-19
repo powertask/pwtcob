@@ -17,45 +17,56 @@ ActiveRecord::Schema.define(version: 20151018214241) do
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string  "name"
-    t.string  "cnpj"
-    t.string  "zipcode"
-    t.string  "state"
-    t.string  "city"
-    t.string  "address"
-    t.string  "complement"
-    t.string  "neighborhood"
-    t.decimal "fee",          precision: 5, scale: 2
+    t.string   "name"
+    t.string   "cnpj"
+    t.string   "zipcode"
+    t.string   "state"
+    t.string   "city"
+    t.string   "address"
+    t.string   "complement"
+    t.string   "neighborhood"
+    t.decimal  "fee",          precision: 5, scale: 2
+    t.integer  "unit_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
   create_table "employees", force: :cascade do |t|
-    t.string  "name"
-    t.string  "email"
-    t.string  "phone"
-    t.decimal "fee",   precision: 5, scale: 2
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.decimal  "fee",        precision: 5, scale: 2
+    t.integer  "unit_id"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   create_table "taxpayers", force: :cascade do |t|
-    t.string "name"
-    t.string "cpf"
-    t.string "zipcode"
-    t.string "state"
-    t.string "city"
-    t.string "address"
-    t.string "complement"
-    t.string "neighborhood"
+    t.string   "name"
+    t.string   "cpf"
+    t.string   "zipcode"
+    t.string   "state"
+    t.string   "city"
+    t.string   "address"
+    t.string   "complement"
+    t.string   "neighborhood"
+    t.integer  "unit_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "units", force: :cascade do |t|
-    t.string "name"
-    t.string "cnpj"
-    t.string "zipcode"
-    t.string "state"
-    t.string "city"
-    t.string "address"
-    t.string "complement"
-    t.string "neighborhood"
-    t.string "email"
+    t.string   "name"
+    t.string   "cnpj"
+    t.string   "zipcode"
+    t.string   "state"
+    t.string   "city"
+    t.string   "address"
+    t.string   "complement"
+    t.string   "neighborhood"
+    t.string   "email"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -69,6 +80,7 @@ ActiveRecord::Schema.define(version: 20151018214241) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.integer  "unit_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end

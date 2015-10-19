@@ -9,6 +9,11 @@ class CreateTaxpayers < ActiveRecord::Migration
       t.string :address
       t.string :complement
       t.string :neighborhood
+
+      t.references :unit
+
+      t.timestamps null: false
+
     end
   end
 end

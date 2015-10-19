@@ -10,6 +10,9 @@ class CreateUnits < ActiveRecord::Migration
       t.string :complement
       t.string :neighborhood
       t.string :email
+
+      t.timestamps null: false
+
     end
   end
 end

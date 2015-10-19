@@ -1,0 +1,22 @@
+<%= simple_form_for(@unit) do |f| %>
+	<div class='section'>
+		<%= f.input :name, :label => t('unit.name'), input_html: { :class => 'form-control' } %>
+		<%= f.input :cnpj, :label => t('cnpj'), input_html: { :class => 'form-control' }  %>
+		<%= f.input :zipcode, :label => t('zipcode'), input_html: { :class => 'form-control' }  %>
+		<%= f.input :address, :label => t('address'), input_html: { :class => 'form-control' }  %>
+		<%= f.input :complement, :label => t('complement'), input_html: { :class => 'form-control' }  %>
+		<%= f.input :neighborhood, :label => t('neighborhood'), input_html: { :class => 'form-control' }  %>
+		<%= f.input :city, :label => t('city'), input_html: { :class => 'form-control' }  %>
+		<%= f.input :state, :label => t('state'), input_html: { :class => 'form-control' }  %>
+		<%= f.input :email, :label => t('email'), input_html: { :class => 'form-control' }%>
+	</div>
+
+	 <div class="actions">
+		<div class='buttonbar'>
+			<%= f.button :submit, t('menu.save'), class: 'btn-primary'%>
+			<%= 'ou' %>
+			<%= link_to t('menu.cancel'), units_path %>
+		</div>
+	</div>
+
+<% end %>

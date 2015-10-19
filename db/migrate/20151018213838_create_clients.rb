@@ -10,6 +10,11 @@ class CreateClients < ActiveRecord::Migration
       t.string :complement
       t.string :neighborhood
       t.decimal :fee, precision: 5, scale: 2
+
+      t.references :unit
+
+      t.timestamps null: false
+
     end
   end
 end

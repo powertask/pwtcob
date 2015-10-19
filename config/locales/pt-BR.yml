@@ -3,6 +3,16 @@ pt-BR:
   sign_in: Acessar minha conta
   corporation: Powertask
 
+  zipcode: CEP
+  state: Estado
+  city: Cidade
+  address: Logradouro
+  complement: Complemento
+  neighborhood: Bairro
+  email: Endereço de E-mail
+  phone: Número do Telefone
+  cnpj: Número do Cnpj
+
   menu:
     home: Home
     main: Cadastros
@@ -22,16 +32,6 @@ pt-BR:
     saving: Salvando...
     remove: Apagar
 
-  comum:
-    zipcode: Cep
-    state: Estado
-    city: Cidade
-    address: Logradouro
-    complement: Complemento
-    neighborhood: Bairro
-    email: Endereço de E-mail
-    phone: Número do Telefone
-    cnpj: Número do Cnpj
 
   unit:
     title: Cadastro do Empresa
