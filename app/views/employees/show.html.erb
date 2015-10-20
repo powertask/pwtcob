@@ -1,0 +1,13 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('employee.new'), new_employee_path) %> </a>
+	<a class="btn btn-large btn-warning" <%= link_to(t('employee.index'), employees_path) %> </a>
+</div>
+
+<div class='title_page'> <%= t('employee.show') %> </div>
+
+<div class='section'>
+	<div class='label1 top req'> <%=t("employee.name") %>: </div>	<%= @employee.name %>
+	<div class='label1 top req'> <%=t("email") %>: </div>			<%= @employee.email %>
+	<div class='label1 top req'> <%=t("phone") %>: </div>			<%= @employee.phone %>
+</div>
+

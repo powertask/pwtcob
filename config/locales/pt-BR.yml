@@ -12,17 +12,22 @@ pt-BR:
   neighborhood: Bairro
   email: Endereço de E-mail
   phone: Número do Telefone
-  cnpj: Número do Cnpj
+  cnpj: CNPJ
+  cpf: CPF
   password: Senha
-  remember_me: Lembrar Senha
+  password_hint: Deixe em branco caso voce não deseja mudar a senha
+  password_confirmation: Confirmação de Senha
+  current_password: Senha Atual
+  current_password_hint: Necessário informar sua senha atual para aprovar as mudanças
+  remember_me: Lembrar a Senha
 
   menu:
     home: Home
     main: Cadastros
     unit: Empresa
-    employee: Colaborador
-    client: Federação
-    taxpayer: Contribuinte
+    employee: Colaboradores
+    client: Federações
+    taxpayer: Contribuintes
     user: Usuários
     myuser: Meus Dados
     edit: Editar
@@ -44,7 +49,7 @@ pt-BR:
     show: Detalhes da Federação
     name: Razão Social
     fee: Taxa de Intermediação
-    search: Procurar Federação
+    search: Procurar por Federação
 
   unit:
     title: Cadastro do Empresa
@@ -56,22 +61,26 @@ pt-BR:
     name: Razão Social
 
   employee:
-      title: Cadastro de Colaborador
-      new: Novo Colaborador
-      edit: Editar Dados do Colaborador
-      index: Listar Todos os Colaboradores
-      create: Gravar Dados do Colaborador
-      show: Detalhes do Colaborador
-      name: Nome do Colaborador
-      fee: Percentual de Comissão
+    title: Cadastro de Colaborador
+    new: Novo Colaborador
+    edit: Editar Dados do Colaborador
+    index: Listar Todos os Colaboradores
+    create: Gravar Dados do Colaborador
+    show: Detalhes do Colaborador
+    name: Nome do Colaborador
+    fee: Percentual de Comissão
+    search: Procurar por Colaborador
 
-
-
-taxpayer:
-    title: Cadastro de Contribuinte
+  taxpayer:
+    title: Cadastro de Contribuintes
     new: Novo Contribuinte
     edit: Editar Dados do Contribuinte
     index: Listar Todos os Contribuintes
     create: Gravar Dados do Contribuinte
     show: Detalhes do Contribuinte
     name: Nome do Contribuinte
+
+  user:
+    edit: Meus Dados
+    cancel_account: Cancelar Minha Conta
+

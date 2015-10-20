@@ -1,0 +1,38 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('taxpayer.new'), new_taxpayer_path) %> </a>
+</div>
+
+<div class='title_page'>
+	<span> <%= t('taxpayer.title') %> </span>
+</div>
+
+<div class='list1'>
+	<% unless @taxpayers.empty? %>
+		<% @taxpayers.each do |taxpayer| %>
+			<li>
+				<div class='strip' id='none'> <%= taxpayer.id %> </div>
+
+				<div class='tools'>
+					<%= link_to(t('menu.edit'), edit_taxpayer_path(taxpayer), class: "btn btn-xs btn-default") %>
+				</div>
+
+				<div class='indent'>
+					<%= link_to(taxpayer.name, taxpayer_path(taxpayer)) %>
+					&ndash;
+					<tt>
+            <%= taxpayer.cpf %>
+					</tt>
+					<dt>
+            <%= taxpayer.address %>
+            &bull;
+            <%= taxpayer.city %>
+            &bull;
+            <%= taxpayer.state %>
+					</dt>
+				</div>
+			</li>
+		<% end %>
+	<% end %>
+</div>
+
+<div id='paginate'><%= render 'common/paginate' %></div>

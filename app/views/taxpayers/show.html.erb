@@ -1,0 +1,18 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('taxpayer.new'), new_taxpayer_path) %> </a>
+	<a class="btn btn-large btn-warning" <%= link_to(t('taxpayer.index'), taxpayers_path) %> </a>
+</div>
+
+<div class='title_page'> <%= t('taxpayer.show') %> </div>
+
+<div class='section'>
+	<div class='label1 top req'> <%=t("taxpayer.name") %>: </div>			<%= @taxpayer.name %>
+	<div class='label1 top req'> <%=t("cnpj") %>: </div> 					<%= @taxpayer.cpf %>
+	<div class='label1 top req'> <%=t("zipcode") %>: </div> 				<%= @taxpayer.zipcode %>
+	<div class='label1 top req'> <%=t("address") %>: </div> 				<%= @taxpayer.address %>
+	<div class='label1 top req'> <%=t("complement") %>: </div>				<%= @taxpayer.complement %>
+	<div class='label1 top req'> <%=t("neighborhood") %>: </div>			<%= @taxpayer.neighborhood %>
+	<div class='label1 top req'> <%=t("city") %>: </div>					<%= @taxpayer.city %>
+	<div class='label1 top req'> <%=t("state") %>: </div>					<%= @taxpayer.state %>
+</div>
+

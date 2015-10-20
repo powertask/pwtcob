@@ -1,0 +1,40 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('employee.new'), new_employee_path) %> </a>
+</div>
+
+<div class='title_page'>
+	<span> <%= t('employee.title') %> </span>
+</div>
+
+<p>
+	<%= form_tag(employees_path, :method=>'get') do |f| %>
+		<%= text_field_tag 'name', params[:name], :size => 80 %>
+		<%= submit_tag t('employee.search') %> ou <%= link_to t('menu.clean'), employees_path %>
+	<% end %>
+</p>
+
+<div class='list1'>
+	<% unless @employees.empty? %>
+		<% @employees.each do |employee| %>
+			<li>
+				<div class='strip' id='none'> <%= employee.id %> </div>
+
+				<div class='tools'>
+					<%= link_to(t('menu.edit'), edit_employee_path(employee), class: "btn btn-xs btn-default") %>
+				</div>
+
+				<div class='indent'>
+					<%= link_to(employee.name, employee_path(employee)) %>
+					&ndash;
+					<tt>
+					</tt>
+					<dt>
+						<%= employee.email %>
+					</dt>
+				</div>
+			</li>
+		<% end %>
+	<% end %>
+</div>
+
+<div id='paginate'><%= render 'common/paginate' %></div>
