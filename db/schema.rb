@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20151021024616) do
+=======
+ActiveRecord::Schema.define(version: 20151022005559) do
+>>>>>>> new columns taxpayers
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +90,32 @@ ActiveRecord::Schema.define(version: 20151021024616) do
     t.integer  "unit_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "client_id"
+    t.string   "cnpj"
+    t.integer  "origin_code"
+  end
+
+  add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
+
+  create_table "temp_contribuintes", force: :cascade do |t|
+    t.integer "qtde"
+    t.integer "cod_proprietario"
+    t.string  "num_uf"
+    t.string  "exercicio"
+    t.integer "sequencial"
+    t.string  "nom_proprietario"
+    t.string  "tip_pessoa"
+    t.string  "endereco"
+    t.string  "bairro"
+    t.string  "cep"
+    t.string  "nom_municipio"
+    t.string  "sigla_uf"
+    t.string  "val_cna"
+    t.string  "val_multa_cna"
+    t.string  "val_juros_cna"
+    t.string  "total"
+    t.date    "dat_vencimento"
+    t.string  "tip_cobranca"
   end
 
   create_table "units", force: :cascade do |t|
@@ -121,4 +151,5 @@ ActiveRecord::Schema.define(version: 20151021024616) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "taxpayers", "clients"
 end

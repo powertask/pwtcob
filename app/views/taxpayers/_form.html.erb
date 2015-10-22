@@ -1,13 +1,16 @@
 <%= simple_form_for(@taxpayer) do |f| %>
 	<div class='section'>
+    <%= f.input :origin_code, :label => t('taxpayer.origin_code'), input_html:{:class => 'form-control'} %>
+    <%= f.association :client, :collection => Client.list(session[:unit_id]), :prompt => t('client.choose'), :label => t('client.name') %>
     <%= f.input :name, :label => t('taxpayer.name'), input_html:{:class => 'form-control'} %>
     <%= f.input :cpf, :label => t('cpf'), input_html:{:class => 'form-control'} %>
+    <%= f.input :cnpj, :label => t('cnpj'), input_html:{:class => 'form-control'} %>
     <%= f.input :zipcode, :label => t('zipcode'), input_html: { :class => 'form-control' }  %>
+    <%= f.input :state, :label => t('state'), input_html: { :class => 'form-control' }  %>
+    <%= f.input :city, :label => t('city'), input_html: { :class => 'form-control' }  %>
     <%= f.input :address, :label => t('address'), input_html: { :class => 'form-control' }  %>
     <%= f.input :complement, :label => t('complement'), input_html: { :class => 'form-control' }  %>
     <%= f.input :neighborhood, :label => t('neighborhood'), input_html: { :class => 'form-control' }  %>
-    <%= f.input :city, :label => t('city'), input_html: { :class => 'form-control' }  %>
-    <%= f.input :state, :label => t('state'), input_html: { :class => 'form-control' }  %>
 
     <div class="actions">
       <div class='buttonbar'>

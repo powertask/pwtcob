@@ -10,7 +10,7 @@
 	<% unless @taxpayers.empty? %>
 		<% @taxpayers.each do |taxpayer| %>
 			<li>
-				<div class='strip' id='none'> <%= taxpayer.id %> </div>
+				<div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
 
 				<div class='tools'>
 					<%= link_to(t('menu.edit'), edit_taxpayer_path(taxpayer), class: "btn btn-xs btn-default") %>

@@ -50,9 +50,10 @@ pt-BR:
     index: Listar Todas as Federações
     create: Gravar Dados da Federação
     show: Detalhes da Federação
-    name: Razão Social
+    name: Razão Social da Federação
     fee: Taxa de Intermediação
     search: Procurar por Federação
+    choose: Selecione a Federação...
 
   unit:
     title: Cadastro do Empresa
@@ -82,6 +83,7 @@ pt-BR:
     create: Gravar Dados do Contribuinte
     show: Detalhes do Contribuinte
     name: Nome do Contribuinte
+    origin_code: Código do Contribuinte
 
   user:
     edit: Meus Dados
