@@ -1,0 +1,31 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('category.new'), new_category_path) %> </a>
+</div>
+
+<div class='title_page'>
+	<span> <%= t('category.title') %> </span>
+</div>
+
+<div class='list1'>
+	<% unless @categories.empty? %>
+		<% @categories.each do |category| %>
+			<li>
+				<div class='strip' id='none'> <%= category.id %> </div>
+
+				<div class='tools'>
+					<%= link_to(t('menu.edit'), edit_category_path(category), class: "btn btn-xs btn-default") %>
+				</div>
+
+				<div class='indent'>
+					<%= link_to(category.name, category_path(category)) %>
+					<tt>
+					</tt>
+					<dt>
+					</dt>
+				</div>
+			</li>
+		<% end %>
+	<% end %>
+</div>
+
+<div id='paginate'><%= render 'common/paginate' %></div>

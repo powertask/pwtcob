@@ -1,0 +1,36 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('task.new'), new_task_path) %> </a>
+</div>
+
+<div class='title_page'>
+  <span> <%= t('task.title') %> </span>
+</div>
+</br>
+
+<script>
+  $(document).ready(function(){
+      $('#calendar').fullCalendar({
+          editable: true,
+          header: {
+              left: 'prev next today',
+              center: 'title',
+              right: 'month,agendaWeek,agendaDay'
+          },
+		  lang: 'pt-br',
+          defaultView: 'agendaWeek',
+          height: 10,
+          slotMinutes: 15,
+          events: "/home/get_tasks",
+          dragOpacity: "1.5",
+		color: 'red',
+		textcolor: 'blue',
+          eventClick: function(event, jsEvent, view){
+              showEventDetails(event);
+          },
+      });
+  });
+</script>
+
+<div id='calendar'></div>
+
+<%= render :partial => "/home/tasks", :locals => {tasks: @tasks} %>

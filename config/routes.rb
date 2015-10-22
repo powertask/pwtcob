@@ -10,6 +10,15 @@ Rails.application.routes.draw do
   resources :clients
   resources :taxpayers
   resources :employees
+  resources :categories
+  resources :tasks
+
+  resources :home do 
+    collection do 
+      get :get_tasks
+      get :get_click
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

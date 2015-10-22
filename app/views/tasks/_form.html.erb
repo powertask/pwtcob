@@ -1,0 +1,19 @@
+<%= simple_form_for(@task) do |f| %>
+	<div class='section'>
+    <%= f.input :task_date, :label => t('task.task_date'), as: :string, readonly: true, placeholder: 'DD/MM/YYYY', input_html: { :class => 'form-input', id: "task_date"} %>
+    <%= f.association :category, :label => t('task.category'), :collection => Category.list(session[:unit_id]), :prompt => t('choose') %>
+    <%= f.association :employee, :label => t('task.employee'), :collection => Employee.list(session[:unit_id]), :prompt => t('choose') %>
+    <%= f.association :taxpayer, :label => t('task.taxpayer'), :collection => Taxpayer.list(session[:unit_id]), :prompt => t('choose') %>
+    <%= f.input :description, :label => t('task.description'), input_html:{:class => 'form-control'} %>
+
+  	<div class="actions">
+      <div class='buttonbar'>
+      	<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+      	<%= 'ou' %>
+      	<%= link_to t('menu.cancel'), root_path %>
+      </div>
+    </div>
+	</div>
+
+<% end %>
+

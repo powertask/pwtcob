@@ -1,0 +1,11 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('category.new'), new_category_path) %> </a>
+	<a class="btn btn-large btn-warning" <%= link_to(t('category.index'), categories_path) %> </a>
+</div>
+
+<div class='title_page'> <%= t('category.show') %> </div>
+
+<div class='section'>
+	<div class='label1 top req'> <%=t("category.name") %>: </div>			<%= @category.name %>
+</div>
+

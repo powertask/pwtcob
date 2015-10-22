@@ -4,6 +4,7 @@ pt-BR:
   log_in: Acessar Sistema de Cobrança
   corporation: Powertask
 
+  id: ID
   zipcode: CEP
   state: Estado
   city: Cidade
@@ -20,6 +21,7 @@ pt-BR:
   current_password: Senha Atual
   current_password_hint: Necessário informar sua senha atual para aprovar as mudanças
   remember_me: Lembrar a Senha
+  choose: Escolha...
 
   menu:
     home: Home
@@ -30,6 +32,7 @@ pt-BR:
     taxpayer: Contribuintes
     user: Usuários
     myuser: Meus Dados
+    category: Ações
     edit: Editar
     show: Detalhes
     search: Filtrar
@@ -83,4 +86,43 @@ pt-BR:
   user:
     edit: Meus Dados
     cancel_account: Cancelar Minha Conta
+
+  task:
+    title: Quadro de Tarefas
+    new: Nova Tarefa
+    index: Listar Todas as Tarefas
+    show: Detalhes da Tarefa
+    category: Ação a ser executada
+    employee: Quem irá executar a ação
+    taxpayer: Ação executada para
+    description: Descrição
+    task_date: Data da Tarefa
+    panel1: Tarefa a ser executada
+    panel2: Dados do contribuinte
+    panel3: Pendencias
+    panel4: Históricos
+
+  category:
+    title: Cadastro de Ações
+    new: Nova Ação
+    edit: Editar Dados da Ação
+    index: Listar Todas as Ações
+    create: Gravar Dados da Ação
+    show: Detalhes da Ação
+    name: Nome da Ação
+  
+  negociation:
+    new: Nova Negociação
+  
+  activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            category_id:
+              blank: Voce deve definir uma ação.
+            employee_id:
+              blank: Voce deve definir quem irá executar a Tarefa.
+            taxpayer_id:
+              blank: Voce deve definir para quem a ação será executada.
 
