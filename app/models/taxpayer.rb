@@ -3,12 +3,8 @@ class Taxpayer < ActiveRecord::Base
   validates_with TaxpayerValidator
 
   belongs_to :unit
-<<<<<<< HEAD
-
   has_many :tasks
-=======
   belongs_to :client
->>>>>>> new columns taxpayers
   
   validates_presence_of :name, :unit_id, :client_id
 

@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20151021024616) do
-=======
 ActiveRecord::Schema.define(version: 20151022005559) do
->>>>>>> new columns taxpayers
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
