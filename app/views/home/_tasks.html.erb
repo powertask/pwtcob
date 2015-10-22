@@ -13,6 +13,9 @@
     <div class="col-sm-6 col-md-3">
       <div class="thumbnail">
         <% if @tasks.present? %>
+          <div class='title_tools'>
+            <a class="btn btn-warning btn-sm" <%= link_to(t('task.edit'), edit_task_path(@tasks)) %> </a>
+          </div>
           <div class='title_page'>
             <span> <%= t('task.panel1') %> </span>
           </div>
@@ -22,6 +25,7 @@
             <div class='label1 top req'> <%=t("task.category") %>: </div>   <%= @tasks.category.name %>
             <div class='label1 top req'> <%=t("task.employee") %>: </div>   <%= @tasks.employee.name %>
             <div class='label1 top req'> <%=t("task.taxpayer") %>: </div>   <%= @tasks.taxpayer.name %>
+            <div class='label1 top req'> <%=t("task.description") %>: </div>   <%= @tasks.description %>
           </div>
         <% end %>
       </div>
@@ -38,6 +42,7 @@
             <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>  <%= @tasks.taxpayer.name %>
             <div class='label1 top req'> <%=t("cpf") %>: </div>   <%= @tasks.taxpayer.cpf %>
             <div class='label1 top req'> <%=t("address") %>: </div>   <%= @tasks.taxpayer.address %>
+            <div class='label1 top req'> <%=t("complement") %>: </div>   <%= @tasks.taxpayer.complement %>
             <div class='label1 top req'> <%=t("city") %>: </div>   <%= @tasks.taxpayer.city %>
             <div class='label1 top req'> <%=t("state") %>: </div>   <%= @tasks.taxpayer.state %>
           </div>

@@ -20,7 +20,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @client = Client.find(params[:id])
+    @task = Task.find(params[:id])
   end
 
   def create
@@ -34,9 +34,9 @@ class TasksController < ApplicationController
   end
 
   def update
-    @client = Client.find(params[:id])
-    @client.update_attributes(client_params)
-    respond_with @client
+    @task = Task.find(params[:id])
+    @task.update_attributes(task_params)
+    respond_with :root
   end
 
   private

@@ -92,6 +92,7 @@ pt-BR:
     new: Nova Tarefa
     index: Listar Todas as Tarefas
     show: Detalhes da Tarefa
+    edit: Editar Tarefa
     category: Ação a ser executada
     employee: Quem irá executar a ação
     taxpayer: Ação executada para
