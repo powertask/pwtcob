@@ -33,6 +33,7 @@ pt-BR:
     user: Usuários
     myuser: Meus Dados
     category: Ações
+    lawyer: Advogados
     edit: Editar
     show: Detalhes
     search: Filtrar
@@ -112,6 +113,17 @@ pt-BR:
     create: Gravar Dados da Ação
     show: Detalhes da Ação
     name: Nome da Ação
+
+  lawyer:
+    title: Cadastro de Advogado
+    new: Novo Advogado
+    edit: Editar Dados do Advogado
+    index: Listar Todos os Advogados
+    create: Gravar Dados do Advogado
+    show: Detalhes do Advogado
+    name: Nome do Advogado
+    search: Procurar por Advogado
+    lawyer_code: Número da OAB
   
   negociation:
     new: Nova Negociação

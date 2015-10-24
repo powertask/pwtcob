@@ -1,0 +1,41 @@
+<div class='title_tools'>
+    <a class="btn btn-large btn-warning" <%= link_to(t('lawyer.new'), new_lawyer_path) %> </a>
+</div>
+
+<div class='title_page'>
+    <span> <%= t('lawyer.title') %> </span>
+</div>
+
+<p>
+    <%= form_tag(lawyers_path, :method=>'get') do |f| %>
+        <%= text_field_tag 'name', params[:name], :size => 80 %>
+        <%= submit_tag t('lawyer.search') %> ou <%= link_to t('menu.clean'),lawyers_path %>
+    <% end %>
+</p>
+
+<div class='list1'>
+    <% unless @lawyers.empty? %>
+        <% @lawyers.each do |lawyer| %>
+            <li>
+                <div class='strip' id='none'> <%= lawyer.id %> </div>
+
+                <div class='tools'>
+                  <%= link_to(t('menu.edit'), edit_lawyer_path(lawyer), class: "btn btn-xs btn-default") %>
+                </div>
+
+                <div class='indent'>
+                    <%= link_to(lawyer.name, lawyer_path(lawyer)) %>
+                    &ndash;
+                    <tt>
+                    <%= lawyer.phone %>
+                    </tt>
+                    <dt>
+                      <%= lawyer.email %>
+                    </dt>
+                </div>
+            </li>
+        <% end %>
+    <% end %>
+</div>
+
+<div id='paginate'><%= render 'common/paginate' %></div>

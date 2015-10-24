@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023013314) do
+ActiveRecord::Schema.define(version: 20151023234636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,26 @@ ActiveRecord::Schema.define(version: 20151023013314) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "lawyers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "lawyer_code"
+    t.string   "cpf"
+    t.string   "cnpj"
+    t.string   "phone"
+    t.string   "zipcode"
+    t.string   "address"
+    t.string   "state"
+    t.string   "city"
+    t.string   "complement"
+    t.string   "neighborhood"
+    t.string   "email"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "unit_id"
+  end
+
+  add_index "lawyers", ["unit_id"], name: "index_lawyers_on_unit_id", using: :btree
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name"
@@ -147,5 +167,6 @@ ActiveRecord::Schema.define(version: 20151023013314) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "lawyers", "units"
   add_foreign_key "taxpayers", "clients"
 end

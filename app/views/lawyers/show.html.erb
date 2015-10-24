@@ -1,0 +1,21 @@
+<div class='title_tools'>
+  <a class="btn btn-large btn-warning" <%= link_to(t('lawyer.new'), new_lawyer_path) %> </a>
+  <a class="btn btn-large btn-warning" <%= link_to(t('lawyer.index'), lawyers_path) %> </a>
+</div>
+
+<div class='title_page'> <%= t('client.show') %> </div>
+
+<div class='section'>
+  <div class='label1 top req'> <%=t("lawyer.lawyer_code") %>: </div>   <%= @lawyer.lawyer_code %>
+  <div class='label1 top req'> <%=t("lawyer.name") %>: </div>   <%= @lawyer.name %>
+  <div class='label1 top req'> <%=t("cpf") %>: </div>           <%= @lawyer.cnpj %>
+  <div class='label1 top req'> <%=t("cnpj") %>: </div>          <%= @lawyer.cnpj %>
+  <div class='label1 top req'> <%=t("zipcode") %>: </div>       <%= @lawyer.zipcode %>
+  <div class='label1 top req'> <%=t("address") %>: </div>       <%= @lawyer.address %>
+  <div class='label1 top req'> <%=t("complement") %>: </div>    <%= @lawyer.complement %>
+  <div class='label1 top req'> <%=t("neighborhood") %>: </div>  <%= @lawyer.neighborhood %>
+  <div class='label1 top req'> <%=t("city") %>: </div>          <%= @lawyer.city %>
+  <div class='label1 top req'> <%=t("state") %>: </div>         <%= @lawyer.state %>
+  <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @lawyer.phone %>
+  <div class='label1 top req'> <%=t("email") %>: </div>         <%= @lawyer.email %>
+</div>

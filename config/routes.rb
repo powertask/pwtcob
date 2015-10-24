@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :employees
   resources :categories
   resources :tasks
+  resources :lawyers
 
   resources :home do 
     collection do 
