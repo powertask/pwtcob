@@ -18,7 +18,7 @@ class HomeController < ApplicationController
       else
         ls_color = 'dark-blue'
       end
-      events << {:id => task.id, :title => task.category.name << " - " << task.taxpayer.name, :start => "#{task.task_date.to_date}", :end => "#{task.task_date.to_date}", :allDay => true, :recurring => false, color: ls_color}
+      events << {:id => task.id, :title => task.category.name << "\n" << task.taxpayer.name << "\n" << task.description, :start => "#{task.task_date.to_date}", :end => "#{task.task_date.to_date}", :allDay => true, :recurring => false, color: ls_color}
     end
     render :text => events.to_json
   end

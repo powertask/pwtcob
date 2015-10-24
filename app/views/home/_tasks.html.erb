@@ -14,18 +14,18 @@
       <div class="thumbnail">
         <% if @tasks.present? %>
           <div class='title_tools'>
-            <a class="btn btn-warning btn-sm" <%= link_to(t('task.edit'), edit_task_path(@tasks)) %> </a>
+            <a class="btn btn-warning btn-xs" <%= link_to(t('task.edit'), edit_task_path(@tasks)) %> </a>
           </div>
-          <div class='title_page'>
+          <div class='subtitle'>
             <span> <%= t('task.panel1') %> </span>
           </div>
           <div class='section'>
-            <div class='label1 top req'> <%=t("id") %>: </div>         <%= @tasks.id.to_s %>
-            <div class='label1 top req'> <%=t("task.task_date") %>: </div>  <%= @tasks.task_date.to_date.to_s_br %>
-            <div class='label1 top req'> <%=t("task.category") %>: </div>   <%= @tasks.category.name %>
-            <div class='label1 top req'> <%=t("task.employee") %>: </div>   <%= @tasks.employee.name %>
-            <div class='label1 top req'> <%=t("task.taxpayer") %>: </div>   <%= @tasks.taxpayer.name %>
-            <div class='label1 top req'> <%=t("task.description") %>: </div>   <%= @tasks.description %>
+            <div class='label1 top req'> <%=t("id") %>: </div>                <%= @tasks.id.to_s %>
+            <div class='label1 top req'> <%=t("task.task_date") %>: </div>    <%= @tasks.task_date.to_date.to_s_br %>
+            <div class='label1 top req'> <%=t("task.category") %>: </div>     <span class="label label-success"><%= @tasks.category.name %></span>
+            <div class='label1 top req'> <%=t("task.employee") %>: </div>     <%= @tasks.employee.name %>
+            <div class='label1 top req'> <%=t("task.taxpayer") %>: </div>     <%= @tasks.taxpayer.name %>
+            <div class='label1 top req'> <%=t("task.description") %>: </div>  <span class="label label-success"><%= @tasks.description %></span>
           </div>
         <% end %>
       </div>
@@ -34,7 +34,7 @@
      <div class="col-sm-6 col-md-3">
        <div class="thumbnail">
         <% if @tasks.present? %>
-          <div class='title_page'>
+          <div class='subtitle'>
             <span> <%= t('task.panel2') %> </span>
           </div>
           <div class='section'>
@@ -53,7 +53,7 @@
      <div class="col-sm-6 col-md-3">
        <div class="thumbnail">
         <% if @tasks.present? %>
-          <div class='title_page'>
+          <div class='subtitle'>
             <span> <%= t('task.panel3') %> </span>
           </div>
           <div class='section'>
@@ -66,7 +66,7 @@
      <div class="col-sm-6 col-md-3">
        <div class="thumbnail">
         <% if @tasks.present? %>
-          <div class='title_page'>
+          <div class='subtitle'>
             <span> <%= t('task.panel4') %> </span>
           </div>
           <div class='section'>
