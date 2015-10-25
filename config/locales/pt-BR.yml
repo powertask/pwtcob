@@ -124,10 +124,10 @@ pt-BR:
     name: Nome do Advogado
     search: Procurar por Advogado
     lawyer_code: Número da OAB
-  
+
   negociation:
     new: Nova Negociação
-  
+
   activerecord:
     errors:
       models:
@@ -139,4 +139,9 @@ pt-BR:
               blank: Voce deve definir quem irá executar a Tarefa.
             taxpayer_id:
               blank: Voce deve definir para quem a ação será executada.
+        taxpayer:
+          attributes:
+            client_id:
+              blank: Voce deve definir uma Federação
+
 
