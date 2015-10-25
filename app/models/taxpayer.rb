@@ -1,6 +1,6 @@
 class Taxpayer < ActiveRecord::Base
-  include ActiveModel::Validations
-  validates_with TaxpayerValidator
+#  include ActiveModel::Validations
+#  validates_with TaxpayerValidator
 
   belongs_to :unit
   has_many :tasks
