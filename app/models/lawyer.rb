@@ -1,10 +1,16 @@
 class Lawyer < ActiveRecord::Base
-  belongs_to :unit
+	include ActiveModel::Validations
+	validates_with LawyerValidator
 
-  validates_presence_of :name, :unit_id
+	belongs_to :unit
 
-  def self.list(unit)
-    self.where("unit_id = ?", unit).order("name ASC")
-  end
+	validates_presence_of :name, :unit_id, :lawyer_code
+
+	usar_como_cpf :cpf
+	usar_como_cnpj :cnpj
+
+	def self.list(unit)
+		self.where("unit_id = ?", unit).order("name ASC")
+	end
 
 end

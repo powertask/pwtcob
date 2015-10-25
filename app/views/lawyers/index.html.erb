@@ -17,7 +17,7 @@
     <% unless @lawyers.empty? %>
         <% @lawyers.each do |lawyer| %>
             <li>
-                <div class='strip' id='none'> <%= lawyer.id %> </div>
+                <div class='strip' id='none'> <%= lawyer.lawyer_code %> </div>
 
                 <div class='tools'>
                   <%= link_to(t('menu.edit'), edit_lawyer_path(lawyer), class: "btn btn-xs btn-default") %>
