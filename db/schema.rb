@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025213132) do
+ActiveRecord::Schema.define(version: 20151025201449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,20 +126,7 @@ ActiveRecord::Schema.define(version: 20151025213132) do
 
   add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
 
-  create_table "temp_advogado", force: :cascade do |t|
-    t.string "nome"
-    t.string "oab"
-    t.string "telefones"
-    t.string "endereco"
-    t.string "cep"
-    t.string "cidade"
-    t.string "uf"
-    t.string "obs"
-    t.string "contas"
-    t.string "cpfcgc"
-  end
-
-  create_table "temp_contribuintes", force: :cascade do |t|
+  create_table "temp_cna", force: :cascade do |t|
     t.integer "qtde"
     t.integer "cod_proprietario"
     t.string  "num_uf"
