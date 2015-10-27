@@ -9,8 +9,8 @@ class CreateCna < ActiveRecord::Migration
       t.float :amount
       t.integer :stage
       t.integer :status
-      t.timestamps :start_at
-      t.timestamps :due_at
+      t.datetime :start_at
+      t.datetime :due_at
 
     	t.timestamps null: false
     end
