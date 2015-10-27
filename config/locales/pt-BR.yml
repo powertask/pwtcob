@@ -84,6 +84,7 @@ pt-BR:
     show: Detalhes do Contribuinte
     name: Nome do Contribuinte
     origin_code: Código do Contribuinte
+    search: Procurar por Contribuinte
 
   user:
     edit: Meus Dados

@@ -6,6 +6,13 @@
 	<span> <%= t('taxpayer.title') %> </span>
 </div>
 
+<p>
+	<%= form_tag(taxpayers_path, :method=>'get') do |f| %>
+		<%= text_field_tag 'name', params[:name], :size => 80 %>
+		<%= submit_tag t('taxpayer.search') %> ou <%= link_to t('menu.clean'), taxpayers_path %>
+	<% end %>
+</p>
+
 <div class='list1'>
 	<% unless @taxpayers.empty? %>
 		<% @taxpayers.each do |taxpayer| %>
@@ -20,7 +27,8 @@
 					<%= link_to(taxpayer.name, taxpayer_path(taxpayer)) %>
 					&ndash;
 					<tt>
-            <%= taxpayer.cpf %>
+					<%= taxpayer.cnpj %>
+					<%= taxpayer.cpf %> 
 					</tt>
 					<dt>
             <%= taxpayer.address %>
