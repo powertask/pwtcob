@@ -22,6 +22,12 @@ pt-BR:
   current_password_hint: Necessário informar sua senha atual para aprovar as mudanças
   remember_me: Lembrar a Senha
   choose: Escolha...
+  status: Situação
+  stage: Tipo cobrança
+  law: Judicial
+  regular: Normal
+  not_pay: Em aberto
+  pay: Pago
 
   menu:
     home: Home

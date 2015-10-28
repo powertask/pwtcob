@@ -56,7 +56,8 @@
             <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>  <%= @taxpayer.origin_code %>
             <div class='label1 top req'> <%=t("client.name") %>: </div>       <%= @taxpayer.client.name %>
             <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>     <%= @taxpayer.name %>
-            <div class='label1 top req'> <%=t("cnpj") %>: </div>          <%= @taxpayer.cpf %>
+            <div class='label1 top req'> <%=t("cpf") %>: </div>          <%= @taxpayer.cpf %>
+            <div class='label1 top req'> <%=t("cnpj") %>: </div>          <%= @taxpayer.cnpj %>
             <div class='label1 top req'> <%=t("zipcode") %>: </div>         <%= @taxpayer.zipcode %>
             <div class='label1 top req'> <%=t("state") %>: </div>         <%= @taxpayer.state %>
             <div class='label1 top req'> <%=t("city") %>: </div>          <%= @taxpayer.city %>
@@ -81,8 +82,8 @@
               <th>Valor CNA</th>
               <th>Data</th>
               <th>Vencimento</th>
-              <th>Tipo Cob</th>
-              <th>Status</th>
+              <th><%= t('stage') %></th>
+              <th><%= t('status') %></th>
             </tr>
           </thead>
           <tbody>
@@ -94,8 +95,8 @@
                   <td><%= cna.amount %> </td>
                   <td><%= cna.start_at.to_s_br %> </td>
                   <td><%= cna.due_at.to_s_br %> </td>
-                  <td><%= cna.stage %> </td>
-                  <td><%= cna.status %> </td>
+                  <td><%= t(cna.stage) %> </td>
+                  <td><%= t(cna.status) %> </td>
                 </tr>
               <% end %>
             <% end %>
