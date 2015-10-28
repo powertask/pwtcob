@@ -14,13 +14,12 @@ Rails.application.routes.draw do
   resources :tasks
   resources :lawyers
 
-  resources :home do 
-    collection do 
-      get :get_tasks
-      get :get_click
+  resources :home do
+    collection do
+      get 'filter_name' => 'home#filter_name'
     end
   end
-
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

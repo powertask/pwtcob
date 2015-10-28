@@ -44,6 +44,13 @@ pt-BR:
     saving: Salvando...
     remove: Apagar
 
+  home:
+    title: Negociação de Contribuintes
+    cna:
+      title: Exercícios do Contribuinte
+    history:
+      title: Históricos do Contribuinte
+
   client:
     title: Cadastro de Federações
     new: Nova Federação
@@ -125,9 +132,6 @@ pt-BR:
     name: Nome do Advogado
     search: Procurar por Advogado
     lawyer_code: Número da OAB
-
-  negociation:
-    new: Nova Negociação
 
   activerecord:
     errors:

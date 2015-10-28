@@ -1,36 +1,131 @@
-<div class='title_tools'>
-	<a class="btn btn-large btn-warning" <%= link_to(t('task.new'), new_task_path) %> </a>
-</div>
 
 <div class='title_page'>
-  <span> <%= t('task.title') %> </span>
+  <span> <%= t('home.title') %> </span>
 </div>
-</br>
+<br>
 
-<script>
-  $(document).ready(function(){
-      $('#calendar').fullCalendar({
-          editable: true,
-          header: {
-              left: 'prev next today',
-              center: 'title',
-              right: 'month,agendaWeek,agendaDay'
-          },
-		  lang: 'pt-br',
-          defaultView: 'agendaWeek',
-          height: 10,
-          slotMinutes: 15,
-          events: "/home/get_tasks",
-          dragOpacity: "1.5",
-		color: 'red',
-		textcolor: 'blue',
-          eventClick: function(event, jsEvent, view){
-              showEventDetails(event);
-          },
-      });
-  });
-</script>
+<%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
+  <%= text_field_tag 'name', params[:name], :size => 80 %>
+  <%= submit_tag t('menu.search') %> ou <%= link_to t('menu.clean'), root_path %>
+<% end %>
 
-<div id='calendar'></div>
+<div class='list1'>
+  <% unless @taxpayers.nil? %>
+    <% @taxpayers.each do |taxpayer| %>
+      <li>
+        <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
 
-<%= render :partial => "/home/tasks", :locals => {tasks: @tasks} %>
+        <div class='indent'>
+          <%= link_to(taxpayer.name, home_path(taxpayer)) %>
+            &bull;
+          <tt>
+            <%= taxpayer.cpf %>
+            &bull;
+            <%= taxpayer.client.name if taxpayer.client %>
+            &bull;
+            <%= taxpayer.address %>
+            &bull;
+            <%= taxpayer.city %>
+            &bull;
+            <%= taxpayer.state %>
+          </tt>
+          <dt>
+          </dt>
+        </div>
+      </li>
+    <% end %>
+
+    <% unless @taxpayers.empty? %>
+      <div class="apple_pagination">
+        <%= will_paginate @taxpayers, :container => false %>
+      </div>
+      <br>
+    <% end %>
+
+  <% end %>
+</div>
+
+<% if @taxpayer %>
+  <div class="row marketing">
+    
+    <div class="col-sm-6 col-md-4">
+      <div class="panel panel-default">
+        <div class='title_page'> <%= t('taxpayer.show') %> </div>
+        <% unless @taxpayer.nil? %>
+          <div class='section'>
+            <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>  <%= @taxpayer.origin_code %>
+            <div class='label1 top req'> <%=t("client.name") %>: </div>       <%= @taxpayer.client.name %>
+            <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>     <%= @taxpayer.name %>
+            <div class='label1 top req'> <%=t("cnpj") %>: </div>          <%= @taxpayer.cpf %>
+            <div class='label1 top req'> <%=t("zipcode") %>: </div>         <%= @taxpayer.zipcode %>
+            <div class='label1 top req'> <%=t("state") %>: </div>         <%= @taxpayer.state %>
+            <div class='label1 top req'> <%=t("city") %>: </div>          <%= @taxpayer.city %>
+            <div class='label1 top req'> <%=t("address") %>: </div>         <%= @taxpayer.address %>
+            <div class='label1 top req'> <%=t("complement") %>: </div>        <%= @taxpayer.complement %>
+            <div class='label1 top req'> <%=t("neighborhood") %>: </div>      <%= @taxpayer.neighborhood %>
+            <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
+          </div>
+        <% end %> 
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-8">
+
+      <div class="panel panel-default">
+        <div class='title_page'> <%= t('home.cna.title') %> </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Ano</th>
+              <th>Num Doc</th>
+              <th>Valor CNA</th>
+              <th>Data</th>
+              <th>Vencimento</th>
+              <th>Tipo Cob</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @cnas.nil? %>
+              <% @cnas.each do |cna| %>
+                <tr>
+                  <td><%= cna.year %> </td>
+                  <td><%= cna.nr_document %> </td>
+                  <td><%= cna.amount %> </td>
+                  <td><%= cna.start_at.to_s_br %> </td>
+                  <td><%= cna.due_at.to_s_br %> </td>
+                  <td><%= cna.stage %> </td>
+                  <td><%= cna.status %> </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+
+        <br>
+        <div class='title_page'> <%= t('home.history.title') %> </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Histórico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @histories.nil? %>
+              <% @histories.each do |history| %>
+                <tr>
+                  <td><%= history.history_date %> </td>
+                  <td><%= history.description %> </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+
+      </div>
+
+
+    </div>
+  </div>
+<% end %>
