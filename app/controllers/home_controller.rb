@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :html, :js, :json
+  respond_to :html
   layout 'application'
 
   def index
@@ -8,27 +8,20 @@ class HomeController < ApplicationController
   	session[:unit_name] = current_user.unit.name
   end
 
-  def get_tasks
-    events  = []
-    @tasks = Task.where("unit_id = ?", session[:unit_id])
-
-    @tasks.each do |task|
-      if task.task_date.to_date ==  Date.today()
-        ls_color  = 'red'
-      else
-        ls_color = 'dark-blue'
-      end
-      events << {:id => task.id, :title => task.category.name << "\n" << task.taxpayer.name << "\n" << task.description, :start => "#{task.task_date.to_date}", :end => "#{task.task_date.to_date}", :allDay => true, :recurring => false, color: ls_color}
-    end
-    render :text => events.to_json
+  def filter_name
+    @taxpayers = Taxpayer
+                    .where("unit_id = ? AND lower(name) like ?", session[:unit_id], params[:name].downcase << "%")
+                    .paginate(:page => params[:page], :per_page => 10)
+                    .order('name ASC')
+    render "index", :layout => 'application'
   end
 
-  def get_click
-    @tasks = Task.find params[:id]
+  def show
+    @taxpayer = Taxpayer.find(params[:id])
+    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id])
+    @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:id])
 
-    respond_to do |format|
-      format.js
-    end
+    render "index", :layout => 'application'
   end
 
 end
