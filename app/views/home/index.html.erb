@@ -53,7 +53,7 @@
         <div class='title_tools'>
           <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), contract_url(cod: @taxpayer.id)) %> </a>
         </div>
-        <div class='title_page'> <%= t('taxpayer.show') %> </div>
+        <div class='title_page'> <%= t('home.taxpayer') %> </div>
         <% unless @taxpayer.nil? %>
           <div class='section'>
             <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>  <%= @taxpayer.origin_code %>

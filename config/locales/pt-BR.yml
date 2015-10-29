@@ -52,7 +52,8 @@ pt-BR:
 
   home:
     title: CobraSeguro - Sistema de Cobrança Gianelli
-    deal: Ir para Negociação
+    deal: Ir para Ambiente de Negociações
+    taxpayer: Contribuinte
     cna:
       title: Exercícios do Contribuinte
     history:
@@ -63,6 +64,7 @@ pt-BR:
   deal:
     title: Ambiente de Negociações
     root: Sair do Ambiente de Negociações
+    cnas: Exercícios - CNAS
 
   client:
     title: Cadastro de Federações

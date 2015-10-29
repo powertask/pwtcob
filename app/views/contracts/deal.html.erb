@@ -1,5 +1,5 @@
 <div class='title_tools'>
-  <a class="btn btn-large btn-warning" <%= link_to(t('deal.root'), root_path) %> </a>
+  <a class="btn btn-large btn-warning" <%= link_to(t('deal.root'), :back) %> </a>
 </div>
 
 <div class='title_page'>
@@ -31,7 +31,6 @@
   </div>
 
   <div class="col-sm-6 col-md-8">
-
     <div class="panel panel-default">
     <p>
       <%= form_tag(employees_path, :method=>'get') do |f| %>
@@ -39,7 +38,7 @@
         <%= submit_tag t('employee.search') %> ou <%= link_to t('menu.clean'), employees_path %>
       <% end %>
     </p>
-    <div class='title_page'> <%= t('home.cna.title') %> </div>
+    <div class='title_page'> <%= t('deal.cnas') %> </div>
       <table class="table">
         <thead>
           <tr>
@@ -68,8 +67,37 @@
           <% end %>
         </tbody>
       </table>
+    </div>
+
+
+    <div class='title_page'> <%= t('deal.ticket_unit') %> </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Vencimento</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% unless @tickets.nil? %>
+            <% @tickets.each do |ticket| %>
+              <tr>
+                <td><%= ticket.ticket_number %> </td>
+                <td><%= ticket.amount %> </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
 
     </div>
+
+
+
+
+
+
 
   </div>
 </div>
