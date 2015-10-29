@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
   end
   
+  get 'contracts/:cod/deal' => 'contracts#deal', as: :contract
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

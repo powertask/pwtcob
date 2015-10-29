@@ -4,6 +4,7 @@
 </div>
 <br>
 
+<div class='subtitle'> <%= t('home.filter.name') %> </div>
 <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
   <%= text_field_tag 'name', params[:name], :size => 80 %>
   <%= submit_tag t('menu.search') %> ou <%= link_to t('menu.clean'), root_path %>
@@ -47,9 +48,11 @@
 
 <% if @taxpayer %>
   <div class="row marketing">
-    
     <div class="col-sm-6 col-md-4">
       <div class="panel panel-default">
+        <div class='title_tools'>
+          <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), contract_url(cod: @taxpayer.id)) %> </a>
+        </div>
         <div class='title_page'> <%= t('taxpayer.show') %> </div>
         <% unless @taxpayer.nil? %>
           <div class='section'>

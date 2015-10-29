@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025201449) do
+ActiveRecord::Schema.define(version: 20151028025124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,20 @@ ActiveRecord::Schema.define(version: 20151025201449) do
     t.datetime "due_at"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.integer  "taxpayer_id"
+    t.integer  "employee_id"
+    t.float    "unit_amount"
+    t.decimal  "unit_fee"
+    t.integer  "unit_ticket_quantity"
+    t.float    "client_amount"
+    t.integer  "client_ticket_quantity"
+    t.datetime "contract_date"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "employees", force: :cascade do |t|
@@ -128,24 +142,15 @@ ActiveRecord::Schema.define(version: 20151025201449) do
 
   add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
 
-  create_table "temp_cna", force: :cascade do |t|
-    t.integer "cod_proprietario"
-    t.string  "num_uf"
-    t.string  "exercicio"
-    t.integer "sequencial"
-    t.string  "nom_proprietario"
-    t.string  "tip_pessoa"
-    t.string  "endereco"
-    t.string  "bairro"
-    t.string  "cep"
-    t.string  "nom_municipio"
-    t.string  "sigla_uf"
-    t.string  "val_cna"
-    t.string  "val_multa_cna"
-    t.string  "val_juros_cna"
-    t.string  "total"
-    t.date    "dat_vencimento"
-    t.string  "tip_cobranca"
+  create_table "tickets", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.integer  "contract_id"
+    t.integer  "ticket_type"
+    t.float    "amount"
+    t.integer  "ticket_number"
+    t.datetime "due"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "units", force: :cascade do |t|
