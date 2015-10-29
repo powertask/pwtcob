@@ -45,11 +45,18 @@ pt-BR:
     remove: Apagar
 
   home:
-    title: Negociação de Contribuintes
+    title: CobraSeguro - Sistema de Cobrança Gianelli
+    deal: Ir para Negociação
     cna:
       title: Exercícios do Contribuinte
     history:
       title: Históricos do Contribuinte
+    filter:
+      name: Nome do Contribuinte
+
+  deal:
+    title: Ambiente de Negociações
+    root: Sair do Ambiente de Negociações
 
   client:
     title: Cadastro de Federações
