@@ -8,7 +8,7 @@ class Contract < ActiveRecord::Base
   validates_presence_of :unit_id, :taxpayer_id, :employee_id
 
   def self.list(unit)
-    self.where("unit_id = ?", unit).order("name ASC")
+    self.where("unit_id = ?", unit)
   end
   
 end

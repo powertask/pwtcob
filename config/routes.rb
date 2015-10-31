@@ -13,15 +13,20 @@ Rails.application.routes.draw do
   resources :categories
   resources :tasks
   resources :lawyers
-
+  resources :contracts
+  resources :cnas
+  
   resources :home do
     collection do
       get 'filter_name' => 'home#filter_name'
     end
   end
-  
-  get 'contracts/:cod/deal' => 'contracts#deal', as: :contract
 
+  get 'home/:cod/deal' => 'home#deal', as: :deal
+  get 'home/:cod/get_cna' => 'home#get_cna', as: :get_cna
+  patch 'home/:cod/set_cna' => 'home#set_cna', as: :set_cna
+
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

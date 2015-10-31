@@ -2,10 +2,12 @@ class Taxpayer < ActiveRecord::Base
   include ActiveModel::Validations
   validates_with TaxpayerValidator
 
-  belongs_to :unit
-  has_many :tasks
   belongs_to :client
-  
+  belongs_to :unit
+
+  has_many :tasks
+  has_many :cnas
+    
   validates_presence_of :name, :unit_id, :client_id
 
   usar_como_cpf :cpf

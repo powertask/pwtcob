@@ -1,0 +1,61 @@
+<div class='subtitle'> <%= t('deal.cnas') %> </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Ano</th>
+      <th>Num Doc</th>
+      <th>Vencimento</th>
+      <th>Valor CNA</th>
+      <th>Meses</th>
+      <th>Multa</th>
+      <th>Juros</th>
+      <th>Valor GUIA</th>
+      <th><%= t('stage') %></th>
+      <th><%= t('status') %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= number_to_currency(@total_cna) %></td>
+      <td></td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td><%= number_to_currency(@total_cna) %></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>  
+  <tbody>
+    <% unless @cnas.nil? %>
+      <% @cnas.each do |cna| %>
+        <tr>
+          <td>
+            <% if cna.fl_charge %>
+              <div class='strip green'> <%= 'Cobrar' %> </div>
+            <% else %>
+              <div class='strip red' id='none'> <%= 'Não Cobrar' %> </div>
+            <% end %> 
+          </td>    
+          <td><%= cna.year %> </td>
+          <td><%= cna.nr_document %> </td>
+          <td><%= cna.due_at.to_s_br %> </td>
+          <td><%= cna.amount %> </td>
+          <td><%= 0 %> </td>
+          <td><%= 0.00 %> </td>
+          <td><%= 0.00 %> </td>
+          <td><%= cna.amount %> </td>
+          <td><%= t(cna.stage) %> </td>
+          <td><%= t(cna.status) %> </td>
+          <td><%= link_to(t('edit'), get_cna_path(cna), class: "btn btn-xs btn-default", remote: true ) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

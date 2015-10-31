@@ -1,0 +1,63 @@
+<div class='title_tools'>
+  <a class="btn btn-large btn-warning" <%= link_to(t('deal.root'), :back) %> </a>
+</div>
+
+<div class='title_page'>
+  <span> <%= t('deal.title') %> </span>
+</div>
+
+<br>
+
+<div class="row marketing">
+  <div class="col-sm-6 col-md-4">
+    <div class="panel panel-primary">
+      <div class='subtitle'> <%= t('taxpayer.show') %> </div>
+      <% unless @taxpayer.nil? %>
+        <div class='section'>
+          <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>  <%= @taxpayer.origin_code %>
+          <div class='label1 top req'> <%=t("client.name") %>: </div>       <%= @taxpayer.client.name %>
+          <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>     <%= @taxpayer.name %>
+          <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
+          <div class='label1 top req'> <%=t("cnpj") %>: </div>          <%= @taxpayer.cpf %>
+          <div class='label1 top req'> <%=t("zipcode") %>: </div>         <%= @taxpayer.zipcode %>
+          <div class='label1 top req'> <%=t("state") %>: </div>         <%= @taxpayer.state %>
+          <div class='label1 top req'> <%=t("city") %>: </div>          <%= @taxpayer.city %>
+          <div class='label1 top req'> <%=t("address") %>: </div>         <%= @taxpayer.address %>
+          <div class='label1 top req'> <%=t("complement") %>: </div>        <%= @taxpayer.complement %>
+          <div class='label1 top req'> <%=t("neighborhood") %>: </div>      <%= @taxpayer.neighborhood %>
+        </div>
+      <% end %> 
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-8">
+
+    <div id='table-cna'>
+      <%= render 'cnas' %>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-2" id="task-form" style="display:none;">
+        <%= render 'cna' %>
+      </div>
+    </div>
+
+    <div class='subtitle'> <%= t('deal.ticket') %> </div>
+
+    <%= simple_form_for(@contract) do |f| %>
+      <div class='section'>
+        <%= f.input :unit_ticket_quantity, :label => t('deal.ticket_quantity', name: 'GMA'), input_html:{:class => 'form-control'} %>
+        <%= f.input :client_ticket_quantity, :label => t('deal.ticket_quantity', name: @taxpayer.client.name), input_html:{:class => 'form-control'} %>
+
+        <div class="actions">
+          <div class='buttonbar'>
+            <%= f.button :submit, t('menu.tickets'), class: 'btn-primary' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+
+  </div>
+</div>

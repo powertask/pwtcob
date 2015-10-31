@@ -227,11 +227,17 @@ tt {
   -moz-border-radius-topleft: 7px;
   -moz-border-radius-bottomleft: 7px;
   -webkit-border-top-left-radius: 7px;
-  -webkit-border-bottom-left-radius: 7px; }
+  -webkit-border-bottom-left-radius: 7px;}
   .green {
-	  background: green;
-	  color: white;
-	}
+    background: green;
+    width: 70px;
+    color: white;
+  }
+  .red {
+    background: red;
+    color: white;
+    width: 70px;
+  }
   .yellow {
 	  background: blue;
 	  color: white;

@@ -28,6 +28,7 @@ pt-BR:
   regular: Normal
   not_pay: Em aberto
   pay: Pago
+  edit: Editar
 
   menu:
     home: Home
@@ -49,6 +50,7 @@ pt-BR:
     save: Salvar Dados
     saving: Salvando...
     remove: Apagar
+    tickets: Gerar Parcelas
 
   home:
     title: CobraSeguro - Sistema de Cobrança Gianelli
@@ -65,6 +67,22 @@ pt-BR:
     title: Ambiente de Negociações
     root: Sair do Ambiente de Negociações
     cnas: Exercícios - CNAS
+    ticket: "Parcelas %{name}"
+    pay: Cobrar
+    ticket_quantity: Quantidade de Parcelas para %{name}
+  
+  cna:
+    edit: Editar Dados da CNA
+    year: Exercício
+    amount: Valor CNA
+    due_at: Vencimento
+    nr_document: Num Doc
+    charge: Cobrar CNA
+
+  contract:
+    unit_amount: "Valor para %{name}"
+    unit_fee: Percentual
+    unit_ticket_quantity: Quantidade de Parcelas
 
   client:
     title: Cadastro de Federações

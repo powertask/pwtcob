@@ -1,5 +1,6 @@
 class Cna < ActiveRecord::Base
   belongs_to :unit
+  belongs_to :taxpayer
   
   enum status: [:not_pay, :pay]
   enum stage: [:regular, :law]
