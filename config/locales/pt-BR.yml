@@ -70,6 +70,8 @@ pt-BR:
     ticket: "Parcelas %{name}"
     pay: Cobrar
     ticket_quantity: Quantidade de Parcelas para %{name}
+    unit_ticket_due: Vencimento Inicial GMA
+    unit_perc: Percentual Cobrado GMA (%)
   
   cna:
     edit: Editar Dados da CNA

@@ -1,0 +1,31 @@
+<div class='subtitle'> <%= t('deal.cnas') %> </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Valor de Parcela GMA</th>
+      <th>Valor de Parcela Cliente</th>
+      <th>Vencimento</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>  
+  <tbody>
+    <% unless @tickets.nil? %>
+      <% @tickets.each do |ticket| %>
+        <tr>
+          <td><%= ticket[:ticket] %> </td>
+          <td><%= ticket[:unit_amount] %> </td>
+          <td><%= ticket[:client_amount] %> </td>
+          <td><%= ticket[:due].to_s_br %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

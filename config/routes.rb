@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'home/:cod/deal' => 'home#deal', as: :deal
   get 'home/:cod/get_cna' => 'home#get_cna', as: :get_cna
   patch 'home/:cod/set_cna' => 'home#set_cna', as: :set_cna
+  get 'home/:cod/get_tickets' => 'home#get_tickets', as: :get_tickets
 
   
   # Example of regular route:

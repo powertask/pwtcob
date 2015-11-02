@@ -37,8 +37,6 @@ require 'pry'
     @cna = Cna.new
     @total_cna = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).sum(:amount)
 
-    session[:cnas] = @cnas
-
     respond_with @taxpayer, :layout => 'application'     
   end
 
@@ -49,9 +47,36 @@ require 'pry'
   def set_cna
     @cna = Cna.find(params[:cod])
     @cna.update_attributes(cna_params)
-    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id)
-
+    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
+    @total_cna = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).sum(:amount)
   end
+
+  def get_tickets
+    unit_perc             =  params[:unit_perc].to_d
+    unit_ticket_quantity  =  params[:unit_ticket_quantity].to_i
+    unit_ticket_due       =  params[:unit_ticket_due].to_date
+
+    total_cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).sum(:amount)
+
+    unit_amount = total_cnas * unit_perc / 100
+    unit_amount = unit_amount.round(2)
+
+    cna_ticket = total_cnas / unit_ticket_quantity.to_i
+    @tickets = []
+
+    unit_ticket_quantity  = unit_ticket_quantity + 1
+
+    (1..unit_ticket_quantity).each  do |tic|
+      
+      unit_due = unit_ticket_due if tic == 1
+      unit_due = unit_ticket_due + (tic - 1).month if tic > 1
+
+      ticket = { ticket: tic, unit_amount: unit_amount, client_amount: 0.00, due: unit_due} if tic == 1
+      ticket = { ticket: tic, unit_amount: 0.00, client_amount: cna_ticket.round(2), due: unit_due} if tic > 1
+      @tickets << ticket
+    end
+  end
+
 
   private
   def cna_params

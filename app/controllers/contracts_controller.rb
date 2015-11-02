@@ -7,8 +7,6 @@ class ContractsController < ApplicationController
   
   def create
     @contract = Contract.new(contract_params)
-    session[:unit_ticket_quantity] = :unit_ticket_quantity
-    session[:client_ticket_quantity] = :client_ticket_quantity
   end
 
 

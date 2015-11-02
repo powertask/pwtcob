@@ -24,6 +24,7 @@ gem 'brazilian-rails'
 gem 'will_paginate'
 gem 'rails_12factor'
 
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end

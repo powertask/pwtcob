@@ -45,19 +45,22 @@
 
     <div class='subtitle'> <%= t('deal.ticket') %> </div>
 
-    <%= simple_form_for(@contract) do |f| %>
+    <%= form_tag(get_tickets_path, method: 'get', remote: true) do |f| %>
       <div class='section'>
-        <%= f.input :unit_ticket_quantity, :label => t('deal.ticket_quantity', name: 'GMA'), input_html:{:class => 'form-control'} %>
-        <%= f.input :client_ticket_quantity, :label => t('deal.ticket_quantity', name: @taxpayer.client.name), input_html:{:class => 'form-control'} %>
-
-        <div class="actions">
-          <div class='buttonbar'>
-            <%= f.button :submit, t('menu.tickets'), class: 'btn-primary' %>
-          </div>
-        </div>
+        <p><%= label_tag(:unit_perc, t('deal.unit_perc')) %>
+        <%= text_field_tag( :unit_perc) %>
+        <p><%= label_tag(:unit_ticket_quantity, t('deal.ticket_quantity', name: 'GMA')) %>
+        <%= text_field_tag( :unit_ticket_quantity) %>
+        <p><%= label_tag(:unit_ticket_due, t('deal.unit_ticket_due', name: 'GMA')) %>
+        <%= text_field_tag( :unit_ticket_due) %>
+        <p><%= submit_tag() %></p>
       </div>
+
     <% end %>
 
+    <div id='table-tickets'>
+      <%= render 'tickets' %>
+    </div>
 
   </div>
 </div>
