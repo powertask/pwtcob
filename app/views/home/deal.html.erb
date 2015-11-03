@@ -48,13 +48,18 @@
       <div class='subtitle'> <%= t('deal.ticket') %> </div>
       <%= form_tag(get_tickets_path, method: 'get', remote: true) do |f| %>
         <div class='section'>
-          <p><%= label_tag(:unit_perc, t('deal.unit_perc')) %>
-          <%= text_field_tag(:unit_perc, 10) %>
-          <p><%= label_tag(:unit_ticket_quantity, t('deal.ticket_quantity')) %>
-          <%= text_field_tag( :unit_ticket_quantity) %>
-          <p><%= label_tag(:unit_ticket_due, t('deal.unit_ticket_due')) %>
-          <%= text_field_tag( :unit_ticket_due) %>
-  
+          <table style="width:100%">
+            <tr>
+              <td><%= label_tag(:unit_perc, t('deal.unit_perc')) %></td>
+              <td><%= label_tag(:unit_ticket_quantity, t('deal.ticket_quantity')) %></td>
+              <td><%= label_tag(:unit_ticket_due, t('deal.unit_ticket_due')) %></td>
+            </tr>
+            <tr>
+              <td><%= text_field_tag(:unit_perc, 10) %></td>
+              <td><%= text_field_tag( :unit_ticket_quantity) %></td>
+              <td><%= text_field_tag( :unit_ticket_due) %></td>
+            </tr>
+          </table>  
           <div class="actions">
             <div class='buttonbar'>
               <%= submit_tag(t('menu.tickets'), class: 'btn-primary') %>
