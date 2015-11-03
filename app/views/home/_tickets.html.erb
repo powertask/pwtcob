@@ -25,8 +25,8 @@
       <% @tickets.each do |ticket| %>
         <tr>
           <td><%= ticket[:ticket] %> </td>
-          <td><%= ticket[:unit_amount] %> </td>
-          <td><%= ticket[:client_amount] %> </td>
+          <td><%= ticket[:unit_amount].real %> </td>
+          <td><%= ticket[:client_amount].real %> </td>
           <td><%= ticket[:due].to_s_br %> </td>
         </tr>
       <% end %>
