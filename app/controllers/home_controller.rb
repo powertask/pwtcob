@@ -2,7 +2,6 @@ class HomeController < ApplicationController
   before_filter :authenticate_user!
   respond_to :html, :js
   layout 'application'
-require 'pry'
 
   def index
   	session[:unit_id] = current_user.unit.id
