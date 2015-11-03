@@ -1,5 +1,5 @@
 <div class='title_tools'>
-  <a class="btn btn-large btn-warning" <%= link_to(t('deal.root'), :back) %> </a>
+  <a class="btn btn-large btn-warning" <%= link_to(t('deal.root'), root_path) %> </a>
 </div>
 
 <div class='title_page'>
@@ -43,22 +43,31 @@
       </div>
     </div>
 
-    <div class='subtitle'> <%= t('deal.ticket') %> </div>
 
-    <%= form_tag(get_tickets_path, method: 'get', remote: true) do |f| %>
-      <div class='section'>
-        <p><%= label_tag(:unit_perc, t('deal.unit_perc')) %>
-        <%= text_field_tag( :unit_perc) %>
-        <p><%= label_tag(:unit_ticket_quantity, t('deal.ticket_quantity', name: 'GMA')) %>
-        <%= text_field_tag( :unit_ticket_quantity) %>
-        <p><%= label_tag(:unit_ticket_due, t('deal.unit_ticket_due', name: 'GMA')) %>
-        <%= text_field_tag( :unit_ticket_due) %>
-        <p><%= submit_tag() %></p>
-      </div>
+    <div id='table-ticket'>
+      <div class='subtitle'> <%= t('deal.ticket') %> </div>
+      <%= form_tag(get_tickets_path, method: 'get', remote: true) do |f| %>
+        <div class='section'>
+          <p><%= label_tag(:unit_perc, t('deal.unit_perc')) %>
+          <%= text_field_tag(:unit_perc, 10) %>
+          <p><%= label_tag(:unit_ticket_quantity, t('deal.ticket_quantity')) %>
+          <%= text_field_tag( :unit_ticket_quantity) %>
+          <p><%= label_tag(:unit_ticket_due, t('deal.unit_ticket_due')) %>
+          <%= text_field_tag( :unit_ticket_due) %>
+  
+          <div class="actions">
+            <div class='buttonbar'>
+              <%= submit_tag(t('menu.tickets'), class: 'btn-primary') %>
+            </div>
+          </div>
 
-    <% end %>
+        </div>
 
-    <div id='table-tickets'>
+      <% end %>
+    </div>
+
+
+    <div id='table-tickets' style="display:none;">
       <%= render 'tickets' %>
     </div>
 

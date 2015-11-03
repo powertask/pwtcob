@@ -20,7 +20,9 @@ require 'pry'
   def show
     @taxpayer = Taxpayer.find(params[:id])
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id])
+    
     @total_cna = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id]).sum(:amount)
+    session[:total_cnas] = @total_cnas
 
     @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:id])
 
@@ -35,7 +37,11 @@ require 'pry'
     @taxpayer = Taxpayer.find(params[:cod])
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
     @cna = Cna.new
-    @total_cna = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).sum(:amount)
+
+    session[:total_cnas] = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).sum(:amount)
+
+    @total_charge = Cna.list(session[:unit_id]).where('taxpayer_id = ? AND fl_charge = ?', params[:cod], true).sum(:amount)
+    session[:total_charge] = @total_charge
 
     respond_with @taxpayer, :layout => 'application'     
   end
@@ -47,8 +53,11 @@ require 'pry'
   def set_cna
     @cna = Cna.find(params[:cod])
     @cna.update_attributes(cna_params)
-    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
-    @total_cna = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).sum(:amount)
+
+    @cnas         = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
+
+    @total_charge = Cna.list(session[:unit_id]).where('taxpayer_id = ? AND fl_charge = ?', @cna.taxpayer.id, true).sum(:amount)
+    session[:total_charge] = @total_charge
   end
 
   def get_tickets
@@ -56,12 +65,12 @@ require 'pry'
     unit_ticket_quantity  =  params[:unit_ticket_quantity].to_i
     unit_ticket_due       =  params[:unit_ticket_due].to_date
 
-    total_cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).sum(:amount)
+    total_charge = session[:total_charge]
 
-    unit_amount = total_cnas * unit_perc / 100
+    unit_amount = total_charge * unit_perc / 100
     unit_amount = unit_amount.round(2)
 
-    cna_ticket = total_cnas / unit_ticket_quantity.to_i
+    cna_ticket = total_charge / unit_ticket_quantity.to_i
     @tickets = []
 
     unit_ticket_quantity  = unit_ticket_quantity + 1

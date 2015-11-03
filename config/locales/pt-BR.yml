@@ -66,12 +66,14 @@ pt-BR:
   deal:
     title: Ambiente de Negociações
     root: Sair do Ambiente de Negociações
-    cnas: Exercícios - CNAS
-    ticket: "Parcelas %{name}"
+    cnas: CNAS - Exercícios
+    ticket: "Parcelamento"
     pay: Cobrar
-    ticket_quantity: Quantidade de Parcelas para %{name}
-    unit_ticket_due: Vencimento Inicial GMA
-    unit_perc: Percentual Cobrado GMA (%)
+    ticket_quantity: Quantidade de Parcelas
+    unit_ticket_due: Vencimento Inicial
+    unit_perc: Percentual GMA (%)
+    value_charge: "Valor a Ser Cobrado: "
+    recalculate: Recalcular Parcelas
   
   cna:
     edit: Editar Dados da CNA
