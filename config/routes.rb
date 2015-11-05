@@ -27,7 +27,8 @@ Rails.application.routes.draw do
   patch 'home/:cod/set_cna' => 'home#set_cna', as: :set_cna
   get 'home/:cod/get_tickets' => 'home#get_tickets', as: :get_tickets
   get 'home/:cod/set_tickets' => 'home#set_tickets', as: :set_tickets
-
+  get 'home/:cod/get_taxpayer' => 'home#get_taxpayer', as: :get_taxpayer
+  patch 'home/:cod/set_taxpayer' => 'home#set_taxpayer', as: :set_taxpayer
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

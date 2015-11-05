@@ -85,10 +85,22 @@ class HomeController < ApplicationController
     end
   end
 
+  def get_taxpayer
+    @taxpayer = Taxpayer.find(params[:cod])
+  end
+
+  def set_taxpayer
+    @taxpayer = Taxpayer.find(params[:cod])
+    @taxpayer.update_attributes(taxpayer_params)
+  end
 
   private
   def cna_params
     params.require(:cna).permit(:fl_charge)
+  end
+
+  def taxpayer_params
+    params.require(:taxpayer).permit(:phone)
   end
 
 end

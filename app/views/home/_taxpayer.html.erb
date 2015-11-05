@@ -1,0 +1,8 @@
+<%= simple_form_for(@taxpayer, :url => set_taxpayer_path, remote: true) do |f| %>
+	<%= f.input :phone, :label => t('phone') %>
+	<div class="actions">
+		<div class='buttonbar'>
+			<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+		</div>
+	</div>
+<% end %>
