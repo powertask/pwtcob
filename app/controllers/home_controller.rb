@@ -18,7 +18,7 @@ class HomeController < ApplicationController
 
   def show
     @taxpayer = Taxpayer.find(params[:id])
-    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id])
+    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id]).order(:year)
     
     @total_cna = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id]).sum(:amount)
     session[:total_cnas] = @total_cnas
@@ -60,7 +60,8 @@ class HomeController < ApplicationController
   end
 
   def get_tickets
-    unit_perc             =  params[:unit_perc].to_d
+    unit = Unit.find(session[:unit_id])
+    unit_perc             =  unit.unit_fee
     unit_ticket_quantity  =  params[:unit_ticket_quantity].to_i
     unit_ticket_due       =  params[:unit_ticket_due].to_date
 

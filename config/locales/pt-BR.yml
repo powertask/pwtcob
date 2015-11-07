@@ -107,6 +107,7 @@ pt-BR:
     create: Gravar Dados da Empresa
     show: Detalhes da Empresa
     name: Razão Social
+    fee: Percentual de Cobrança (%)
 
   employee:
     title: Cadastro de Colaborador
