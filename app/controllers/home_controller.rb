@@ -65,6 +65,8 @@ class HomeController < ApplicationController
     unit_ticket_quantity  =  params[:unit_ticket_quantity].to_i
     unit_ticket_due       =  params[:unit_ticket_due].to_date
 
+    unit_perc = 0 if unit_perc.nil?
+
     total_charge = session[:total_charge]
 
     unit_amount = total_charge * unit_perc / 100
