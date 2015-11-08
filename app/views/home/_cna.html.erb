@@ -1,23 +1,26 @@
+<br>
 <%= simple_form_for(@cna, :url => set_cna_path, remote: true) do |f| %>
-		<table style="width:100%">
-			<tr>
-			    <td><div class='label1 top req'> <%= f.label t("cna.year") %></div></td>
-				<td><div class='label1 top req'> <%= f.label t("cna.nr_document") %></div></td>
-				<td><div class='label1 top req'> <%= f.label t("cna.due_at") %></div></td>
-				<td><div class='label1 top req'> <%= f.label t("cna.amount") %></div></td>
-				<td><div class='label1 top req'> <%= f.label t('cna.charge') %></div></td>
-			</tr>
-			<tr>
-			    <td><%= @cna.year %></td>
-				<td><%= @cna.nr_document %></td>
-				<td><%= @cna.due_at.to_date.to_s_br if @cna.due_at %></td>
-				<td><%= @cna.amount.real %></td>
-				<td><%= f.input :fl_charge, :label => t('cna.charge') %></td>
-			</tr>
-		</table>
-		<div class="actions">
-			<div class='buttonbar'>
-				<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
-			</div>
+
+	<table style="width:100%">
+		<tr>
+	    <td><div class='label1 top req'> <%= f.label t("cna.year") %></div></td>
+			<td><div class='label1 top req'> <%= f.label t("cna.nr_document") %></div></td>
+			<td><div class='label1 top req'> <%= f.label t("cna.due_at") %></div></td>
+			<td><div class='label1 top req'> <%= f.label t("cna.amount") %></div></td>
+			<td><div class='label1 top req'> <%= f.label t('cna.charge') %></div></td>
+		</tr>
+		<tr>
+	    <td><%= @cna.year %></td>
+			<td><%= @cna.nr_document %></td>
+			<td><%= @cna.due_at.to_date.to_s_br if @cna.due_at %></td>
+			<td><%= @cna.amount.real %></td>
+			<td><%= f.input :fl_charge, :label => t('cna.charge') %></td>
+		</tr>
+	</table>
+	<div class="actions">
+		<div class='buttonbar'>
+			<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
 		</div>
+  </div>
+
 <% end %>

@@ -3,7 +3,7 @@ class Cna < ActiveRecord::Base
   belongs_to :taxpayer
   
   enum status: [:not_pay, :pay]
-  enum stage: [:regular, :law]
+  enum stage: [:lawyer, :normal]
 
 #  usar_como_dinheiro :amount
 

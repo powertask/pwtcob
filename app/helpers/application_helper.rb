@@ -25,15 +25,20 @@ module ApplicationHelper
 
   def calc_cna(cna)
     amount = cna.amount
+    charge = 0
+
     multa = calc_multa(cna)
     juros = calc_juros(cna)
-    total = amount + multa + juros
+    total_cna = amount + multa + juros
+
+    charge = charge + total_cna if cna.fl_charge
 
     session[:value_cna] = session[:value_cna] + amount
     session[:total_multa] = session[:total_multa] + multa
     session[:total_juros] = session[:total_juros] + juros
-    session[:total_cna] = session[:total_cna] + total
-    total
+    session[:total_cobrado] = session[:total_cobrado] + charge
+    session[:total_cna] = session[:total_cna] + total_cna
+    total_cna
   end
 
 end

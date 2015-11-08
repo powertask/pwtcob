@@ -27,14 +27,26 @@
               <div class='strip red' id='none'> <%= 'Não Cobrar' %> </div>
             <% end %> 
           </td>    
-          <td><%= cna.year %> </td>
+          <td>
+            <% if cna.fl_charge %>
+              <span class="label label-success"><%= cna.year %></span>
+            <% else %>
+              <%= cna.year %> 
+            <% end %> 
+          </td>
           <td><%= cna.nr_document %> </td>
           <td><%= cna.due_at.to_date.to_s_br %> </td>
           <td><%= cna.amount %> </td>
           <td><%= calc_months(cna.year) %> </td>
           <td><%= calc_multa(cna).real %> </td>
           <td><%= calc_juros(cna).real %> </td>
-          <td><%= calc_cna(cna).real %> </td>
+          <td> 
+            <% if cna.fl_charge %>
+              <span class="label label-success"><%= calc_cna(cna).real %></span>
+            <% else %>
+              <%= calc_cna(cna).real %>
+            <% end %>
+          </td>
           <td><%= t(cna.stage) %> </td>
           <td><%= t(cna.status) %> </td>
           <td><%= link_to(t('edit'), get_cna_path(cna), class: "btn btn-xs btn-default", remote: true ) %></td>
@@ -59,7 +71,13 @@
     </tr>
   </tfoot>  
 </table>
-<div class='title' 'label label-success'> 
-  <%= t('deal.value_charge') << '  ' << session[:total_charge].real.to_s %> 
-</div>
+
+<ul class="nav nav-pills" role="tablist">
+  <li role="presentation" class="active">
+    <a href="#">Valor Total a Ser Cobrado do Contribuinte:
+      <span class="badge"><%= session[:total_cobrado].real.to_s %></span>
+    </a>
+  </li>
+</ul>
+
 

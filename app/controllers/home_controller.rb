@@ -42,7 +42,7 @@ class HomeController < ApplicationController
     session[:total_multa] = 0
     session[:total_juros] = 0
     session[:total_cna] = 0
-    session[:total_charge]  = total_charge(@cnas)
+    session[:total_cobrado]  = 0
 
     respond_with @taxpayer, :layout => 'application'     
   end
@@ -57,7 +57,11 @@ class HomeController < ApplicationController
 
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
 
-    session[:total_charge]  = calc_total_charge(@cnas)
+    session[:value_cna] = 0
+    session[:total_multa] = 0
+    session[:total_juros] = 0
+    session[:total_cobrado] = 0
+    session[:total_cna] = 0
   end
 
   def get_tickets
@@ -69,7 +73,7 @@ class HomeController < ApplicationController
 
     unit_perc = 0 if unit_perc.nil?
 
-    total_charge = session[:total_charge]
+    total_charge = session[:total_cobrado]
 
     unit_amount = total_charge * unit_perc / 100
     unit_amount = unit_amount.round(2)
@@ -108,10 +112,6 @@ class HomeController < ApplicationController
 
   def taxpayer_params
     params.require(:taxpayer).permit(:phone)
-  end
-
-  def total_charge(cnas)
-    return cnas.map{|x|x.fl_charge ? x.amount : 0}.inject(:+).round(2)
   end
 
 end
