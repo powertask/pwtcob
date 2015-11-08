@@ -3,8 +3,6 @@ class HomeController < ApplicationController
   respond_to :html, :js
   layout 'application'
 
-require 'pry'
-
   def index
   	session[:unit_id] = current_user.unit.id
   	session[:unit_name] = current_user.unit.name
@@ -21,10 +19,12 @@ require 'pry'
   def show
     @taxpayer = Taxpayer.find(params[:id])
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id]).order(:year)
-    
-    session[:total_cnas] = @cnas.map{|x|x.amount}.inject(:+).round(2)
-
     @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:id])
+    
+    session[:value_cna] = 0
+    session[:total_multa] = 0
+    session[:total_juros] = 0
+    session[:total_cna] = 0
 
     render "index", :layout => 'application'
   end
@@ -38,8 +38,11 @@ require 'pry'
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
     @cna = Cna.new
 
-    session[:total_cnas]    = @cnas.map{|x|x.amount}.inject(:+).round(2)
-    session[:total_charge]  = calc_total_charge(@cnas)
+    session[:value_cna] = 0
+    session[:total_multa] = 0
+    session[:total_juros] = 0
+    session[:total_cna] = 0
+    session[:total_charge]  = total_charge(@cnas)
 
     respond_with @taxpayer, :layout => 'application'     
   end
@@ -96,6 +99,8 @@ require 'pry'
     @taxpayer.update_attributes(taxpayer_params)
   end
 
+
+
   private
   def cna_params
     params.require(:cna).permit(:fl_charge)
@@ -105,7 +110,7 @@ require 'pry'
     params.require(:taxpayer).permit(:phone)
   end
 
-  def calc_total_charge(cnas)
+  def total_charge(cnas)
     return cnas.map{|x|x.fl_charge ? x.amount : 0}.inject(:+).round(2)
   end
 

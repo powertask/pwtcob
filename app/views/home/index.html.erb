@@ -91,38 +91,38 @@
               <th><%= t('status') %></th>
             </tr>
           </thead>
-          <tfoot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><%= session[:total_cnas].real %></td>
-              <td></td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td><%= session[:total_cnas].real %></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>  
           <tbody>
             <% unless @cnas.nil? %>
               <% @cnas.each do |cna| %>
                 <tr>
                   <td><%= cna.year %> </td>
                   <td><%= cna.nr_document %> </td>
-                  <td><%= cna.due_at.to_s_br %> </td>
-                  <td><%= cna.amount %> </td>
+                  <td><%= cna.due_at.to_date.to_s_br %> </td>
+                  <td><%= cna.amount.real %> </td>
                   <td><%= calc_months(cna.year) %> </td>
-                  <td><%= 0.00 %> </td>
-                  <td><%= 0.00 %> </td>
-                  <td><%= cna.amount %> </td>
+                  <td><%= calc_multa(cna).real %> </td>
+                  <td><%= calc_juros(cna).real %> </td>
+                  <td><%= calc_cna(cna).real %> </td>
                   <td><%= t(cna.stage) %> </td>
                   <td><%= t(cna.status) %> </td>
                 </tr>
               <% end %>
             <% end %>
           </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><%= session[:value_cna].real %></td>
+              <td></td>
+              <td> <%= session[:total_multa].real %> </td>
+              <td> <%= session[:total_juros].real %> </td>
+              <td> <%= session[:total_cna].real %></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tfoot>  
         </table>
 
         <br>
