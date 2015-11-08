@@ -31,6 +31,7 @@ pt-BR:
   pay: Pago
   edit: Editar
 
+
   menu:
     home: Home
     main: Cadastros
@@ -57,6 +58,12 @@ pt-BR:
     title: CobraSeguro - Sistema de Cobrança Gianelli
     deal: Ir para Ambiente de Negociações
     taxpayer: Contribuinte
+    name: Nome do Contribuinte
+    search:
+      title: Procurar por Contribuinte
+      name: Nome do Contribuinte
+      cna: CNA
+      cpf: CPF
     cna:
       title: Exercícios do Contribuinte
     history:

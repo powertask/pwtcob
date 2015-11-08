@@ -9,10 +9,25 @@ class HomeController < ApplicationController
   end
 
   def filter_name
-    @taxpayers = Taxpayer
-                    .where("unit_id = ? AND lower(name) like ?", session[:unit_id], params[:name].downcase << "%")
-                    .paginate(:page => params[:page], :per_page => 10)
-                    .order('name ASC')
+    if params[:name].present?
+      @taxpayers = Taxpayer
+                      .where("unit_id = ? AND lower(name) like ?", session[:unit_id], params[:name].downcase << "%")
+                      .paginate(:page => params[:page], :per_page => 10)
+                      .order('name ASC')
+    
+    elsif params[:cpf].present?
+      @taxpayers = Taxpayer
+                      .where("unit_id = ? AND cpf = ?", session[:unit_id], params[:cpf])
+                      .paginate(:page => params[:page], :per_page => 10)
+                      .order('name ASC')
+
+    elsif params[:cna].present?
+      @taxpayers = Taxpayer
+                      .where("unit_id = ? AND origin_code = ?", session[:unit_id], params[:cna])
+                      .paginate(:page => params[:page], :per_page => 10)
+                      .order('name ASC')
+    end
+
     render "index", :layout => 'application'
   end
 
