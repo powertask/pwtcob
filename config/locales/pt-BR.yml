@@ -15,6 +15,7 @@ pt-BR:
   phone: Número do Telefone
   cnpj: CNPJ
   cpf: CPF
+  cnpj_cpf: CNPJ/CPF
   password: Senha
   password_hint: Deixe em branco caso voce não deseja mudar a senha
   password_confirmation: Confirmação de Senha

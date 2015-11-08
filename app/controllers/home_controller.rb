@@ -3,6 +3,8 @@ class HomeController < ApplicationController
   respond_to :html, :js
   layout 'application'
 
+require 'pry'
+
   def index
   	session[:unit_id] = current_user.unit.id
   	session[:unit_name] = current_user.unit.name
@@ -20,8 +22,7 @@ class HomeController < ApplicationController
     @taxpayer = Taxpayer.find(params[:id])
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id]).order(:year)
     
-    @total_cna = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id]).sum(:amount)
-    session[:total_cnas] = @total_cnas
+    session[:total_cnas] = @cnas.map{|x|x.amount}.inject(:+).round(2)
 
     @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:id])
 
@@ -37,10 +38,8 @@ class HomeController < ApplicationController
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
     @cna = Cna.new
 
-    session[:total_cnas] = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).sum(:amount)
-
-    @total_charge = Cna.list(session[:unit_id]).where('taxpayer_id = ? AND fl_charge = ?', params[:cod], true).sum(:amount)
-    session[:total_charge] = @total_charge
+    session[:total_cnas]    = @cnas.map{|x|x.amount}.inject(:+).round(2)
+    session[:total_charge]  = calc_total_charge(@cnas)
 
     respond_with @taxpayer, :layout => 'application'     
   end
@@ -53,15 +52,15 @@ class HomeController < ApplicationController
     @cna = Cna.find(params[:cod])
     @cna.update_attributes(cna_params)
 
-    @cnas         = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
+    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
 
-    @total_charge = Cna.list(session[:unit_id]).where('taxpayer_id = ? AND fl_charge = ?', @cna.taxpayer.id, true).sum(:amount)
-    session[:total_charge] = @total_charge
+    session[:total_charge]  = calc_total_charge(@cnas)
   end
 
   def get_tickets
     unit = Unit.find(session[:unit_id])
-    unit_perc             =  unit.unit_fee
+    unit_perc =  unit.unit_fee
+
     unit_ticket_quantity  =  params[:unit_ticket_quantity].to_i
     unit_ticket_due       =  params[:unit_ticket_due].to_date
 
@@ -104,6 +103,10 @@ class HomeController < ApplicationController
 
   def taxpayer_params
     params.require(:taxpayer).permit(:phone)
+  end
+
+  def calc_total_charge(cnas)
+    return cnas.map{|x|x.fl_charge ? x.amount : 0}.inject(:+).round(2)
   end
 
 end

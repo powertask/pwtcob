@@ -164,24 +164,6 @@ ActiveRecord::Schema.define(version: 20151107031516) do
 
   add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
 
-  create_table "temp_areas", force: :cascade do |t|
-    t.string "cod_prop"
-    t.string "exercicio"
-    t.string "id_srf"
-    t.string "nome"
-    t.string "endereco"
-    t.string "municipio"
-    t.string "uf"
-    t.string "vtnt"
-    t.string "area"
-    t.string "modulos"
-    t.string "emp_com_cart"
-    t.string "emp_sem_cart"
-    t.string "emp_temp"
-    t.string "grau_utilizacao"
-    t.string "area_aproveitavel"
-  end
-
   create_table "tickets", force: :cascade do |t|
     t.integer  "unit_id"
     t.integer  "contract_id"

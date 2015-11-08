@@ -57,17 +57,16 @@
         <% unless @taxpayer.nil? %>
           <div class='section'>
             <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>  <%= @taxpayer.origin_code %>
-            <div class='label1 top req'> <%=t("client.name") %>: </div>       <%= @taxpayer.client.name %>
-            <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>     <%= @taxpayer.name %>
-            <div class='label1 top req'> <%=t("cpf") %>: </div>          <%= @taxpayer.cpf %>
-            <div class='label1 top req'> <%=t("cnpj") %>: </div>          <%= @taxpayer.cnpj %>
-            <div class='label1 top req'> <%=t("zipcode") %>: </div>         <%= @taxpayer.zipcode %>
-            <div class='label1 top req'> <%=t("state") %>: </div>         <%= @taxpayer.state %>
-            <div class='label1 top req'> <%=t("city") %>: </div>          <%= @taxpayer.city %>
+            <div class='label1 top req'> <%=t("client.name") %>: </div>   <%= @taxpayer.client.name %>
+            <div class='label1 top req'> <%=t("taxpayer.name") %>: </div> <%= @taxpayer.name %>
+            <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
+            <div class='label1 top req'> <%=t("cnpj_cpf") %>: </div>      <%= @taxpayer.cpf.present? ? @taxpayer.cpf : @taxpayer.cnpj %>
             <div class='label1 top req'> <%=t("address") %>: </div>         <%= @taxpayer.address %>
             <div class='label1 top req'> <%=t("complement") %>: </div>        <%= @taxpayer.complement %>
             <div class='label1 top req'> <%=t("neighborhood") %>: </div>      <%= @taxpayer.neighborhood %>
-            <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
+            <div class='label1 top req'> <%=t("zipcode") %>: </div>         <%= @taxpayer.zipcode %>
+            <div class='label1 top req'> <%=t("city") %>: </div>          <%= @taxpayer.city %>
+            <div class='label1 top req'> <%=t("state") %>: </div>         <%= @taxpayer.state %>
           </div>
         <% end %> 
       </div>
@@ -97,11 +96,11 @@
               <td></td>
               <td></td>
               <td></td>
-              <td><%= @total_cna.real %></td>
+              <td><%= session[:total_cnas].real %></td>
               <td></td>
               <td>0.00</td>
               <td>0.00</td>
-              <td><%= @total_cna.real %></td>
+              <td><%= session[:total_cnas].real %></td>
               <td></td>
               <td></td>
             </tr>
@@ -114,7 +113,7 @@
                   <td><%= cna.nr_document %> </td>
                   <td><%= cna.due_at.to_s_br %> </td>
                   <td><%= cna.amount %> </td>
-                  <td><%= 0 %> </td>
+                  <td><%= calc_months(cna.year) %> </td>
                   <td><%= 0.00 %> </td>
                   <td><%= 0.00 %> </td>
                   <td><%= cna.amount %> </td>
