@@ -33,11 +33,12 @@ module ApplicationHelper
 
     charge = charge + total_cna if cna.fl_charge
 
-    session[:value_cna] = session[:value_cna] + amount
-    session[:total_multa] = session[:total_multa] + multa
-    session[:total_juros] = session[:total_juros] + juros
-    session[:total_cobrado] = session[:total_cobrado] + charge
-    session[:total_cna] = session[:total_cna] + total_cna
+    session[:value_cna] = (session[:value_cna].nil? ? 0 : session[:value_cna]) + (amount.nil? ? 0 : amount)
+    session[:total_multa] = (session[:total_multa].nil? ? 0 : session[:total_multa]) + (multa.nil? ? 0 : multa)
+    session[:total_juros] = (session[:total_juros].nil? ? 0 : session[:total_juros]) + (juros.nil? ? 0 : juros)
+    session[:total_cobrado] = (session[:total_cobrado].nil? ? 0 : session[:total_cobrado]) + (charge.nil? ? 0 : charge)
+    session[:total_cna] = (session[:total_cna].nil? ? 0 : session[:total_cna]) + (total_cna.nil? ? 0 : total_cna)
+
     total_cna
   end
 
