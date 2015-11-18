@@ -181,6 +181,8 @@ pt-BR:
 
   activerecord:
     errors:
+      messages:
+        record_invalid: Registro inválido
       models:
         task:
           attributes:

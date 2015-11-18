@@ -24,11 +24,11 @@ RSpec.describe LawyersController, type: :controller do
   # Lawyer. As you add validations to Lawyer, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {name: "Marcelo Reichert", unit_id: 1, lawyer_code: 1, cpf: "69806594053"}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {name: "Marcelo Reichert", unit_id: nil, cpf: 999 }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -36,10 +36,15 @@ RSpec.describe LawyersController, type: :controller do
   # LawyersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  before :each do
+    sign_in
+    session[:unit_id] = 1
+  end
+
   describe "GET #index" do
     it "assigns all lawyers as @lawyers" do
       lawyer = Lawyer.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {:unit_id => 1}, valid_session
       expect(assigns(:lawyers)).to eq([lawyer])
     end
   end
@@ -103,7 +108,7 @@ RSpec.describe LawyersController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: "Marcelo Reichert", unit_id: 1, lawyer_code: 1, cpf: "69806594053" }
       }
 
       it "updates the requested lawyer" do

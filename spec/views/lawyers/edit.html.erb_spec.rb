@@ -3,18 +3,18 @@ require 'rails_helper'
 RSpec.describe "lawyers/edit", type: :view do
   before(:each) do
     @lawyer = assign(:lawyer, Lawyer.create!(
-      :name => "MyString",
-      :lawyer_code => "MyString",
-      :cpf => "MyString",
-      :cnpj => "MyString",
-      :phone => "MyString",
-      :zipcode => "MyString",
-      :address => "MyString",
-      :state => "MyString",
-      :city => "MyString",
-      :complement => "MyString",
-      :neighborhood => "MyString",
-      :email => "MyString"
+      :name => "Marcelo Reichert",
+      :unit_id => 1,
+      :lawyer_code => "123",
+      :cpf => "69806594053",
+      :phone => "9560-1340",
+      :zipcode => "90830-244",
+      :address => "Rua Wilson A Freitas de Paiva",
+      :state => "RS",
+      :city => "Porto Alegre",
+      :complement => "Ap201",
+      :neighborhood => "Cavalhada",
+      :email => "marcelo@powertask.com.br"
     ))
   end
 

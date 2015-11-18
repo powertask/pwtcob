@@ -38,4 +38,8 @@
     <% end %>
 </div>
 
-<div id='paginate'><%= render 'common/paginate' %></div>
+<div id='paginate'>
+    <div class="apple_pagination">
+        <%= will_paginate @lawyers, :container => false %>
+    </div>
+</div>
