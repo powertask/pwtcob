@@ -23,13 +23,16 @@ RSpec.describe LawyersController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Lawyer. As you add validations to Lawyer, be sure to
   # adjust the attributes here as well.
+  let(:unit) { FactoryGirl.create(:unit) }
+
   let(:valid_attributes) {
-    {name: "Marcelo Reichert", unit_id: 1, lawyer_code: 1, cpf: "69806594053"}
+    {name: "Marcelo Reichert", unit_id: unit.id, lawyer_code: 1, cpf: "69806594053"}
   }
 
   let(:invalid_attributes) {
     {name: "Marcelo Reichert", unit_id: nil, cpf: 999 }
   }
+
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in

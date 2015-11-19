@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "lawyers/edit", type: :view do
+  
+  let(:unit) { FactoryGirl.create(:unit) }
+  
   before(:each) do
     @lawyer = assign(:lawyer, Lawyer.create!(
       :name => "Marcelo Reichert",
-      :unit_id => 1,
+      :unit_id => unit.id,
       :lawyer_code => "123",
       :cpf => "69806594053",
       :phone => "9560-1340",

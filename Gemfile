@@ -37,8 +37,8 @@ group :development, :test do
   gem 'pry-rails', :require => false
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
-  gem 'capybara'
   gem 'thin'
+  gem 'factory_girl_rails'
 
 end
 

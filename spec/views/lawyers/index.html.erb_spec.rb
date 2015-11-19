@@ -1,24 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe "lawyers/index", type: :view do
-  before(:each) do
-    Unit.create!(id: 2, name: "Unit 2")
 
+  let(:unit1) { FactoryGirl.create(:unit) }
+  let(:unit2) { FactoryGirl.create(:unit2, name: "Unit 2") }
+
+  before(:each) do
     Lawyer.create!(
       :name => "Marcelo Reichert",
-      :unit_id => 1,
+      :unit_id => unit1.id,
       :lawyer_code => "123",
       :cpf => "69806594053"
       )
     Lawyer.create!(
       :name => "Marcelo Reichert",
-      :unit_id => 1,
+      :unit_id => unit1.id,
       :lawyer_code => "123",
       :cpf => "69806594053"
     )
     Lawyer.create!(
       :name => "Marcelo Reichert",
-      :unit_id => 2,
+      :unit_id => unit2.id,
       :lawyer_code => "123",
       :cpf => "69806594053"
     )
