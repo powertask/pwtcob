@@ -23,7 +23,7 @@ gem 'responders'
 gem 'brazilian-rails'
 gem 'will_paginate'
 gem 'rails_12factor'
-
+gem 'boletosimples'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
