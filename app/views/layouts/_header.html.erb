@@ -1,4 +1,4 @@
-<header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<header class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="navbar-inner">
     <div class="container">
   		<div class="navbar-header">
@@ -12,7 +12,7 @@
       	<ul class="nav navbar-nav navbar-right">
           <li>
             <a>
-              <strong><%= current_user.email %></strong>
+              <strong><%= current_user.email %> ( <%= t(current_user.profile) %> )</strong>
             </a>
           </li>
       	  <li class='active'><%= link_to t("logout", default: "Logout"), destroy_user_session_path, method: :delete %></li>

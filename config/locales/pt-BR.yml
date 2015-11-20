@@ -30,7 +30,8 @@ pt-BR:
   not_pay: Em aberto
   pay: Pago
   edit: Editar
-
+  admin: Administrador
+  user: Colaborador
 
   menu:
     home: Home

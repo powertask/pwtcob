@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :contracts
   resources :cnas
   
+  resources :user, :controller => 'users'
+
   resources :home do
     collection do
       get 'filter_name' => 'home#filter_name'

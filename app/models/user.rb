@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
 
   belongs_to :unit
 
+  enum profile: [:admin, :user]
+
 end
