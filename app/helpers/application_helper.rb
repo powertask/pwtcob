@@ -1,13 +1,18 @@
 module ApplicationHelper
 
-  def calc_months(year)
-  	date_base = Date.new(year, 5, 22)
+  def calc_meses_atraso(cna)
+  	date_base = Date.new(cna.year, 5, 22)
   	date_today = Date.today()
   	(date_today.year * 12 + date_today.month) - (date_base.year * 12 + date_base.month)
   end
 
+  def calc_valor_corrigido_INPC 
+    
+
+  end
+
   def calc_multa(cna)
-  	months = calc_months(cna.year)
+  	months = calc_meses_atraso(cna)
     @value = cna.amount
 
     (1..months).map{|x|@value = @value + (x == 1 ? @value * 0.1 : @value * 0.02)}.last
@@ -15,7 +20,7 @@ module ApplicationHelper
   end
 
   def calc_juros(cna)
-    months = calc_months(cna.year)
+    months = calc_meses_atraso(cna.year)
     @value = cna.amount
 
     (1..months).map{|x|@value = @value + ( @value * 0.01 )}.last
