@@ -1,13 +1,17 @@
 <%= simple_form_for(@city) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :status %>
-    <%= f.input :state %>
-  </div>
+	<div class='section'>
+	  <div class="form-inputs">
+	    <%= f.input :unit_id, as: :hidden %>
+	    <%= f.input :name, :label => t('city.name') %>
+	    <%= f.input :state, :label => t('state') %>
+	  </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+	  <div class="form-actions">
+  		<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+  		<%= 'ou' %>
+  		<%= link_to t('menu.cancel'), cities_path %>
+	  </div>
+	</div>
 <% end %>

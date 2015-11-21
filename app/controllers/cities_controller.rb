@@ -8,7 +8,8 @@ class CitiesController < ApplicationController
   # GET /cities
   # GET /cities.json
   def index
-    @cities = City.all
+    @cities = index_class(City)
+    respond_with @cities, :layout => 'application'
   end
 
   # GET /cities/1
@@ -19,6 +20,7 @@ class CitiesController < ApplicationController
   # GET /cities/new
   def new
     @city = City.new
+    @city.unit_id = session[:unit_id]
   end
 
   # GET /cities/1/edit
@@ -29,30 +31,15 @@ class CitiesController < ApplicationController
   # POST /cities.json
   def create
     @city = City.new(city_params)
-
-    respond_to do |format|
-      if @city.save
-        format.html { redirect_to @city, notice: 'City was successfully created.' }
-        format.json { render :show, status: :created, location: @city }
-      else
-        format.html { render :new }
-        format.json { render json: @city.errors, status: :unprocessable_entity }
-      end
-    end
+    @city.save
+    respond_with @city, notice: 'Cidade criada com sucesso.'
   end
 
   # PATCH/PUT /cities/1
   # PATCH/PUT /cities/1.json
   def update
-    respond_to do |format|
-      if @city.update(city_params)
-        format.html { redirect_to @city, notice: 'City was successfully updated.' }
-        format.json { render :show, status: :ok, location: @city }
-      else
-        format.html { render :edit }
-        format.json { render json: @city.errors, status: :unprocessable_entity }
-      end
-    end
+    @city.update_attributes(city_params)
+    respond_with @city, notice: 'Cidade atualizada com sucesso.'
   end
 
   # DELETE /cities/1
@@ -73,6 +60,6 @@ class CitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def city_params
-      params.require(:city).permit(:name, :status, :state)
+      params.require(:city).permit(:name, :status, :state, :unit_id)
     end
 end

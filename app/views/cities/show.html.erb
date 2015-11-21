@@ -1,19 +1,11 @@
-<p id="notice"><%= notice %></p>
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('city.new'), new_city_path) %> </a>
+	<a class="btn btn-large btn-warning" <%= link_to(t('city.index'), cities_path) %> </a>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @city.name %>
-</p>
+<div class='title_page'> <%= t('city.show') %> </div>
 
-<p>
-  <strong>Status:</strong>
-  <%= @city.status %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @city.state %>
-</p>
-
-<%= link_to 'Edit', edit_city_path(@city) %> |
-<%= link_to 'Back', cities_path %>
+<div class='section'>
+	<div class='label1 top req'> <%=t("city.name") %>: </div>	<%= @city.name %>
+	<div class='label1 top req'> <%=t("state") %>: </div> 		<%= @city.state %>
+</div>

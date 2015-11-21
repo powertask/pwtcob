@@ -1,31 +1,37 @@
+<div class='title_tools'>
+  <a class="btn btn-large btn-warning" <%= link_to(t('city.new'), new_city_path) %> </a>
+</div>
+
+<div class='title_page'>
+  <span> <%= t('city.title') %> </span>
+</div>
+
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Cities</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Status</th>
-      <th>State</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class='list1'>
+  <% unless @cities.empty? %>
     <% @cities.each do |city| %>
-      <tr>
-        <td><%= city.name %></td>
-        <td><%= city.status %></td>
-        <td><%= city.state %></td>
-        <td><%= link_to 'Show', city %></td>
-        <td><%= link_to 'Edit', edit_city_path(city) %></td>
-        <td><%= link_to 'Destroy', city, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <li>
+        <div class='strip' id='none'> <%= city.id %> </div>
+
+        <div class='tools'>
+          <%= link_to(t('menu.edit'), edit_city_path(city), class: "btn btn-xs btn-default") %>
+        </div>
+ 
+        <div class='indent'>
+          <%= link_to(city.name, city_path(city)) %>
+          &bull;
+          <%= city.state %>
+          <tt></tt>
+          <dt></dt>
+        </div>
+      </li>
     <% end %>
-  </tbody>
-</table>
+  <% end %>
+</div>
 
-<br>
-
-<%= link_to 'New City', new_city_path %>
+<div id='paginate'>
+  <div class="apple_pagination">
+    <%= will_paginate @cities, :container => false %>
+  </div>
+</div>

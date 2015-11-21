@@ -54,6 +54,7 @@ pt-BR:
     saving: Salvando...
     remove: Apagar
     tickets: Gerar Parcelas
+    city: Cidades
 
   home:
     title: CobraSeguro - Sistema de Cobrança Gianelli
@@ -91,6 +92,14 @@ pt-BR:
     due_at: Vencimento
     nr_document: Num Doc
     charge: Cobrar CNA
+
+  city:
+    title: Cadastro de Cidades
+    new: Nova Cidade
+    edit: Editar Dados das Cidades
+    show: Detalhes da Cidade
+    index: Listar Todas as Cidades
+    name: Nome da Cidade
 
   contract:
     unit_amount: "Valor para %{name}"
