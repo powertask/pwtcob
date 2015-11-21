@@ -45,11 +45,22 @@ class HomeController < ApplicationController
   end
 
   def deal
+    @taxpayer = Taxpayer.find(params[:cod])
+
+    if @taxpayer.city.present?
+      if @taxpayer.city.fl_charge == false
+        flash[:notice] = "Colaborador de uma cidade não liberada para cobrança!"
+        redirect_to :root and return 
+      end
+    else
+      flash[:notice] = "Colaborador de uma cidade não liberada para cobrança!"
+      redirect_to :root and return
+    end
+
     @contract = Contract.new
     @contract.unit_ticket_quantity = 1
     @contract.client_ticket_quantity = 1
 
-    @taxpayer = Taxpayer.find(params[:cod])
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
     @cna = Cna.new
 

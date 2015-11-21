@@ -37,7 +37,7 @@
           <td><%= cna.nr_document %> </td>
           <td><%= cna.due_at.to_date.to_s_br %> </td>
           <td><%= cna.amount %> </td>
-          <td><%= calc_months(cna.year) %> </td>
+          <td><%= calc_meses_atraso(cna) %> </td>
           <td><%= calc_multa(cna).real %> </td>
           <td><%= calc_juros(cna).real %> </td>
           <td> 

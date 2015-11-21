@@ -7,7 +7,6 @@ module ApplicationHelper
   end
 
   def calc_valor_corrigido_INPC 
-    
 
   end
 

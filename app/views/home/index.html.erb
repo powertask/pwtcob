@@ -33,9 +33,9 @@
             &bull;
             <%= taxpayer.address %>
             &bull;
-            <%= taxpayer.city %>
+            <%= taxpayer.city.name if taxpayer.city %>
             &bull;
-            <%= taxpayer.state %>
+            <%= taxpayer.city.state if taxpayer.city %>
           </tt>
           <dt>
           </dt>
@@ -58,7 +58,11 @@
     <div class="col-sm-6 col-md-4">
       <div class="panel panel-primary">
         <div class='title_tools'>
-          <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
+          <% if @taxpayer.city.present? and @taxpayer.city.fl_charge %>
+            <a class="btn btn-large btn-warning"> <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
+          <% else %>
+            <a class="btn btn-large btn-danger"> <%= "Não liberado para cobrança" %> </a>
+          <% end %>
         </div>
         <div class='title_page'> <%= t('home.taxpayer') %> </div>
         <% unless @taxpayer.nil? %>
@@ -68,12 +72,12 @@
             <div class='label1 top req'> <%=t("taxpayer.name") %>: </div> <%= @taxpayer.name %>
             <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
             <div class='label1 top req'> <%=t("cnpj_cpf") %>: </div>      <%= @taxpayer.cpf.present? ? @taxpayer.cpf : @taxpayer.cnpj %>
-            <div class='label1 top req'> <%=t("address") %>: </div>         <%= @taxpayer.address %>
-            <div class='label1 top req'> <%=t("complement") %>: </div>        <%= @taxpayer.complement %>
-            <div class='label1 top req'> <%=t("neighborhood") %>: </div>      <%= @taxpayer.neighborhood %>
-            <div class='label1 top req'> <%=t("zipcode") %>: </div>         <%= @taxpayer.zipcode %>
-            <div class='label1 top req'> <%=t("city") %>: </div>          <%= @taxpayer.city %>
-            <div class='label1 top req'> <%=t("state") %>: </div>         <%= @taxpayer.state %>
+            <div class='label1 top req'> <%=t("address") %>: </div>        <%= @taxpayer.address %>
+            <div class='label1 top req'> <%=t("complement") %>: </div>     <%= @taxpayer.complement %>
+            <div class='label1 top req'> <%=t("neighborhood") %>: </div>   <%= @taxpayer.neighborhood %>
+            <div class='label1 top req'> <%=t("zipcode") %>: </div>        <%= @taxpayer.zipcode %>
+            <div class='label1 top req'> <%=t("taxpayer.city") %>: </div>  <%= @taxpayer.city.name if @taxpayer.city %>
+            <div class='label1 top req'> <%=t("state") %>: </div>          <%= @taxpayer.city.state if @taxpayer.city %>
           </div>
         <% end %> 
       </div>
@@ -106,7 +110,7 @@
                   <td><%= cna.nr_document %> </td>
                   <td><%= cna.due_at.to_date.to_s_br %> </td>
                   <td><%= cna.amount.real %> </td>
-                  <td><%= calc_months(cna.year) %> </td>
+                  <td><%= calc_meses_atraso(cna) %> </td>
                   <td><%= calc_multa(cna).real %> </td>
                   <td><%= calc_juros(cna).real %> </td>
                   <td><%= calc_cna(cna).real %> </td>
