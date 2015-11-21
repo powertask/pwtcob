@@ -59,7 +59,7 @@
       <div class="panel panel-primary">
         <div class='title_tools'>
           <% if @taxpayer.city.present? and @taxpayer.city.fl_charge %>
-            <a class="btn btn-large btn-warning"> <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
+            <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
           <% else %>
             <a class="btn btn-large btn-danger"> <%= "Não liberado para cobrança" %> </a>
           <% end %>
