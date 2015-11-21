@@ -11,11 +11,9 @@
 	<div class='label1 top req'> <%=t("taxpayer.name") %>: </div>			<%= @taxpayer.name %>
 	<div class='label1 top req'> <%=t("cnpj") %>: </div> 					<%= @taxpayer.cpf %>
 	<div class='label1 top req'> <%=t("zipcode") %>: </div> 				<%= @taxpayer.zipcode %>
-	<div class='label1 top req'> <%=t("state") %>: </div>					<%= @taxpayer.state %>
-	<div class='label1 top req'> <%=t("city") %>: </div>					<%= @taxpayer.city %>
+	<div class='label1 top req'> <%=t("taxpayer.city") %>: </div>					<%= @taxpayer.city.name << "/" << @taxpayer.city.state %>
 	<div class='label1 top req'> <%=t("address") %>: </div> 				<%= @taxpayer.address %>
 	<div class='label1 top req'> <%=t("complement") %>: </div>				<%= @taxpayer.complement %>
 	<div class='label1 top req'> <%=t("neighborhood") %>: </div>			<%= @taxpayer.neighborhood %>
 	<div class='label1 top req'> <%=t("phone") %>: </div>					<%= @taxpayer.phone %>
 </div>
-

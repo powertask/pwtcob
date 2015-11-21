@@ -6,8 +6,7 @@
     <%= f.input :cpf, :label => t('cpf'), input_html:{:class => 'form-control'} %>
     <%= f.input :cnpj, :label => t('cnpj'), input_html:{:class => 'form-control'} %>
     <%= f.input :zipcode, :label => t('zipcode'), input_html: { :class => 'form-control' }  %>
-    <%= f.input :state, :label => t('state'), input_html: { :class => 'form-control' }  %>
-    <%= f.input :city, :label => t('city'), input_html: { :class => 'form-control' }  %>
+    <%= f.association :city, :collection => City.list(session[:unit_id]), :prompt => t('choose'), :label => t('city.name')  %>
     <%= f.input :address, :label => t('address'), input_html: { :class => 'form-control' }  %>
     <%= f.input :complement, :label => t('complement'), input_html: { :class => 'form-control' }  %>
     <%= f.input :neighborhood, :label => t('neighborhood'), input_html: { :class => 'form-control' }  %>
@@ -20,6 +19,6 @@
         <%= link_to t('menu.cancel'), taxpayers_path %>
       </div>
     </div>
-
+  </div>
 <% end %>
 

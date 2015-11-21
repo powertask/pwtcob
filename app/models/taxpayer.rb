@@ -4,11 +4,12 @@ class Taxpayer < ActiveRecord::Base
 
   belongs_to :client
   belongs_to :unit
+  belongs_to :city
 
   has_many :tasks
   has_many :cnas
     
-  validates_presence_of :name, :unit_id, :client_id
+  validates_presence_of :name, :unit_id, :client_id, :city_id
 
   usar_como_cpf :cpf
   usar_como_cnpj :cnpj
