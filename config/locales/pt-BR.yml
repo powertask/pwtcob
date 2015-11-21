@@ -32,6 +32,7 @@ pt-BR:
   edit: Editar
   admin: Administrador
   user: Colaborador
+  Yes: Sim
 
   menu:
     home: Home
@@ -96,10 +97,11 @@ pt-BR:
   city:
     title: Cadastro de Cidades
     new: Nova Cidade
-    edit: Editar Dados das Cidades
+    edit: Editar Dados da Cidade
     show: Detalhes da Cidade
     index: Listar Todas as Cidades
     name: Nome da Cidade
+    fl_charge: Liberar cobrança para contribuintes dessa cidade
 
   contract:
     unit_amount: "Valor para %{name}"
@@ -223,3 +225,5 @@ pt-BR:
         zero: Nenhum %{model} encontrado
     page_gap: "&hellip;"
     previous_label: "&#8592; Anteriores"
+
+

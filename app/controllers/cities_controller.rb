@@ -60,6 +60,6 @@ class CitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def city_params
-      params.require(:city).permit(:name, :status, :state, :unit_id)
+      params.require(:city).permit(:name, :status, :state, :unit_id, :fl_charge)
     end
 end

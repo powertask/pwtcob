@@ -12,7 +12,12 @@
   <% unless @cities.empty? %>
     <% @cities.each do |city| %>
       <li>
-        <div class='strip' id='none'> <%= city.id %> </div>
+        
+        <% if city.fl_charge %>
+          <div class='strip green' id='none'> <%= city.id %> </div>
+        <% else %>
+          <div class='strip red' id='none'> <%= city.id %> </div>
+        <% end %>
 
         <div class='tools'>
           <%= link_to(t('menu.edit'), edit_city_path(city), class: "btn btn-xs btn-default") %>
@@ -22,7 +27,8 @@
           <%= link_to(city.name, city_path(city)) %>
           &bull;
           <%= city.state %>
-          <tt></tt>
+          &bull;
+          <tt><%= city.fl_charge ? "Cidade liberada para cobrança" : "Não cobrar contribuintes dessa cidade" %></tt>
           <dt></dt>
         </div>
       </li>
