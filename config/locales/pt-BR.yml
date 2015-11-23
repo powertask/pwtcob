@@ -85,6 +85,7 @@ pt-BR:
     unit_perc: Percentual GMA (%)
     value_charge: "Valor a Ser Cobrado: "
     recalculate: Recalcular Parcelas
+    create_contract: Gravar Parcelamento e Gerar Termo
   
   cna:
     edit: Editar Dados da CNA
