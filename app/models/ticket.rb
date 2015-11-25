@@ -6,6 +6,6 @@ class Ticket < ActiveRecord::Base
   enum ticket_type: [:client, :unit]
 
   def self.list(unit)
-    self.where("unit_id = ?", unit).order("name ASC")
+    self.where("unit_id = ?", unit)
   end
 end

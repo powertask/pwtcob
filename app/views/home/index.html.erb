@@ -1,7 +1,13 @@
+<div class='title_tools'>
+  <a class="btn btn-large btn-default" <%= link_to(t('menu.search'), root_path ) %> </a>
+</div>
 
 <div class='title_page'>
   <span> <%= t('home.title') %> </span>
 </div>
+
+
+<% if @taxpayer.nil? %>
 
 <div class='subtitle'> <%= t('home.search.title') %> </div>
 <div class='section'>
@@ -16,6 +22,7 @@
     <%= submit_tag t('menu.search') %> ou <%= link_to t('menu.clean'), root_path %>
   <% end %>
 </div>
+<% end %>
 
 <div class='list1'>
   <% unless @taxpayers.nil? %>
@@ -24,7 +31,7 @@
         <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
 
         <div class='indent'>
-          <%= link_to(taxpayer.name, home_path(taxpayer)) %>
+          <%= link_to(taxpayer.name, show_path(taxpayer)) %>
             &bull;
           <tt>
             <%= taxpayer.cpf %>
@@ -55,8 +62,51 @@
 
 <% if @taxpayer %>
   <div class="row marketing">
-    <div class="col-sm-6 col-md-4">
+    <div class="col-sm-6 col-md-3">
       <div class="panel panel-primary">
+        <%= render 'show_taxpayer' %> 
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-9">
+
+      <div class="panel panel-primary">
+
+        <div class='title_page'> <%= t('home.area.title') %> </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Ano</th>
+              <th>Num Doc</th>
+              <th>Nome</th>
+              <th>Endereço</th>
+              <th>VTNT</th>
+              <th>Área</th>
+              <th>Módulos Rurais</th>
+              <th>Grau Util</th>
+              <th>Área Usada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @areas.nil? %>
+              <% @areas.each do |area| %>
+                <tr>
+                  <td><%= area.year %> </td>
+                  <td><%= area.nr_document %> </td>
+                  <td><%= area.name %> </td>
+                  <td><%= area.address << ' - ' << area.city << ' - ' << area.state %> </td>
+                  <td><%= area.vtnt.real %> </td>
+                  <td><%= area.area %> </td>
+                  <td><%= area.modulo %></td>
+                  <td><%= area.degree_of_use %></td>
+                  <td><%= area.usable_area %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+
+        <br>
         <div class='title_tools'>
           <% if @taxpayer.city.present? and @taxpayer.city.fl_charge %>
             <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
@@ -64,28 +114,7 @@
             <a class="btn btn-large btn-danger"> <%= "Cidade não liberado para cobrança" %> </a>
           <% end %>
         </div>
-        <div class='title_page'> <%= t('home.taxpayer') %> </div>
-        <% unless @taxpayer.nil? %>
-          <div class='section'>
-            <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>  <%= @taxpayer.origin_code %>
-            <div class='label1 top req'> <%=t("client.name") %>: </div>   <%= @taxpayer.client.name %>
-            <div class='label1 top req'> <%=t("taxpayer.name") %>: </div> <%= @taxpayer.name %>
-            <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
-            <div class='label1 top req'> <%=t("cnpj_cpf") %>: </div>      <%= @taxpayer.cpf.present? ? @taxpayer.cpf : @taxpayer.cnpj %>
-            <div class='label1 top req'> <%=t("address") %>: </div>        <%= @taxpayer.address %>
-            <div class='label1 top req'> <%=t("complement") %>: </div>     <%= @taxpayer.complement %>
-            <div class='label1 top req'> <%=t("neighborhood") %>: </div>   <%= @taxpayer.neighborhood %>
-            <div class='label1 top req'> <%=t("zipcode") %>: </div>        <%= @taxpayer.zipcode %>
-            <div class='label1 top req'> <%=t("taxpayer.city") %>: </div>  <%= @taxpayer.city.name if @taxpayer.city %>
-            <div class='label1 top req'> <%=t("state") %>: </div>          <%= @taxpayer.city.state if @taxpayer.city %>
-          </div>
-        <% end %> 
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-md-8">
-
-      <div class="panel panel-primary">
+        
         <div class='title_page'> <%= t('home.cna.title') %> </div>
         <table class="table">
           <thead>
@@ -100,6 +129,7 @@
               <th>Valor GUIA</th>
               <th><%= t('stage') %></th>
               <th><%= t('status') %></th>
+              <th>Contrato</th>
             </tr>
           </thead>
           <tbody>
@@ -114,8 +144,9 @@
                   <td><%= calc_multa(cna).real %> </td>
                   <td><%= calc_juros(cna).real %> </td>
                   <td><%= calc_cna(cna).real %> </td>
-                  <td><%= t(cna.stage) %> </td>
-                  <td><%= t(cna.status) %> </td>
+                  <td><%= t('cna.stage.'<<cna.stage) %> </td>
+                  <td><%= t('cna.status.'<<cna.status) %> </td>
+                  <td><%= cna.contract_id %> </td>
                 </tr>
               <% end %>
             <% end %>
@@ -132,9 +163,40 @@
               <td> <%= session[:total_cna].real %></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
           </tfoot>  
         </table>
+
+        <br>
+        <div class='title_page'> <%= t('home.contract.title') %> </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Contrato</th>
+              <th>Data Contrato</th>
+              <th>Parcelas GMA</th>
+              <th>Valor GMA</th>
+              <th>Parcelas Federação</th>
+              <th>Valor Federação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @contracts.nil? %>
+              <% @contracts.each do |contract| %>
+                <tr>
+                  <td><%= contract.id %> </td>
+                  <td><%= contract.contract_date.to_s_br %> </td>
+                  <td><%= contract.unit_ticket_quantity %> </td>
+                  <td><%= contract.unit_amount.real %> </td>
+                  <td><%= contract.client_ticket_quantity %> </td>
+                  <td><%= contract.client_amount.real %> </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+
 
         <br>
         <div class='title_page'> <%= t('home.history.title') %> </div>

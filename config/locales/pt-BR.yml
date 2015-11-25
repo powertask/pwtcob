@@ -47,7 +47,7 @@ pt-BR:
     lawyer: Advogados
     edit: Editar
     show: Detalhes
-    search: Filtrar
+    search: Procurar por Contribuinte
     clean: Limpar Filtros
     create: Criar
     cancel: Cancelar
@@ -73,6 +73,10 @@ pt-BR:
       title: Históricos do Contribuinte
     filter:
       name: Nome do Contribuinte
+    contract:
+      title: Negociações Fechadas
+    area:
+      title: Áreas do Contribuinte
 
   deal:
     title: Ambiente de Negociações
@@ -86,7 +90,7 @@ pt-BR:
     value_charge: "Valor a Ser Cobrado: "
     recalculate: Recalcular Parcelas
     create_contract: Gravar Parcelamento e Gerar Termo
-  
+
   cna:
     edit: Editar Dados da CNA
     year: Exercício
@@ -94,6 +98,13 @@ pt-BR:
     due_at: Vencimento
     nr_document: Num Doc
     charge: Cobrar CNA
+    status:
+      contract: Em Cobrança
+      pay: Pago
+      not_pay: Em Aberto
+    stage:
+      normal: Extra-Judicial
+      lawyer: Judicial
 
   city:
     title: Cadastro de Cidades
@@ -105,9 +116,14 @@ pt-BR:
     fl_charge: Liberar cobrança para contribuintes dessa cidade
 
   contract:
-    unit_amount: "Valor para %{name}"
-    unit_fee: Percentual
-    unit_ticket_quantity: Quantidade de Parcelas
+    show: Detalhes do Contrato
+    index: Listar Todos Contratos
+    amount: "Valor - %{name}"
+    unit_fee: "Percentual - %{name}"
+    ticket_quantity: "Quantidade de Parcelas - %{name}" 
+    contract_date: Data do Contrato
+    taxpayer: Contribuinte
+
 
   client:
     title: Cadastro de Federações

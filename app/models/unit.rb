@@ -5,4 +5,5 @@ class Unit < ActiveRecord::Base
 
   has_many :users
   has_many :clients
+  has_many :contracts
 end

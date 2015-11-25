@@ -1,0 +1,42 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('contract.index'), contracts_path) %> </a>
+</div>
+
+<div class='title_page'> <%= t('contract.show') %> </div>
+
+<div class='section'>
+  <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
+  <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>          <%= @contract.contract_date.to_s_br %>
+	<div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>				        <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name %>
+	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>: </div>           <%= @contract.unit_amount.real %>
+	<div class='label1 top req'> <%=t("contract.unit_fee", name: @contract.unit.name) %>: </div>				        <%= @contract.unit_fee.real %>
+	<div class='label1 top req'> <%=t("contract.ticket_quantity", name: @contract.unit.name) %>: </div>	 <%= @contract.unit_ticket_quantity %>
+	<div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>			    <%= @contract.client_amount.real %>
+	<div class='label1 top req'> <%=t("contract.ticket_quantity", name: @contract.taxpayer.client.name) %>: </div>	<%= @contract.client_ticket_quantity %>
+</div>
+
+
+<div class='subtitle'> <%= t('deal.ticket') %> </div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Vencimento</th>
+      <th>Valor de Parcela Cliente</th>
+      <th>Valor de Parcela GMA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @tickets.nil? %>
+      <% @tickets.each do |ticket| %>
+        <tr>
+          <td><%= ticket.ticket_number %> </td>
+          <td><%= ticket.due.to_date.to_s_br %> </td>
+          <td><%= ticket.amount.real if ticket.client? %> </td>
+          <td><%= ticket.amount.real if ticket.unit? %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

@@ -32,9 +32,11 @@ class HomeController < ApplicationController
   end
 
   def show
-    @taxpayer = Taxpayer.find(params[:id])
-    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:id]).order(:year)
-    @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:id])
+    @taxpayer = Taxpayer.find(params[:cod])
+    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
+    @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
+    @contracts = Contract.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
+    @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
     
     session[:value_cna] = 0
     session[:total_multa] = 0
@@ -82,7 +84,7 @@ class HomeController < ApplicationController
     @cna = Cna.find(params[:cod])
     @cna.update_attributes(cna_params)
 
-    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
+    @cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
 
     session[:value_cna] = 0
     session[:total_multa] = 0

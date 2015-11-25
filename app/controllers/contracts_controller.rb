@@ -4,6 +4,11 @@ class ContractsController < ApplicationController
   respond_to :html
   layout 'window'
 
+  def show
+    @contract = Contract.find(params[:id])
+    @tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:id])
+    respond_with @contract
+  end
 
   def create_contract
 
@@ -25,6 +30,7 @@ class ContractsController < ApplicationController
       @contract = Contract.new
 
       @contract.unit_id = session[:unit_id]
+      @contract.contract_date = Time.now
       @contract.taxpayer_id = cod 
       @contract.unit_amount = unit_amount
       @contract.unit_fee = unit_fee
@@ -52,7 +58,7 @@ class ContractsController < ApplicationController
 
       cnas.each do  |cna|
         cna.contract_id = @contract.id
-        cna.pay!
+        cna.contract!
         cna.save!
       end
     end

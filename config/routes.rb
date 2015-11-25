@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'home/:cod/show' => 'home#show', as: :show
   get 'home/:cod/deal' => 'home#deal', as: :deal
   get 'home/:cod/get_cna' => 'home#get_cna', as: :get_cna
   patch 'home/:cod/set_cna' => 'home#set_cna', as: :set_cna
