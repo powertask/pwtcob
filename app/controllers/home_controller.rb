@@ -44,6 +44,7 @@ class HomeController < ApplicationController
     render "index", :layout => 'application'
   end
 
+
   def deal
     @taxpayer = Taxpayer.find(params[:cod])
 
@@ -61,7 +62,7 @@ class HomeController < ApplicationController
     @contract.unit_ticket_quantity = 1
     @contract.client_ticket_quantity = 1
 
-    @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
+    @cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ?', params[:cod]).order(:year)
     @cna = Cna.new
 
     session[:value_cna] = 0
@@ -117,6 +118,7 @@ class HomeController < ApplicationController
       ticket = { ticket: tic, unit_amount: unit_amount, client_amount: 0.00, due: unit_due} if tic == 1
       ticket = { ticket: tic, unit_amount: 0.00, client_amount: cna_ticket.round(2), due: unit_due} if tic > 1
       @tickets << ticket
+      session[:tickets] = @tickets
     end
   end
 

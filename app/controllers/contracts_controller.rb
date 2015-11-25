@@ -4,9 +4,61 @@ class ContractsController < ApplicationController
   respond_to :html
   layout 'window'
 
-  
-  def create
-    @contract = Contract.new(contract_params)
+
+  def create_contract
+
+    cod = params[:cod]
+
+    taxpayer = Taxpayer.find(cod)
+    cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
+    unit = Unit.find(session[:unit_id])
+
+    unit_fee =  unit.unit_fee
+    unit_fee = 0 if unit_fee.nil?
+
+    total_charge = session[:total_cobrado]
+
+    unit_amount = total_charge * unit_fee / 100
+    unit_amount = unit_amount.round(2)
+
+    ActiveRecord::Base.transaction do
+      @contract = Contract.new
+
+      @contract.unit_id = session[:unit_id]
+      @contract.taxpayer_id = cod 
+      @contract.unit_amount = unit_amount
+      @contract.unit_fee = unit_fee
+      @contract.unit_ticket_quantity = 1
+
+      @contract.client_ticket_quantity = session[:tickets].count - 1
+      @contract.client_amount = total_charge
+
+      @contract.save!
+
+      session[:tickets].each  do |tic|
+        @ticket = Ticket.new
+        @ticket.unit_id = session[:unit_id]
+        @ticket.contract_id = @contract.id
+        @ticket.ticket_type = 0 if tic['unit_amount'].to_f == 0
+        @ticket.ticket_type = 1 if tic['unit_amount'].to_f > 0
+        
+        @ticket.amount = tic['client_amount'].to_f if tic['client_amount'].to_f > 0
+        @ticket.amount = tic['unit_amount'].to_f if tic['unit_amount'].to_f > 0
+        
+        @ticket.due = tic['due'].to_date
+        
+        @ticket.save!
+      end
+
+      cnas.each do  |cna|
+        cna.contract_id = @contract.id
+        cna.pay!
+        cna.save!
+      end
+    end
+
+    respond_with @contract, notice: 'Termo criado com sucesso.'
+
   end
 
 
