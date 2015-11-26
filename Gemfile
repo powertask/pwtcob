@@ -35,11 +35,7 @@ group :development, :test do
 
   gem 'awesome_print', :require => false
   gem 'pry-rails', :require => false
-  gem 'rspec-rails'
-  gem 'rspec-collection_matchers'
   gem 'thin'
-  gem 'factory_girl_rails'
-
 end
 
 group :development do
