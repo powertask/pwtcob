@@ -1,0 +1,31 @@
+
+<div class='title_page'>
+  <span> <%= t('contract.title') %> </span>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<div class='list1'>
+  <% unless @contracts.empty? %>
+    <% @contracts.each do |contract| %>
+      <li>
+        <div class='strip' id='none'> <%= contract.id %> </div>
+
+        <div class='indent'>
+          <%= contract.taxpayer.origin_code %>
+          &bull;
+          <%= link_to(contract.taxpayer.name, contract_path(contract)) %>
+          &bull;
+          <tt><%= 'Data: '<<contract.contract_date.to_s_br %></tt>
+          <dt></dt>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
+</div>
+
+<div id='paginate'>
+  <div class="apple_pagination">
+    <%= will_paginate @contracts, :container => false %>
+  </div>
+</div>

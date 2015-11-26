@@ -4,6 +4,11 @@ class ContractsController < ApplicationController
   respond_to :html
   layout 'window'
 
+  def index
+    @contracts = index_class(Contract, {order: false})
+    respond_with @contracts, :layout => 'application'
+  end
+
   def show
     @contract = Contract.find(params[:id])
     @tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:id])
@@ -11,7 +16,6 @@ class ContractsController < ApplicationController
   end
 
   def create_contract
-
     cod = params[:cod]
 
     taxpayer = Taxpayer.find(cod)
@@ -41,7 +45,9 @@ class ContractsController < ApplicationController
 
       @contract.save!
 
+      n = 0
       session[:tickets].each  do |tic|
+        n = n + 1
         @ticket = Ticket.new
         @ticket.unit_id = session[:unit_id]
         @ticket.contract_id = @contract.id
@@ -52,6 +58,7 @@ class ContractsController < ApplicationController
         @ticket.amount = tic['unit_amount'].to_f if tic['unit_amount'].to_f > 0
         
         @ticket.due = tic['due'].to_date
+        @ticket.ticket_number = n
         
         @ticket.save!
       end
@@ -63,7 +70,7 @@ class ContractsController < ApplicationController
       end
     end
 
-    respond_with @contract, notice: 'Termo criado com sucesso.'
+    respond_with @contract, notice: 'Contrato criado com sucesso.'
 
   end
 

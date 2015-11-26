@@ -56,6 +56,7 @@ pt-BR:
     remove: Apagar
     tickets: Gerar Parcelas
     city: Cidades
+    contract: Contratos
 
   home:
     title: CobraSeguro - Sistema de Cobrança Gianelli
@@ -116,6 +117,7 @@ pt-BR:
     fl_charge: Liberar cobrança para contribuintes dessa cidade
 
   contract:
+    title: Contratos Negociados com Contribuintes
     show: Detalhes do Contrato
     index: Listar Todos Contratos
     amount: "Valor - %{name}"

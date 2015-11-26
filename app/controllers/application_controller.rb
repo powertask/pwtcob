@@ -18,6 +18,8 @@ class ApplicationController < ActionController::Base
  private
 
     def index_class(klass, options = {})
+      options[:order] = true if options[:order].nil?
+
       if params[:name].nil?
         list(klass, options)
       else
@@ -35,11 +37,18 @@ class ApplicationController < ActionController::Base
 
     def list(klass, options = {})
       if options[:type].nil?
-        klass.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20).order('name ASC')
+        k = klass.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
+        
+        if options[:order]
+          k = k.order('name ASC')
+        end
+        k
+        
       elsif options[:type] == :id
         klass.where('id = ?', session[:unit_id])
       else
-        klass.all.paginate(:page => params[:page], :per_page => 20).order('name ASC')
+        k = klass.all.paginate(:page => params[:page], :per_page => 20)
+        k = k.order('name ASC') unless options[:order]
       end
     end
 end
