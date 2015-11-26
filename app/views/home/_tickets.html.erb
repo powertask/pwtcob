@@ -1,6 +1,8 @@
 <div class='title_tools'>
   <a class="btn btn-large btn-default" <%= link_to(t('deal.recalculate'), :back) %> </a>
   <a class="btn btn-large btn-success" <%= link_to(t('deal.create_contract'), create_contract_path, method: :post ) %> </a>
+  <a class="btn btn-large btn-success" <%= link_to t('deal.contract_pdf'), :action => "contract_pdf", :cod => @tickets, :format => "pdf" %> </a>
+>>>>>>> contract pdf
 </div>
 
 <br>

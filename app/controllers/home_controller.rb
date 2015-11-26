@@ -133,7 +133,16 @@ class HomeController < ApplicationController
     @taxpayer.update_attributes(taxpayer_params)
   end
 
-
+  def contract_pdf
+    respond_to do |format|
+      format.pdf do
+      pdf = ContractPdf.new(params[:cod], view_context)
+      send_data pdf.render, filename: "contract",
+                            type: "application/pdf",
+                            disposition: "inline"
+      end
+    end
+  end
 
   private
   def cna_params
