@@ -125,7 +125,7 @@ pt-BR:
     ticket_quantity: "Quantidade de Parcelas - %{name}" 
     contract_date: Data do Contrato
     taxpayer: Contribuinte
-
+    print_pdf: Termo em PDF
 
   client:
     title: Cadastro de Federações

@@ -133,8 +133,6 @@ class HomeController < ApplicationController
     @taxpayer.update_attributes(taxpayer_params)
   end
 
-
-
   private
   def cna_params
     params.require(:cna).permit(:fl_charge)

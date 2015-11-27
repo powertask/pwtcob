@@ -33,8 +33,8 @@ Rails.application.routes.draw do
   get 'home/:cod/set_tickets' => 'home#set_tickets', as: :set_tickets
   get 'home/:cod/get_taxpayer' => 'home#get_taxpayer', as: :get_taxpayer
   patch 'home/:cod/set_taxpayer' => 'home#set_taxpayer', as: :set_taxpayer
-  
   post 'contract/:cod/create_contract' => 'contracts#create_contract', as: :create_contract
+  get 'contract/:cod/contract_pdf' => 'contracts#contract_pdf', as: :contract_pdf
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

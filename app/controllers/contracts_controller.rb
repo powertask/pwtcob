@@ -74,6 +74,21 @@ class ContractsController < ApplicationController
 
   end
 
+  def contract_pdf
+    unit = Unit.find(session[:unit_id])
+    contract = Contract.find(params[:cod])
+    tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:cod])
+    cnas = Cna.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('year')
+
+    respond_to do |format|
+      format.pdf do
+      pdf = ContractPdf.new(unit, contract, tickets, cnas, view_context)
+      send_data pdf.render, filename: contract.taxpayer.origin_code.to_s << " - " << contract.taxpayer.name,
+                            type: "application/pdf",
+                            disposition: "attachment"
+      end
+    end
+  end
 
   private
   def contract_params
