@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125034235) do
+ActiveRecord::Schema.define(version: 20151128003013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,17 @@ ActiveRecord::Schema.define(version: 20151125034235) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "indices", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.integer  "month"
+    t.integer  "year"
+    t.decimal  "idx",        precision: 5, scale: 4
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "indices", ["unit_id"], name: "index_indices_on_unit_id", using: :btree
+
   create_table "lawyers", force: :cascade do |t|
     t.string   "name"
     t.string   "lawyer_code"
@@ -224,6 +235,7 @@ ActiveRecord::Schema.define(version: 20151125034235) do
 
   add_foreign_key "areas", "taxpayers"
   add_foreign_key "areas", "units"
+  add_foreign_key "indices", "units"
   add_foreign_key "lawyers", "units"
   add_foreign_key "taxpayers", "clients"
 end
