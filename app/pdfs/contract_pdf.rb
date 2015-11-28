@@ -48,7 +48,7 @@ class ContractPdf < Prawn::Document
     move_down 10
     text "<b><u><i>PRIMEIRA</b></u></i> - <b>#{@contract.unit_amount.real_contabil}</b> - referente à taxa administrativa, com vencimento em #{@tickets.first.due.to_date.strftime('%d/%m/%Y')} (a ser paga através de boleto bancário).", size: 9.5, :inline_format => true
     move_down 10
-    text "<b><u><i>O RESTANTE DE</b></u></i> <b>#{@contract.client_amount.real_contabil}</b>, a ser pago em #{@contract.client_ticket_quantity} parcela(s) com vencimento(s) em #{ticket_due}.", size: 9.5, :inline_format => true
+    text "<b><u><i>O RESTANTE DE</b></u></i> <b>#{@contract.client_amount.real_contabil}</b>, a ser pago em #{@contract.client_ticket_quantity} parcela(s) com vencimento(s) em#{ticket_due}.", size: 9.5, :inline_format => true
     move_down 10
     stroke_horizontal_rule
     move_down 5
@@ -86,7 +86,7 @@ class ContractPdf < Prawn::Document
   end
 
   def ticket_due
-    @tickets.collect{ |i| i.due.to_date.to_s_br}.join(", ")
+    @tickets.collect{ |i| i.due.to_date.to_s_br if i.client?}.join(", ")
   end
 
   def contract_years

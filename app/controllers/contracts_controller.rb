@@ -77,7 +77,7 @@ class ContractsController < ApplicationController
   def contract_pdf
     unit = Unit.find(session[:unit_id])
     contract = Contract.find(params[:cod])
-    tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:cod])
+    tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('due')
     cnas = Cna.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('year')
 
     respond_to do |format|
