@@ -1,39 +1,37 @@
 module ApplicationHelper
 
-  def calc_meses_atraso(cna)
-  	date_base = Date.new(cna.year, 5, 22)
-  	date_today = Date.today()
-  	(date_today.year * 12 + date_today.month) - (date_base.year * 12 + date_base.month)
+  def calc_meses_atraso(_dt_ini, _dt_end)
+    (_dt_end.year * 12 + _dt_end.month) - (_dt_ini.year * 12 + _dt_ini.month)
   end
 
-  def calc_valor_corrigido_INPC 
 
+  def calc_valor_corrigido_INPC(_dt_ini, _dt_end, _value) 
+    190.88
   end
 
-  def calc_multa(cna)
-  	months = calc_meses_atraso(cna)
-    @value = cna.amount
-
-    (1..months).map{|x|@value = @value + (x == 1 ? @value * 0.1 : @value * 0.02)}.last
-    @value.round(2)
+  def calc_multa(_dt_ini, _dt_end, _value)
+  	months = calc_meses_atraso(_dt_ini, _dt_end)
+    _perc = (10 + ((months - 1) * 2)).round(2)
+    _new_value = (_value * (_perc / 100)).round(2)
   end
 
-  def calc_juros(cna)
-    months = calc_meses_atraso(cna.year)
-    @value = cna.amount
-
-    (1..months).map{|x|@value = @value + ( @value * 0.01 )}.last
-
-    @value.round(2)
+  def calc_juros(_dt_ini, _dt_end, _value)
+    months = calc_meses_atraso(_dt_ini, _dt_end)
+    _perc = (months * 0.01).round(2)
+    _new_value = (_value * _perc).round(2)
   end
 
   def calc_cna(cna)
-    amount = cna.amount
+    _dt_ini = Date.new(cna.year,5,22)
+    _dt_end = Date.today
+    _value = cna.amount
+    
     charge = 0
 
-    multa = calc_multa(cna)
-    juros = calc_juros(cna)
-    total_cna = amount + multa + juros
+    _correcao = calc_valor_corrigido_INPC(_dt_ini, _dt_end, _value)
+    _multa = calc_multa(_dt_ini, _dt_end, _correcao)
+    _juros = calc_juros(_dt_ini, _dt_end, _correcao)
+    total_cna = _correcao + _multa + _juros
 
     charge = charge + total_cna if cna.fl_charge
 
