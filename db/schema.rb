@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128030027) do
+ActiveRecord::Schema.define(version: 20151130232117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,17 @@ ActiveRecord::Schema.define(version: 20151128030027) do
 
   add_index "indices", ["unit_id"], name: "index_indices_on_unit_id", using: :btree
 
+  create_table "inpcs", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.integer  "month"
+    t.integer  "year"
+    t.decimal  "idx",        precision: 10, scale: 4
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "inpcs", ["unit_id"], name: "index_inpcs_on_unit_id", using: :btree
+
   create_table "lawyers", force: :cascade do |t|
     t.string   "name"
     t.string   "lawyer_code"
@@ -188,37 +199,6 @@ ActiveRecord::Schema.define(version: 20151128030027) do
 
   add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
 
-  create_table "temp_cna", force: :cascade do |t|
-    t.integer "cod_proprietario"
-    t.string  "num_uf"
-    t.string  "exercicio"
-    t.integer "sequencial"
-    t.string  "nom_proprietario"
-    t.string  "tip_pessoa"
-    t.string  "endereco"
-    t.string  "bairro"
-    t.string  "cep"
-    t.string  "nom_municipio"
-    t.string  "sigla_uf"
-    t.string  "val_cna"
-    t.string  "val_multa_cna"
-    t.string  "val_juros_cna"
-    t.string  "total"
-    t.date    "dat_vencimento"
-    t.string  "tip_cobranca"
-  end
-
-  create_table "temp_indices", force: :cascade do |t|
-    t.integer "year"
-    t.integer "month"
-    t.decimal "idx_c", precision: 8, scale: 4
-    t.decimal "idx_d", precision: 8, scale: 4
-    t.decimal "idx_e", precision: 8, scale: 4
-    t.decimal "idx_f", precision: 8, scale: 4
-    t.decimal "idx_g", precision: 8, scale: 4
-    t.decimal "idx_h", precision: 8, scale: 4
-  end
-
   create_table "tickets", force: :cascade do |t|
     t.integer  "unit_id"
     t.integer  "contract_id"
@@ -268,6 +248,7 @@ ActiveRecord::Schema.define(version: 20151128030027) do
   add_foreign_key "areas", "taxpayers"
   add_foreign_key "areas", "units"
   add_foreign_key "indices", "units"
+  add_foreign_key "inpcs", "units"
   add_foreign_key "lawyers", "units"
   add_foreign_key "taxpayers", "clients"
 end
