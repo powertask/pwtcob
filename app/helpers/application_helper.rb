@@ -6,7 +6,16 @@ module ApplicationHelper
 
 
   def calc_valor_corrigido_INPC(_dt_ini, _dt_end, _value) 
-    190.88
+    _dt_ini_month = _dt_ini.month()
+    _dt_ini_year = _dt_ini.year()
+
+    _dt_end_month = _dt_end.month()    
+    _dt_end_year = _dt_end.year()
+
+
+
+    inpc = Inpc.where('year between ? AND ? AND unit_id = ?', _dt_ini_year, _dt_end_year, 1)
+
   end
 
   def calc_multa(_dt_ini, _dt_end, _value)

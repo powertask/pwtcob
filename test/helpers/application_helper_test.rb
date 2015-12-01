@@ -21,13 +21,9 @@ class ApplicationHelperTest < ActiveSupport::TestCase
   end
 
   test 'calc_multa' do
-  	_dt_ini = Date.new(2010,5,22)
-  	_dt_end = Date.new(2015,11,22)
-  	_value = 190.88
+  	_value = calc_multa(Date.new(2010,5,22), Date.new(2015,11,22), 190.88)
 
-  	_new_value = calc_multa(_dt_ini, _dt_end, _value)
-
-  	assert_equal 267.23, _new_value
+  	assert_equal 267.23, _value
   end
 
   test 'calc_juros' do
