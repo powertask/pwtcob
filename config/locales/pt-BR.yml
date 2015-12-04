@@ -26,7 +26,7 @@ pt-BR:
   status: Situação
   stage: Tipo cobrança
   lawyer: Judicial
-  normal: Extra Judicial
+  normal: Extrajudicial
   not_pay: Em aberto
   pay: Pago
   edit: Editar
@@ -104,7 +104,7 @@ pt-BR:
       pay: Pago
       not_pay: Em Aberto
     stage:
-      normal: Extra-Judicial
+      normal: Extrajudicial
       lawyer: Judicial
 
   city:
