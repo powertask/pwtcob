@@ -1,5 +1,6 @@
 <div class='title_tools'>
 	<a class="btn btn-large btn-warning" <%= link_to(t('contract.index'), contracts_path) %> </a>
+  <a class="btn btn-large btn-warning" <%= link_to t('contract.print_transaction_pdf'), :action => "contract_transaction_pdf", :cod => @contract.id, :format => "pdf" %> </a>
   <a class="btn btn-large btn-warning" <%= link_to t('contract.print_pdf'), :action => "contract_pdf", :cod => @contract.id, :format => "pdf" %> </a>
 </div>
 

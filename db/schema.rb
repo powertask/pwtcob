@@ -200,6 +200,37 @@ ActiveRecord::Schema.define(version: 20151201003026) do
 
   add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
 
+  create_table "temp_cna", force: :cascade do |t|
+    t.integer "cod_proprietario"
+    t.string  "num_uf"
+    t.string  "exercicio"
+    t.integer "sequencial"
+    t.string  "nom_proprietario"
+    t.string  "tip_pessoa"
+    t.string  "endereco"
+    t.string  "bairro"
+    t.string  "cep"
+    t.string  "nom_municipio"
+    t.string  "sigla_uf"
+    t.string  "val_cna"
+    t.string  "val_multa_cna"
+    t.string  "val_juros_cna"
+    t.string  "total"
+    t.date    "dat_vencimento"
+    t.string  "tip_cobranca"
+  end
+
+  create_table "temp_indices", force: :cascade do |t|
+    t.integer "year"
+    t.integer "month"
+    t.decimal "idx_c", precision: 8, scale: 4
+    t.decimal "idx_d", precision: 8, scale: 4
+    t.decimal "idx_e", precision: 8, scale: 4
+    t.decimal "idx_f", precision: 8, scale: 4
+    t.decimal "idx_g", precision: 8, scale: 4
+    t.decimal "idx_h", precision: 8, scale: 4
+  end
+
   create_table "tickets", force: :cascade do |t|
     t.integer  "unit_id"
     t.integer  "contract_id"

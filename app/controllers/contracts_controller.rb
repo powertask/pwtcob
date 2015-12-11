@@ -90,6 +90,22 @@ class ContractsController < ApplicationController
     end
   end
 
+  def contract_transaction_pdf
+    unit = Unit.find(session[:unit_id])
+    contract = Contract.find(params[:cod])
+    tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('due')
+    cnas = Cna.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('year')
+
+    respond_to do |format|
+      format.pdf do
+      pdf = ContractTransactionPdf.new(unit, contract, tickets, cnas, view_context)
+      send_data pdf.render, filename: contract.taxpayer.name << " - Termo de Acordo",
+                            type: "application/pdf",
+                            disposition: "attachment"
+      end
+    end
+  end
+
   private
   def contract_params
     params.require(:contract).permit( :unit_id, :unit_ticket_quantity, :client_ticket_quantity )

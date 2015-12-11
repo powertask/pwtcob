@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   patch 'home/:cod/set_taxpayer' => 'home#set_taxpayer', as: :set_taxpayer
   post 'contract/:cod/create_contract' => 'contracts#create_contract', as: :create_contract
   get 'contract/:cod/contract_pdf' => 'contracts#contract_pdf', as: :contract_pdf
+  get 'contract/:cod/contract_transaction_pdf' => 'contracts#contract_transaction_pdf', as: :contract_transaction_pdf
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -126,6 +126,7 @@ pt-BR:
     contract_date: Data do Contrato
     taxpayer: Contribuinte
     print_pdf: Termo em PDF
+    print_transaction_pdf: Termo de Transação
 
   client:
     title: Cadastro de Federações
