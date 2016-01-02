@@ -37,14 +37,14 @@
           <td><%= cna.nr_document %> </td>
           <td><%= cna.due_at.to_date.to_s_br %> </td>
           <td><%= cna.amount %> </td>
-          <td><%= calc_meses_atraso(cna) %> </td>
-          <td><%= calc_multa(cna).real %> </td>
-          <td><%= calc_juros(cna).real %> </td>
+          <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
+          <td><%= calc_multa(cna, nil, nil).real %> </td>
+          <td><%= calc_juros(cna, nil, nil).real %> </td>
           <td> 
             <% if cna.fl_charge %>
-              <span class="label label-success"><%= calc_cna(cna).real %></span>
+              <span class="label label-success"><%= calc_cna(cna, nil, nil).real %></span>
             <% else %>
-              <%= calc_cna(cna).real %>
+              <%= calc_cna(cna, nil, nil).real %>
             <% end %>
           </td>
           <td><%= t(cna.stage) %> </td>
