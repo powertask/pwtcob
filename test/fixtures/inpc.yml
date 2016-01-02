@@ -1,0 +1,71 @@
+2010_05: {unit_id: 1, year: 2010, month: 5,  idx: 0.43  , idx_date: 2010-5-1}
+2010_06: {unit_id: 1, year: 2010, month: 6,  idx: -0.11 , idx_date: 2010-6-1}
+2010_07: {unit_id: 1, year: 2010, month: 7,  idx: -0.07 , idx_date: 2010-7-1}
+2010_08: {unit_id: 1, year: 2010, month: 8,  idx: -0.07 , idx_date: 2010-8-1}
+2010_09: {unit_id: 1, year: 2010, month: 9,  idx: 0.54  , idx_date: 2010-9-1}
+2010_10: {unit_id: 1, year: 2010, month: 10, idx: 0.92  , idx_date: 2010-10-1}
+2010_11: {unit_id: 1, year: 2010, month: 11, idx: 1.03  , idx_date: 2010-11-1}
+2010_12: {unit_id: 1, year: 2010, month: 12, idx: 0.60  , idx_date: 2010-12-1}
+
+2011_01: {unit_id: 1, year: 2011, month: 1,  idx: 0.94 , idx_date: 2011-1-1 }
+2011_02: {unit_id: 1, year: 2011, month: 2,  idx: 0.54 , idx_date: 2011-2-1 }
+2011_03: {unit_id: 1, year: 2011, month: 3,  idx: 0.66 , idx_date: 2011-3-1 }
+2011_04: {unit_id: 1, year: 2011, month: 4,  idx: 0.72 , idx_date: 2011-4-1 }
+2011_05: {unit_id: 1, year: 2011, month: 5,  idx: 0.57 , idx_date: 2011-5-1 }
+2011_06: {unit_id: 1, year: 2011, month: 6,  idx: 0.22 , idx_date: 2011-6-1 }
+2011_07: {unit_id: 1, year: 2011, month: 7,  idx: 0.00 , idx_date: 2011-7-1 }
+2011_08: {unit_id: 1, year: 2011, month: 8,  idx: 0.42 , idx_date: 2011-8-1 }
+2011_09: {unit_id: 1, year: 2011, month: 9,  idx: 0.45 , idx_date: 2011-9-1 }
+2011_10: {unit_id: 1, year: 2011, month: 10, idx: 0.32 , idx_date: 2011-10-1 }
+2011_11: {unit_id: 1, year: 2011, month: 11, idx: 0.57 , idx_date: 2011-11-1 }
+2011_12: {unit_id: 1, year: 2011, month: 12, idx: 0.51 , idx_date: 2011-12-1}
+
+2012_01: {unit_id: 1, year: 2012, month: 1,  idx: 0.51, idx_date: 2012-1-1 }
+2012_02: {unit_id: 1, year: 2012, month: 2,  idx: 0.39, idx_date: 2012-2-1  }
+2012_03: {unit_id: 1, year: 2012, month: 3,  idx: 0.18, idx_date: 2012-3-1  }
+2012_04: {unit_id: 1, year: 2012, month: 4,  idx: 0.64, idx_date: 2012-4-1  }
+2012_05: {unit_id: 1, year: 2012, month: 5,  idx: 0.55, idx_date: 2012-5-1  }
+2012_06: {unit_id: 1, year: 2012, month: 6,  idx: 0.26, idx_date: 2012-6-1  }
+2012_07: {unit_id: 1, year: 2012, month: 7,  idx: 0.43, idx_date: 2012-7-1  }
+2012_08: {unit_id: 1, year: 2012, month: 8,  idx: 0.45, idx_date: 2012-8-1  }
+2012_09: {unit_id: 1, year: 2012, month: 9,  idx: 0.63, idx_date: 2012-9-1  }
+2012_10: {unit_id: 1, year: 2012, month: 10, idx: 0.71, idx_date: 2012-10-1  }
+2012_11: {unit_id: 1, year: 2012, month: 11, idx: 0.54, idx_date: 2012-11-1  }
+2012_12: {unit_id: 1, year: 2012, month: 12, idx: 0.74, idx_date: 2012-12-1  }
+
+2013_01: {unit_id: 1, year: 2013, month: 1,  idx: 0.92 , idx_date: 2013-1-1 }
+2013_02: {unit_id: 1, year: 2013, month: 2,  idx: 0.52 , idx_date: 2013-2-1 }
+2013_03: {unit_id: 1, year: 2013, month: 3,  idx: 0.60 , idx_date: 2013-3-1 }
+2013_04: {unit_id: 1, year: 2013, month: 4,  idx: 0.59 , idx_date: 2013-4-1 }
+2013_05: {unit_id: 1, year: 2013, month: 5,  idx: 0.35 , idx_date: 2013-5-1 }
+2013_06: {unit_id: 1, year: 2013, month: 6,  idx: 0.28 , idx_date: 2013-6-1 }
+2013_07: {unit_id: 1, year: 2013, month: 7,  idx: -0.13, idx_date: 2013-7-1 }
+2013_08: {unit_id: 1, year: 2013, month: 8,  idx: 0.16 , idx_date: 2013-8-1 }
+2013_09: {unit_id: 1, year: 2013, month: 9,  idx: 0.27 , idx_date: 2013-9-1 }
+2013_10: {unit_id: 1, year: 2013, month: 10, idx: 0.61 , idx_date: 2013-10-1 }
+2013_11: {unit_id: 1, year: 2013, month: 11, idx: 0.54 , idx_date: 2013-11-1 }
+2013_12: {unit_id: 1, year: 2013, month: 12, idx: 0.72 , idx_date: 2013-12-1 }
+
+2014_01: {unit_id: 1, year: 2014, month: 1,  idx: 0.63 , idx_date: 2014-1-1}
+2014_02: {unit_id: 1, year: 2014, month: 2,  idx: 0.64 , idx_date: 2014-2-1}
+2014_03: {unit_id: 1, year: 2014, month: 3,  idx: 0.82 , idx_date: 2014-3-1}
+2014_04: {unit_id: 1, year: 2014, month: 4,  idx: 0.78 , idx_date: 2014-4-1}
+2014_05: {unit_id: 1, year: 2014, month: 5,  idx: 0.60 , idx_date: 2014-5-1}
+2014_06: {unit_id: 1, year: 2014, month: 6,  idx: 0.26 , idx_date: 2014-6-1}
+2014_07: {unit_id: 1, year: 2014, month: 7,  idx: 0.13 , idx_date: 2014-7-1}
+2014_08: {unit_id: 1, year: 2014, month: 8,  idx: 0.18 , idx_date: 2014-8-1}
+2014_09: {unit_id: 1, year: 2014, month: 9,  idx: 0.49 , idx_date: 2014-9-1}
+2014_10: {unit_id: 1, year: 2014, month: 10, idx: 0.38 , idx_date: 2014-10-1}
+2014_11: {unit_id: 1, year: 2014, month: 11, idx: 0.53 , idx_date: 2014-11-1}
+2014_12: {unit_id: 1, year: 2014, month: 12, idx: 0.62 , idx_date: 2014-12-1}
+
+2015_01: {unit_id: 1, year: 2015, month: 1,  idx: 1.48 , idx_date: 2015-1-1}
+2015_02: {unit_id: 1, year: 2015, month: 2,  idx: 1.16 , idx_date: 2015-2-1}
+2015_03: {unit_id: 1, year: 2015, month: 3,  idx: 1.51 , idx_date: 2015-3-1}
+2015_04: {unit_id: 1, year: 2015, month: 4,  idx: 0.71 , idx_date: 2015-4-1}
+2015_05: {unit_id: 1, year: 2015, month: 5,  idx: 0.99 , idx_date: 2015-5-1}
+2015_06: {unit_id: 1, year: 2015, month: 6,  idx: 0.77 , idx_date: 2015-6-1}
+2015_07: {unit_id: 1, year: 2015, month: 7,  idx: 0.58 , idx_date: 2015-7-1}
+2015_08: {unit_id: 1, year: 2015, month: 8,  idx: 0.25 , idx_date: 2015-8-1}
+2015_09: {unit_id: 1, year: 2015, month: 9,  idx: 0.51 , idx_date: 2015-9-1}
+2015_10: {unit_id: 1, year: 2015, month: 10, idx: 0.77 , idx_date: 2015-10-1}

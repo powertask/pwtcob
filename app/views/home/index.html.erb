@@ -140,10 +140,10 @@
                   <td><%= cna.nr_document %> </td>
                   <td><%= cna.due_at.to_date.to_s_br %> </td>
                   <td><%= cna.amount.real %> </td>
-                  <td><%= calc_meses_atraso(cna) %> </td>
-                  <td><%= calc_multa(cna).real %> </td>
-                  <td><%= calc_juros(cna).real %> </td>
-                  <td><%= calc_cna(cna).real %> </td>
+                  <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
+                  <td><%= calc_multa(cna, nil, nil).real %> </td>
+                  <td><%= calc_juros(cna, nil, nil).real %> </td>
+                  <td><%= calc_cna(cna, nil, nil).real %> </td>
                   <td><%= t('cna.stage.'<<cna.stage) %> </td>
                   <td><%= t('cna.status.'<<cna.status) %> </td>
                   <td><%= cna.contract_id %> </td>

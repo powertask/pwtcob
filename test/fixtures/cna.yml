@@ -1,2 +1,3 @@
-one: {id: 1, unit_id: 1, taxpayer_id: 1, year: 2010, amount: 134.09}
+one: {id: 1, unit_id: 1, taxpayer_id: 1, year: 2015, amount: 134.09}
+two: {id: 2, unit_id: 1, taxpayer_id: 1, year: 2010, amount: 134.09}
 # column: value
