@@ -10,10 +10,21 @@
 
   def filter_name
     if params[:name].present?
+
+      if params[:name].size <= 2
+        flash[:alert] = "Nome do contribuinte deve conter ao menos 3 letras."
+        redirect_to :root and return
+      end 
+
       @taxpayers = Taxpayer
-                      .where("unit_id = ? AND lower(name) like ?", session[:unit_id], params[:name].downcase << "%")
+                      .where("unit_id = ? AND lower(name) like ?", session[:unit_id], "%"<< params[:name].downcase << "%")
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
+
+      if @taxpayers.count == 0
+        flash[:alert] = "Não encontrado contribuinte."
+        redirect_to :root and return
+      end 
     
     elsif params[:cpf].present?
       @taxpayers = Taxpayer
