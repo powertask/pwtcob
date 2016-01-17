@@ -179,6 +179,7 @@
               <th>Valor GMA</th>
               <th>Parcelas Federação</th>
               <th>Valor Federação</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -191,6 +192,7 @@
                   <td><%= contract.unit_amount.real %> </td>
                   <td><%= contract.client_ticket_quantity %> </td>
                   <td><%= contract.client_amount.real %> </td>
+                  <td><%= link_to(t('deal.delete_contract'), delete_contract_path(contract.id), class: "btn btn-xs btn-danger", remote: false ) %></td>
                 </tr>
               <% end %>
             <% end %>

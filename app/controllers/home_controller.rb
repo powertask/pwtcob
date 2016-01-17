@@ -47,7 +47,7 @@
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
     @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
     @contracts = Contract.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
-    @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
+    @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
     
     session[:value_cna] = 0
     session[:total_multa] = 0

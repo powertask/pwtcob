@@ -3,7 +3,7 @@ class Area < ActiveRecord::Base
   
 
   def self.list(unit)
-    self.where("unit_id = ?", unit).order("name ASC")
+    self.where("unit_id = ?", unit)
   end
   
 end

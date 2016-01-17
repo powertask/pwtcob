@@ -91,6 +91,7 @@ pt-BR:
     value_charge: "Valor a Ser Cobrado: "
     recalculate: Recalcular Parcelas
     create_contract: Gravar Parcelamento e Gerar Termo
+    delete_contract: Deletar Termo
 
   cna:
     edit: Editar Dados da CNA

@@ -4,6 +4,8 @@ class ContractsController < ApplicationController
   respond_to :html
   layout 'window'
 
+  require 'pry'
+
   def index
     @contracts = index_class(Contract, {order: false})
     respond_with @contracts, :layout => 'application'
@@ -73,6 +75,35 @@ class ContractsController < ApplicationController
     respond_with @contract, notice: 'Contrato criado com sucesso.'
 
   end
+
+  def delete_contract
+    contract = params[:contract]
+
+    contract = Contract.find(contract)
+    cnas     = Cna.where('contract_id = ?', contract)
+    tickets  = Ticket.where('contract_id = ?', contract)
+
+
+    ActiveRecord::Base.transaction do
+
+      cnas.each do  |cna|
+        cna.contract_id = nil
+        cna.not_pay!
+        cna.save!
+      end
+
+      tickets.each do  |ticket|
+        ticket.destroy
+      end
+
+      contract.destroy
+
+    end
+
+    respond_with @contract, notice: 'Contrato deletado com sucesso.'
+
+  end
+
 
   def contract_pdf
     unit = Unit.find(session[:unit_id])
