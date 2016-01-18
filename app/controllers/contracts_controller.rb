@@ -4,8 +4,6 @@ class ContractsController < ApplicationController
   respond_to :html
   layout 'window'
 
-  require 'pry'
-
   def index
     @contracts = index_class(Contract, {order: false})
     respond_with @contracts, :layout => 'application'
