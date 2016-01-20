@@ -1,6 +1,7 @@
 <%= simple_form_for(@taxpayer) do |f| %>
 	<div class='section'>
     <%= f.input :origin_code, :label => t('taxpayer.origin_code'), input_html:{:class => 'form-control'} %>
+    <%= f.association :employee, :collection => Employee.list(session[:unit_id]), :prompt => t('choose'), :label => t('employee.name') %>
     <%= f.association :client, :collection => Client.list(session[:unit_id]), :prompt => t('choose'), :label => t('client.name') %>
     <%= f.input :name, :label => t('taxpayer.name'), input_html:{:class => 'form-control'} %>
     <%= f.input :cpf, :label => t('cpf'), input_html:{:class => 'form-control'} %>

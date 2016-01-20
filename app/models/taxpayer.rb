@@ -5,6 +5,7 @@ class Taxpayer < ActiveRecord::Base
   belongs_to :client
   belongs_to :unit
   belongs_to :city
+  belongs_to :employee
 
   has_many :tasks
   has_many :cnas
@@ -15,7 +16,7 @@ class Taxpayer < ActiveRecord::Base
   usar_como_cnpj :cnpj
 
   def self.list(unit)
-    self.where("unit_id = ?", unit).order("name ASC")
+    self.where("unit_id = ? and employee_id = ?", unit, session[:employee_id]).order("name ASC")
   end
   
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201003026) do
+ActiveRecord::Schema.define(version: 20160114201857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,9 +196,11 @@ ActiveRecord::Schema.define(version: 20151201003026) do
     t.integer  "origin_code"
     t.string   "phone"
     t.integer  "city_id"
+    t.integer  "employee_id"
   end
 
   add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
+  add_index "taxpayers", ["employee_id"], name: "index_taxpayers_on_employee_id", using: :btree
 
   create_table "temp_cna", force: :cascade do |t|
     t.integer "cod_proprietario"
@@ -272,9 +274,11 @@ ActiveRecord::Schema.define(version: 20151201003026) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "profile"
+    t.integer  "employee_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["employee_id"], name: "index_users_on_employee_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "areas", "taxpayers"
@@ -283,4 +287,6 @@ ActiveRecord::Schema.define(version: 20151201003026) do
   add_foreign_key "inpcs", "units"
   add_foreign_key "lawyers", "units"
   add_foreign_key "taxpayers", "clients"
+  add_foreign_key "taxpayers", "employees"
+  add_foreign_key "users", "employees"
 end

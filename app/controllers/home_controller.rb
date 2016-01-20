@@ -6,6 +6,7 @@
   def index
   	session[:unit_id] = current_user.unit.id
   	session[:unit_name] = current_user.unit.name
+    session[:employee_id] = current_user.employee_id
   end
 
   def filter_name
@@ -17,7 +18,7 @@
       end 
 
       @taxpayers = Taxpayer
-                      .where("unit_id = ? AND lower(name) like ?", session[:unit_id], "%"<< params[:name].downcase << "%")
+                      .where("unit_id = ? AND lower(name) like ? and employee_id = ?", session[:unit_id], "%"<< params[:name].downcase << "%", session[:employee_id])
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
 
@@ -28,13 +29,13 @@
     
     elsif params[:cpf].present?
       @taxpayers = Taxpayer
-                      .where("unit_id = ? AND cpf = ?", session[:unit_id], params[:cpf])
+                      .where("unit_id = ? AND cpf = ? and employee_id = ?", session[:unit_id], params[:cpf], session[:employee_id])
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
 
     elsif params[:cna].present?
       @taxpayers = Taxpayer
-                      .where("unit_id = ? AND origin_code = ?", session[:unit_id], params[:cna])
+                      .where("unit_id = ? AND origin_code = ? and employee_id", session[:unit_id], params[:cna], session[:employee_id])
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
     end

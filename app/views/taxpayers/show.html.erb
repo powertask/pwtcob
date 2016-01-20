@@ -7,6 +7,7 @@
 
 <div class='section'>
 	<div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>	<%= @taxpayer.origin_code %>
+	<div class='label1 top req'> <%=t("employee.name") %>: </div>	<%= @taxpayer.employee.name if @taxpayer.employee.present?%>
 	<div class='label1 top req'> <%=t("client.name") %>: </div>				<%= @taxpayer.client.name %>
 	<div class='label1 top req'> <%=t("taxpayer.name") %>: </div>			<%= @taxpayer.name %>
 	<div class='label1 top req'> <%=t("cnpj") %>: </div> 					<%= @taxpayer.cpf %>
