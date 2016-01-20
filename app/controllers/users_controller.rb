@@ -9,11 +9,6 @@ class UsersController < ApplicationController
     respond_with @users, :layout => 'application'
   end
 
-  def new
-    super do |resource|
-      BackgroundWorker.trigger(resource)
-    end
-  end
 
   def edit
     @user = User.find(params[:id])
