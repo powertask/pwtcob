@@ -17,10 +17,17 @@
         redirect_to :root and return
       end 
 
-      @taxpayers = Taxpayer
+      if current_user.admin?
+        @taxpayers = Taxpayer
+                      .where("unit_id = ? AND lower(name) like ?", session[:unit_id], "%"<< params[:name].downcase << "%")
+                      .paginate(:page => params[:page], :per_page => 10)
+                      .order('name ASC')
+        else
+          @taxpayers = Taxpayer
                       .where("unit_id = ? AND lower(name) like ? and employee_id = ?", session[:unit_id], "%"<< params[:name].downcase << "%", session[:employee_id])
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
+      end
 
       if @taxpayers.count == 0
         flash[:alert] = "Não encontrado contribuinte."

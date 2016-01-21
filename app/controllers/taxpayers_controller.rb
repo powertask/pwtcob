@@ -6,6 +6,7 @@ class TaxpayersController < ApplicationController
 
   def index
     @taxpayers = index_class(Taxpayer)
+    @taxpayers = @taxpayers.where('employee_id = ?', session[:employee_id]) if current_user.user?
     respond_with @taxpayers, :layout => 'application'
   end
 

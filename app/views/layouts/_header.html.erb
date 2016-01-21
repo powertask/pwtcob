@@ -12,7 +12,7 @@
       	<ul class="nav navbar-nav navbar-right">
           <li>
             <a>
-              <strong><%= current_user.email %> ( <%= t(current_user.profile) %> )</strong>
+              <strong><%= current_user.email %> ( <%= current_user.admin? ? 'ADMIN' : 'COLABORADOR' %> )</strong>
             </a>
           </li>
       	  <li class='active'><%= link_to t("logout", default: "Logout"), destroy_user_session_path, method: :delete %></li>

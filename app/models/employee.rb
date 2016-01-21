@@ -1,6 +1,8 @@
 class Employee < ActiveRecord::Base
   belongs_to :unit
-  
+
+  has_many :taxpayers
+    
   validates_presence_of :name, :unit_id
   validates_format_of :phone, :with => /\A^[\d]+$\Z/, :message => " - Deve ser um número"
 
