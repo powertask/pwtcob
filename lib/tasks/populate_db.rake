@@ -40,9 +40,9 @@ namespace :populate_db do
 
 	desc "allocate employees"
 	task :allocate_employess => :environment do
-		cnas = Cna.select("taxpayer_id, sum(amount)").where("unit_id = ?", 1).group("taxpayer_id").order(2)
+		cnas = Cna.find_by_sql('select taxpayer_id, count(*), sum(amount) from cnas group by taxpayer_id order by 3 DESC')
 		count_employees = Employee.count
-		count_limit = 1
+		count_limit = 2
 		cnas.each do |c|
 			#taxpayer = Taxpayer.where('unit_id = ? and id = ?', 1, c.taxpayer_id)
 			taxpayer = Taxpayer.find_by(unit_id: 1, id: c.taxpayer_id)
@@ -52,7 +52,7 @@ namespace :populate_db do
 					taxpayer.employee_id = employee.id
 					taxpayer.save!
 					count_limit = count_limit + 1
-					count_limit = 1 if (count_limit > count_employees)
+					count_limit = 2 if (count_limit > count_employees)
 				end
 			end
 		end
