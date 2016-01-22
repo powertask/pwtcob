@@ -41,10 +41,17 @@
                       .order('name ASC')
 
     elsif params[:cna].present?
-      @taxpayers = Taxpayer
-                      .where("unit_id = ? AND origin_code = ? and employee_id", session[:unit_id], params[:cna], session[:employee_id])
+      if current_user.admin?
+        @taxpayers = Taxpayer
+                      .where("unit_id = ? AND origin_code = ?", session[:unit_id], params[:cna])
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
+      else
+        @taxpayers = Taxpayer
+                      .where("unit_id = ? AND origin_code = ? and employee_id = ?", session[:unit_id], params[:cna], session[:employee_id])
+                      .paginate(:page => params[:page], :per_page => 10)
+                      .order('name ASC')
+      end
     end
 
     render "index", :layout => 'application'
