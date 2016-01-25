@@ -17,7 +17,7 @@ namespace :populate_db do
 		User.create!(:password => 'TaianaCastilho', :email => 'taiana.castilho@gianellimartins.com.br', :password_confirmation => 'TaianaCastilho', :unit_id => 1, :profile => 1, :employee_id => 17)
 		User.create!(:password => 'AnaSilvia', :email => 'ana.gomes@gianellimartins.com.br', :password_confirmation => 'AnaSilvia', :unit_id => 1, :profile => 1, :employee_id => 18)
 		User.create!(:password => 'BrunaPires', :email => 'brunapires@gianellimartins.com.br', :password_confirmation => 'BrunaPires', :unit_id => 1, :profile => 1, :employee_id => 20)
-		User.create!(:password => 'Camila', :email => 'camila.molina@gianellimartins.com.br', :password_confirmation => 'Camila', :unit_id => 1, :profile => 1, :employee_id => 4)
+		User.create!(:password => 'CamilaMolina', :email => 'camila.molina@gianellimartins.com.br', :password_confirmation => 'CamilaMolina', :unit_id => 1, :profile => 1, :employee_id => 4)
 		User.create!(:password => 'DeniseBisotto', :email => 'denise.bisotto@gianellimartins.com.br', :password_confirmation => 'DeniseBisotto', :unit_id => 1, :profile => 1, :employee_id => 21)
 		User.create!(:password => 'IsabelCarboni', :email => 'isabel.carboni@gianellimartins.com.br', :password_confirmation => 'IsabelCarboni', :unit_id => 1, :profile => 1, :employee_id => 31)
 		User.create!(:password => 'LucindaOliveira', :email => 'lucinda.oliveira@gianellimartins.com.br', :password_confirmation => 'LucindaOliveira', :unit_id => 1, :profile => 1, :employee_id => 23)
@@ -27,23 +27,11 @@ namespace :populate_db do
 		User.create!(:password => 'SilvaneSchneider', :email => 'silvane.schneider@gianellimartins.com.br', :password_confirmation => 'SilvaneSchneider', :unit_id => 1, :profile => 1, :employee_id => 26)
     end
 
-	desc "update employee to users"
-	task :update_employee_to_users => :environment do
-		employees = Employee.where('unit_id = ? and email is not null', 1)
-		employees.each do |e|
-			user = User.find_by(unit_id: 1, email: e.email)
-			if user.present? 
-				user.employee_id = e.id
-				user.save!
-			end
-		end
-	end
-
 	desc "allocate employees"
 	task :allocate_employess => :environment do
 		cnas = Cna.find_by_sql('select taxpayer_id, count(*), sum(amount) from cnas group by taxpayer_id order by 3 DESC')
 		count_employees = Employee.count
-		count_limit = 2
+		count_limit = 1
 		cnas.each do |c|
 			#taxpayer = Taxpayer.where('unit_id = ? and id = ?', 1, c.taxpayer_id)
 			taxpayer = Taxpayer.find_by(unit_id: 1, id: c.taxpayer_id)
@@ -53,7 +41,7 @@ namespace :populate_db do
 					taxpayer.employee_id = employee.id
 					taxpayer.save!
 					count_limit = count_limit + 1
-					count_limit = 2 if (count_limit > count_employees)
+					count_limit = 1 if (count_limit > count_employees)
 				end
 			end
 		end
