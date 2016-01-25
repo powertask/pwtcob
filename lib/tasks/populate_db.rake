@@ -30,18 +30,20 @@ namespace :populate_db do
 	desc "allocate employees"
 	task :allocate_employess => :environment do
 		cnas = Cna.find_by_sql('select taxpayer_id, count(*), sum(amount) from cnas group by taxpayer_id order by 3 DESC')
-		count_employees = Employee.count
-		count_limit = 1
+		
+		employees = Employee.all
+		row = 0
+		
 		cnas.each do |c|
 			#taxpayer = Taxpayer.where('unit_id = ? and id = ?', 1, c.taxpayer_id)
 			taxpayer = Taxpayer.find_by(unit_id: 1, id: c.taxpayer_id)
 			if taxpayer.present?
-				employee = Employee.find(count_limit)
+				employee = employees[row]
 				if employee.present?
 					taxpayer.employee_id = employee.id
 					taxpayer.save!
-					count_limit = count_limit + 1
-					count_limit = 1 if (count_limit > count_employees)
+					row = row + 1
+					row = 0 if (row > 23)
 				end
 			end
 		end
