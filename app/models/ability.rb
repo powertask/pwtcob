@@ -8,6 +8,7 @@ class Ability
     can :manage, :all if user.admin?
 
     can :manage, Home if user.user?
+    can :manage, Taxpayer 
 
     # Define abilities for the passed in user here. For example:
     #
