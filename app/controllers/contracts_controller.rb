@@ -43,6 +43,8 @@ class ContractsController < ApplicationController
       @contract.client_ticket_quantity = session[:tickets].count - 1
       @contract.client_amount = total_charge
 
+      @contract.status = 0
+
       @contract.save!
 
       n = 0
@@ -70,7 +72,7 @@ class ContractsController < ApplicationController
       end
     end
 
-    respond_with @contract, notice: 'Contrato criado com sucesso.'
+    respond_with @contract, notice: 'Termo criado com sucesso.'
 
   end
 
@@ -90,15 +92,11 @@ class ContractsController < ApplicationController
         cna.save!
       end
 
-      tickets.each do  |ticket|
-        ticket.destroy
-      end
-
-      contract.destroy
+      contract.cancel!
 
     end
 
-    respond_with @contract, notice: 'Contrato deletado com sucesso.'
+    redirect_to(controller: 'contracts', action:'index')
 
   end
 

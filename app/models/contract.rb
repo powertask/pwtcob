@@ -8,6 +8,8 @@ class Contract < ActiveRecord::Base
   
   validates_presence_of :unit_id, :taxpayer_id
 
+	enum status: [:active, :cancel]
+
   def self.list(unit)
     self.where("unit_id = ?", unit)
   end

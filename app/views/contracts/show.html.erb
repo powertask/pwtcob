@@ -1,5 +1,8 @@
 <div class='title_tools'>
-	<a class="btn btn-large btn-warning" <%= link_to(t('contract.index'), contracts_path) %> </a>
+  <% if @contract.active? & current_user.admin? %>
+    <a class="btn btn-large btn-danger" <%= link_to(t('contract.delete'), delete_contract_path(@contract)) %> </a>
+  <% end %>
+  <a class="btn btn-large btn-warning" <%= link_to(t('contract.index'), contracts_path) %> </a>
   <a class="btn btn-large btn-warning" <%= link_to t('contract.print_pdf'), :action => "contract_transaction_pdf", :cod => @contract.id, :format => "pdf" %> </a>
 </div>
 
@@ -7,6 +10,7 @@
 
 <div class='section'>
   <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
+  <div class='label1 top req'> <%=t("status") %>: </div>          <%= t('contract.status.' << @contract.status) %>
   <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>          <%= @contract.contract_date.to_s_br %>
 	<div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>				        <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name %>
 	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>: </div>           <%= @contract.unit_amount.real %>

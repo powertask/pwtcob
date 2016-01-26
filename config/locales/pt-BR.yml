@@ -76,7 +76,7 @@ pt-BR:
     filter:
       name: Nome do Contribuinte
     contract:
-      title: Negociações Fechadas
+      title: Termos
     area:
       title: Áreas do Contribuinte
 
@@ -119,9 +119,10 @@ pt-BR:
     fl_charge: Liberar cobrança para contribuintes dessa cidade
 
   contract:
-    title: Contratos Negociados com Contribuintes
-    show: Detalhes do Contrato
-    index: Listar Todos Contratos
+    title: Termos Negociados com Contribuintes
+    show: Detalhes do Termo
+    index: Listar Todos Termos
+    delete: Cancelar Termo
     amount: "Valor - %{name}"
     unit_fee: "Percentual - %{name}"
     ticket_quantity: "Quantidade de Parcelas - %{name}" 
@@ -129,6 +130,9 @@ pt-BR:
     taxpayer: Contribuinte
     print_pdf: Termo em PDF
     print_transaction_pdf: Termo de Transação
+    status:
+      active: ATIVO
+      cancel: CANCELADO
 
   client:
     title: Cadastro de Federações

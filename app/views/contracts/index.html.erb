@@ -17,7 +17,7 @@
           <%= link_to(contract.taxpayer.name, contract_path(contract)) %>
           &bull;
           <tt><%= 'Data: '<<contract.contract_date.to_s_br %></tt>
-          <dt></dt>
+          <dt><%= contract.cancel? ? 'CANCELADO' : 'ATIVO' %> </dt>
         </div>
       </li>
     <% end %>

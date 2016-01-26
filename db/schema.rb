@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160117154953) do
+ActiveRecord::Schema.define(version: 20160126021648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20160117154953) do
     t.datetime "updated_at",             null: false
     t.date     "unit_due"
     t.date     "client_due"
+    t.integer  "status"
   end
 
   create_table "employees", force: :cascade do |t|
@@ -180,7 +181,6 @@ ActiveRecord::Schema.define(version: 20160117154953) do
   end
 
   create_table "taxpayer_phones", force: :cascade do |t|
-    t.integer  "unit_id"
     t.integer  "taxpayer_id"
     t.string   "phone"
     t.datetime "created_at",  null: false
@@ -188,7 +188,6 @@ ActiveRecord::Schema.define(version: 20160117154953) do
   end
 
   add_index "taxpayer_phones", ["taxpayer_id"], name: "index_taxpayer_phones_on_taxpayer_id", using: :btree
-  add_index "taxpayer_phones", ["unit_id"], name: "index_taxpayer_phones_on_unit_id", using: :btree
 
   create_table "taxpayers", force: :cascade do |t|
     t.string   "name"
@@ -267,7 +266,6 @@ ActiveRecord::Schema.define(version: 20160117154953) do
   add_foreign_key "inpcs", "units"
   add_foreign_key "lawyers", "units"
   add_foreign_key "taxpayer_phones", "taxpayers"
-  add_foreign_key "taxpayer_phones", "units"
   add_foreign_key "taxpayers", "clients"
   add_foreign_key "taxpayers", "employees"
   add_foreign_key "users", "employees"

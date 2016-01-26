@@ -174,12 +174,12 @@
           <thead>
             <tr>
               <th>Contrato</th>
+              <th>Status</th>
               <th>Data Contrato</th>
               <th>Parcelas GMA</th>
               <th>Valor GMA</th>
               <th>Parcelas Federação</th>
               <th>Valor Federação</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -187,12 +187,12 @@
               <% @contracts.each do |contract| %>
                 <tr>
                   <td><%= contract.id %> </td>
+                  <td><%= t('contract.status.' << contract.status) %> </td>
                   <td><%= contract.contract_date.to_s_br %> </td>
                   <td><%= contract.unit_ticket_quantity %> </td>
                   <td><%= contract.unit_amount.real %> </td>
                   <td><%= contract.client_ticket_quantity %> </td>
                   <td><%= contract.client_amount.real %> </td>
-                  <td><%= link_to(t('deal.delete_contract'), delete_contract_path(contract.id), class: "btn btn-xs btn-danger", remote: false ) %></td>
                 </tr>
               <% end %>
             <% end %>
