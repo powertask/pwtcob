@@ -9,19 +9,19 @@
 
 <% if @taxpayer.nil? %>
 
-<div class='subtitle'> <%= t('home.search.title') %> </div>
-<div class='section'>
-  <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
-    <div class='label1 top req'> <%= t("home.search.name") %>: </div>
-    <%= text_field_tag 'name', params[:name], :size => 80 %>
-    <div class='label1 top req'> <%= t('home.search.cpf') %>: </div>
-    <%= text_field_tag 'cpf', params[:cpf], :size => 20 %>
-    <div class='label1 top req'> <%= t('home.search.cna') %>: </div>
-    <%= text_field_tag 'cna', params[:cna], :size => 20 %>
-    <br>
-    <%= submit_tag t('menu.search') %> ou <%= link_to t('menu.clean'), root_path %>
-  <% end %>
-</div>
+  <div class='subtitle'> <%= t('home.search.title') %> </div>
+  <div class='section'>
+    <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
+      <div class='label1 top req'> <%= t("home.search.name") %>: </div>
+      <%= text_field_tag 'name', params[:name], :size => 80 %>
+      <div class='label1 top req'> <%= t('home.search.cpf') %>: </div>
+      <%= text_field_tag 'cpf', params[:cpf], :size => 20 %>
+      <div class='label1 top req'> <%= t('home.search.cna') %>: </div>
+      <%= text_field_tag 'cna', params[:cna], :size => 20 %>
+      <br>
+      <%= submit_tag t('menu.search') %> ou <%= link_to t('menu.clean'), root_path %>
+    <% end %>
+  </div>
 <% end %>
 
 <div class='list1'>

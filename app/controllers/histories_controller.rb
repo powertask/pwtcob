@@ -28,12 +28,10 @@ class HistoriesController < ApplicationController
   def edit
   end
 
-  # POST /cities
-  # POST /cities.json
   def create
     @history = History.new(history_params)
     @history.save
-    respond_with @history, notice: 'Historico criado com sucesso.'
+    redirect_to( show_path(session[:taxpayer_id]))
   end
 
   # PATCH/PUT /cities/1

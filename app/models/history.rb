@@ -5,7 +5,7 @@ class History < ActiveRecord::Base
 
 
   def self.list(unit)
-    self.where("unit_id = ?", unit).order('description ASC')
+    self.where("unit_id = ?", unit)
   end
   
 end
