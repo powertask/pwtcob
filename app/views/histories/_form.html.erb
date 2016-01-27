@@ -1,0 +1,22 @@
+<div class='section'>
+  <div class='label1 top req'> <%=t("history.taxpayer") %>: </div> <%= @history.taxpayer.name %>
+  <div class='label1 top req'> <%=t("history.employee") %>: </div>     <%= @history.employee.name if @history.employee %>
+</div>
+
+<%= simple_form_for(@history) do |f| %>
+	<div class='section'>
+    <%= f.input :unit_id, as: :hidden %>
+    <%= f.input :taxpayer_id, as: :hidden %>
+    <%= f.input :employee_id, as: :hidden %>
+    <%= f.input :history_date, as: :hidden %>
+    <%= f.input :description, :label => t('history.description'), input_html:{:class => 'form-control'} %>
+
+  	<div class="actions">
+  		<div class='buttonbar'>
+  			<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+  			<%= 'ou' %>
+  			<%= link_to t('menu.cancel'), :back %>
+  		</div>
+  	</div>
+  </div>
+<% end %>

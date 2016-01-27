@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :cnas
   resources :cities
   resources :taxpayer_contacts
+  resources :histories
   
   resources :user, :controller => 'users'
 
