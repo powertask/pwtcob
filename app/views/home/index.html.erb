@@ -72,41 +72,7 @@
 
       <div class="panel panel-primary">
 
-        <div class='title_page'> <%= t('home.area.title') %> </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Ano</th>
-              <th>Num Doc</th>
-              <th>Nome</th>
-              <th>Endereço</th>
-              <th>VTNT</th>
-              <th>Área</th>
-              <th>Módulos Rurais</th>
-              <th>Grau Util</th>
-              <th>Área Usada</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% unless @areas.nil? %>
-              <% @areas.each do |area| %>
-                <tr>
-                  <td><%= area.year %> </td>
-                  <td><%= area.nr_document %> </td>
-                  <td><%= area.name %> </td>
-                  <td><%= area.address << ' - ' << area.city << ' - ' << area.state %> </td>
-                  <td><%= area.vtnt.real %> </td>
-                  <td><%= area.area %> </td>
-                  <td><%= area.modulo %></td>
-                  <td><%= area.degree_of_use %></td>
-                  <td><%= area.usable_area %></td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
 
-        <br>
         <div class='title_tools'>
           <% if @taxpayer.city.present? and @taxpayer.city.fl_charge %>
             <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
@@ -129,7 +95,7 @@
               <th>Valor GUIA</th>
               <th><%= t('stage') %></th>
               <th><%= t('status') %></th>
-              <th>Contrato</th>
+              <th>Termo</th>
             </tr>
           </thead>
           <tbody>
@@ -169,12 +135,47 @@
         </table>
 
         <br>
+        <div class='title_page'> <%= t('home.area.title') %> </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Ano</th>
+              <th>Num Doc</th>
+              <th>Nome</th>
+              <th>Endereço</th>
+              <th>VTNT</th>
+              <th>Área</th>
+              <th>Módulos Rurais</th>
+              <th>Grau Util</th>
+              <th>Área Usada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @areas.nil? %>
+              <% @areas.each do |area| %>
+                <tr>
+                  <td><%= area.year %> </td>
+                  <td><%= area.nr_document %> </td>
+                  <td><%= area.name %> </td>
+                  <td><%= area.address << ' - ' << area.city << ' - ' << area.state %> </td>
+                  <td><%= area.vtnt.real %> </td>
+                  <td><%= area.area %> </td>
+                  <td><%= area.modulo %></td>
+                  <td><%= area.degree_of_use %></td>
+                  <td><%= area.usable_area %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+
+        <br>
         <div class='title_page'> <%= t('home.contract.title') %> </div>
         <table class="table">
           <thead>
             <tr>
-              <th>Contrato</th>
-              <th>Status</th>
+              <th>Termo</th>
+              <th>Situação</th>
               <th>Data Contrato</th>
               <th>Parcelas GMA</th>
               <th>Valor GMA</th>
@@ -187,7 +188,11 @@
               <% @contracts.each do |contract| %>
                 <tr>
                   <td><%= contract.id %> </td>
-                  <td><%= t('contract.status.' << contract.status) %> </td>
+                  <% if contract.active? %>
+                    <td><%= link_to(t('contract.status.' << contract.status) << ' - Ver Termo', contract_path(contract)) %> </td>
+                  <% else %>
+                    <td><%= t('contract.status.' << contract.status) %></td>
+                  <% end %>
                   <td><%= contract.contract_date.to_s_br %> </td>
                   <td><%= contract.unit_ticket_quantity %> </td>
                   <td><%= contract.unit_amount.real %> </td>
@@ -201,6 +206,10 @@
 
 
         <br>
+        <div class='title_tools'>
+            <a class="btn btn-large btn-warning" <%= link_to(t('home.history.new'), new_history_path) %> </a>
+        </div>
+
         <div class='title_page'> <%= t('home.history.title') %> </div>
         <table class="table">
           <thead>
@@ -213,7 +222,7 @@
             <% unless @histories.nil? %>
               <% @histories.each do |history| %>
                 <tr>
-                  <td><%= history.history_date %> </td>
+                  <td><%= history.created_at.to_s_br %> </td>
                   <td><%= history.description %> </td>
                 </tr>
               <% end %>

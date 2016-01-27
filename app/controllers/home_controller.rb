@@ -68,6 +68,8 @@
     session[:total_multa] = 0
     session[:total_juros] = 0
     session[:total_cna] = 0
+    
+    session[:taxpayer_id] = params[:cod]
 
     render "index", :layout => 'application'
   end

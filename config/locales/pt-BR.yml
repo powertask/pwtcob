@@ -73,6 +73,7 @@ pt-BR:
       title: Exercícios do Contribuinte
     history:
       title: Históricos do Contribuinte
+      new: Cadastrar Novo Histórico
     filter:
       name: Nome do Contribuinte
     contract:
@@ -177,6 +178,12 @@ pt-BR:
     origin_code: Código do Contribuinte
     search: Procurar por Contribuinte
     city: Cidade
+
+  history:
+    new: Cadastro de Históricos
+    taxpayer: Contribuinte
+    employee: Colaborador
+    description: Histórico a ser gerado
 
   user:
     edit: Meus Dados

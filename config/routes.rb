@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :contracts
   resources :cnas
   resources :cities
+  resources :histories
   
   resources :user, :controller => 'users'
 
