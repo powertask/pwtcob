@@ -39,7 +39,7 @@ namespace :populate_db do
 			taxpayer = Taxpayer.find_by(unit_id: 1, id: c.taxpayer_id)
 			if taxpayer.present?
 				employee = employees[row]
-				if employee.present?
+				if employee.present? & employee.id <> 21 & employee.id <> 14 & employee.id <> 27 & employee.id <> 4 & employee.id <> 31 & employee.id <> 18
 					taxpayer.employee_id = employee.id
 					taxpayer.save!
 					row = row + 1
