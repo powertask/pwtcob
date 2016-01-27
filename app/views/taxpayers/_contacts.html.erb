@@ -1,0 +1,30 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('taxpayer_contact.new'), new_taxpayer_contact_path(@taxpayer.id)) %> </a>
+</div>
+
+<div class='title_page'> <%= t('taxpayer_contact.show') %> </div>
+
+<div class='list1'>
+	<% unless @taxpayer_contacts.empty? %>
+		<% @taxpayer_contacts.each do |taxpayer_contact| %>
+			<li>
+				<div class='strip' id='none'> <%= taxpayer_contact.id %> </div>
+
+				<div class='tools'>
+					<%= link_to(t('menu.edit'), edit_taxpayer_contact_path(taxpayer_contact), class: "btn btn-xs btn-default") %>
+				</div>
+
+				<div class='indent'>
+					<%= link_to(taxpayer_contact.name, edit_taxpayer_contact_path(taxpayer_contact)) %>
+					&ndash;
+					<tt>
+					<%= taxpayer_contact.phone %>
+		            &bull;
+					<%= taxpayer_contact.email %> 
+					</tt>
+				</div>
+			</li>
+		<% end %>
+	<% end %>
+</div>
+

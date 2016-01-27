@@ -12,6 +12,7 @@ class TaxpayersController < ApplicationController
 
   def show
     @taxpayer = Taxpayer.find(params[:id])
+    @taxpayer_contacts = TaxpayerContact.where('taxpayer_id = ?', @taxpayer.id)
     respond_with @taxpayer
   end
 

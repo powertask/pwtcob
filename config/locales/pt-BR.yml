@@ -218,6 +218,19 @@ pt-BR:
     search: Procurar por Advogado
     lawyer_code: Número da OAB
 
+  taxpayer_contact:
+    title: Contatos no Contribuinte
+    new: Novo Contato
+    edit: Editar Dados do Contato
+    index: Listar Todos os Contatos
+    create: Gravar Dados do Contato
+    show: Contatos do Contribuinte
+    name: Nome do Contato
+    description: Descrição
+    phone: Telefone do Contato
+    email: E-mail do Contato
+    search: Procurar por Contato
+
   activerecord:
     errors:
       messages:
