@@ -31,19 +31,20 @@ namespace :populate_db do
 	task :allocate_employess => :environment do
 		cnas = Cna.find_by_sql('select taxpayer_id, count(*), sum(amount) from cnas group by taxpayer_id order by 3 DESC')
 		
-		employees = Employee.all
+		employees = Employee.find_by_sql('select id from employees where id not in (21,14,27,4,31,18)')
 		row = 0
+		total = employees.size 
 		
 		cnas.each do |c|
 			#taxpayer = Taxpayer.where('unit_id = ? and id = ?', 1, c.taxpayer_id)
 			taxpayer = Taxpayer.find_by(unit_id: 1, id: c.taxpayer_id)
 			if taxpayer.present?
 				employee = employees[row]
-				if employee.present? & employee.id <> 21 & employee.id <> 14 & employee.id <> 27 & employee.id <> 4 & employee.id <> 31 & employee.id <> 18
+				if employee.present? 
 					taxpayer.employee_id = employee.id
 					taxpayer.save!
 					row = row + 1
-					row = 0 if (row > 23)
+					row = 0 if (row > total - 1)
 				end
 			end
 		end
