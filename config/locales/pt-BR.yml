@@ -68,7 +68,8 @@ pt-BR:
       title: Procurar por Contribuinte
       name: Nome do Contribuinte
       cna: CNA
-      cpf: CPF
+      cpf: CPF do Contribuinte
+      cod_contribuinte: Código Contribuinte
     cna:
       title: Exercícios do Contribuinte
     history:
