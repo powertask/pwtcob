@@ -31,6 +31,7 @@ module ApplicationHelper
     (_value ).to_f.round(2)
   end
 
+
   def calc_multa(cna, _dt_ini, _dt_end)
     _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
     _dt_end = Date.current if _dt_end.nil?
@@ -41,6 +42,7 @@ module ApplicationHelper
     _new_value = (_value * (_perc / 100)).round(2)
   end
 
+
   def calc_juros(cna, _dt_ini, _dt_end)
     _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
     _dt_end = Date.current if _dt_end.nil?
@@ -50,6 +52,7 @@ module ApplicationHelper
     _perc = (_months * 0.01).round(2)
     _new_value = (_value * _perc).round(2)
   end
+
 
   def calc_cna(cna, _dt_ini, _dt_end)
     _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
@@ -69,6 +72,8 @@ module ApplicationHelper
     session[:total_juros] = (session[:total_juros].nil? ? 0 : session[:total_juros]) + (_juros.nil? ? 0 : _juros)
     session[:total_cobrado] = (session[:total_cobrado].nil? ? 0 : session[:total_cobrado]) + (charge.nil? ? 0 : charge)
     session[:total_cna] = (session[:total_cna].nil? ? 0 : session[:total_cna]) + (total_cna.nil? ? 0 : total_cna)
+
+    session[:total_fee] = Unit.unit_fee(session[:unit_id], session[:total_cobrado])
 
     total_cna
   end
