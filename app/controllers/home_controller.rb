@@ -68,6 +68,7 @@
     session[:value_cna] = 0
     session[:total_multa] = 0
     session[:total_juros] = 0
+    session[:total_correcao] = 0
     session[:total_cna] = 0
     
     session[:taxpayer_id] = params[:cod]
@@ -101,6 +102,8 @@
     session[:total_juros] = 0
     session[:total_cna] = 0
     session[:total_cobrado]  = 0
+    session[:total_correcao] = 0
+
 
     respond_with @taxpayer, :layout => 'application'     
   end
@@ -120,6 +123,8 @@
     session[:total_juros] = 0
     session[:total_cobrado] = 0
     session[:total_cna] = 0
+    session[:total_correcao] = 0
+
   end
 
   def get_tickets
@@ -131,7 +136,7 @@
 
     unit_perc = 0 if unit_perc.nil?
 
-    total_charge = session[:total_cobrado]
+    total_charge = session[:total_cna_cobrado]
 
     unit_amount = total_charge * unit_perc / 100
     unit_amount = unit_amount.round(2)

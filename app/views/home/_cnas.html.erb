@@ -6,8 +6,9 @@
       <th>Ano</th>
       <th>Num Doc</th>
       <th>Vencimento</th>
-      <th>Valor CNA</th>
       <th>Meses</th>
+      <th>CNA</th>
+      <th>Correção</th>
       <th>Multa</th>
       <th>Juros</th>
       <th>Valor GUIA</th>
@@ -36,8 +37,9 @@
           </td>
           <td><%= cna.nr_document %> </td>
           <td><%= cna.due_at.to_date.to_s_br %> </td>
-          <td><%= cna.amount %> </td>
           <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
+          <td><%= cna.amount.real %> </td>
+          <td><%= calc_correcao(cna, nil, nil).real %> </td>
           <td><%= calc_multa(cna, nil, nil).real %> </td>
           <td><%= calc_juros(cna, nil, nil).real %> </td>
           <td> 
@@ -60,8 +62,9 @@
       <td></td>
       <td></td>
       <td></td>
-      <td><%= session[:value_cna].real %></td>
       <td></td>
+      <td> <%= session[:value_cna].real %></td>
+      <td> <%= session[:total_correcao].real %></td>
       <td> <%= session[:total_multa].real %> </td>
       <td> <%= session[:total_juros].real %> </td>
       <td> <%= session[:total_cna].real %></td>
@@ -75,9 +78,55 @@
 <ul class="nav nav-pills" role="tablist">
   <li role="presentation" class="active">
     <a href="#">
-      Valor Total CNAs:<span class="badge"> R$ <%= session[:total_cobrado].real.to_s %></span>
-      Valor Comissão GMA:<span class="badge">R$ <%= Unit.unit_fee(session[:unit_id], session[:total_cobrado]).real.to_s %></span>
-      Valor Total a Ser Cobrado do Contribuinte:<span class="badge">R$ <%= (session[:total_cobrado] + Unit.unit_fee(session[:unit_id], session[:total_cobrado])).real.to_s %></span>
+      <span class="badge"> Parcelado</span>
+      Valor CNA:<span class="badge"> R$ <%= session[:value_cna_cobrado].real.to_s %></span>
+      Correção:
+      <span class="badge">
+        R$ <%= session[:total_correcao_cobrado].real.to_s %>
+      </span>
+      Multa:<span class="badge"> R$ <%= session[:total_multa_cobrado].real.to_s %></span>
+      Juros:<span class="badge"> R$ <%= session[:total_juros_cobrado].real.to_s %></span>
+      Valor GMA:<span class="badge">R$ <%= Unit.unit_fee(session[:unit_id], session[:total_cna_cobrado]).real.to_s %></span>
+      Valor Total:<span class="badge">R$ <%= (session[:total_cna_cobrado] + Unit.unit_fee(session[:unit_id], session[:total_cna_cobrado])).real.to_s %></span>
+    </a>
+  </li>
+</ul>
+<br>
+<ul class="nav nav-pills" role="tablist">
+  <li role="presentation" class="active">
+    <a href="#">
+      <span class="badge"> À Vista </span>
+      
+      Valor CNA:
+      <span class="badge">
+        R$ <%= session[:value_cna_cobrado].real.to_s %>
+      </span>
+      
+      Correção:
+      <span class="badge">
+        R$ <%= session[:total_correcao_cobrado].real.to_s %>
+      </span>
+      
+      Multa:
+      <span class="badge">
+        R$ <%= session[:total_multa_a_vista].real.to_s %>
+      </span>
+
+      Juros:
+      <span class="badge">
+        R$ <%= session[:total_juros_a_vista].real.to_s %>
+      </span>
+      
+      Valor GMA:
+      <span class="badge">
+        R$ <%= session[:total_fee_a_vista].real.to_s %>
+      </span>
+      
+      Valor Total:
+      <span class="badge">
+        R$ <%= session[:total_cobrado_a_vista].real.to_s %>
+      </span>
+
     </a>
   </li>
 </ul>
