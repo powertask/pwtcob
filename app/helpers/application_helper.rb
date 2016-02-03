@@ -83,17 +83,17 @@ module ApplicationHelper
       session[:total_juros_cobrado]    = session[:total_juros]
       session[:total_correcao_cobrado] = session[:total_correcao]
       session[:total_cna_cobrado]      = session[:total_cna]
-
       session[:total_fee_cobrado]      = Unit.unit_fee(session[:unit_id], session[:total_cna_cobrado])
+      session[:total_cna_cobrado]      = session[:total_cna_cobrado].to_f + session[:total_fee_cobrado].to_f 
 
-      session[:total_juros_a_vista]    = session[:total_juros_cobrado] - (session[:total_juros_cobrado] * 0.2).round(2)
-      session[:total_multa_a_vista]    = session[:total_multa_cobrado] - (session[:total_multa_cobrado] * 0.2).round(2)
-      session[:total_cobrado_a_vista]  = session[:value_cna_cobrado] + 
-                                         session[:total_correcao_cobrado] + 
-                                         session[:total_multa_a_vista] + 
-                                         session[:total_juros_a_vista] 
-      session[:total_fee_a_vista]      = Unit.unit_fee(session[:unit_id], session[:total_cobrado_a_vista])
-      session[:total_cobrado_a_vista]  = session[:total_cobrado_a_vista] + session[:total_fee_a_vista]
+      session[:total_juros_a_vista]    = session[:total_juros_cobrado].to_f - (session[:total_juros_cobrado].to_f * 0.2).round(2)
+      session[:total_multa_a_vista]    = session[:total_multa_cobrado].to_f - (session[:total_multa_cobrado].to_f * 0.2).round(2)
+      session[:total_cna_a_vista]      = session[:value_cna_cobrado].to_f + 
+                                         session[:total_correcao_cobrado].to_f + 
+                                         session[:total_multa_a_vista].to_f + 
+                                         session[:total_juros_a_vista].to_f 
+      session[:total_fee_a_vista]      = Unit.unit_fee(session[:unit_id], session[:total_cna_a_vista])
+      session[:total_cna_a_vista]      = session[:total_cna_a_vista].to_f + session[:total_fee_a_vista].to_f
 
     end
 

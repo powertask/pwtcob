@@ -86,7 +86,7 @@ pt-BR:
     title: Ambiente de Negociações
     root: Sair do Ambiente de Negociações
     cnas: CNAS - Exercícios
-    ticket: "Parcelamento"
+    ticket: "Simulação de Pagamentos À Vista ou Parcelados"
     pay: Cobrar
     ticket_quantity: Quantidade de Parcelas
     unit_ticket_due: Vencimento Inicial

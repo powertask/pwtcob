@@ -7,17 +7,33 @@ class Unit < ActiveRecord::Base
   has_many :clients
   has_many :contracts
 
-
 	def self.unit_fee(unit, total_cnas)
 
-	    unit = Unit.find(unit)
+    if total_cnas == 0
+      return 0
+    end
 
-	    unit_perc =  unit.unit_fee
-	    unit_perc = 0 if unit_perc.nil?
+    if total_cnas.nil?
+      return 0
+    end
 
-	    unit_amount = total_cnas * unit_perc / 100
-	    unit_amount = unit_amount.round(2)
-	  
+    unit = Unit.find(unit)
+
+    unless unit.valid?
+      return 0
+    end
+
+    if unit.unit_fee == 0
+      return 0
+    end
+
+    if unit.unit_fee.nil?
+      return 0
+    end
+
+    unit_perc   = unit.unit_fee
+    unit_amount = total_cnas * unit_perc / 100
+    unit_amount = unit_amount.round(2)	  
 	end
 
 

@@ -65,12 +65,8 @@
     @contracts = Contract.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
     @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
     
-    session[:value_cna] = 0
-    session[:total_multa] = 0
-    session[:total_juros] = 0
-    session[:total_correcao] = 0
-    session[:total_cna] = 0
-    
+    clear_variable_session()
+
     session[:taxpayer_id] = params[:cod]
 
     render "index", :layout => 'application'
@@ -97,13 +93,7 @@
     @cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ?', params[:cod]).order(:year)
     @cna = Cna.new
 
-    session[:value_cna] = 0
-    session[:total_multa] = 0
-    session[:total_juros] = 0
-    session[:total_cna] = 0
-    session[:total_cobrado]  = 0
-    session[:total_correcao] = 0
-
+    clear_variable_session()
 
     respond_with @taxpayer, :layout => 'application'     
   end
@@ -118,12 +108,7 @@
 
     @cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
 
-    session[:value_cna] = 0
-    session[:total_multa] = 0
-    session[:total_juros] = 0
-    session[:total_cobrado] = 0
-    session[:total_cna] = 0
-    session[:total_correcao] = 0
+    clear_variable_session()
 
   end
 
@@ -136,12 +121,17 @@
 
     unit_perc = 0 if unit_perc.nil?
 
-    total_charge = session[:total_cna_cobrado]
+    if unit_ticket_quantity == 1
+      total_cna_a_vista = session[:total_cna_a_vista].to_f
+      total_fee = session[:total_fee_a_vista].to_f.round(2)
+      total_cna = total_cna_a_vista - total_fee      
+    else
+      total_cna_cobrado = session[:total_cna_cobrado].to_f
+      total_fee = (session[:total_fee_cobrado].to_f).round(2)
+      total_cna = total_cna_cobrado - total_fee      
+    end
 
-    unit_amount = total_charge * unit_perc / 100
-    unit_amount = unit_amount.round(2)
-
-    cna_ticket = total_charge / unit_ticket_quantity.to_i
+    cna_ticket = total_cna / unit_ticket_quantity.to_i
     @tickets = []
 
     unit_ticket_quantity  = unit_ticket_quantity + 1
@@ -151,7 +141,7 @@
       unit_due = unit_ticket_due if tic == 1
       unit_due = unit_ticket_due + (tic - 1).month if tic > 1
 
-      ticket = { ticket: tic, unit_amount: unit_amount, client_amount: 0.00, due: unit_due} if tic == 1
+      ticket = { ticket: tic, unit_amount: total_fee, client_amount: 0.00, due: unit_due} if tic == 1
       ticket = { ticket: tic, unit_amount: 0.00, client_amount: cna_ticket.round(2), due: unit_due} if tic > 1
       @tickets << ticket
       session[:tickets] = @tickets
@@ -176,4 +166,27 @@
     params.require(:taxpayer).permit(:phone)
   end
 
+  def clear_variable_session
+
+    session[:value_cna] = 0
+    session[:total_multa] = 0
+    session[:total_juros] = 0
+    session[:total_correcao] = 0
+    session[:total_cna] = 0
+
+    session[:value_cna_cobrado] = 0
+    session[:total_multa_cobrado] = 0
+    session[:total_juros_cobrado] = 0
+    session[:total_correcao_cobrado] = 0
+    session[:total_cna_cobrado] = 0
+    session[:total_fee_cobrado] = 0
+
+    session[:value_cna_a_vista] = 0
+    session[:total_multa_a_vista] = 0
+    session[:total_juros_a_vista] = 0
+    session[:total_correcao_a_vista] = 0
+    session[:total_cna_a_vista] = 0
+    session[:total_fee_a_vista] = 0
+
+  end
 end

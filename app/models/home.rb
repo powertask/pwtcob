@@ -5,5 +5,4 @@ class Home < ActiveRecord::Base
   	date_today = Date.today()
   	(date_today.year * 12 + date_today.month) - (date_base.year * 12 + date_base.month)
   end
-
 end

@@ -87,8 +87,8 @@
         </span>
         Multa:<span class="badge"> R$ <%= session[:total_multa_cobrado].real.to_s %></span>
         Juros:<span class="badge"> R$ <%= session[:total_juros_cobrado].real.to_s %></span>
-        Valor GMA:<span class="badge">R$ <%= Unit.unit_fee(session[:unit_id], session[:total_cna_cobrado]).real.to_s %></span>
-        Valor Total:<span class="badge">R$ <%= (session[:total_cna_cobrado] + Unit.unit_fee(session[:unit_id], session[:total_cna_cobrado])).real.to_s %></span>
+        Valor GMA:<span class="badge">R$ <%= session[:total_fee_cobrado].real.to_s %></span>
+        Valor Total:<span class="badge">R$ <%= session[:total_cna_cobrado].real.to_s %></span>
       </a>
     </li>
   </ul>
@@ -125,7 +125,7 @@
         
         Valor Total:
         <span class="badge">
-          R$ <%= session[:total_cobrado_a_vista].real.to_s %>
+          R$ <%= session[:total_cna_a_vista].real.to_s %>
         </span>
   
       </a>

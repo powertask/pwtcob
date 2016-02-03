@@ -28,9 +28,10 @@
       </div>
     </div>
 
-
+    <br>
     <div id='table-ticket'>
       <div class='subtitle'> <%= t('deal.ticket') %> </div>
+
       <%= form_tag(get_tickets_path, method: 'get', remote: true) do |f| %>
         <div class='section'>
           <table style="width:100%">
