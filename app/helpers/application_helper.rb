@@ -77,11 +77,11 @@ module ApplicationHelper
 
 
     if cna.fl_charge
-      session[:value_cna_cobrado]      = session[:value_cna_cobrado].to_f + session[:value_cna].to_f
-      session[:total_multa_cobrado]    = session[:total_multa_cobrado].to_f + session[:total_multa].to_f
-      session[:total_juros_cobrado]    = session[:total_juros_cobrado].to_f + session[:total_juros].to_f
-      session[:total_correcao_cobrado] = session[:total_correcao_cobrado].to_f + session[:total_correcao].to_f
-      session[:total_cna_cobrado]      = session[:total_cna_cobrado].to_f + session[:total_cna].to_f
+      session[:value_cna_cobrado]      = session[:value_cna_cobrado].to_f + (cna.amount.nil? ? 0 : cna.amount)
+      session[:total_multa_cobrado]    = session[:total_multa_cobrado].to_f + (_multa.nil? ? 0 : _multa)
+      session[:total_juros_cobrado]    = session[:total_juros_cobrado].to_f + (_juros.nil? ? 0 : _juros)
+      session[:total_correcao_cobrado] = session[:total_correcao_cobrado].to_f + (_correcao.nil? ? 0 : _correcao)
+      session[:total_cna_cobrado]      = session[:total_cna_cobrado].to_f + (total.nil? ? 0 : total)
       session[:total_fee_cobrado]      = Unit.unit_fee(session[:unit_id], session[:total_cna_cobrado])
       session[:total_cna_cobrado]      = session[:total_cna_cobrado].to_f + session[:total_fee_cobrado].to_f 
 
