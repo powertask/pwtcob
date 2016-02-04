@@ -22,27 +22,26 @@ class ContractsController < ApplicationController
     cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
     unit = Unit.find(session[:unit_id])
 
-    unit_fee =  unit.unit_fee
-    unit_fee = 0 if unit_fee.nil?
-
-    total_charge = session[:total_cobrado]
-
-    unit_amount = total_charge * unit_fee / 100
-    unit_amount = unit_amount.round(2)
-
     ActiveRecord::Base.transaction do
       @contract = Contract.new
 
       @contract.unit_id = session[:unit_id]
       @contract.contract_date = Time.now
-      @contract.taxpayer_id = cod 
-      @contract.unit_amount = unit_amount
-      @contract.unit_fee = unit_fee
-      @contract.unit_ticket_quantity = 1
-
-      @contract.client_ticket_quantity = session[:tickets].count - 1
-      @contract.client_amount = total_charge
-
+      @contract.taxpayer_id = cod
+      
+      if session[:tickets].count == 1
+        @contract.unit_amount = session[:total_fee_a_vista]
+        @contract.client_amount = session[:total_cna_a_vista]
+        @contract.client_ticket_quantity = 1
+        @contract.unit_ticket_quantity = 1
+      else
+        @contract.unit_amount = session[:total_fee_cobrado]
+        @contract.client_amount = session[:total_cna_cobrado]
+        @contract.client_ticket_quantity = session[:tickets].count - 1
+        @contract.unit_ticket_quantity = 1
+      end
+      
+      @contract.unit_fee = 10
       @contract.status = 0
 
       @contract.save!
