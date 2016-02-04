@@ -10,7 +10,7 @@ class Ability
     can :manage, Home if user.user?
     can :manage, Taxpayer 
     can :manage, History
-    can :manage, :Contract
+    can :manage, Contract
     
   end
 end
