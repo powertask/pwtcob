@@ -179,6 +179,7 @@
     session[:total_juros_cobrado] = 0
     session[:total_correcao_cobrado] = 0
     session[:total_cna_cobrado] = 0
+    session[:total_cna_sem_fee_cobrado] = 0
     session[:total_fee_cobrado] = 0
 
     session[:value_cna_a_vista] = 0
