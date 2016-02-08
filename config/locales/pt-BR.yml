@@ -89,7 +89,8 @@ pt-BR:
     ticket: "Simulação de Pagamentos À Vista ou Parcelados"
     pay: Cobrar
     ticket_quantity: Quantidade de Parcelas
-    unit_ticket_due: Vencimento Inicial
+    unit_ticket_due: Vencimento Inicial GMA
+    client_ticket_due: Vencimento Inicial Cliente
     unit_perc: Percentual GMA (%)
     value_charge: "Valor a Ser Cobrado: "
     recalculate: Recalcular Parcelas

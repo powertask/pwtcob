@@ -113,13 +113,9 @@
   end
 
   def get_tickets
-    unit = Unit.find(session[:unit_id])
-    unit_perc =  unit.unit_fee
-
     unit_ticket_quantity  =  params[:unit_ticket_quantity].to_i
     unit_ticket_due       =  params[:unit_ticket_due].to_date
-
-    unit_perc = 0 if unit_perc.nil?
+    client_ticket_due     =  params[:client_ticket_due].to_date
 
     if unit_ticket_quantity == 1
       total_cna_a_vista = session[:total_cna_a_vista].to_f
@@ -139,10 +135,11 @@
     (1..unit_ticket_quantity).each  do |tic|
       
       unit_due = unit_ticket_due if tic == 1
-      unit_due = unit_ticket_due + (tic - 1).month if tic > 1
+      client_due = client_ticket_due if tic == 2
+      client_due = client_ticket_due + 1.month if tic > 2
 
       ticket = { ticket: tic, unit_amount: total_fee, client_amount: 0.00, due: unit_due} if tic == 1
-      ticket = { ticket: tic, unit_amount: 0.00, client_amount: cna_ticket.round(2), due: unit_due} if tic > 1
+      ticket = { ticket: tic, unit_amount: 0.00, client_amount: cna_ticket.round(2), due: client_due} if tic > 1
       @tickets << ticket
       session[:tickets] = @tickets
     end
