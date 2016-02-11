@@ -40,6 +40,11 @@
           <td><%= ticket.due.to_date.to_s_br %> </td>
           <td><%= ticket.amount.real if ticket.client? %> </td>
           <td><%= ticket.amount.real if ticket.unit? %> </td>
+          <td>
+          <div class='tools'>
+            <a class="btn btn-xs btn-default" <%= link_to(t('contract.bank_billet'), :action => "create_bank_billet", :cod => ticket.id) %> </a>
+          </div>
+          </td>
         </tr>
       <% end %>
     <% end %>

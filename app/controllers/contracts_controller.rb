@@ -60,7 +60,7 @@ class ContractsController < ApplicationController
         
         @ticket.due = tic['due'].to_date
         @ticket.ticket_number = n
-        
+
         @ticket.save!
       end
 
@@ -129,6 +129,52 @@ class ContractsController < ApplicationController
                             type: "application/pdf",
                             disposition: "attachment"
       end
+    end
+  end
+
+  def create_bank_billet
+    ticket = Ticket.find(params[:cod])
+
+    if ticket.bank_billet_id.blank?
+      @contract = Contract.find(ticket.contract_id)
+      taxpayer = Taxpayer.find(@contract.taxpayer_id)
+
+      if taxpayer.cpf.present?
+        cnpj_cpf = taxpayer.cpf.to_s
+      else
+        cnpj_cpf = taxpayer.cnpj.to_s
+      end
+
+      ActiveRecord::Base.transaction do
+        bank_billet = BoletoSimples::BankBillet.create({
+                          amount: ticket.amount,
+                          description: 'Servicos prestados conforme contrato',
+                          expire_at: ticket.due,
+                          customer_address: taxpayer.address,
+                          customer_address_complement: taxpayer.complement,
+                          customer_city_name: taxpayer.city.name,
+                          customer_cnpj_cpf: cnpj_cpf,
+                          customer_neighborhood: taxpayer.neighborhood,
+                          customer_person_name: taxpayer.name,
+                          customer_person_type: 'individual',
+                          customer_state: taxpayer.city.state,
+                          customer_zipcode: taxpayer.zipcode,
+                          bank_billet_account_id: 21
+                        })
+
+        if bank_billet.persisted?
+          ticket.bank_billet_id = bank_billet.id
+          ticket.save!
+          redirect_to bank_billet.formats["pdf"]
+        else
+          puts "Erro :("
+          puts bank_billet.response_errors
+        end
+      end
+    else
+      @contract = Contract.find(ticket.contract_id)
+      bank_billet = BoletoSimples::BankBillet.find(ticket.bank_billet_id)
+      redirect_to bank_billet.formats["pdf"]
     end
   end
 

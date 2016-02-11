@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get 'contract/:contract/delete_contract' => 'contracts#delete_contract', as: :delete_contract
   get 'contract/:cod/contract_pdf' => 'contracts#contract_pdf', as: :contract_pdf
   get 'contract/:cod/contract_transaction_pdf' => 'contracts#contract_transaction_pdf', as: :contract_transaction_pdf
+  get 'contract/:cod/create_bank_billet' => 'contracts#create_bank_billet', as: :create_bank_billet
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
