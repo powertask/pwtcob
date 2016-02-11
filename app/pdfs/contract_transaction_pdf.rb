@@ -49,7 +49,7 @@ class ContractTransactionPdf < Prawn::Document
     move_down 5
     stroke_horizontal_rule
     move_down 5
-    text "<b>EM #{@contract.client_ticket_quantity} PARCELA(s) DE #{client_ticket_amount} (#{client_ticket_amount.to_f.round(2).por_extenso_em_reais}) com vencimento(s) em#{ticket_due}. ACRESCIDO DE #{@contract.unit_amount.real_contabil} (#{@contract.unit_amount.to_f.round(2).por_extenso_em_reais}) REFERENTE A HONORÁRIOS ADVOCATÍCIOS COM VENCIMENTO EM #{@tickets.first.due.to_date.strftime('%d/%m/%Y')}</b>", size: 9.5, :inline_format => true
+    text "<b>EM #{@contract.client_ticket_quantity} PARCELA(s) DE #{client_ticket_amount.real_contabil} (#{client_ticket_amount.to_f.round(2).por_extenso_em_reais}) com vencimento(s) em#{ticket_due}. ACRESCIDO DE #{@contract.unit_amount.real_contabil} (#{@contract.unit_amount.to_f.round(2).por_extenso_em_reais}) REFERENTE A HONORÁRIOS ADVOCATÍCIOS COM VENCIMENTO EM #{@tickets.first.due.to_date.strftime('%d/%m/%Y')}</b>", size: 9.5, :inline_format => true
     move_down 5
     stroke_horizontal_rule
     move_down 5
@@ -98,7 +98,7 @@ class ContractTransactionPdf < Prawn::Document
   end
   
   def client_ticket_amount
-    @tickets.second.amount.real_contabil
+    @tickets.second.amount
   end
   
 end
