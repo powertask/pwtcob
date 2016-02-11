@@ -135,7 +135,7 @@ class ContractsController < ApplicationController
   def create_bank_billet
     ticket = Ticket.find(params[:cod])
 
-    if ticket.bank_billet_id.blank?
+    if ticket.bank_billet_id.blank? || ticket.bank_billet_id.nil?
       @contract = Contract.find(ticket.contract_id)
       taxpayer = Taxpayer.find(@contract.taxpayer_id)
 
