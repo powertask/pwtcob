@@ -29,9 +29,9 @@ namespace :populate_db do
 
 	desc "allocate employees"
 	task :allocate_employess => :environment do
-		cnas = Cna.find_by_sql('select taxpayer_id, count(*), sum(amount) from cnas group by taxpayer_id order by 3 DESC')
+		cnas = Cna.find_by_sql('select c.taxpayer_id, count(*), sum(c.amount) from cnas c, taxpayers t where c.taxpayer_id = t.id and t.employee_id is null group by taxpayer_id order by 3 DESC')
 		
-		employees = Employee.find_by_sql('select id from employees where id not in (21,14,27,4,31,18)')
+		employees = Employee.find_by_sql('select id from employees where id not in (21,14,27,4,31,18,6,7)')
 		row = 0
 		total = employees.size 
 		
