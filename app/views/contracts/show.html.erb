@@ -30,6 +30,7 @@
       <th>Vencimento</th>
       <th>Valor de Parcela Cliente</th>
       <th>Valor de Parcela GMA</th>
+      <th>Situação do Boleto</th>
     </tr>
   </thead>
   <tbody>
@@ -40,6 +41,7 @@
           <td><%= ticket.due.to_date.to_s_br %> </td>
           <td><%= ticket.amount.real if ticket.client? %> </td>
           <td><%= ticket.amount.real if ticket.unit? %> </td>
+          <td><%= 'Emitido' if ticket.bank_billet_id.present? %> </td>
           <td>
           <div class='tools'>
             <a class="btn btn-xs btn-default" <%= link_to(t('contract.bank_billet'), :action => "create_bank_billet", :cod => ticket.id) %> </a>
