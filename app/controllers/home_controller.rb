@@ -136,7 +136,7 @@
       
       unit_due = unit_ticket_due if tic == 1
       client_due = client_ticket_due if tic == 2
-      client_due = client_ticket_due + 1.month if tic > 2
+      client_due = client_ticket_due + (tic - 2).month if tic > 2
 
       ticket = { ticket: tic, unit_amount: total_fee, client_amount: 0.00, due: unit_due} if tic == 1
       ticket = { ticket: tic, unit_amount: 0.00, client_amount: cna_ticket.round(2), due: client_due} if tic > 1
