@@ -11,6 +11,7 @@ class Ability
     can :manage, Taxpayer 
     can :manage, History
     can :manage, Contract
+    can :manage, Remittance
     
   end
 end

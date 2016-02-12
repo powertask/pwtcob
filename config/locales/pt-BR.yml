@@ -57,6 +57,7 @@ pt-BR:
     tickets: Gerar Parcelas
     city: Cidades
     contract: Contratos
+    remittance: Remessas
 
   home:
     title: CobraSeguro - Sistema de Cobrança Gianelli
@@ -240,6 +241,15 @@ pt-BR:
     phone: Telefone do Contato
     email: E-mail do Contato
     search: Procurar por Contato
+
+  remittance:
+    title: Remessas
+    new: Gerar Remessa
+    status:
+      unprocessed: Pendente
+      processed: Processado
+      downloaded: Baixada pelo usuário
+      sent: Enviada para o banco
 
   activerecord:
     errors:

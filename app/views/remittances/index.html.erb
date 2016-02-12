@@ -1,0 +1,35 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('remittance.new'), remittance_create_path) %> </a>
+</div>
+
+<div class='title_page'>
+	<span> <%= t('remittance.title') %> </span>
+</div>
+
+<div class='list1'>
+	<% unless @remittances.empty? %>
+		<% @remittances.each do |remittance| %>
+			<li>
+				<div class='strip' id='none'> <%= remittance.id %> </div>
+
+				<div class='tools'>
+				<a class="btn btn-xs btn-default" <%= link_to(t('remittance.download'), :action => "remittance_download", :cod => remittance.id) %> </a>
+				</div>
+
+				<div class='indent'>
+					<%= remittance.bank_billet_account_id %>
+					&ndash;
+					<tt>
+					<%= remittance.filename %>
+					</tt>
+					<dt>
+					<%= t(remittance.status) %>
+		            &bull;
+					<%= remittance.processed_at.to_date.to_s_br %>
+					</dt>
+				</div>
+			</li>
+		<% end %>
+	<% end %>
+</div>
+
