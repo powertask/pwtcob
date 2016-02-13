@@ -138,6 +138,7 @@ class ContractsController < ApplicationController
     if ticket.bank_billet_id.blank? || ticket.bank_billet_id.nil?
       @contract = Contract.find(ticket.contract_id)
       taxpayer = Taxpayer.find(@contract.taxpayer_id)
+      cna = Cna.select('year').where('contract_id = ?', ticket.contract_id)
 
       if taxpayer.cpf.present?
         cnpj_cpf = taxpayer.cpf.to_s
@@ -159,7 +160,8 @@ class ContractsController < ApplicationController
                           customer_person_type: 'individual',
                           customer_state: taxpayer.city.state,
                           customer_zipcode: taxpayer.zipcode,
-                          bank_billet_account_id: 21
+                          bank_billet_account_id: 21,
+                          instructions: 'Parcela ' << ticket.ticket_number.to_s << ' referente ao(s) ano(s) de ' << cna.collect {|i| i.year}.sort.join(',')
                         })
 
         if bank_billet.persisted?
