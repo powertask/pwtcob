@@ -1,0 +1,33 @@
+<div class='title_page'>
+	<span> <%= t('bank_billet.title') << ' - Carteira de Cobrança ' << bank_billet_account_name(112)%> </span>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome/Razão Social</th>
+      <th>Quantia (R$)</th>
+      <th>Vencimento</th>
+      <th>Data de pagamento</th>
+      <th>Quantia Paga (R$)</th>
+      <th><%= t('status') %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @bankbillets.nil? %>
+      <% @bankbillets.each do |bankbillet| %>
+        <tr>
+          <td><%= bankbillet.id %> </td>
+          <td><%= link_to(bankbillet.customer_person_name, :action => "bank_billet_show", :cod => bankbillet.id) %></td>
+          <td><%= bankbillet.amount.real %> </td>
+          <td><%= bankbillet.expire_at.to_date.to_s_br %> </td>
+          <td><%= bankbillet.paid_at %> </td>
+          <td><%= bankbillet.paid_amount %> </td>
+          <td><%= t(bankbillet.status) %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

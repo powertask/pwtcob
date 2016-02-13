@@ -44,7 +44,7 @@
           <td><%= 'Emitido' if ticket.bank_billet_id.present? %> </td>
           <td>
           <div class='tools'>
-            <a class="btn btn-xs btn-default" <%= link_to(t('contract.bank_billet'), :action => "create_bank_billet", :cod => ticket.id) %> </a>
+            <a class="btn btn-xs btn-default" <%= link_to(t('contract.bankbillet'), :action => "create_bank_billet", :cod => ticket.id) %> </a>
           </div>
           </td>
         </tr>

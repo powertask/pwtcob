@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :taxpayer_contacts
   resources :histories
   resources :remittances
+  resources :bank_billets
 
   resources :user, :controller => 'users'
 
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
   get 'contract/:cod/create_bank_billet' => 'contracts#create_bank_billet', as: :create_bank_billet
   get 'remittance/remittance_create' => 'remittances#remittance_create', as: :remittance_create
   get 'remittance/:cod/remittance_download' => 'remittances#remittance_download', as: :remittance_download
+  get 'bank_billet/:cod/bank_billet_show' => 'bank_billets#bank_billet_show', as: :bank_billet_show
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

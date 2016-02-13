@@ -58,6 +58,7 @@ pt-BR:
     city: Cidades
     contract: Contratos
     remittance: Remessas
+    bankbillet: Boletos
 
   home:
     title: CobraSeguro - Sistema de Cobrança Gianelli
@@ -134,7 +135,7 @@ pt-BR:
     taxpayer: Contribuinte
     print_pdf: Termo em PDF
     print_transaction_pdf: Termo de Transação
-    bank_billet: Boleto
+    bankbillet: Boleto
     status:
       active: ATIVO
       cancel: CANCELADO
@@ -250,6 +251,28 @@ pt-BR:
       processed: Processado
       downloaded: Baixada pelo usuário
       sent: Enviada para o banco
+
+  bank_billet:
+    title: Boletos
+    index: Listar Todos os Boletos
+    show: Detalhes do Boleto
+    customer_person_name: Contribuinte
+    bank_billet_account_name: Carteira de Cobrança
+    our_name: Nosso Número
+    expire_at: Vencimento
+    amount: Quantia (R$)
+    paid_at: Data do Pagamento
+    paid_amount: Valor do Pagamento (R$)
+    link: Clique aqui para Visualizar o Boleto
+    bankbillet: Boleto
+    status:
+      generating: Gerando
+      opened: Aberto
+      canceled: Cancelado
+      paid: Pago
+      overdue: Vencido
+      blocked: Bloqueado
+      chargeback: Estornado
 
   activerecord:
     errors:
