@@ -12,7 +12,7 @@
 	<div class='label1 top req'> <%= t('bank_billet.amount') %>: </div><%= @bank_billet.amount.real %>
 	<div class='label1 top req'> <%= t('bank_billet.paid_at') %>: </div><%= @bank_billet.paid_at.to_date.to_s_br if @bank_billet.paid_at %>
 	<div class='label1 top req'> <%= t('bank_billet.paid_amount') %>: </div><%= @bank_billet.paid_amount.real %>
-	<div class='label1 top req'> <%= t('status') %>: </div><%= t(@bank_billet.status) %>
+	<div class='label1 top req'> <%= t('status') %>: </div><%= t('bank_billet.status.'<< @bank_billet.status) %>
 	<div class='label1 top req'> <%= t('bank_billet.bankbillet') %>: </div><%= link_to(t('bank_billet.link'), @bank_billet.formats[:pdf]) %>
 </div>
 
