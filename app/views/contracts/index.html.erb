@@ -21,11 +21,13 @@
         </div>
       </li>
     <% end %>
+  <% else %>
+    Colaborador não tem termos gerados.
   <% end %>
 </div>
 
 <div id='paginate'>
   <div class="apple_pagination">
-    <%= will_paginate @contracts, :container => false %>
+    <%= will_paginate @contracts, :container => false  if @contracts.present? %>
   </div>
 </div>
