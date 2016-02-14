@@ -6,9 +6,11 @@
   <span> <%= t('home.title') %> </span>
 </div>
 
+<br>
+<%= render "calendar" %>
+<br>
 
 <% if @taxpayer.nil? %>
-
   <div class='subtitle'> <%= t('home.search.title') %> </div>
   <div class='section'>
     <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
