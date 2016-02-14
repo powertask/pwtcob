@@ -7,10 +7,10 @@
     <tr>
       <th>#</th>
       <th>Nome/Razão Social</th>
-      <th>Quantia (R$)</th>
+      <th>Valor (R$)</th>
       <th>Vencimento</th>
-      <th>Data de pagamento</th>
-      <th>Quantia Paga (R$)</th>
+      <th>Data de Pagamento</th>
+      <th>Valor Pago (R$)</th>
       <th><%= t('status') %></th>
       <th></th>
     </tr>
@@ -24,8 +24,8 @@
           <td><%= bankbillet.amount.real %> </td>
           <td><%= bankbillet.expire_at.to_date.to_s_br %> </td>
           <td><%= bankbillet.paid_at %> </td>
-          <td><%= bankbillet.paid_amount %> </td>
-          <td><%= t(bankbillet.status) %> </td>
+          <td><%= bankbillet.paid_amount.real %> </td>
+          <td><%= t('bankbillet.status.'<< bankbillet.status) %> </td>
         </tr>
       <% end %>
     <% end %>
