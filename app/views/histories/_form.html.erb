@@ -1,5 +1,5 @@
 <div class='section'>
-  <div class='label1 top req'> <%=t("history.taxpayer") %>: </div> <%= @history.taxpayer.name %>
+  <div class='label1 top req'> <%=t("history.taxpayer") %>: </div> <%= @history.taxpayer.name if @history.taxpayer %>
   <div class='label1 top req'> <%=t("history.employee") %>: </div>     <%= @history.employee.name if @history.employee %>
 </div>
 
