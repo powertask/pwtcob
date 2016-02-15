@@ -33,7 +33,7 @@ class ContractsController < ApplicationController
       @contract.contract_date = Time.now
       @contract.taxpayer_id = cod
       
-      if session[:tickets].count == 1
+      if session[:tickets].count == 2
         @contract.unit_amount = session[:total_fee_a_vista]
         @contract.client_amount = session[:total_cna_a_vista]
         @contract.client_ticket_quantity = 1
