@@ -27,7 +27,7 @@ class HistoriesController < ApplicationController
   def create
     @history = History.new(history_params)
     @history.save
-    respond_with @history, notice: 'Histórico criado com sucesso.'
+    redirect_to( show_path(session[:taxpayer_id]))
   end
 
   private
