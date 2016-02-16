@@ -59,6 +59,7 @@ pt-BR:
     contract: Contratos
     remittance: Remessas
     bankbillet: Boletos
+    discharge: Retornos
 
   home:
     title: Agenda do Colaborador
@@ -245,6 +246,7 @@ pt-BR:
 
   remittance:
     title: Remessas
+    index: Listar Todas as Remessas
     new: Gerar Remessa Santander
     status:
       unprocessed: Pendente
@@ -273,6 +275,17 @@ pt-BR:
       overdue: Vencido
       blocked: Bloqueado
       chargeback: Estornado
+
+  discharge:
+    title: Retornos
+    index: Listar Todos os Retornos
+    sent: Enviar Retorno
+    filename: Nome do Arquivo
+    processed_at: Processado em
+    select_file: Arquivo
+    status:
+      unprocessed: Pendente
+      processed: Processado
 
   activerecord:
     errors:

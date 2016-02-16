@@ -1,0 +1,19 @@
+<div class='title_page'>
+  <span> <%= t('discharge.title') %> </span>
+</div>
+
+<br>
+
+<%= form_tag(create_discharge_path, :html => {:multipart => true}) do |f| %>
+	<div class='section'>
+		<div class='label1 top req'> <%= t('discharge.select_file') %>: 
+		<%= file_field_tag :attached %> </div>
+
+	      <div class="actions">
+	        <div class='buttonbar'>
+	          <%= submit_tag(t('discharge.sent'), class: 'btn-primary') %> ou <%= link_to t('menu.cancel'), discharges_path %>
+	        </div>
+	      </div>
+	</div>
+<% end %>
+
