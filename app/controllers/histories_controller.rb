@@ -16,6 +16,9 @@ class HistoriesController < ApplicationController
   def new
     @history = History.new
     @history.unit_id = session[:unit_id]
+    @history.employee_id = session[:employee_id]
+    @history.taxpayer_id = session[:taxpayer_id]
+    @history.history_date = Time.current
   end
 
   def edit
@@ -27,20 +30,13 @@ class HistoriesController < ApplicationController
     respond_with @history, notice: 'Histórico criado com sucesso.'
   end
 
-  def update
-    @city.update_attributes(city_params)
-    respond_with @city, notice: 'Cidade atualizada com sucesso.'
-  end
-
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_history
       @history = History.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def history_params
-      params.require(:history).permit(:name, :status, :state, :unit_id, :fl_charge)
+      params.require(:history).permit(:description, :history_date, :unit_id, :taxpayer_id, :employee_id)
     end
 end
