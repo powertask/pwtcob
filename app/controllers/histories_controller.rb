@@ -1,5 +1,5 @@
 class HistoriesController < ApplicationController
-  before_action :set_city, only: [:show, :edit, :update, :destroy]
+  before_action :set_history, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   load_and_authorize_resource
   respond_to :html
@@ -7,7 +7,7 @@ class HistoriesController < ApplicationController
 
   def index
     @histories = index_class(History)
-    respond_with @cities, :layout => 'application'
+    respond_with @histories, :layout => 'application'
   end
 
   def show
