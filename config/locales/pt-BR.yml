@@ -267,6 +267,7 @@ pt-BR:
     paid_amount: Valor do Pagamento (R$)
     link: Clique aqui para Visualizar o Boleto
     bankbillet: Boleto
+    cancel: Cancelar
     status:
       generating: Gerando
       opened: Aberto

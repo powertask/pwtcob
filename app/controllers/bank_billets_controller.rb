@@ -16,4 +16,14 @@ class BankBilletsController < ApplicationController
   	respond_with @bank_billet
   end
 
+  def bank_billet_cancel
+    bank_billet = BoletoSimples::BankBillet.find(params[:cod])
+
+    if bank_billet.cancel
+      @response_errors = "Cancelado!"
+    else
+      @response_errors = bank_billet.response_errors
+    end
+  end
+
 end

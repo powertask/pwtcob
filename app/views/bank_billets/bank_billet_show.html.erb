@@ -1,5 +1,9 @@
 <div class='title_tools'>
 	<a class="btn btn-large btn-warning" <%= link_to(t('bank_billet.index'), bank_billets_path) %> </a>
+    <% if @bank_billet.status == 'opened' || @bank_billet.status == 'overdue' %>
+      <a class="btn btn-large btn-danger" <%= link_to t('bank_billet.cancel'), :action => "bank_billet_cancel", :cod => @bank_billet.id %> </a>
+	<% end %>
+
 </div>
 
 <div class='title_page'> <%= t('bank_billet.show') %> </div>
