@@ -56,7 +56,7 @@ pt-BR:
     remove: Apagar
     tickets: Gerar Parcelas
     city: Cidades
-    contract: Contratos
+    contract: Termos
     remittance: Remessas
     bankbillet: Boletos
     discharge: Retornos
@@ -91,7 +91,7 @@ pt-BR:
     cnas: CNAS - Exercícios
     ticket: "Simulação de Pagamentos À Vista ou Parcelados"
     pay: Cobrar
-    ticket_quantity: Quantidade de Parcelas
+    ticket_quantity: Quantidade de Parcelas do Cliente
     unit_ticket_due: Vencimento Inicial GMA
     client_ticket_due: Vencimento Inicial Cliente
     unit_perc: Percentual GMA (%)
@@ -132,7 +132,7 @@ pt-BR:
     amount: "Valor - %{name}"
     unit_fee: "Percentual - %{name}"
     ticket_quantity: "Quantidade de Parcelas - %{name}" 
-    contract_date: Data do Contrato
+    contract_date: Data do Termo
     taxpayer: Contribuinte
     print_pdf: Termo em PDF
     print_transaction_pdf: Termo de Transação

@@ -32,19 +32,28 @@ class ContractsController < ApplicationController
       @contract.unit_id = session[:unit_id]
       @contract.contract_date = Time.now
       @contract.taxpayer_id = cod
+      @contract.employee_id = current_user.employee_id
       
       if session[:tickets].count == 2
-        @contract.unit_amount = session[:total_fee_a_vista]
-        @contract.client_amount = session[:total_cna_a_vista]
+        unit_amount = session[:total_fee_a_vista].to_f
+        @contract.unit_amount = unit_amount.round(2)
+
+        client_amount = session[:total_cna_a_vista].to_f - session[:total_fee_a_vista].to_f
+        @contract.client_amount = client_amount.round(2)
+        
         @contract.client_ticket_quantity = 1
-        @contract.unit_ticket_quantity = 1
+
       else
-        @contract.unit_amount = session[:total_fee_cobrado]
-        @contract.client_amount = session[:total_cna_cobrado]
+        unit_amount = session[:total_fee_cobrado].to_f
+        @contract.unit_amount = unit_amount.round(2)
+
+        client_amount = session[:total_cna_cobrado].to_f - session[:total_fee_cobrado].to_f
+        @contract.client_amount = client_amount.round(2)
+        
         @contract.client_ticket_quantity = session[:tickets].count - 1
-        @contract.unit_ticket_quantity = 1
       end
       
+      @contract.unit_ticket_quantity = 1
       @contract.unit_fee = 10
       @contract.status = 0
 
