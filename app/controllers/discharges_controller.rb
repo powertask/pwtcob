@@ -13,7 +13,12 @@ class DischargesController < ApplicationController
   end
 
   def create_discharge
-  	@discharge = BoletoSimples::Discharge.create(filename: params[:attached], content: 'multipart/form-data')
+
+    f = File.open(params[:attached].tempfile, "r")
+    content = f.read
+    f.close
+
+    @discharge = BoletoSimples::Discharge.create(discharge: params[:attached].tempfile, filename: params[:attached].original_filename, content: content)
 
   	if @discharge.persisted?
   	  puts "Sucesso :)"
