@@ -1,0 +1,38 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('cna.new'), new_cna_path(@taxpayer.id)) %> </a>
+</div>
+
+<div class='title_page'>
+	<span> <%= t('cna.title') %> </span>
+</div>
+
+<div class='list1'>
+	<% unless @cnas.empty? %>
+		<% @cnas.each do |cna| %>
+			<li>
+				<div class='strip' id='none'> <%= cna.id %> </div>
+
+				<div class='tools'>
+					<%= link_to(t('menu.edit'), edit_cna_path(cna), class: "btn btn-xs btn-default") unless cna.contract_id %>
+				</div>
+
+				<div class='indent'>
+					<%= cna.year %>
+          &ndash;
+          <%= cna.nr_document %>
+          &ndash;
+          <%= cna.amount.real_contabil %>
+          &ndash;
+          <%=  t('cna.stage.' << cna.stage) %>
+          &ndash;
+          <%=  t('cna.status.' << cna.status) %>
+          &ndash;
+          <%=  'Contrato nro ' << cna.contract_id.to_s if cna.contract_id %>
+					<tt></tt>
+					<dt></dt>
+				</div>
+			</li>
+		<% end %>
+	<% end %>
+</div>
+

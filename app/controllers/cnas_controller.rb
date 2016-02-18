@@ -5,7 +5,7 @@ class CnasController < ApplicationController
   layout 'window'
 
   def index
-    @cnas = index_class(Cna)
+    @cnas = Cna.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
     respond_with @cnas, :layout => 'application'
   end
 
@@ -16,33 +16,36 @@ class CnasController < ApplicationController
 
   def new
     @cna = Cna.new
-    respond_with @cna
+    @cna.unit_id = session[:unit_id]
+    @cna.taxpayer_id = params[:format]
   end
 
   def edit
     @cna = Cna.find(params[:id])
-    taxpayer = @cna.taxpayer.id
-    @taxpayer = Taxpayer.find(taxpayer)
   end
 
   def create
     @cna = Cna.new(cna_params)
     @cna.unit_id = session[:unit_id]
+    @cna.stage = 1
+    @cna.status = 0
+    @cna.fl_charge = 0
+    @cna.start_at = Date.current
+    @cna.due_at = Date.new(@cna.year, 5, 22)
     @cna.save!
-    respond_with @cna
-    
-  rescue ActiveRecord::RecordInvalid => exception
-    respond_with @cna
+
+    @taxpayer = Taxpayer.find(@cna.taxpayer_id)
+    respond_with @taxpayer
   end
 
   def update
     @cna = Cna.find(params[:id])
     @cna.update_attributes(cna_params)
-    redirect_to( deal_url(cod: @cna.taxpayer.id))
+    redirect_to( taxpayer_path(@cna.taxpayer.id))
   end
 
   private
     def cna_params
-      params.require(:cna).permit(:fl_charge, :amount, :status, :stage)
+      params.require(:cna).permit(:fl_charge, :amount, :status, :stage, :nr_document, :taxpayer_id, :unit_id, :year)
     end
 end

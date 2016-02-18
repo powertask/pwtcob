@@ -1,14 +1,18 @@
+<div class='section'>
+  <div class='label1 top req'> <%=t("taxpayer.id") %>: </div>  <%= @cna.taxpayer.id %>
+  <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>  <%= @cna.taxpayer.origin_code %>
+  <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>  <%= @cna.taxpayer.name %>
+  <div class='label1 top req'> <%=t("cna.id") %>: </div>  <%= @cna.id %>
+</div>
+<br>
+
 <%= simple_form_for(@cna) do |f| %>
 	<div class='section'>
-    <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>        <%= @taxpayer.name %>
-  </div>
-  <div class='section'>
-    <div class='label1 top req'> <%=t("cna.year") %>: </div>        <%= @cna.year %>
-		<div class='label1 top req'> <%=t("cna.nr_document") %>: </div> <%= @cna.nr_document %>
-		<div class='label1 top req'> <%=t("cna.due_at") %>: </div> 			<%= @cna.due_at.to_s_br %>
-		<div class='label1 top req'> <%=t("cna.amount") %>: </div> 			<%= @cna.amount %>
-
-		<%= f.input :fl_charge, :label => t('cna.charge') %>
+    <%= f.input :unit_id, as: :hidden %>
+    <%= f.input :taxpayer_id, as: :hidden %>
+    <%= f.input :year, :label => t('cna.year'), input_html:{:class => 'form-control'} %>
+    <%= f.input :nr_document, :label => t('cna.nr_document'), input_html:{:class => 'form-control'} %>
+    <%= f.input :amount, :label => t('cna.amount'), input_html:{:class => 'form-control'} %>
 
 		<div class="actions">
 			<div class='buttonbar'>

@@ -12,7 +12,8 @@
   <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
   <div class='label1 top req'> <%=t("status") %>: </div>          <%= t('contract.status.' << @contract.status) %>
   <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>          <%= @contract.contract_date.to_s_br %>
-	<div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>				        <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name %>
+  <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>               <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name %>
+  <div class='label1 top req'> <%=t("contract.employee") %>: </div> <%= @contract.employee ? @contract.employee.name : 'ADMIN'  %>
 	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>: </div>           <%= @contract.unit_amount.real %>
 	<div class='label1 top req'> <%=t("contract.unit_fee", name: @contract.unit.name) %>: </div>				        <%= @contract.unit_fee.real %>
 	<div class='label1 top req'> <%=t("contract.ticket_quantity", name: @contract.unit.name) %>: </div>	 <%= @contract.unit_ticket_quantity %>
