@@ -13,6 +13,8 @@ class TaxpayersController < ApplicationController
   def show
     @taxpayer = Taxpayer.find(params[:id])
     @taxpayer_contacts = TaxpayerContact.where('taxpayer_id = ?', @taxpayer.id)
+    @cnas = Cna.where('taxpayer_id = ?', @taxpayer.id).order('year ASC')
+
     respond_with @taxpayer
   end
 

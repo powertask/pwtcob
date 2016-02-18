@@ -6,6 +6,7 @@
 <div class='title_page'> <%= t('taxpayer.show') %> </div>
 
 <div class='section'>
+	<div class='label1 top req'> <%=t("id") %>: </div>	<%= @taxpayer.id %>
 	<div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>	<%= @taxpayer.origin_code %>
 	<div class='label1 top req'> <%=t("employee.name") %>: </div>	<%= @taxpayer.employee.name if @taxpayer.employee.present?%>
 	<div class='label1 top req'> <%=t("client.name") %>: </div>				<%= @taxpayer.client.name %>
@@ -19,4 +20,6 @@
 	<div class='label1 top req'> <%=t("phone") %>: </div>					<%= @taxpayer.phone %>
 </div>
 
+<%= render 'cnas' %>
+<br>
 <%= render 'contacts' %>

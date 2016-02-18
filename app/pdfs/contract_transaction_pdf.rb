@@ -32,11 +32,11 @@ class ContractTransactionPdf < Prawn::Document
     move_down 5
     stroke_horizontal_rule
     move_down 5
-    text "<b> #{@contract.client_amount.real_contabil} ACRESCIDO DE #{@contract.unit_amount.real_contabil} (#{@contract.unit_amount.to_f.round(2).por_extenso_em_reais}) REFERENTE A HONORÁRIOS ADVOCATÍCIOS </b>", size: 9.5, :inline_format => true
+    text "<b> #{@contract.client_amount.real_contabil} (#{@contract.client_amount.to_f.round(2).por_extenso_em_reais}) </b>", size: 9.5, :inline_format => true
     move_down 5
     stroke_horizontal_rule
     move_down 5
-    text "referente aos exercícios de", size: 9.5
+    text "referente ao(s) exercício(s) de ", size: 9.5
     move_down 5
     stroke_horizontal_rule
     move_down 5

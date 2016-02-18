@@ -101,7 +101,10 @@ pt-BR:
     delete_contract: Deletar Termo
 
   cna:
+    id: ID da CNA
+    title: CNAs do Contribuinte
     edit: Editar Dados da CNA
+    new: Cadastrar Nova CNA
     year: Exercício
     amount: Valor CNA
     due_at: Vencimento
@@ -137,6 +140,7 @@ pt-BR:
     print_pdf: Termo em PDF
     print_transaction_pdf: Termo de Transação
     bankbillet: Boleto
+    employee: Colaborador Responsável
     status:
       active: ATIVO
       cancel: CANCELADO
@@ -174,6 +178,7 @@ pt-BR:
     search: Procurar por Colaborador
 
   taxpayer:
+    id: ID do Contribuinte
     title: Cadastro de Contribuintes
     new: Novo Contribuinte
     edit: Editar Dados do Contribuinte
@@ -233,7 +238,7 @@ pt-BR:
 
   taxpayer_contact:
     title: Contatos no Contribuinte
-    new: Novo Contato
+    new: Cadastrar Novo Contato
     edit: Editar Dados do Contato
     index: Listar Todos os Contatos
     create: Gravar Dados do Contato
