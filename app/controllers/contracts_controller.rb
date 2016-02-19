@@ -138,7 +138,7 @@ class ContractsController < ApplicationController
     respond_to do |format|
       format.pdf do
       pdf = ContractTransactionPdf.new(unit, contract, tickets, cnas, view_context)
-      send_data pdf.render, filename: contract.taxpayer.name << " - Termo de Acordo",
+      send_data pdf.render, filename: contract.taxpayer.name << " - Termo de Acordo.PDF",
                             type: "application/pdf",
                             disposition: "attachment"
       end
