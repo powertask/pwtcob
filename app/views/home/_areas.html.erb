@@ -23,12 +23,25 @@
           <td><%= area.name %> </td>
           <td><%= area.address << ' - ' << area.city << ' - ' << area.state %> </td>
           <td><%= area.vtnt.real %> </td>
-          <td><%= area.area %> </td>
-          <td><%= area.modulo %></td>
-          <td><%= area.degree_of_use %></td>
-          <td><%= area.usable_area %></td>
+          <td><%= area.area.real %> </td>
+          <td><%= area.modulo.real %></td>
+          <td><%= area.degree_of_use.real %></td>
+          <td><%= area.usable_area.real %></td>
         </tr>
       <% end %>
     <% end %>
   </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= @areas.map{|i|i[:vtnt]}.inject(:+).real if @areas %></td>
+      <td><%= @areas.map{|i|i[:area]}.inject(:+).real if @areas %></td>
+      <td><%= @areas.map{|i|i[:modulo]}.inject(:+).real if @areas %></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>  
 </table>
