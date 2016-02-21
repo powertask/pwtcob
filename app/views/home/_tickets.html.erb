@@ -17,9 +17,9 @@
   </thead>
   <tfoot>
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Totais</td>
+      <td><%= @tickets.map{|i|i[:unit_amount]}.inject(:+).real if @tickets %></td>
+      <td><%= @tickets.map{|i|i[:client_amount]}.inject(:+).real if @tickets %></td>
       <td></td>
     </tr>
   </tfoot>  
