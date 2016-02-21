@@ -63,7 +63,6 @@
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
     @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('created_at DESC')
     @contracts = Contract.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
-    @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
     
     clear_variable_session()
 
@@ -75,6 +74,7 @@
 
   def deal
     @taxpayer = Taxpayer.find(params[:cod])
+    @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
 
     if @taxpayer.city.present?
       if @taxpayer.city.fl_charge == false

@@ -72,168 +72,124 @@
 
     <div class="col-sm-6 col-md-9">
 
-      <div class="panel panel-primary">
-
-
-        <div class='title_tools'>
-          <% if @taxpayer.city.present? and @taxpayer.city.fl_charge %>
-            <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
-          <% else %>
-            <a class="btn btn-large btn-danger"> <%= "Cidade não liberado para cobrança" %> </a>
+      <div class='title_tools'>
+        <% if @taxpayer.city.present? and @taxpayer.city.fl_charge %>
+          <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
+        <% else %>
+          <a class="btn btn-large btn-danger"> <%= "Cidade não liberado para cobrança" %> </a>
+        <% end %>
+      </div>
+      
+      <div class='title_page'> <%= t('home.cna.title') %> </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Ano</th>
+            <th>Num Doc</th>
+            <th>Vencimento</th>
+            <th>Valor CNA</th>
+            <th>Meses</th>
+            <th>Multa</th>
+            <th>Juros</th>
+            <th>Valor GUIA</th>
+            <th><%= t('stage') %></th>
+            <th><%= t('status') %></th>
+            <th>Termo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% unless @cnas.nil? %>
+            <% @cnas.each do |cna| %>
+              <tr>
+                <td><%= cna.year %> </td>
+                <td><%= cna.nr_document %> </td>
+                <td><%= cna.due_at.to_date.to_s_br %> </td>
+                <td><%= cna.amount.real %> </td>
+                <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
+                <td><%= calc_multa(cna, nil, nil).real %> </td>
+                <td><%= calc_juros(cna, nil, nil).real %> </td>
+                <td><%= calc_cna(cna, nil, nil).real %> </td>
+                <td><%= t('cna.stage.'<<cna.stage) %> </td>
+                <td><%= t('cna.status.'<<cna.status) %> </td>
+                <td><%= cna.contract_id %> </td>
+              </tr>
+            <% end %>
           <% end %>
-        </div>
-        
-        <div class='title_page'> <%= t('home.cna.title') %> </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Ano</th>
-              <th>Num Doc</th>
-              <th>Vencimento</th>
-              <th>Valor CNA</th>
-              <th>Meses</th>
-              <th>Multa</th>
-              <th>Juros</th>
-              <th>Valor GUIA</th>
-              <th><%= t('stage') %></th>
-              <th><%= t('status') %></th>
-              <th>Termo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% unless @cnas.nil? %>
-              <% @cnas.each do |cna| %>
-                <tr>
-                  <td><%= cna.year %> </td>
-                  <td><%= cna.nr_document %> </td>
-                  <td><%= cna.due_at.to_date.to_s_br %> </td>
-                  <td><%= cna.amount.real %> </td>
-                  <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
-                  <td><%= calc_multa(cna, nil, nil).real %> </td>
-                  <td><%= calc_juros(cna, nil, nil).real %> </td>
-                  <td><%= calc_cna(cna, nil, nil).real %> </td>
-                  <td><%= t('cna.stage.'<<cna.stage) %> </td>
-                  <td><%= t('cna.status.'<<cna.status) %> </td>
-                  <td><%= cna.contract_id %> </td>
-                </tr>
-              <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><%= session[:value_cna].real %></td>
+            <td></td>
+            <td> <%= session[:total_multa].real %> </td>
+            <td> <%= session[:total_juros].real %> </td>
+            <td> <%= session[:total_cna].real %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>  
+      </table>
+
+      <div class='title_page'> <%= t('home.contract.title') %> </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Termo</th>
+            <th>Situação</th>
+            <th>Data Contrato</th>
+            <th>Parcelas GMA</th>
+            <th>Valor GMA</th>
+            <th>Parcelas Federação</th>
+            <th>Valor Federação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% unless @contracts.nil? %>
+            <% @contracts.each do |contract| %>
+              <tr>
+                <td><%= contract.id %> </td>
+                <% if contract.active? %>
+                  <td><%= link_to(t('contract.status.' << contract.status) << ' - Ver Termo', contract_path(contract)) %> </td>
+                <% else %>
+                  <td><%= t('contract.status.' << contract.status) %></td>
+                <% end %>
+                <td><%= contract.contract_date.to_s_br %> </td>
+                <td><%= contract.unit_ticket_quantity %> </td>
+                <td><%= contract.unit_amount.real %> </td>
+                <td><%= contract.client_ticket_quantity %> </td>
+                <td><%= contract.client_amount.real %> </td>
+              </tr>
             <% end %>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><%= session[:value_cna].real %></td>
-              <td></td>
-              <td> <%= session[:total_multa].real %> </td>
-              <td> <%= session[:total_juros].real %> </td>
-              <td> <%= session[:total_cna].real %></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>  
-        </table>
+          <% end %>
+        </tbody>
+      </table>
 
-        <br>
-        <div class='title_page'> <%= t('home.area.title') %> </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Ano</th>
-              <th>Num Doc</th>
-              <th>Nome</th>
-              <th>Endereço</th>
-              <th>VTNT</th>
-              <th>Área</th>
-              <th>Módulos Rurais</th>
-              <th>Grau Util</th>
-              <th>Área Usada</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% unless @areas.nil? %>
-              <% @areas.each do |area| %>
-                <tr>
-                  <td><%= area.year %> </td>
-                  <td><%= area.nr_document %> </td>
-                  <td><%= area.name %> </td>
-                  <td><%= area.address << ' - ' << area.city << ' - ' << area.state %> </td>
-                  <td><%= area.vtnt.real %> </td>
-                  <td><%= area.area %> </td>
-                  <td><%= area.modulo %></td>
-                  <td><%= area.degree_of_use %></td>
-                  <td><%= area.usable_area %></td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
-
-        <br>
-        <div class='title_page'> <%= t('home.contract.title') %> </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Termo</th>
-              <th>Situação</th>
-              <th>Data Contrato</th>
-              <th>Parcelas GMA</th>
-              <th>Valor GMA</th>
-              <th>Parcelas Federação</th>
-              <th>Valor Federação</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% unless @contracts.nil? %>
-              <% @contracts.each do |contract| %>
-                <tr>
-                  <td><%= contract.id %> </td>
-                  <% if contract.active? %>
-                    <td><%= link_to(t('contract.status.' << contract.status) << ' - Ver Termo', contract_path(contract)) %> </td>
-                  <% else %>
-                    <td><%= t('contract.status.' << contract.status) %></td>
-                  <% end %>
-                  <td><%= contract.contract_date.to_s_br %> </td>
-                  <td><%= contract.unit_ticket_quantity %> </td>
-                  <td><%= contract.unit_amount.real %> </td>
-                  <td><%= contract.client_ticket_quantity %> </td>
-                  <td><%= contract.client_amount.real %> </td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
-
-
-        <br>
-        <div class='title_tools'>
-            <a class="btn btn-large btn-warning" <%= link_to(t('home.history.new'), new_history_path) %> </a>
-        </div>
-
-        <div class='title_page'> <%= t('home.history.title') %> </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Histórico</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% unless @histories.nil? %>
-              <% @histories.each do |history| %>
-                <tr>
-                  <td><%= history.created_at.to_s_br %> </td>
-                  <td><%= history.description %> </td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
-
+      <div class='title_tools'>
+          <a class="btn btn-large btn-warning" <%= link_to(t('home.history.new'), new_history_path) %> </a>
       </div>
 
+      <div class='title_page'> <%= t('home.history.title') %> </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Histórico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% unless @histories.nil? %>
+            <% @histories.each do |history| %>
+              <tr>
+                <td><%= history.created_at.to_s_br %> </td>
+                <td><%= history.description %> </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
 
     </div>
   </div>

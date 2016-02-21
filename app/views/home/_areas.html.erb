@@ -1,0 +1,34 @@
+<div class='subtitle'> <%= t('home.area.title') %> </div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Ano</th>
+      <th>Num Doc</th>
+      <th>Nome</th>
+      <th>Endereço</th>
+      <th>VTNT</th>
+      <th>Área</th>
+      <th>Módulos Rurais</th>
+      <th>Grau Util</th>
+      <th>Área Usada</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @areas.nil? %>
+      <% @areas.each do |area| %>
+        <tr>
+          <td><%= area.year %> </td>
+          <td><%= area.nr_document %> </td>
+          <td><%= area.name %> </td>
+          <td><%= area.address << ' - ' << area.city << ' - ' << area.state %> </td>
+          <td><%= area.vtnt.real %> </td>
+          <td><%= area.area %> </td>
+          <td><%= area.modulo %></td>
+          <td><%= area.degree_of_use %></td>
+          <td><%= area.usable_area %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
