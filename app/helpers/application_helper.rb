@@ -92,6 +92,8 @@ module ApplicationHelper
                                          session[:total_correcao_cobrado].to_f + 
                                          session[:total_multa_a_vista].to_f + 
                                          session[:total_juros_a_vista].to_f 
+                                         
+      session[:total_cna_sem_fee_a_vista] = session[:total_cna_a_vista].to_f
       
       session[:total_fee_a_vista]      = Unit.unit_fee(session[:unit_id], session[:total_cna_a_vista])
       session[:total_cna_a_vista]      = session[:total_cna_a_vista].to_f + session[:total_fee_a_vista].to_f
