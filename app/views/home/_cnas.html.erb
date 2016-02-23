@@ -80,26 +80,41 @@
     <li role="presentation" class="active">
       <a href="#">
         <span class="badge">Parcelado</span>
-        <table>
-          <tbody>
-            <tr>
-              <td>Valor CNA: R$ <%= session[:value_cna_cobrado].real.to_s %></td>
-              <td>Valor Cliente: <span class="badge">R$ <%= session[:total_cna_sem_fee_cobrado].real.to_s %> </span></td>
-            </tr>
-            <tr>
-              <td>Correção: R$ <%= session[:total_correcao_cobrado].real.to_s %></td>
-              <td>Valor GMA:<span class="badge">R$ <%= session[:total_fee_cobrado].real.to_s %></span></td>
-            </tr>
-            <tr>
-              <td>Multa: R$ <%= session[:total_multa_cobrado].real.to_s %></td>
-              <td>Valor Total:<span class="badge">R$ <%= session[:total_cna_cobrado].real.to_s %></span></td>
-            </tr>
-            <tr>
-              <td>Juros: R$ <%= session[:total_juros_cobrado].real.to_s %></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        
+        Valor CNA:
+        <span class="badge">
+          <%= session[:value_cna_cobrado].real.to_s %>
+        </span>
+        
+        Correção: 
+        <span class="badge">
+          <%= session[:total_correcao_cobrado].real.to_s %>
+        </span>
+
+        Multa:
+        <span class="badge">
+          <%= session[:total_multa_cobrado].real.to_s %>
+        </span>
+        
+        Juros:
+        <span class="badge">
+          <%= session[:total_juros_cobrado].real.to_s %>
+        </span>
+        
+        Valor Cliente:
+        <span class="badge">
+          <%= session[:total_cna_sem_fee_cobrado].real.to_s %>
+        </span>
+        
+        Valor GMA:
+        <span class="badge">
+          <%= session[:total_fee_cobrado].real.to_s %>
+        </span>
+        
+        Valor Total:
+        <span class="badge">
+          <%= session[:total_cna_cobrado].real.to_s %>
+        </span>
       </a>
     </li>
   </ul>
