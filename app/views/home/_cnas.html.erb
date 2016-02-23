@@ -81,37 +81,37 @@
       <a href="#">
         <span class="badge">Parcelado</span>
         
-        Valor CNA:
+        Valor CNA
         <span class="badge">
           <%= session[:value_cna_cobrado].real.to_s %>
         </span>
         
-        Correção: 
+        Correção
         <span class="badge">
           <%= session[:total_correcao_cobrado].real.to_s %>
         </span>
 
-        Multa:
+        Multa
         <span class="badge">
           <%= session[:total_multa_cobrado].real.to_s %>
         </span>
         
-        Juros:
+        Juros
         <span class="badge">
           <%= session[:total_juros_cobrado].real.to_s %>
         </span>
-        
-        Valor Cliente:
+        <br>
+        Valor Cliente
         <span class="badge">
           <%= session[:total_cna_sem_fee_cobrado].real.to_s %>
         </span>
         
-        Valor GMA:
+        Valor GMA
         <span class="badge">
           <%= session[:total_fee_cobrado].real.to_s %>
         </span>
         
-        Valor Total:
+        Valor Total
         <span class="badge">
           <%= session[:total_cna_cobrado].real.to_s %>
         </span>
