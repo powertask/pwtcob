@@ -79,14 +79,12 @@
   <ul class="nav nav-pills" role="tablist">
     <li role="presentation" class="active">
       <a href="#">
-        <span class="badge"> Parcelado</span>
-        Valor CNA:<span class="badge"> R$ <%= session[:value_cna_cobrado].real.to_s %></span>
-        Correção:
-        <span class="badge">
-          R$ <%= session[:total_correcao_cobrado].real.to_s %>
-        </span>
-        Multa:<span class="badge"> R$ <%= session[:total_multa_cobrado].real.to_s %></span>
-        Juros:<span class="badge"> R$ <%= session[:total_juros_cobrado].real.to_s %></span>
+        <span class="badge">Parcelado</span>
+        Valor CNA: R$ <%= session[:value_cna_cobrado].real.to_s %>
+        Correção: R$ <%= session[:total_correcao_cobrado].real.to_s %>
+        Multa: R$ <%= session[:total_multa_cobrado].real.to_s %>
+        Juros: R$ <%= session[:total_juros_cobrado].real.to_s %>
+        Valor Cliente: <span class="badge">R$ <%= session[:total_cna_sem_fee_cobrado].real.to_s %> </span>
         Valor GMA:<span class="badge">R$ <%= session[:total_fee_cobrado].real.to_s %></span>
         Valor Total:<span class="badge">R$ <%= session[:total_cna_cobrado].real.to_s %></span>
       </a>
