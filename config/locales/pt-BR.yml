@@ -253,6 +253,7 @@ pt-BR:
     title: Remessas
     index: Listar Todas as Remessas
     new: Gerar Remessa Santander
+    bank_billet_account: Carteira de Cobrança
     status:
       unprocessed: Pendente
       processed: Processado
@@ -273,6 +274,7 @@ pt-BR:
     link: Clique aqui para Visualizar o Boleto
     bankbillet: Boleto
     cancel: Cancelar
+    view: Visualizar Boleto
     status:
       generating: Gerando
       opened: Aberto

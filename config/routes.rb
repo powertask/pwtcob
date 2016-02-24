@@ -43,7 +43,8 @@ Rails.application.routes.draw do
   get 'contract/:cod/contract_pdf' => 'contracts#contract_pdf', as: :contract_pdf
   get 'contract/:cod/contract_transaction_pdf' => 'contracts#contract_transaction_pdf', as: :contract_transaction_pdf
   get 'contract/:cod/create_bank_billet' => 'contracts#create_bank_billet', as: :create_bank_billet
-  get 'remittance/remittance_create' => 'remittances#remittance_create', as: :remittance_create
+  post 'remittance/remittance_create' => 'remittances#remittance_create', as: :remittance_create
+  get 'remittance/remittance_new' => 'remittances#remittance_new', as: :remittance_new
   get 'remittance/:cod/remittance_download' => 'remittances#remittance_download', as: :remittance_download
   get 'bank_billet/:cod/bank_billet_show' => 'bank_billets#bank_billet_show', as: :bank_billet_show
   get 'bank_billet/:cod/bank_billet_cancel' => 'bank_billets#bank_billet_cancel', as: :bank_billet_cancel

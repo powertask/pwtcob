@@ -151,6 +151,8 @@ class ContractsController < ApplicationController
     if ticket.bank_billet_id.blank? || ticket.bank_billet_id.nil?
       @contract = Contract.find(ticket.contract_id)
       taxpayer = Taxpayer.find(@contract.taxpayer_id)
+      client = Client.find(taxpayer.client_id)
+      bank_billet_account = BankBilletAccount.find(client.bank_billet_account_id)
       cna = Cna.select('year').where('contract_id = ?', ticket.contract_id)
 
       if taxpayer.cpf.present?
@@ -173,14 +175,14 @@ class ContractsController < ApplicationController
                           customer_person_type: 'individual',
                           customer_state: taxpayer.city.state,
                           customer_zipcode: taxpayer.zipcode,
-                          bank_billet_account_id: 21,
+                          bank_billet_account_id: (ticket.ticket_type == 'client' ? bank_billet_account.bank_billet_account : session[:unit_bank_billet_account]),
                           instructions: 'Parcela ' << ticket.ticket_number.to_s << ' referente ao(s) ano(s) de ' << cna.collect {|i| i.year}.sort.join(',')
                         })
 
         if bank_billet.persisted?
           ticket.bank_billet_id = bank_billet.id
           ticket.save!
-          redirect_to bank_billet.formats["pdf"]
+          @url = bank_billet.formats["pdf"]
         else
           puts "Erro :("
           puts bank_billet.response_errors
@@ -189,7 +191,7 @@ class ContractsController < ApplicationController
     else
       @contract = Contract.find(ticket.contract_id)
       bank_billet = BoletoSimples::BankBillet.find(ticket.bank_billet_id)
-      redirect_to bank_billet.formats["pdf"]
+      @url = bank_billet.formats["pdf"]
     end
   end
 

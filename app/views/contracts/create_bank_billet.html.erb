@@ -1,4 +1,5 @@
-Boleto criado com sucesso!
+<h4/>Boleto criado com sucesso!
 
-</p>
-<%= link_to(t('contract.show'), contract_path(@contract.id)) %>
+</br></br></br>
+<a class="btn btn-large btn-warning" <%= link_to(t('bank_billet.view'), @url, :target => "_blank") %> </a>
+<a class="btn btn-large btn-warning" <%= link_to(t('contract.show'), contract_path(@contract.id)) %> </a>

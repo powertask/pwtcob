@@ -6,6 +6,7 @@
   def index
   	session[:unit_id] = current_user.unit.id
   	session[:unit_name] = current_user.unit.name
+    session[:unit_bank_billet_account] = 21
     session[:employee_id] = current_user.employee_id
     session[:taxpayer_id] = nil
   end

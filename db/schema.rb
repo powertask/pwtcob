@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210232259) do
+ActiveRecord::Schema.define(version: 20160223235111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20160210232259) do
 
   add_index "areas", ["taxpayer_id"], name: "index_areas_on_taxpayer_id", using: :btree
   add_index "areas", ["unit_id"], name: "index_areas_on_unit_id", using: :btree
+
+  create_table "bank_billet_accounts", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.string   "name"
+    t.integer  "bank_billet_account"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "bank_billet_accounts", ["unit_id"], name: "index_bank_billet_accounts_on_unit_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -63,11 +73,14 @@ ActiveRecord::Schema.define(version: 20160210232259) do
     t.string   "neighborhood"
     t.string   "phone"
     t.string   "email"
-    t.decimal  "fee",          precision: 5, scale: 2
+    t.decimal  "fee",                    precision: 5, scale: 2
     t.integer  "unit_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "bank_billet_account_id"
   end
+
+  add_index "clients", ["bank_billet_account_id"], name: "index_clients_on_bank_billet_account_id", using: :btree
 
   create_table "cnas", force: :cascade do |t|
     t.integer  "unit_id"
@@ -306,6 +319,8 @@ ActiveRecord::Schema.define(version: 20160210232259) do
 
   add_foreign_key "areas", "taxpayers"
   add_foreign_key "areas", "units"
+  add_foreign_key "bank_billet_accounts", "units"
+  add_foreign_key "clients", "bank_billet_accounts"
   add_foreign_key "indices", "units"
   add_foreign_key "inpcs", "units"
   add_foreign_key "lawyers", "units"

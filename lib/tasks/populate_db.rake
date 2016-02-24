@@ -328,5 +328,11 @@ namespace :populate_db do
 		City.create!(:name => 'XAXIM', :state => 'SC', :unit_id => 1, :fl_charge => 0) if City.find_by( name: 'XAXIM').blank?
 		City.create!(:name => 'ZORTEA', :state => 'SC', :unit_id => 1, :fl_charge => 0) if City.find_by( name: 'ZORTEA').blank?
 	end
+
+  desc "create bank billet account"
+    task :create_bank_billet_account => :environment do
+		BankBilletAccount.create!(:unit_id => 1, :name => 'Santander 101 - CC 013002997-7', :bank_billet_account => 21)
+		BankBilletAccount.create!(:unit_id => 1, :name => 'Banco do Brasil 17 - CC 00011672-6', :bank_billet_account => 47)
+    end
 end
 

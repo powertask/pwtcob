@@ -9,8 +9,12 @@ class RemittancesController < ApplicationController
     respond_with @remittances, :layout => 'application'
   end
 
+  def remittance_new
+  end
+
   def remittance_create
-  	@remittance = BoletoSimples::Remittance.create(bank_billet_account_id: 21)
+    bank_billet_account = BankBilletAccount.find(params[:bank_billet_account])
+    @remittance = BoletoSimples::Remittance.create(bank_billet_account_id: bank_billet_account.bank_billet_account)
 
   	if @remittance.persisted?
   	  puts "Sucesso :)"

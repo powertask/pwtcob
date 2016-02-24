@@ -10,6 +10,7 @@
 		<%= f.input :state, :label => t('state'), input_html: { :class => 'form-control' }  %>
 		<%= f.input :phone, :label => t('phone'), input_html: { :class => 'form-control' } %>
 		<%= f.input :email, :label => t('email'), input_html: { :class => 'form-control' }%>
+		<%= f.association :bank_billet_account, :collection => BankBilletAccount.list(session[:unit_id]), :prompt => t('choose'), :label => t('bank_billet_account.name') %>
 
 		<div class="actions">
 			<div class='buttonbar'>

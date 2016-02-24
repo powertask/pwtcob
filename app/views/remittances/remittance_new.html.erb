@@ -1,0 +1,19 @@
+<div class='title_page'>
+  <span> <%= t('remittance.title') %> </span>
+</div>
+
+<br>
+
+<%= form_tag(remittance_create_path) do |f| %>
+	<div class='section'>
+		<div class='label1 top req'> <%= t('remittance.bank_billet_account') %>: </div>
+		<%= select_tag(:bank_billet_account, options_for_select(BankBilletAccount.where('unit_id = ?', session[:unit_id]).collect{|e| [e.name, e.id]})) %>
+
+		<div class="actions">
+			<div class='buttonbar'>
+			  <%= submit_tag(t('remittance.new'), class: 'btn-primary') %> ou <%= link_to t('menu.cancel'), remittances_path %>
+			</div>
+		</div>
+	</div>
+<% end %>
+
