@@ -74,6 +74,12 @@
 
 
   def deal
+    if current_user.client?
+      flash[:alert] = "Não permitido acessar Ambiente de Negociações!"
+      redirect_to show_path(params[:cod]) and return 
+    end
+
+
     @taxpayer = Taxpayer.find(params[:cod])
     @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
 

@@ -5,7 +5,7 @@ class ContractsController < ApplicationController
   layout 'window'
 
   def index
-    if current_user.admin?
+    if current_user.admin? || current_user.client?
       @contracts = Contract.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
     else
       @contracts = Contract.where("unit_id = ? AND employee_id = ?", session[:unit_id], current_user.employee_id).paginate(:page => params[:page], :per_page => 20)

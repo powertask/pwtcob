@@ -7,6 +7,6 @@ class User < ActiveRecord::Base
   belongs_to :unit
   belongs_to :employee
 
-  enum profile: [:admin, :user]
+  enum profile: [:admin, :user, :client]
 
 end

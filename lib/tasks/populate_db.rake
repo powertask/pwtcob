@@ -27,6 +27,11 @@ namespace :populate_db do
 		User.create!(:password => 'SilvaneSchneider', :email => 'silvane.schneider@gianellimartins.com.br', :password_confirmation => 'SilvaneSchneider', :unit_id => 1, :profile => 1, :employee_id => 26)
     end
 
+    desc "create users faesc"
+    task :create_user_faesc => :environment do
+		User.create!(:password => 'AndreiaFaesc', :email => 'andreia@faesc.com.br', :password_confirmation => 'AndreiaFaesc', :unit_id => 1, :profile => 2, :employee_id => 3)
+	end
+
 	desc "allocate employees"
 	task :allocate_employess => :environment do
 		cnas = Cna.find_by_sql('select c.taxpayer_id, count(*), sum(c.amount) from cnas c, taxpayers t where c.taxpayer_id = t.id and t.employee_id is null group by taxpayer_id order by 3 DESC')

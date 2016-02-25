@@ -63,6 +63,7 @@ pt-BR:
 
   home:
     title: Agenda do Colaborador
+    title_client: Acesso Cliente
     deal: Ir para Ambiente de Negociações
     taxpayer: Contribuinte
     name: Nome do Contribuinte
