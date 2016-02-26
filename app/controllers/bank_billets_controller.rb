@@ -5,7 +5,7 @@ class BankBilletsController < ApplicationController
   layout 'window'
 
   def index
-    @bank_billets = BankBillet.where("unit_id = ?", session[:unit_id]).order('expire_at ASC').paginate(:page => params[:page], :per_page => 20)
+    @bank_billets = BankBillet.where("unit_id = ?", session[:unit_id]).order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
     respond_with @bank_billets, :layout => 'application'
   end
 
