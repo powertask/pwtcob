@@ -33,7 +33,6 @@
       <th>Valor de Parcela GMA</th>
       <th>Situação do Boleto</th>
       <th>Data do Pagamento</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -44,8 +43,8 @@
           <td><%= ticket.due.to_date.to_s_br %> </td>
           <td><%= ticket.amount.real if ticket.client? %> </td>
           <td><%= ticket.amount.real if ticket.unit? %> </td>
-          <td><%= 'Emitido' if ticket.bank_billet_id.present? %> </td>
-          <td></td>
+          <td><%= t('bank_billet.status.'<< ticket.bank_billet.status) if ticket.bank_billet.present? %> </td>
+          <td><%= ticket.bank_billet.paid_at.to_s_br if ticket.bank_billet.present? %></td>
           <td>
           <div class='tools'>
             <a class="btn btn-xs btn-default" <%= link_to(t('contract.bankbillet'), :action => "create_bank_billet", :cod => ticket.id) %> </a>

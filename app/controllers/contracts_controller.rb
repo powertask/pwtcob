@@ -153,6 +153,7 @@ class ContractsController < ApplicationController
       taxpayer = Taxpayer.find(@contract.taxpayer_id)
       client = Client.find(taxpayer.client_id)
       bank_billet_account = BankBilletAccount.find(client.bank_billet_account_id)
+      bank_billet_account_unit = BankBilletAccount.find_by(bank_billet_account: session[:unit_bank_billet_account])
       cna = Cna.select('year').where('contract_id = ?', ticket.contract_id)
 
       if taxpayer.cpf.present?
@@ -175,14 +176,33 @@ class ContractsController < ApplicationController
                           customer_person_type: 'individual',
                           customer_state: taxpayer.city.state,
                           customer_zipcode: taxpayer.zipcode,
-                          bank_billet_account_id: (ticket.ticket_type == 'client' ? bank_billet_account.bank_billet_account : session[:unit_bank_billet_account]),
+                          bank_billet_account_id: (ticket.ticket_type == 'client' ? bank_billet_account.bank_billet_account : bank_billet_account_unit.bank_billet_account),
                           instructions: 'Parcela ' << ticket.ticket_number.to_s << ' referente ao(s) ano(s) de ' << cna.collect {|i| i.year}.sort.join(',')
                         })
 
         if bank_billet.persisted?
-          ticket.bank_billet_id = bank_billet.id
+          
+          bank_billet_pwt = BankBillet.new( :unit_id => session[:unit_id], 
+                                            :bank_billet_account_id => (ticket.ticket_type == 'client' ? bank_billet_account.id : bank_billet_account_unit.id), 
+                                            :origin_code => bank_billet.id, 
+                                            :our_number => bank_billet.our_number, 
+                                            :amount => bank_billet.amount, 
+                                            :expire_at => bank_billet.expire_at, 
+                                            :customer_person_name => bank_billet.customer_person_name,
+                                            :customer_cnpj_cpf => bank_billet.customer_cnpj_cpf,
+                                            :status => (bank_billet.status == 'generating' ? 1 : bank_billet.status), 
+                                            :shorten_url => bank_billet.formats["pdf"], 
+                                            :fine_for_delay => bank_billet.fine_for_delay, 
+                                            :late_payment_interest => bank_billet.late_payment_interest, 
+                                            :document_date => bank_billet.document_date, 
+                                            :document_amount => bank_billet.document_amount)
+
+          bank_billet_pwt.save!
+
+          ticket.bank_billet_id = bank_billet_pwt.id
           ticket.save!
-          @url = bank_billet.formats["pdf"]
+
+          @url = bank_billet_pwt.shorten_url
         else
           puts "Erro :("
           puts bank_billet.response_errors
@@ -190,8 +210,8 @@ class ContractsController < ApplicationController
       end
     else
       @contract = Contract.find(ticket.contract_id)
-      bank_billet = BoletoSimples::BankBillet.find(ticket.bank_billet_id)
-      @url = bank_billet.formats["pdf"]
+      bank_billet = BankBillet.find(ticket.bank_billet_id)
+      @url = bank_billet.shorten_url
     end
   end
 

@@ -242,6 +242,14 @@ tt {
 	  background: blue;
 	  color: white;
 	}
+  .blue {
+    background: blue;
+    color: white;
+  }
+  .orange {
+    background: orange;
+    color: white;
+  }
 
 .filters, .panel {
   background: snow;

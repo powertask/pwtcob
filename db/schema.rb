@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223235111) do
+ActiveRecord::Schema.define(version: 20160225025944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,30 @@ ActiveRecord::Schema.define(version: 20160223235111) do
   end
 
   add_index "bank_billet_accounts", ["unit_id"], name: "index_bank_billet_accounts_on_unit_id", using: :btree
+
+  create_table "bank_billets", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.integer  "bank_billet_account_id"
+    t.integer  "origin_code"
+    t.string   "our_number"
+    t.float    "amount"
+    t.date     "expire_at"
+    t.string   "customer_person_name"
+    t.string   "customer_cnpj_cpf"
+    t.integer  "status"
+    t.date     "paid_at"
+    t.float    "paid_amount"
+    t.string   "shorten_url"
+    t.float    "fine_for_delay"
+    t.float    "late_payment_interest"
+    t.date     "document_date"
+    t.float    "document_amount"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "bank_billets", ["bank_billet_account_id"], name: "index_bank_billets_on_bank_billet_account_id", using: :btree
+  add_index "bank_billets", ["unit_id"], name: "index_bank_billets_on_unit_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -320,6 +344,8 @@ ActiveRecord::Schema.define(version: 20160223235111) do
   add_foreign_key "areas", "taxpayers"
   add_foreign_key "areas", "units"
   add_foreign_key "bank_billet_accounts", "units"
+  add_foreign_key "bank_billets", "bank_billet_accounts"
+  add_foreign_key "bank_billets", "units"
   add_foreign_key "clients", "bank_billet_accounts"
   add_foreign_key "indices", "units"
   add_foreign_key "inpcs", "units"

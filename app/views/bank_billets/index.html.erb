@@ -6,28 +6,50 @@
   <thead>
     <tr>
       <th>#</th>
+      <th>Nosso Numero</th>
+      <th>Carteira de Cobrança</th>
       <th>Nome/Razão Social</th>
       <th>Valor (R$)</th>
       <th>Vencimento</th>
-      <th>Data de Pagamento</th>
+      <th>Data do Pagamento</th>
       <th>Valor Pago (R$)</th>
       <th><%= t('status') %></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-    <% unless @bankbillets.nil? %>
-      <% @bankbillets.each do |bankbillet| %>
+    <% unless @bank_billets.nil? %>
+      <% @bank_billets.each do |bankbillet| %>
         <tr>
-          <td><%= bankbillet.id %> </td>
-          <td><%= link_to(bankbillet.customer_person_name, :action => "bank_billet_show", :cod => bankbillet.id) %></td>
+          <td><%= bankbillet.origin_code %> </td>
+          <td><%= link_to(bankbillet.our_number, bank_billet_path(bankbillet)) %> </td>
+          <td><%= bankbillet.bank_billet_account.name %></td>
+          <td><%= bankbillet.customer_person_name %></td>
           <td><%= bankbillet.amount.real %> </td>
           <td><%= bankbillet.expire_at.to_date.to_s_br %> </td>
           <td><%= bankbillet.paid_at.to_date.to_s_br if bankbillet.paid_at %> </td>
           <td><%= bankbillet.paid_amount.real %> </td>
-          <td><%= t('bank_billet.status.'<< bankbillet.status) %> </td>
+          <td>
+            <% if bankbillet.status == 'opened' %>
+              <div class = "strip blue"><%= t('bank_billet.status.'<< bankbillet.status) %></div>
+            <% elsif bankbillet.status == 'canceled' %>
+              <div class = "strip orange"><%= t('bank_billet.status.'<< bankbillet.status) %></div>
+            <% elsif bankbillet.status == 'paid' %>
+              <div class = "strip green"><%= t('bank_billet.status.'<< bankbillet.status) %></div>
+            <% elsif bankbillet.status == 'overdue' %>
+              <div class = "strip red"><%= t('bank_billet.status.'<< bankbillet.status) %></div>
+            <% else %>
+              <%= t('bank_billet.status.'<< bankbillet.status) %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     <% end %>
   </tbody>
 </table>
+
+<div id='paginate'>
+  <div class="apple_pagination">
+    <%= will_paginate @contracts, :container => false  if @contracts.present? %>
+  </div>
+</div>

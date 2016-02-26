@@ -1,0 +1,22 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('bank_billet.index'), bank_billets_path) %> </a>
+    <% if @bank_billet.status == 'opened' || @bank_billet.status == 'overdue' %>
+      <a class="btn btn-large btn-danger" <%= link_to t('bank_billet.cancel'), :action => "bank_billet_cancel", :cod => @bank_billet.id %> </a>
+	<% end %>
+
+</div>
+
+<div class='title_page'> <%= t('bank_billet.show') %> </div>
+
+<div class='section'>
+	<div class='label1 top req'> <%= t('bank_billet.customer_person_name') %>: </div><%= @bank_billet.customer_person_name %>
+	<div class='label1 top req'> <%= t('bank_billet.bank_billet_account_name') %>: </div><%= @bank_billet.bank_billet_account.name %>
+	<div class='label1 top req'> <%= t('bank_billet.our_name') %>: </div><%= @bank_billet.our_number %>
+	<div class='label1 top req'> <%= t('bank_billet.expire_at') %>: </div><%= @bank_billet.expire_at.to_date.to_s_br %>
+	<div class='label1 top req'> <%= t('bank_billet.amount') %>: </div><%= @bank_billet.amount.real %>
+	<div class='label1 top req'> <%= t('bank_billet.paid_at') %>: </div><%= @bank_billet.paid_at.to_date.to_s_br if @bank_billet.paid_at %>
+	<div class='label1 top req'> <%= t('bank_billet.paid_amount') %>: </div><%= @bank_billet.paid_amount.real %>
+	<div class='label1 top req'> <%= t('status') %>: </div><%= t('bank_billet.status.'<< @bank_billet.status) %>
+	<div class='label1 top req'> <%= t('bank_billet.bankbillet') %>: </div><%= link_to(t('bank_billet.link'), @bank_billet.shorten_url) %>
+</div>
+
