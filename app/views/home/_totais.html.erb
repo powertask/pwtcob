@@ -1,0 +1,40 @@
+<% if session[:value_cna_cobrado]  %>
+
+  <div class='subtitle'> <%= "Totais" %>  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tipo Cobrança</th>
+        <th>Valor CNA</th>
+        <th>Correção</th>
+        <th>Multa</th>
+        <th>Juros</th>
+        <th>Valor Total Cliente</th>
+        <th>Valor Total GMA</th>
+        <th>Valor Total Geral</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Parcelado</td>
+        <td><%= session[:value_cna_cobrado].real.to_s %></td>    
+        <td><%= session[:total_correcao_cobrado].real.to_s %></td>
+        <td><%= session[:total_multa_cobrado].real.to_s %></td>
+        <td><%= session[:total_juros_cobrado].real.to_s %></td>
+        <td><%= session[:total_cna_sem_fee_cobrado].real.to_s %></td>
+        <td><%= session[:total_fee_cobrado].real.to_s %></td>
+        <td><%= session[:total_cna_cobrado].real.to_s %></td>
+      </tr>
+      <tr>
+        <td>A Vista</td>
+        <td><%= session[:value_cna_cobrado].real.to_s %></td>    
+        <td><%= session[:total_correcao_cobrado].real.to_s %></td>
+        <td><%= session[:total_multa_a_vista].real.to_s %></td>
+        <td><%= session[:total_juros_a_vista].real.to_s %></td>
+        <td><%= session[:total_cna_sem_fee_a_vista].real.to_s %></td>
+        <td><%= session[:total_fee_a_vista].real.to_s %></td>
+        <td><%= session[:total_cna_a_vista].real.to_s %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
