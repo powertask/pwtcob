@@ -1,5 +1,6 @@
 class History < ActiveRecord::Base
   belongs_to :unit
+  belongs_to :user
   belongs_to :employee
   belongs_to :taxpayer
 

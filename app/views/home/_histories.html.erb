@@ -1,0 +1,31 @@
+<div class='title_tools'>
+    <a class="btn btn-large btn-warning" <%= link_to(t('home.history.new'), new_history_path) %> </a>
+</div>
+
+<div class='title_page'> <%= t('home.history.title') %> </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Colaborador</th>
+      <th>Histórico</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @histories.nil? %>
+      <% @histories.each do |history| %>
+        <tr>
+          <td><%= history.created_at.to_s_br %> </td>
+          <td>
+            <% if history.user.employee %>
+              <%= history.user.employee.name %>
+            <% elsif history.user %>
+              <%= history.user.email %>
+            <% end %>
+          </td>
+          <td><%= history.description %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

@@ -6,6 +6,7 @@
 <%= simple_form_for(@history) do |f| %>
 	<div class='section'>
     <%= f.input :unit_id, as: :hidden %>
+    <%= f.input :user_id, as: :hidden %>
     <%= f.input :taxpayer_id, as: :hidden %>
     <%= f.input :employee_id, as: :hidden %>
     <%= f.input :history_date, as: :hidden %>
