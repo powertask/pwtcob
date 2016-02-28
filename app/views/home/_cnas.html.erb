@@ -4,15 +4,14 @@
     <tr>
       <th>#</th>
       <th>Ano</th>
-      <th>Vencimento</th>
+      <th><%= t('stage') %></th>
+      <th><%= t('status') %></th>
       <th>Meses</th>
       <th>Valor CNA</th>
       <th>Correção</th>
       <th>Multa</th>
       <th>Juros</th>
       <th>Valor GUIA</th>
-      <th><%= t('stage') %></th>
-      <th><%= t('status') %></th>
       <th></th>
     </tr>
   </thead>
@@ -34,7 +33,8 @@
               <%= cna.year %> 
             <% end %> 
           </td>
-          <td><%= cna.due_at.to_date.to_s_br %> </td>
+          <td><%= t(cna.stage) %> </td>
+          <td><%= t(cna.status) %> </td>
           <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
           <td><%= cna.amount.real %> </td>
           <td><%= calc_correcao(cna, nil, nil).real %> </td>
@@ -47,8 +47,6 @@
               <%= calc_cna(cna, nil, nil).real %>
             <% end %>
           </td>
-          <td><%= t(cna.stage) %> </td>
-          <td><%= t(cna.status) %> </td>
           <td><%= link_to(t('edit'), get_cna_path(cna), class: "btn btn-xs btn-default", remote: true ) %></td>
         </tr>
       <% end %>
@@ -60,13 +58,12 @@
       <td></td>
       <td></td>
       <td></td>
+      <td></td>
       <td> <%= session[:value_cna].real %></td>
       <td> <%= session[:total_correcao].real %></td>
       <td> <%= session[:total_multa].real %> </td>
       <td> <%= session[:total_juros].real %> </td>
       <td> <%= session[:total_cna].real %></td>
-      <td></td>
-      <td></td>
       <td></td>
     </tr>
   </tfoot>  

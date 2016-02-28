@@ -4,16 +4,15 @@ module ApplicationHelper
     
     _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
     _dt_end = Date.current if _dt_end.nil?
-    
-    if _dt_ini.month != _dt_end.month
-      _dt_end = _dt_end - 1.month if _dt_end.day < 22
-    end
 
-    (_dt_end.year * 12 + _dt_end.month) - (_dt_ini.year * 12 + _dt_ini.month)
+    (_dt_end.year * 12 + _dt_end.month) - (_dt_ini.year * 12 + _dt_ini.month) + 1
   end
 
 
   def calc_correcao(cna, _dt_ini, _dt_end) 
+
+    return 0
+    
     _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
     _dt_end = Date.current if _dt_end.nil?
 

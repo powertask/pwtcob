@@ -37,6 +37,7 @@ class ApplicationHelperTest < ActiveSupport::TestCase
   end
 
   test 'calc_valor_corrigido_INPC' do
+    skip
   	_dt_ini = Date.new(2010,5,22)
   	_dt_end = Date.new(2010,12,31)
   	cna = Cna.first  
