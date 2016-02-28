@@ -17,10 +17,12 @@
         <tr>
           <td><%= history.created_at.to_s_br %> </td>
           <td>
-            <% if history.user.employee %>
-              <%= history.user.employee.name %>
-            <% elsif history.user %>
-              <%= history.user.email %>
+            <% if history.user %>
+              <% if history.user.employee %>
+                <%= history.user.employee.name %>
+              <% else %>
+                <%= history.user.email %>
+              <% end %>
             <% end %>
           </td>
           <td><%= history.description %> </td>
