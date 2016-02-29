@@ -10,8 +10,8 @@ module ApplicationHelper
 
 
   def calc_correcao(cna, _dt_ini, _dt_end) 
-
-    return 0
+  
+    return 0 unless current_user.unit.fl_correcao
     
     _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
     _dt_end = Date.current if _dt_end.nil?

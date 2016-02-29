@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160228185310) do
+ActiveRecord::Schema.define(version: 20160229005904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20160228185310) do
     t.datetime "updated_at",  null: false
     t.boolean  "fl_charge"
     t.integer  "contract_id"
+    t.integer  "proposal_id"
   end
 
   create_table "contracts", force: :cascade do |t|
@@ -205,6 +206,34 @@ ActiveRecord::Schema.define(version: 20160228185310) do
   end
 
   add_index "lawyers", ["unit_id"], name: "index_lawyers_on_unit_id", using: :btree
+
+  create_table "proposal_tickets", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.integer  "proposal_id"
+    t.integer  "ticket_type"
+    t.float    "amount"
+    t.integer  "ticket_number"
+    t.date     "due_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "proposals", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.integer  "user_id"
+    t.integer  "taxpayer_id"
+    t.integer  "employee_id"
+    t.float    "unit_amount"
+    t.float    "unit_fee"
+    t.integer  "unit_ticket_quantity"
+    t.integer  "client_ticket_quantity"
+    t.float    "client_amount"
+    t.date     "unit_due_at"
+    t.date     "client_due_at"
+    t.integer  "status"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name"
@@ -318,6 +347,7 @@ ActiveRecord::Schema.define(version: 20160228185310) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.decimal  "unit_fee"
+    t.boolean  "fl_correcao"
   end
 
   create_table "users", force: :cascade do |t|

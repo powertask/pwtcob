@@ -1,0 +1,32 @@
+
+<div class='title_page'>
+  <span> <%= t('proposal.title') %> </span>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<div class='list1'>
+  <% unless @proposals.empty? %>
+    <% @proposals.each do |proposal| %>
+      <li>
+        <div class='strip' id='none'> <%= proposal.id %> </div>
+
+        <div class='indent'>
+          <%= proposal.taxpayer.origin_code %>
+          &bull;
+          <%= link_to(proposal.taxpayer.name, proposal_path(proposal)) %>
+          &bull;
+          <dt><%= t('proposal.status.'<< proposal.status ) %> </dt>
+        </div>
+      </li>
+    <% end %>
+  <% else %>
+    Colaborador não tem termos gerados.
+  <% end %>
+</div>
+
+<div id='paginate'>
+  <div class="apple_pagination">
+    <%= will_paginate @proposals, :container => false  if @proposals.present? %>
+  </div>
+</div>

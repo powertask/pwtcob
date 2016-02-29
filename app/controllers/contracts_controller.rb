@@ -15,7 +15,7 @@ class ContractsController < ApplicationController
 
   def show
     @contract = Contract.find(params[:id])
-    @tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:id])
+    @tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:id]).order('ticket_number')
     respond_with @contract
   end
 
@@ -87,6 +87,71 @@ class ContractsController < ApplicationController
     respond_with @contract, notice: 'Termo criado com sucesso.'
 
   end
+
+
+  def create_contract_from_proposal
+    cod = params[:cod]
+
+    proposal = Proposal.find cod
+    cnas = Cna.list(session[:unit_id]).where('proposal_id = ?', cod)
+    unit = Unit.find(session[:unit_id])
+    tickets = ProposalTicket.where('proposal_id = ?', cod)
+
+    ActiveRecord::Base.transaction do
+      @contract = Contract.new
+
+      @contract.unit_id = session[:unit_id]
+      @contract.contract_date = Time.now
+      @contract.taxpayer_id = proposal.taxpayer_id
+      @contract.employee_id = current_user.employee_id
+      @contract.status = 0
+      @contract.unit_fee = 10
+
+
+      unit_amount = 0
+      client_amount = 0
+
+      tickets.each  do |tic|
+        unit_amount = unit_amount + tic['amount'].to_f if tic['ticket_number'] == 1
+        client_amount = client_amount + tic['amount'].to_f if tic['ticket_number'] > 1
+      end
+
+      @contract.unit_amount = unit_amount.round(2)
+      @contract.unit_ticket_quantity = 1
+      @contract.client_amount = client_amount.round(2)
+      @contract.client_ticket_quantity = tickets.size - 1
+
+      @contract.save!
+
+
+      tickets.each  do |tic|
+        ticket = Ticket.new
+        ticket.unit_id = session[:unit_id]
+        ticket.contract_id = @contract.id
+
+        ticket.ticket_type = tic['ticket_type']
+        ticket.amount = tic['amount'].to_f
+        ticket.due = tic['due_at'].to_date
+        ticket.ticket_number = tic['ticket_number']
+
+        ticket.save!
+      end
+
+
+
+      cnas.each do  |cna|
+        cna.contract_id = @contract.id
+        cna.contract!
+        cna.save!
+      end
+
+      proposal.contract!
+      
+    end
+    respond_with @contract, notice: 'Termo criado com sucesso.'
+  end
+
+
 
   def delete_contract
     contract = params[:contract]

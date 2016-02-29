@@ -8,6 +8,7 @@ pt-BR:
   zipcode: CEP
   state: Estado
   city: Cidade
+  cities: Cidade
   address: Logradouro
   complement: Complemento
   neighborhood: Bairro
@@ -60,6 +61,7 @@ pt-BR:
     remittance: Remessas
     bankbillet: Boletos
     discharge: Retornos
+    proposal: Propostas
 
   home:
     title: Agenda do Colaborador
@@ -100,6 +102,7 @@ pt-BR:
     recalculate: Recalcular Parcelas
     create_contract: Gravar Parcelamento e Gerar Termo
     delete_contract: Deletar Termo
+    create_proposal: Gerar Proposta
 
   cna:
     id: ID da CNA
@@ -146,6 +149,23 @@ pt-BR:
       active: ATIVO
       cancel: CANCELADO
 
+  proposal:
+    title: Propostas Negociados com Contribuintes
+    show: Detalhes da Proposta
+    index: Listar Todas Propostas
+    delete: Cancelar Proposta
+    amount: "Valor - %{name}"
+    unit_fee: "Percentual - %{name}"
+    ticket_quantity: "Quantidade de Parcelas - %{name}" 
+    contract_date: Data do Termo
+    taxpayer: Contribuinte
+    employee: Colaborador Responsável
+    create_contract: Gerar Parcelamento e Termo
+    status:
+      active: ATIVO
+      cancel: CANCELADO
+      contract: GERADO CONTRATO
+
   client:
     title: Cadastro de Federações
     new: Nova Federação
@@ -166,6 +186,7 @@ pt-BR:
     show: Detalhes da Empresa
     name: Razão Social
     fee: Percentual de Cobrança (%)
+    fl_correcao: Cálculos com correção de CNA
 
   employee:
     title: Cadastro de Colaborador

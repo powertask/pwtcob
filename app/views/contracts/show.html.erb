@@ -29,10 +29,11 @@
     <tr>
       <th>#</th>
       <th>Vencimento</th>
-      <th>Valor de Parcela Cliente</th>
       <th>Valor de Parcela GMA</th>
+      <th>Valor de Parcela Cliente</th>
       <th>Situação do Boleto</th>
       <th>Data do Pagamento</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -41,8 +42,8 @@
         <tr>
           <td><%= ticket.ticket_number %> </td>
           <td><%= ticket.due.to_date.to_s_br %> </td>
-          <td><%= ticket.amount.real if ticket.client? %> </td>
           <td><%= ticket.amount.real if ticket.unit? %> </td>
+          <td><%= ticket.amount.real if ticket.client? %> </td>
           <td><%= t('bank_billet.status.'<< ticket.bank_billet.status) if ticket.bank_billet.present? %> </td>
           <td><%= ticket.bank_billet.paid_at.to_s_br if ticket.bank_billet.present? %></td>
           <td>

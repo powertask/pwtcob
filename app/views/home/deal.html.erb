@@ -3,7 +3,7 @@
 </div>
 
 <div class='title_page'>
-  <span> <%= t('deal.title') %> </span>
+  <span> <%= t('deal.title') << ' - ' << @taxpayer.name.upcase %> </span>
 </div>
 
 <br>
@@ -28,8 +28,6 @@
       </div>
     </div>
 
-    <%= render 'areas' %>
-
     <br>
     <div id='table-ticket'>
       <div class='subtitle'> <%= t('deal.ticket') %> </div>
@@ -48,18 +46,22 @@
               <td><%= text_field_tag(:client_ticket_due) %></td>
             </tr>
           </table>  
-        </div>
           <div class="actions">
             <div class='buttonbar'>
               <%= submit_tag(t('menu.tickets'), class: 'btn-primary') %>
             </div>
           </div>
+        </div>
       <% end %>
     </div>
 
     <div id='table-tickets' style="display:none;">
       <%= render 'tickets' %>
     </div>
+
+    <br>
+    <br>
+    <%= render 'areas' %>
 
   </div>
 </div>
