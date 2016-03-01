@@ -120,6 +120,7 @@ class ContractsController < ApplicationController
       @contract.unit_ticket_quantity = 1
       @contract.client_amount = client_amount.round(2)
       @contract.client_ticket_quantity = tickets.size - 1
+      @contract.proposal_id = cod
 
       @contract.save!
 
@@ -137,15 +138,15 @@ class ContractsController < ApplicationController
         ticket.save!
       end
 
-
-
       cnas.each do  |cna|
         cna.contract_id = @contract.id
         cna.contract!
         cna.save!
       end
 
+      proposal.contract_id = @contract.id
       proposal.contract!
+      proposal.save!
       
     end
     respond_with @contract, notice: 'Termo criado com sucesso.'
