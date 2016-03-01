@@ -6,6 +6,14 @@ class ProposalTicketsController < ApplicationController
 
   def edit
     @ticket = ProposalTicket.find(params[:id])
+
+    proposal = Proposal.find @ticket.proposal_id
+
+   if proposal.contract?
+      flash[:alert] = "Ação não permitida. Proposta ja gerou um TERMO NRO " << proposal.contract_id.to_s
+      redirect_to :proposals and return
+    end     
+
   end
 
   def update

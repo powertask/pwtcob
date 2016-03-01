@@ -1,13 +1,13 @@
 <%= simple_form_for(@ticket) do |f| %>
 	<div class='section'>
 		
-    <%= f.input :amount, :label => t('proposal.name'), input_html:{:class => 'form-control'} %>
+    <%= f.input :amount, :label => t('proposal_ticket.amount'), input_html:{:class => 'form-control'} %>
 
 		<div class="actions">
 			<div class='buttonbar'>
 				<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
 				<%= 'ou' %>
-				<%= link_to t('menu.cancel'), clients_path %>
+				<%= link_to t('menu.cancel'), proposal_path(@ticket.proposal_id) %>
 			</div>
 		</div>
 	</div>

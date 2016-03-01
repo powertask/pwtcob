@@ -91,8 +91,13 @@ class ContractsController < ApplicationController
 
   def create_contract_from_proposal
     cod = params[:cod]
-
     proposal = Proposal.find cod
+
+    if proposal.contract?
+      flash[:alert] = "Ação não permitida. Proposta ja gerou um TERMO NRO " << proposal.contract_id.to_s
+      redirect_to :proposals and return
+    end 
+
     cnas = Cna.list(session[:unit_id]).where('proposal_id = ?', cod)
     unit = Unit.find(session[:unit_id])
     tickets = ProposalTicket.where('proposal_id = ?', cod)

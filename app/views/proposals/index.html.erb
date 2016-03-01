@@ -1,4 +1,3 @@
-
 <div class='title_page'>
   <span> <%= t('proposal.title') %> </span>
 </div>
@@ -12,16 +11,23 @@
         <div class='strip' id='none'> <%= proposal.id %> </div>
 
         <div class='indent'>
+          <% if proposal.contract? %>
+            <span class="label label-success"><%= t('proposal.status.'<< proposal.status, :contract => proposal.contract_id ) %> </span> 
+          <% else %>
+            <span class="label label-primary"><%= t('proposal.status.'<< proposal.status ) %> </span> 
+          <% end %>
+          &nbsp;
           <%= proposal.taxpayer.origin_code %>
           &bull;
           <%= link_to(proposal.taxpayer.name, proposal_path(proposal)) %>
           &bull;
-          <dt><%= t('proposal.status.'<< proposal.status ) %> </dt>
+          <%= 'Termo gerado: ' << proposal.contract_id.to_s if proposal.contract? %>
+          <dt></dt>
         </div>
       </li>
     <% end %>
   <% else %>
-    Colaborador não tem termos gerados.
+    Colaborador não tem propostas geradas.
   <% end %>
 </div>
 

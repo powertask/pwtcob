@@ -11,6 +11,14 @@
 <div class='section'>
   <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
   <div class='label1 top req'> <%=t("status") %>: </div>          <%= t('contract.status.' << @contract.status) %>
+  
+  <div class='label1 top req'> <%=t("origin") %>:</div>
+  <% if @contract.proposal_id %> 
+    <%= link_to( 'PROPOSTA NRO ' << @contract.proposal_id.to_s, proposal_path(@contract.proposal_id)) %>
+  <% else %>
+    ÁREA DE NEGOCIAÇÕES
+  <% end  %>
+
   <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>          <%= @contract.contract_date.to_s_br %>
   <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>               <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name %>
   <div class='label1 top req'> <%=t("contract.employee") %>: </div> <%= @contract.employee ? @contract.employee.name : 'ADMIN'  %>

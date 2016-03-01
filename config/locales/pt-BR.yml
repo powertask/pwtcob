@@ -34,6 +34,7 @@ pt-BR:
   admin: Administrador
   user: Colaborador
   Yes: Sim
+  origin: Origem
 
   menu:
     home: Home
@@ -162,9 +163,13 @@ pt-BR:
     employee: Colaborador Responsável
     create_contract: Gerar Parcelamento e Termo
     status:
-      active: ATIVO
-      cancel: CANCELADO
-      contract: GERADO CONTRATO
+      active: PROPOSTA ATIVA
+      cancel: PROPOSTA CANCELADA
+      contract: 'TERMO NRO %{contract} GERADO'
+
+  proposal_ticket:
+    edit: Editar Parcelas
+    amount: Valor da Parcela a Alterar
 
   client:
     title: Cadastro de Federações

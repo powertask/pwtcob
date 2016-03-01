@@ -1,21 +1,48 @@
 <div class='title_tools'>
   <a class="btn btn-large btn-warning" <%= link_to(t('proposal.index'), proposals_path) %> </a>
-  <a class="btn btn-large btn-success" <%= link_to(t('proposal.create_contract'), create_contract_from_proposal_path(@proposal.id),  method: 'post') %> </a>
+  
+  <% unless @proposal.contract? %>
+    <a class="btn btn-large btn-success" <%= link_to(t('proposal.create_contract'), create_contract_from_proposal_path(@proposal.id),  method: 'post') %> </a>
+  <% end %>
+
 </div>
 
 <div class='title_page'> <%= t('proposal.show') %> </div>
 
 <div class='section'>
-  <div class='label1 top req'> <%=t("id") %>: </div>          <%= @proposal.id %>
-  <div class='label1 top req'> <%=t("status") %>: </div>          <%= t('proposal.status.' << @proposal.status) %>
-  <div class='label1 top req'> <%=t("proposal.contract_date") %>: </div> 
-  <div class='label1 top req'> <%=t("proposal.taxpayer") %>: </div>               <%= @proposal.taxpayer.origin_code.to_s << " - " << @proposal.taxpayer.name %>
-  <div class='label1 top req'> <%=t("proposal.employee") %>: </div> <%= @proposal.employee ? @proposal.employee.name : 'ADMIN'  %>
-	<div class='label1 top req'> <%=t("proposal.amount", name: @proposal.unit.name) %>: </div>           <%= @proposal.unit_amount.real %>
-	<div class='label1 top req'> <%=t("proposal.unit_fee", name: @proposal.unit.name) %>: </div>				        <%= @proposal.unit_fee.real %>
-	<div class='label1 top req'> <%=t("proposal.ticket_quantity", name: @proposal.unit.name) %>: </div>	 <%= @proposal.unit_ticket_quantity %>
-	<div class='label1 top req'> <%=t("proposal.amount", name: @proposal.taxpayer.client.name) %>: </div>			    <%= @proposal.client_amount.real %>
-	<div class='label1 top req'> <%=t("proposal.ticket_quantity", name: @proposal.taxpayer.client.name) %>: </div>	<%= @proposal.client_ticket_quantity %>
+  <div class='label1 top req'> <%=t("id") %>: </div>
+  <%= @proposal.id %>
+  
+  <div class='label1 top req'> <%=t("status") %>: </div>
+  <% if @proposal.contract? & @proposal.contract_id %>
+    <span class="label label-success"><%= link_to( t('proposal.status.'<< @proposal.status, :contract => @proposal.contract_id), contract_path(@proposal.contract_id)) %> </span> 
+  <% else %>
+    <span class="label label-primary"><%= t('proposal.status.'<< @proposal.status) %> </span> 
+  <% end %>
+  
+  <div class='label1 top req'> <%=t("proposal.contract_date") %>: </div>
+  <%= @proposal.created_at.to_s_br %>
+
+  <div class='label1 top req'> <%=t("proposal.taxpayer") %>: </div>
+  <%= @proposal.taxpayer.origin_code.to_s << " - " << @proposal.taxpayer.name %>
+  
+  <div class='label1 top req'> <%=t("proposal.employee") %>: </div>
+  <%= @proposal.employee ? @proposal.employee.name : 'ADMIN'  %>
+	
+  <div class='label1 top req'> <%=t("proposal.amount", name: @proposal.unit.name) %>: </div>
+  <%= @proposal.unit_amount.real %>
+	
+  <div class='label1 top req'> <%=t("proposal.unit_fee", name: @proposal.unit.name) %>: </div>
+  <%= @proposal.unit_fee.real %>
+	
+  <div class='label1 top req'> <%=t("proposal.ticket_quantity", name: @proposal.unit.name) %>: </div>
+  <%= @proposal.unit_ticket_quantity %>
+	
+  <div class='label1 top req'> <%=t("proposal.amount", name: @proposal.taxpayer.client.name) %>: </div>
+  <%= @proposal.client_amount.real %>
+	
+  <div class='label1 top req'> <%=t("proposal.ticket_quantity", name: @proposal.taxpayer.client.name) %>: </div>
+  <%= @proposal.client_ticket_quantity %>
 </div>
 
 
@@ -39,10 +66,12 @@
           <td><%= ticket.due_at.to_date.to_s_br %> </td>
           <td><%= ticket.amount.real if ticket.unit? %> </td>
           <td><%= ticket.amount.real if ticket.client? %> </td>
-
-          <td><div class='tools'>
-            <%= link_to(t('menu.edit'), edit_proposal_ticket_path(ticket), class: "btn btn-xs btn-default") %>
-          </div>
+          <td>
+            <% unless @proposal.contract? %>
+              <div class='tools'>
+                <%= link_to(t('menu.edit'), edit_proposal_ticket_path(ticket), class: "btn btn-xs btn-default") %>
+              </div>
+            <% end %>
           </td>
         </tr>
       <% end %>
