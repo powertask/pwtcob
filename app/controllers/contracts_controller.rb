@@ -33,6 +33,7 @@ class ContractsController < ApplicationController
       @contract.contract_date = Time.now
       @contract.taxpayer_id = cod
       @contract.employee_id = current_user.employee_id
+      @contract.user_id = current_user.id
       
       if session[:tickets].count == 2
         unit_amount = session[:total_fee_a_vista].to_f
@@ -109,6 +110,7 @@ class ContractsController < ApplicationController
       @contract.contract_date = Time.now
       @contract.taxpayer_id = proposal.taxpayer_id
       @contract.employee_id = current_user.employee_id
+      @contract.user_id = current_user.id
       @contract.status = 0
       @contract.unit_fee = 10
 
