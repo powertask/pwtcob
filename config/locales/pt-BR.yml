@@ -65,12 +65,14 @@ pt-BR:
     proposal: Propostas
 
   home:
-    title: Agenda do Colaborador
+    title: Home do Colaborador
     title_client: Acesso Cliente
     deal: Ir para Ambiente de Negociações
     taxpayer: Contribuinte
     name: Nome do Contribuinte
     employee: Colaborador Responsável
+    taxpayer:
+      show: Dados Cadastrais
     search:
       title: Procurar por Contribuinte
       name: Nome do Contribuinte
@@ -78,7 +80,7 @@ pt-BR:
       cpf: CPF do Contribuinte
       cod_contribuinte: Código Contribuinte
     cna:
-      title: Exercícios do Contribuinte
+      title: CNAs do Contribuinte
     history:
       title: Históricos do Contribuinte
       new: Cadastrar Novo Histórico

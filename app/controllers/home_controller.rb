@@ -9,9 +9,14 @@
     session[:unit_bank_billet_account] = 21
     session[:employee_id] = current_user.employee_id
     session[:taxpayer_id] = nil
+
+    contracts_meter
   end
 
   def filter_name
+    
+    contracts_meter
+
     if params[:name].present?
 
       if params[:name].size <= 2
@@ -66,6 +71,7 @@
     @contracts = Contract.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
     
     clear_variable_session()
+    contracts_meter
 
     session[:taxpayer_id] = params[:cod]
 
@@ -192,6 +198,15 @@
     session[:total_correcao_a_vista] = 0
     session[:total_cna_a_vista] = 0
     session[:total_fee_a_vista] = 0
+
+  end
+
+  def contracts_meter 
+    @count_contracts_day = Contract.list(session[:unit_id]).where('user_id = ? and contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
+
+    dt_ini = Date.new(Date.current.year, Date.current.month, 1).beginning_of_day
+    dt_end = ((dt_ini + 1.month) - 1.day).end_of_day
+    @count_contracts_month = Contract.list(session[:unit_id]).where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).count
 
   end
 end

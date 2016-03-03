@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   belongs_to :employee
 
   has_many :histories
+  has_many :contracts
   
   enum profile: [:admin, :user, :client]
 

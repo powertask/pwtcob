@@ -1,4 +1,10 @@
 <div class='title_tools'>
+  <button class="btn btn-success" type="button">
+    Termos Fechados Hoje: &nbsp; <span class="badge"> <%= @count_contracts_day %> </span>
+  </button>
+  <button class="btn btn-primary" type="button">
+    Termos Fechados no MES: &nbsp; <span class="badge"> <%= @count_contracts_month %> </span>
+  </button>
   <a class="btn btn-large btn-default" <%= link_to(t('menu.search'), root_path ) %> </a>
 </div>
 
@@ -12,21 +18,39 @@
   <br>
 <% end %>
 
-<% if @taxpayer.nil? %>
-  <div class='subtitle'> <%= t('home.search.title') %> </div>
-  <div class='section'>
-    <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
-      <div class='label1 top req'> <%= t("home.search.name") %>: 
-      <%= text_field_tag 'name', params[:name], :size => 80 %></div>
-      <div class='label1 top req'> <%= t('home.search.cod_contribuinte') %>:
-      <%= text_field_tag 'cna', params[:cna], :size => 20 %> </div>
-      <div class='label1 top req'> <%= t('home.search.cpf') %>: 
-      <%= text_field_tag 'cpf', params[:cpf], :size => 20 %> </div>
 
-      <%= submit_tag t('menu.search') %> ou <%= link_to t('menu.clean'), root_path %>
-    <% end %>
+<% if @taxpayer %>
+  <div class='title'>
+    <span> <%= 'Informações sobre Contribuinte - ' << @taxpayer.name.upcase %> </span>
   </div>
 <% end %>
+
+
+<% if @taxpayer.nil? %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class='subtitle'> <%= t('home.search.title') %> </div>
+      <div class='section'>
+        <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
+          <div class='label1 top req'> <%= t("home.search.name") %>: 
+          <%= text_field_tag 'name', params[:name], :size => 80 %></div>
+          <div class='label1 top req'> <%= t('home.search.cod_contribuinte') %>:
+          <%= text_field_tag 'cna', params[:cna], :size => 20 %> </div>
+          <div class='label1 top req'> <%= t('home.search.cpf') %>: 
+          <%= text_field_tag 'cpf', params[:cpf], :size => 20 %> </div>
+
+          <%= submit_tag t('menu.search') %> ou <%= link_to t('menu.clean'), root_path %>
+        <% end %>
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+      <div class='subtitle'> <%= 'Termometro - Termos Fechados' %> </div>
+        Ainda não implementado.
+      </div>
+    </div>
+  </div>
+<% end  %>
 
 <div class='list1'>
   <% unless @taxpayers.nil? %>
@@ -83,6 +107,7 @@
       </div>
       
       <div class='title_page'> <%= t('home.cna.title') %> </div>
+
       <table class="table">
         <thead>
           <tr>
