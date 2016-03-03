@@ -26,6 +26,7 @@ gem 'rails_12factor'
 gem 'boletosimples'
 gem 'prawn'
 gem 'prawn-table'
+gem 'rubyzip'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'

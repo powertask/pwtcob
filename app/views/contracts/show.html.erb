@@ -29,8 +29,13 @@
 	<div class='label1 top req'> <%=t("contract.ticket_quantity", name: @contract.taxpayer.client.name) %>: </div>	<%= @contract.client_ticket_quantity %>
 </div>
 
+<div class='title_tools'>
+  <% if @contract.active? %>
+    <a class="btn btn-large btn-warning" <%= link_to(t('contract.bankbillet'), :action => "create_bank_billet", :cod => @contract.id) %></a>
+  <% end %>
+</div>
 
-<div class='subtitle'> <%= 'Parcelas' %> </div>
+<div class='title_page'> <%= 'Parcelas' %> </div>
 
 <table class="table">
   <thead>
@@ -54,11 +59,6 @@
           <td><%= ticket.amount.real if ticket.client? %> </td>
           <td><%= t('bank_billet.status.'<< ticket.bank_billet.status) if ticket.bank_billet.present? %> </td>
           <td><%= ticket.bank_billet.paid_at.to_s_br if ticket.bank_billet.present? %></td>
-          <td>
-          <div class='tools'>
-            <a class="btn btn-xs btn-default" <%= link_to(t('contract.bankbillet'), :action => "create_bank_billet", :cod => ticket.id) %> </a>
-          </div>
-          </td>
         </tr>
       <% end %>
     <% end %>
