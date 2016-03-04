@@ -5,12 +5,7 @@ class RemittancesController < ApplicationController
   layout 'window'
 
   def index
-    if current_user.client?
-      @remittances = BoletoSimples::Remittance.where('bank_billet_account = ?', 47)(page: 1, per_page: 5)
-    else
-      @remittances = BoletoSimples::Remittance.all(page: 1, per_page: 5)
-
-    end 
+    @remittances = BoletoSimples::Remittance.all(page: 1, per_page: 5)
      
     respond_with @remittances, :layout => 'application'
   end

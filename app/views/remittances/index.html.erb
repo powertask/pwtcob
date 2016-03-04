@@ -20,14 +20,16 @@
   <tbody>
     <% unless @remittances.nil? %>
       <% @remittances.each do |remittance| %>
-        <tr>
-          <td><%= remittance.id %> </td>
-          <td><%= remittance.bank_billet_account_id %> </td>
-          <td><%= remittance.filename %> </td>
-          <td><%= t('remittance.status.'<< remittance.status) %> </td>
-          <td><%= remittance.processed_at.to_date.to_s_br if remittance.processed_at %> </td>
-          <td><%= link_to(t('remittance.download'), :action => "remittance_download", :cod => remittance.id) %></td>
-        </tr>
+        <% if (current_user.client? & remittance.bank_billet_account_id == 47) || current_user.admin? || current_user.user? %>
+          <tr>
+            <td><%= remittance.id %> </td>
+            <td><%= remittance.bank_billet_account_id %> </td>
+            <td><%= remittance.filename %> </td>
+            <td><%= t('remittance.status.'<< remittance.status) %> </td>
+            <td><%= remittance.processed_at.to_date.to_s_br if remittance.processed_at %> </td>
+            <td><%= link_to(t('remittance.download'), :action => "remittance_download", :cod => remittance.id) %></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>
