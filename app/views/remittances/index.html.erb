@@ -20,7 +20,7 @@
   <tbody>
     <% unless @remittances.nil? %>
       <% @remittances.each do |remittance| %>
-        <% if (current_user.client? & remittance.bank_billet_account_id == 47) || current_user.admin? || current_user.user? %>
+        <% if (current_user.client? and remittance.bank_billet_account_id == 47) or current_user.admin? or current_user.user? %>
           <tr>
             <td><%= remittance.id %> </td>
             <td><%= remittance.bank_billet_account_id %> </td>
