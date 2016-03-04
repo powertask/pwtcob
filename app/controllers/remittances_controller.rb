@@ -6,6 +6,11 @@ class RemittancesController < ApplicationController
 
   def index
     @remittances = BoletoSimples::Remittance.all(page: 1, per_page: 5)
+
+    if current_user.client?
+      @remittances.where('bank_billet_account = ?', 47)
+    end
+     
     respond_with @remittances, :layout => 'application'
   end
 
