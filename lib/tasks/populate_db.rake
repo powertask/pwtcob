@@ -29,7 +29,8 @@ namespace :populate_db do
 
     desc "create users faesc"
     task :create_user_faesc => :environment do
-		User.create!(:password => 'AndreiaFaesc', :email => 'andreia@faesc.com.br', :password_confirmation => 'AndreiaFaesc', :unit_id => 1, :profile => 2, :employee_id => 3)
+#		User.create!(:password => 'AndreiaFaesc', :email => 'andreia@faesc.com.br', :password_confirmation => 'AndreiaFaesc', :unit_id => 1, :profile => 2)
+		User.create!(:password => 'TatianeFaesc', :email => 'tatiane@faesc.com.br', :password_confirmation => 'TatianeFaesc', :unit_id => 1, :profile => 2)
 	end
 
 	desc "allocate employees"
