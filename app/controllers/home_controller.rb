@@ -205,8 +205,23 @@
     @count_contracts_day = Contract.list(session[:unit_id]).where('user_id = ? and contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
 
     dt_ini = Date.new(Date.current.year, Date.current.month, 1).beginning_of_day
-    dt_end = ((dt_ini + 1.month) - 1.day).end_of_day
+    dt_end = Date.current.end_of_day
     @count_contracts_month = Contract.list(session[:unit_id]).where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).count
+
+    if current_user.admin?
+      @count_contracts_day_master = Contract.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+    else
+      @count_contracts_day_master = Contract.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+    end
+
+    if current_user.admin?
+      @count_contracts_month_master = Contract.where('contract_date between ? AND ?', dt_ini, dt_end).group('user_id').count
+    else
+      @count_contracts_month_master = Contract.where('user_id = ? AND contract_date between ? AND ?', current_user.id, dt_ini, dt_end).group('user_id').count
+    end      
+
+    @count_contracts_day_master = @count_contracts_day_master.map{|z|z}
+    @count_contracts_month_master = @count_contracts_month_master.map{|z|z}
 
   end
 end

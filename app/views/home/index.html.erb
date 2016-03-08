@@ -44,11 +44,55 @@
       </div>
     </div>
   
-    <div class="col-md-6">
-      <div class='subtitle'> <%= 'Termometro - Termos Fechados' %> </div>
-        Ainda não implementado.
+    <div class="col-md-3">
+      <div class='subtitle'> <%= 'Termos Fechados HOJE' %> </div>
+
+       <table class="table">
+          <thead>
+            <tr>
+              <th>Colaborador</th>
+              <th>Termo(s)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @count_contracts_day_master.nil? %>
+              <% @count_contracts_day_master.each do |contract| %>
+                <tr>
+                  <td><%= user_name contract[0] %> </td>
+                  <td><%= contract[1] %> </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-3">
+        <div class='subtitle'> <%= 'Termos Fechados no MES' %> </div>
+
+         <table class="table">
+            <thead>
+              <tr>
+                <th>Colaborador</th>
+                <th>Termo(s)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% unless @count_contracts_month_master.nil? %>
+                <% @count_contracts_month_master.each do |contract| %>
+                  <tr>
+                    <td><%= user_name contract[0] %> </td>
+                    <td><%= contract[1] %> </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+
+
   </div>
 <% end  %>
 
