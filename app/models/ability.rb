@@ -24,6 +24,8 @@ class Ability
 
     can :manage, Discharge if user.client?
     can :manage, BankBillet if user.client?
+
+    can :manage, BankBillet if user.user?
     
   end
 end

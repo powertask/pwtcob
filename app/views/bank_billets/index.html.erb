@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>#</th>
+      <th><%= t('status') %></th>
       <th>Nosso Numero</th>
       <th>Carteira de Cobrança</th>
       <th>Nome/Razão Social</th>
@@ -13,7 +14,6 @@
       <th>Vencimento</th>
       <th>Data do Pagamento</th>
       <th>Valor Pago (R$)</th>
-      <th><%= t('status') %></th>
       <th></th>
     </tr>
   </thead>
@@ -22,6 +22,19 @@
       <% @bank_billets.each do |bankbillet| %>
         <tr>
           <td><%= bankbillet.origin_code %> </td>
+          <td>
+            <% if bankbillet.status == 'opened' %>
+              <span class="label label-primary"><%= t('bank_billet.status.'<< bankbillet.status) %></span>
+            <% elsif bankbillet.status == 'canceled' %>
+              <span class="label label-warning"><%= t('bank_billet.status.'<< bankbillet.status) %></span>
+            <% elsif bankbillet.status == 'paid' %>
+              <span class="label label-success"><%= t('bank_billet.status.'<< bankbillet.status) %></span>
+            <% elsif bankbillet.status == 'overdue' %>
+              <span class="label label-danger"><%= t('bank_billet.status.'<< bankbillet.status) %></span>
+            <% else %>
+              <%= t('bank_billet.status.'<< bankbillet.status) %>
+            <% end %>
+          </td>
           <td><%= link_to(bankbillet.our_number, bank_billet_path(bankbillet)) %> </td>
           <td><%= bankbillet.bank_billet_account.name %></td>
           <td><%= bankbillet.customer_person_name %></td>
@@ -29,19 +42,6 @@
           <td><%= bankbillet.expire_at.to_date.to_s_br %> </td>
           <td><%= bankbillet.paid_at.to_date.to_s_br if bankbillet.paid_at %> </td>
           <td><%= bankbillet.paid_amount.real %> </td>
-          <td>
-            <% if bankbillet.status == 'opened' %>
-              <div class = "strip blue"><%= t('bank_billet.status.'<< bankbillet.status) %></div>
-            <% elsif bankbillet.status == 'canceled' %>
-              <div class = "strip orange"><%= t('bank_billet.status.'<< bankbillet.status) %></div>
-            <% elsif bankbillet.status == 'paid' %>
-              <div class = "strip green"><%= t('bank_billet.status.'<< bankbillet.status) %></div>
-            <% elsif bankbillet.status == 'overdue' %>
-              <div class = "strip red"><%= t('bank_billet.status.'<< bankbillet.status) %></div>
-            <% else %>
-              <%= t('bank_billet.status.'<< bankbillet.status) %>
-            <% end %>
-          </td>
         </tr>
       <% end %>
     <% end %>
