@@ -115,6 +115,17 @@
     @cna = Cna.find(params[:cod])
   end
 
+  
+  def pay_cna
+    if current_user.id == 1
+      @cna = Cna.find(params[:cod])
+      @cna.pay!
+
+      redirect_to show_path(@cna.taxpayer_id) and return
+    end
+  end
+
+
   def set_cna
     @cna = Cna.find(params[:cod])
     @cna.update_attributes(cna_params)
