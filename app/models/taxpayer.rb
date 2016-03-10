@@ -18,5 +18,9 @@ class Taxpayer < ActiveRecord::Base
   def self.list(unit)
     self.where("unit_id = ? and employee_id = ?", unit, session[:employee_id]).order("name ASC")
   end
+
+  def self.chargeble?(taxpayer)
+    taxpayer.city.present? and taxpayer.city.fl_charge ? true : false 
+  end
   
 end

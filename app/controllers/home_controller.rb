@@ -19,35 +19,50 @@
 
     if params[:name].present?
 
-      if params[:name].size <= 2
+      if params[:name].size < 3
         flash[:alert] = "Nome do contribuinte deve conter ao menos 3 letras."
         redirect_to :root and return
       end 
 
       if current_user.admin?
         @taxpayers = Taxpayer
-                      .where("unit_id = ? AND lower(name) like ?", session[:unit_id], "%"<< params[:name].downcase << "%")
+                      .joins(:city)
+                      .where("taxpayers.unit_id = ? AND lower(taxpayers.name) like ?", session[:unit_id], "%"<< params[:name].downcase << "%")
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
-        else
-          @taxpayers = Taxpayer
-                      .where("unit_id = ? AND lower(name) like ? and employee_id = ?", session[:unit_id], "%"<< params[:name].downcase << "%", session[:employee_id])
+      else
+        @taxpayers = Taxpayer
+                      .joins(:city)
+                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND lower(taxpayers.name) like ? and employee_id = ?", session[:unit_id], true, "%"<< params[:name].downcase << "%", session[:employee_id])
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
       end
 
-      if @taxpayers.count == 0
-        flash[:alert] = "Não encontrado contribuinte."
+
+    elsif params[:cpf].present?
+
+      unless params[:cpf].size == 14
+        flash[:alert] = "CPF deve conter 11 números no formato 999.999.999-99"
         redirect_to :root and return
       end 
-    
-    elsif params[:cpf].present?
-      @taxpayers = Taxpayer
-                      .where("unit_id = ? AND cpf = ? and employee_id = ?", session[:unit_id], params[:cpf], session[:employee_id])
+
+      if current_user.admin?
+        @taxpayers = Taxpayer
+                      .joins(:city)
+                      .where("taxpayers.unit_id = ? AND taxpayers.cpf = ?", session[:unit_id], params[:cpf])
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
+      else
+        @taxpayers = Taxpayer
+                      .joins(:city)
+                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND taxpayers.cpf = ? and taxpayers.employee_id = ?", session[:unit_id], true, params[:cpf], session[:employee_id])
+                      .paginate(:page => params[:page], :per_page => 10)
+                      .order('name ASC')
+      end
+
 
     elsif params[:cna].present?
+
       if current_user.admin?
         @taxpayers = Taxpayer
                       .where("unit_id = ? AND origin_code = ?", session[:unit_id], params[:cna])
@@ -55,11 +70,18 @@
                       .order('name ASC')
       else
         @taxpayers = Taxpayer
-                      .where("unit_id = ? AND origin_code = ? and employee_id = ?", session[:unit_id], params[:cna], session[:employee_id])
+                      .joins(:city)
+                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND taxpayers.origin_code = ? and taxpayers.employee_id = ?", session[:unit_id], true, params[:cna], session[:employee_id])
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
       end
     end
+
+    if @taxpayers.count == 0
+      flash[:alert] = "Não encontrado contribuinte."
+      redirect_to :root and return
+    end 
+  
 
     render "index", :layout => 'application'
   end
@@ -85,19 +107,15 @@
       redirect_to show_path(params[:cod]) and return 
     end
 
-
     @taxpayer = Taxpayer.find(params[:cod])
+
+    unless Taxpayer.chargeble? @taxpayer
+      flash[:alert] = "Cidade não liberada para negociações!"
+      redirect_to show_path(params[:cod]) and return 
+    end
+
     @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
 
-    if @taxpayer.city.present?
-      if @taxpayer.city.fl_charge == false
-        flash[:notice] = "Colaborador de uma cidade não liberada para cobrança!"
-        redirect_to :root and return 
-      end
-    else
-      flash[:notice] = "Colaborador de uma cidade não liberada para cobrança!"
-      redirect_to :root and return
-    end
 
     @contract = Contract.new
     @contract.unit_ticket_quantity = 1
