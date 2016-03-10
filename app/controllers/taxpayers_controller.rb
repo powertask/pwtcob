@@ -5,8 +5,21 @@ class TaxpayersController < ApplicationController
   layout 'window'
 
   def index
-    @taxpayers = index_class(Taxpayer)
-    @taxpayers = @taxpayers.where('employee_id = ?', session[:employee_id]) if current_user.user?
+    if current_user.user?
+      @taxpayers = index_class(Taxpayer)
+      @taxpayers = @taxpayers
+                    .joins(:city)
+                    .where('taxpayers.unit_id = ? AND employee_id = ? AND cities.fl_charge = ?', session[:unit_id], session[:employee_id], true) 
+                    .paginate(:page => params[:page], :per_page => 20)
+                    .order('name ASC')
+    else
+      @taxpayers = index_class(Taxpayer)
+      @taxpayers = @taxpayers
+                    .joins(:city)
+                    .where('taxpayers.unit_id = ?', session[:unit_id]) 
+                    .paginate(:page => params[:page], :per_page => 20)
+                    .order('name ASC')
+    end      
     respond_with @taxpayers, :layout => 'application'
   end
 

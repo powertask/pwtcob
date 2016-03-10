@@ -31,13 +31,13 @@ class ApplicationController < ActionController::Base
       if params[:name].empty?
         list(klass, options)
       else
-        list(klass, options).where("lower(name) like ?", params[:name].downcase << "%")
+        list(klass, options).where("lower("<<klass.to_s.pluralize.downcase<<".name) like ?", params[:name].downcase << "%")
       end
     end
 
     def list(klass, options = {})
       if options[:type].nil?
-        k = klass.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
+        k = klass.where(klass.to_s.pluralize.downcase<<".unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
         
         if options[:order]
           k = k.order('name ASC')

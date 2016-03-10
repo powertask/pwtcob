@@ -27,15 +27,16 @@
 					<%= link_to(taxpayer.name, taxpayer_path(taxpayer)) %>
 					&ndash;
 					<tt>
-					<%= taxpayer.cnpj %>
-					<%= taxpayer.cpf %> 
-					</tt>
-					<dt>
+            <%= taxpayer.cnpj %>
+            <%= taxpayer.cpf %> 
+            &bull;
             <%= taxpayer.address %>
             &bull;
             <%= taxpayer.city.name %>
             &bull;
             <%= taxpayer.city.state %>
+					</tt>
+					<dt>
 					</dt>
 				</div>
 			</li>
