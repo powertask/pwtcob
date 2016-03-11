@@ -10,7 +10,7 @@ namespace :bank_billet_status_sync do
 
   		if bankbillet_api.present?
         bankbillet = BankBillet.find(i.id)
-        ticket     = Ticket.where('bank_billet_id = ?', i.id)
+        ticket     = Ticket.where('bank_billet_id = ?', i.id).first
 
         ActiveRecord::Base.transaction do
           bankbillet.status = bankbillet_api.status
