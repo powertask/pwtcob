@@ -300,10 +300,12 @@ class ContractsController < ApplicationController
       zipfile_name = "tmp/boletos_do_contribuinte_" + @taxpayer.origin_code.to_s + ".zip"
 
       if File.exist? zipfile_name
+          logger.info zipfile_name.inspect
         send_file zipfile_name, filename: "boletos_do_contribuinte_" + @taxpayer.origin_code.to_s + ".zip", :type=>"application/zip", :disposition => "attachment", :x_sendfile=>true 
       else
         @values.each do |filename,url|
           image_url = URI.parse(url)
+          logger.info image_url.inspect
           file = Tempfile.new
           file.binmode
           file.write open(image_url).read
