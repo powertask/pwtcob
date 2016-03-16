@@ -1,0 +1,34 @@
+<div class='section'>
+  <table width="600" cellpadding="0" cellspacing="0">
+		<tr height='40'>
+			<td><%= t('report.between_date') %>:</td>
+			<td><%= date_select(@datainicial, "datainicial") -%>&nbsp;a&nbsp;
+				<%= date_select(@datafinal, "datafinal") -%></td>
+		</tr>
+		<tr height='40'>
+			<td><%= t('report.insurance') %>:</td>
+			<td><%= select_tag(:insurance, options_for_select(Insurance.where('unit_id = ?', session[:unit_id]).collect{|e| [e.name, e.id]})) %></td>
+		</tr>
+			<% if @id == '1' %>
+			<tr height='40'>
+				<td><%= t('report.proctype') %>:</td>
+				<td><%= select_tag :proctype, options_for_select(['Ecografia', 'Raio-X']) %></td>
+			</tr>
+			<tr height='40'>
+				<td><%= t('report.reporttype') %>:</td>
+				<td><%= select_tag :reporttype, options_for_select(['Analitico', 'Sintetico']) %></td>
+			</tr>
+			<% elsif @id == '2' %>
+			<tr height='40'>
+				<td><%= t('report.doctor') %>:</td>
+				<td><%= select_tag(:doctor, options_for_select(Doctor.where('unit_id = ?', session[:unit_id]).collect{|e| [e.name, e.id]})) %></td>
+			</tr>
+			<% end %>
+	</table>
+</div>
+
+<div class='buttonbar'>
+  <%= submit_tag t('report.filter'), class: 'btn-primary' %>
+	<%= 'ou' %>
+  <%= link_to t('menu.cancel'), root_path %>
+</div>
