@@ -1,5 +1,5 @@
 namespace :populate_db do
-  desc "create users"
+  	desc "create users"
     task :create_users => :environment do
 		User.create!(:password => 'CamilaSilva', :email => 'camila.silva@gianellimartins.com.br', :password_confirmation => 'CamilaSilva', :unit_id => 1, :profile => 1, :employee_id => 3)
 		User.create!(:password => 'DanieleSoares', :email => 'daniele.soares@gianellimartins.com.br', :password_confirmation => 'DanieleSoares', :unit_id => 1, :profile => 1, :employee_id => 6)
@@ -31,6 +31,11 @@ namespace :populate_db do
     task :create_user_faesc => :environment do
 #		User.create!(:password => 'AndreiaFaesc', :email => 'andreia@faesc.com.br', :password_confirmation => 'AndreiaFaesc', :unit_id => 1, :profile => 2)
 		User.create!(:password => 'TatianeFaesc', :email => 'tatiane@faesc.com.br', :password_confirmation => 'TatianeFaesc', :unit_id => 1, :profile => 2)
+	end
+
+    desc "create users Isabel Santos"
+    task :create_user_isabel_santos => :environment do
+		User.create!(:password => 'IsabelSantos', :email => 'isabel.santos@gianellimartins.com.br', :password_confirmation => 'IsabelSantos', :unit_id => 1, :profile => 1, :employee_id => 33)
 	end
 
 	desc "allocate employees"
