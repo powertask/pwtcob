@@ -60,7 +60,7 @@ Rails.application.routes.draw do
   get 'discharge/sent_discharge' => 'discharges#sent_discharge', as: :sent_discharge
   post 'discharge/create_discharge' => 'discharges#create_discharge', as: :create_discharge
 
-  get 'report/payment' => 'reports#payment', as: :report_payment
+  get 'contract/rel_payment' => 'contracts#rel_payment', as: :rel_payment
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

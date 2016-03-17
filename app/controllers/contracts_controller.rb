@@ -319,6 +319,13 @@ class ContractsController < ApplicationController
     end
   end
 
+
+  def rel_payment
+    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due from contracts c, tickets t, taxpayers tax, cities where c.unit_id = ? AND paid_amount > ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id order by t.paid_at DESC', session[:unit_id], 0]
+  end
+
+
+
   private
   def contract_params
     params.require(:contract).permit( :unit_id, :unit_ticket_quantity, :client_ticket_quantity )

@@ -1,0 +1,44 @@
+
+<div class='title_page'>
+  <span> <%= 'Relatório de Pagamentos Efetuados' %> </span>
+</div>
+
+<table class="table" border="0">
+  <thead>
+    <tr>
+      <th>Contribuinte</th>
+      <th>CNA</th>
+      <th>Cidade</th>
+      <th>CPF</th>
+      <th>Valor</th>
+      <th>Data Pagamento</th>
+      <th>Data Vencimento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @rels.nil? %>
+      <% @rels.each do |rel| %>
+        <tr>
+          <td><%= rel.tname %> </td>
+          <td><%= rel.origin_code %> </td>
+          <td><%= rel.cname %></td>
+          <td><%= rel.cpf %> </td>
+          <td><%= rel.paid_amount.real %> </td>
+          <td><%= rel.paid_at.to_s_br %> </td>
+          <td><%= rel.due.to_date.to_s_br %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>TOTAIS PAGOS</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= @rels.map{|i|i[:paid_amount]}.inject(:+).real if @rels %></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>  
+</table>
