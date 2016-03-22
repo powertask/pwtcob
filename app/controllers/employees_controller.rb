@@ -26,6 +26,7 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     @employee.unit_id = session[:unit_id]
+    
     @employee.save!
     respond_with @employee
     

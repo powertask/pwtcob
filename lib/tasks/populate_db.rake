@@ -1,42 +1,11 @@
 namespace :populate_db do
-  	desc "create users"
-    task :create_users => :environment do
-		User.create!(:password => 'CamilaSilva', :email => 'camila.silva@gianellimartins.com.br', :password_confirmation => 'CamilaSilva', :unit_id => 1, :profile => 1, :employee_id => 3)
-		User.create!(:password => 'DanieleSoares', :email => 'daniele.soares@gianellimartins.com.br', :password_confirmation => 'DanieleSoares', :unit_id => 1, :profile => 1, :employee_id => 6)
-		User.create!(:password => 'DaisyAguiar', :email => 'daisy.aguiar@gianellimartins.com.br', :password_confirmation => 'DaisyAguiar', :unit_id => 1, :profile => 1, :employee_id => 27)
-		User.create!(:password => 'EdsonLuz', :email => 'edson.luz@gianellimartins.com.br', :password_confirmation => 'EdsonLuz', :unit_id => 1, :profile => 1, :employee_id => 7)
-		User.create!(:password => 'FernandaBagatini', :email => 'fernanda.bagatini@gianellimartins.com.br', :password_confirmation => 'FernandaBagatini', :unit_id => 1, :profile => 1, :employee_id => 9)
-		User.create!(:password => 'JessicaSilveira', :email => 'jessica.silveira@gianellimartins.com.br', :password_confirmation => 'JessicaSilveira', :unit_id => 1, :profile => 1, :employee_id => 22)
-		User.create!(:password => 'JulianaRocha', :email => 'juliana.rocha@gianellimartins.com.br', :password_confirmation => 'JulianaRocha', :unit_id => 1, :profile => 1, :employee_id => 28)
-		User.create!(:password => 'MariaKazuko', :email => 'kazuko@gianellimartins.com.br', :password_confirmation => 'MariaKazuko', :unit_id => 1, :profile => 1, :employee_id => 10)
-		User.create!(:password => 'PatriciaGusmao', :email => 'patriciagusmao@gianellimartins.com.br', :password_confirmation => 'PatriciaGusmao', :unit_id => 1, :profile => 1, :employee_id => 29)
-		User.create!(:password => 'SilviaIraci', :email => 'silvia.santos@gianellimartins.com.br', :password_confirmation => 'SilviaIraci', :unit_id => 1, :profile => 1, :employee_id => 30)
-		User.create!(:password => 'SimonePrado', :email => 'simonepereira@gianellimartins.com.br', :password_confirmation => 'SimonePrado', :unit_id => 1, :profile => 1, :employee_id => 14)
-		User.create!(:password => 'SimoneVeloso', :email => 'simoneveloso@gianellimartins.com.br', :password_confirmation => 'SimoneVeloso', :unit_id => 1, :profile => 1, :employee_id => 15)
-		User.create!(:password => 'SusanaLima', :email => 'susana@gianellimartins.com.br', :password_confirmation => 'SusanaLima', :unit_id => 1, :profile => 1, :employee_id => 16)
-		User.create!(:password => 'TaianaCastilho', :email => 'taiana.castilho@gianellimartins.com.br', :password_confirmation => 'TaianaCastilho', :unit_id => 1, :profile => 1, :employee_id => 17)
-		User.create!(:password => 'AnaSilvia', :email => 'ana.gomes@gianellimartins.com.br', :password_confirmation => 'AnaSilvia', :unit_id => 1, :profile => 1, :employee_id => 18)
-		User.create!(:password => 'BrunaPires', :email => 'brunapires@gianellimartins.com.br', :password_confirmation => 'BrunaPires', :unit_id => 1, :profile => 1, :employee_id => 20)
-		User.create!(:password => 'CamilaMolina', :email => 'camila.molina@gianellimartins.com.br', :password_confirmation => 'CamilaMolina', :unit_id => 1, :profile => 1, :employee_id => 4)
-		User.create!(:password => 'DeniseBisotto', :email => 'denise.bisotto@gianellimartins.com.br', :password_confirmation => 'DeniseBisotto', :unit_id => 1, :profile => 1, :employee_id => 21)
-		User.create!(:password => 'IsabelCarboni', :email => 'isabel.carboni@gianellimartins.com.br', :password_confirmation => 'IsabelCarboni', :unit_id => 1, :profile => 1, :employee_id => 31)
-		User.create!(:password => 'LucindaOliveira', :email => 'lucinda.oliveira@gianellimartins.com.br', :password_confirmation => 'LucindaOliveira', :unit_id => 1, :profile => 1, :employee_id => 23)
-		User.create!(:password => 'RosaneAnjos', :email => 'rosane.anjos@gianellimartins.com.br', :password_confirmation => 'RosaneAnjos', :unit_id => 1, :profile => 1, :employee_id => 24)
-		User.create!(:password => 'SabrinaCruz', :email => 'sabrinacruz@gianellimartins.com.br', :password_confirmation => 'SabrinaCruz', :unit_id => 1, :profile => 1, :employee_id => 25)
-		User.create!(:password => 'AlanaPereira', :email => 'alana.pereira@gianellimartins.com.br', :password_confirmation => 'AlanaPereira', :unit_id => 1, :profile => 1, :employee_id => 32)
-		User.create!(:password => 'SilvaneSchneider', :email => 'silvane.schneider@gianellimartins.com.br', :password_confirmation => 'SilvaneSchneider', :unit_id => 1, :profile => 1, :employee_id => 26)
-    end
 
-    desc "create users faesc"
-    task :create_user_faesc => :environment do
-#		User.create!(:password => 'AndreiaFaesc', :email => 'andreia@faesc.com.br', :password_confirmation => 'AndreiaFaesc', :unit_id => 1, :profile => 2)
-		User.create!(:password => 'TatianeFaesc', :email => 'tatiane@faesc.com.br', :password_confirmation => 'TatianeFaesc', :unit_id => 1, :profile => 2)
+    desc "create users Sidelma Reis"
+    task :create_user => :environment do
+    	e = Employee.create!(:name => 'Sidelma Reis', :email => 'sidelma.reis@gianellimartins.com.br', :phone => '0', :unit_id => 1)
+		u = User.create!(:password => 'SidelmaReis', :email => 'sidelma.reis@gianellimartins.com.br', :password_confirmation => 'SidelmaReis', :unit_id => 1, :profile => 1, :employee_id => e.id)
 	end
 
-    desc "create users Isabel Santos"
-    task :create_user_isabel_santos => :environment do
-		User.create!(:password => 'IsabelSantos', :email => 'isabel.santos@gianellimartins.com.br', :password_confirmation => 'IsabelSantos', :unit_id => 1, :profile => 1, :employee_id => 33)
-	end
 
 	desc "allocate employees"
 	task :allocate_employess => :environment do
