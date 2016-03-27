@@ -61,6 +61,9 @@ Rails.application.routes.draw do
   post 'discharge/create_discharge' => 'discharges#create_discharge', as: :create_discharge
 
   get 'contract/rel_payment' => 'contracts#rel_payment', as: :rel_payment
+
+  get 'employee/report_fee_filter' => 'employees#report_fee_filter', as: :report_fee_filter
+  get 'employee/report_fee_action' => 'employees#report_fee_action', as: :report_fee_action
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

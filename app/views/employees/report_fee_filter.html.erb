@@ -1,0 +1,23 @@
+<%= form_tag(report_fee_action_path, :method => 'get') do |f| %>
+  <div class='title'> Relatório de Comissões </div>
+  
+  <div class='section'>
+    <table width="600" cellpadding="0" cellspacing="0">
+		  <tr height='40'>
+  			<td>Mes:</td>
+  			<td><%= select_tag(:month, options_for_select(@months)) %></td>
+  		</tr>
+      <tr height='40'>
+        <td>Ano</td>
+        <td><%= select_tag(:year, options_for_select(@years)) %></td>
+      </tr>
+	 </table>
+  </div>
+
+  <div class='buttonbar'>
+    <%= submit_tag 'Gerar Relatório', class: 'btn-primary' %>
+    <%= 'ou' %>
+    <%= link_to t('menu.cancel'), root_path %>
+  </div>
+
+<% end %>

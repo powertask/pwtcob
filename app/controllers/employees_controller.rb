@@ -40,6 +40,18 @@ class EmployeesController < ApplicationController
     respond_with @employee
   end
 
+  def report_fee_filter
+    @months = [['Janeiro',1],['Fevereiro',2],['Março',3],['Abril',4],['Maio',5],['Junho',6],['Julho',7],['Agosto',8],['Setembro',9],['Outubro',10],['Novembro',11],['Dezembro',12]]
+    @years = [['2016',2016]]
+  end
+
+  def report_fee_action
+    dt_ini = Date.new(params[:year].to_i, params[:month].to_i, 1)
+    dt_fim = ((dt_ini + 1.month))
+    @rels = Contract.find_by_sql(['select employee_id, e.name, sum(paid_amount) paid_amount from contracts c, tickets t, employees e where c.id = t.contract_id and c.employee_id = e.id AND t.ticket_type = 1 and paid_amount > 0 AND t.status = 3  AND paid_at >= ? AND paid_at < ? group by employee_id, e.name', dt_ini, dt_fim])
+  end
+
+
   private
     def employee_params
       params.require(:employee).permit( :name, :unit_id, :email, :phone, :fee )

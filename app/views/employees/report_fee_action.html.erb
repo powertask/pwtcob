@@ -1,0 +1,35 @@
+<div class='title_tools'>
+  <a class="btn btn-large btn-default" <%= link_to('Voltar para Filtros', report_fee_filter_path) %> </a>
+</div>
+
+<div class='title_page'> <%= 'Relatório de Comissões' %>  </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Contribuinte</th>
+      <th>Valor Realizado</th>
+      <th>Comissão</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @rels.nil? %>
+      <% @rels.each do |rel| %>
+        <tr>
+          <td><%= rel.employee_id %> </td>
+          <td><%= rel.name %> </td>
+          <td><%= rel.paid_amount.real %> </td>
+          <td><%= comissao(rel.paid_amount).real %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>  
+</table>

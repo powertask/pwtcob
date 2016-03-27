@@ -111,4 +111,8 @@ module ApplicationHelper
   end
 
 
+  def comissao(valor)
+    valor = valor * 0.01
+  end
+
 end
