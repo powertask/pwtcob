@@ -12,12 +12,19 @@
         <div class='strip' id='none'> <%= contract.id %> </div>
 
         <div class='indent'>
+          <% if contract.cancel? %>
+            <span class="label label-danger"><%= 'CANCELADO' %> </span> 
+          <% else %>
+            <span class="label label-success"><%= 'ATIVO' %> </span> 
+          <% end %>
+
+          &nbsp;
+          &bull;
           <%= contract.taxpayer.origin_code %>
           &bull;
           <%= link_to(contract.taxpayer.name, contract_path(contract)) %>
-          &bull;
           <tt><%= 'Data: '<<contract.contract_date.to_s_br %></tt>
-          <dt><%= contract.cancel? ? 'CANCELADO' : 'ATIVO' %> </dt>
+          <dt></dt>
         </div>
       </li>
     <% end %>
