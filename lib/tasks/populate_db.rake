@@ -47,7 +47,7 @@ namespace :populate_db do
     e = Employee.all
     e.each do |emp|
       u = User.where('employee_id = ?', emp.id).first
-      if u.valid?
+      if u.present?
         u.name = emp.name
         u.phone = emp.phone
         u.save!
