@@ -5,7 +5,11 @@ class UsersController < ApplicationController
   layout 'window'
 
   def index
-    @users = User.where('unit_id = ?', session[:unit_id])
+    unless current_user.admin?
+      redirect_to :back, :alert => "Acesso permitido somente para ADMINISTADOR."
+    end
+
+    @users = User.where("unit_id = ? AND id not in (1,2)", session[:unit_id]).order('profile').paginate(:page => params[:page], :per_page => 20)
     respond_with @users, :layout => 'application'
   end
 
@@ -16,8 +20,18 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update_attributes(params[:user])
+    @user.update_attributes(user_params)
     respond_with(@user)
   end
+
+  def show
+    @user = User.find(params[:id])
+  end
+
+
+  private
+    def user_params
+      params.require(:user).permit(:name, :email, :phone, :profile)
+    end
 
 end

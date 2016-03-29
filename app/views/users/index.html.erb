@@ -1,0 +1,42 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('user.new'), new_user_path) %> </a>
+</div>
+
+<div class='title_page'>
+	<span> <%= t('user.title') %> </span>
+</div>
+
+<div class='list1'>
+	<% unless @users.empty? %>
+		<% @users.each do |user| %>
+			<li>
+				<div class='strip' id='none'> <%= user.id %> </div>
+
+				<div class='tools'>
+					<%= link_to(t('menu.edit'), edit_user_path(user), class: "btn btn-xs btn-default") %>
+				</div>
+
+				<div class='indent'>
+
+          <% if user.admin? %>
+            <span class="label label-success"><%= t('user.status.admin' ) %> </span> 
+          <% elsif user.user? %>
+            <span class="label label-primary"><%= t('user.status.user' ) %> </span> 
+          <% elsif user.client? %>
+            <span class="label label-warning"><%= t('user.status.client' ) %> </span> 
+          <% end %>
+          &nbsp;
+					<%= link_to(user.email, user_path(user)) %>
+					&bull;
+          <%= user.name %>
+          &bull;
+          <%= user.phone %>
+					<tt></tt>
+					<dt></dt>
+				</div>
+			</li>
+		<% end %>
+	<% end %>
+</div>
+
+<div id='paginate'><%= render 'common/paginate' %></div>

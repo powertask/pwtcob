@@ -40,10 +40,9 @@ pt-BR:
     home: Home
     main: Cadastros
     unit: Empresa
-    employee: Colaboradores
     client: Federações
     taxpayer: Contribuintes
-    user: Usuários
+    user: Colaboradores
     myuser: Meus Dados
     category: Ações
     lawyer: Advogados
@@ -226,8 +225,17 @@ pt-BR:
     description: Histórico a ser gerado
 
   user:
-    edit: Meus Dados
+    edit: Editar Dados Colaborador
+    index: Listar Todos os Colaboradores
+    new: Novo Colaborador
+    show: Detalhes do Colaborador
+    title: Cadastro de Colaboradores
     cancel_account: Cancelar Minha Conta
+    name: Nome do Colaborador
+    status:
+      admin: ADMINISTRADOR
+      client: CLIENTE
+      user: COLABORADOR
 
   task:
     title: Quadro de Tarefas

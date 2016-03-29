@@ -41,5 +41,20 @@ namespace :populate_db do
 		BankBilletAccount.create!(:unit_id => 1, :name => 'Santander 101 - CC 013002997-7', :bank_billet_account => 21)
 		BankBilletAccount.create!(:unit_id => 1, :name => 'Banco do Brasil 17 - CC 00011672-6', :bank_billet_account => 47)
     end
+
+	desc "update users"
+	task :update_users => :environment do
+    e = Employee.all
+    e.each do |emp|
+      u = User.where('employee_id = ?', emp.id).first
+      if u.valid?
+        u.name = emp.name
+        u.phone = emp.phone
+        u.save!
+      end
+    end
+	end
+
+
 end
 
