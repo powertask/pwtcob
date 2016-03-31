@@ -17,8 +17,8 @@
         <tr>
           <td><%= history.created_at.to_s_br %> </td>
           <td>
-            <% if history.user %>
-              <% if history.user %>
+            <% if history.user_id %>
+              <% if history.user_id %>
                 <%= history.user.name %>
               <% else %>
                 <%= history.user.email %>
