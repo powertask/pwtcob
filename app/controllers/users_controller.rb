@@ -15,6 +15,9 @@ class UsersController < ApplicationController
 
 
   def edit
+    unless current_user.admin?
+      redirect_to :back, :alert => "Acesso permitido somente para ADMINISTADOR."
+    end
     @user = User.find(params[:id])
   end
 
@@ -25,13 +28,16 @@ class UsersController < ApplicationController
   end
 
   def show
+    unless current_user.admin?
+      redirect_to :back, :alert => "Acesso permitido somente para ADMINISTADOR."
+    end
     @user = User.find(params[:id])
   end
 
 
   private
     def user_params
-      params.require(:user).permit(:name, :email, :phone, :profile)
+      params.require(:user).permit(:name, :email, :phone, :profile, :fl_taxpayer)
     end
 
 end

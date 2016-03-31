@@ -3,6 +3,7 @@
 		<%= f.input :name, :label => t('user.name'), input_html:{:class => 'form-control'} %>
 		<%= f.input :email, :label => t('email'), input_html: { :class => 'form-control' }%>
     <%= f.input :phone, :label => t('phone'), input_html: { :class => 'form-control' } %>
+    <%= f.input :fl_taxpayer, :label => t('user.fl_taxpayer'), as: :radio_buttons, collection: [["Sim", true], ["Não", false]] %>
 
     <div class='styled-select1'>
       <%= f.collection_select :profile, {admin: 'Administrador', user: 'Colaborador', client: 'Cliente'}, :first, :last %>

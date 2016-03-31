@@ -232,10 +232,12 @@ pt-BR:
     title: Cadastro de Colaboradores
     cancel_account: Cancelar Minha Conta
     name: Nome do Colaborador
+    fl_taxpayer: Permissão para cobrar Contribuinte?
+    profile: Perfil do Colaborador
     status:
-      admin: ADMINISTRADOR
-      client: CLIENTE
-      user: COLABORADOR
+      admin:  "ADMINISTRADOR"
+      client: "CLIENTE      "
+      user:   "COLABORADOR  "
 
   task:
     title: Quadro de Tarefas

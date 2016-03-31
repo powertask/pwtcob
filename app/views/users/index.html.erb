@@ -18,6 +18,10 @@
 
 				<div class='indent'>
 
+          <%= user.name %>
+          &bull;
+          <%= link_to(user.email, user_path(user)) %>
+          &nbsp;
           <% if user.admin? %>
             <span class="label label-success"><%= t('user.status.admin' ) %> </span> 
           <% elsif user.user? %>
@@ -26,11 +30,12 @@
             <span class="label label-warning"><%= t('user.status.client' ) %> </span> 
           <% end %>
           &nbsp;
-					<%= link_to(user.email, user_path(user)) %>
-					&bull;
-          <%= user.name %>
-          &bull;
-          <%= user.phone %>
+          <% if user.fl_taxpayer %>
+            <span class="label label-success"> <%= "Pode Cobrar Contribuinte" %> </span> 
+          <% else %>
+            <span class="label label-danger">  <%= "Não Pode Cobrar Contribuinte" %> </span> 
+          <% end %>
+          &nbsp;
 					<tt></tt>
 					<dt></dt>
 				</div>

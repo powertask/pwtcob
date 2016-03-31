@@ -1,13 +1,16 @@
 <div class='title_tools'>
 	<a class="btn btn-large btn-warning" <%= link_to(t('user.new'), new_user_path) %> </a>
+	<a class="btn btn-large btn-warning" <%= link_to(t('user.edit'), edit_user_path(@user)) %> </a>
 	<a class="btn btn-large btn-warning" <%= link_to(t('user.index'), users_path) %> </a>
 </div>
 
 <div class='title_page'> <%= t('user.show') %> </div>
 
 <div class='section'>
-	<div class='label1 top req'> <%=t("user.name") %>: </div>	<%= @user.name %>
-	<div class='label1 top req'> <%=t("email") %>: </div>		<%= @user.email %>
-	<div class='label1 top req'> <%=t("phone") %>: </div>		<%= @user.phone %>
+	<div class='label1 top req'> <%=t("user.name") %>: </div>		<%= @user.name %>
+	<div class='label1 top req'> <%=t("email") %>: </div>			<%= @user.email %>
+	<div class='label1 top req'> <%=t("phone") %>: </div>			<%= @user.phone %>
+	<div class='label1 top req'> <%=t("user.profile") %>: </div>	<%= t('user.status.'<<@user.profile) %>
+	<div class='label1 top req'> <%=t("user.fl_taxpayer") %>: </div><%= @user.fl_taxpayer ? "SIM" : "NÃO" %>
 </div>
 
