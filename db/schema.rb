@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331011425) do
+ActiveRecord::Schema.define(version: 20160331021116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -289,10 +289,12 @@ ActiveRecord::Schema.define(version: 20160331011425) do
     t.string   "phone"
     t.integer  "city_id"
     t.integer  "employee_id"
+    t.integer  "user_id"
   end
 
   add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
   add_index "taxpayers", ["employee_id"], name: "index_taxpayers_on_employee_id", using: :btree
+  add_index "taxpayers", ["user_id"], name: "index_taxpayers_on_user_id", using: :btree
 
   create_table "temp_cna", force: :cascade do |t|
     t.integer "cod_proprietario"
@@ -395,5 +397,6 @@ ActiveRecord::Schema.define(version: 20160331011425) do
   add_foreign_key "taxpayer_phones", "taxpayers"
   add_foreign_key "taxpayers", "clients"
   add_foreign_key "taxpayers", "employees"
+  add_foreign_key "taxpayers", "users"
   add_foreign_key "users", "employees"
 end
