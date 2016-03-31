@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
 
   enum profile: [:admin, :user, :client]
 
+  def self.list(unit)
+    self.where("unit_id = ? AND fl_taxpayer = true", unit ).order("name ASC")
+  end
+
   def soft_delete  
     update_attribute(:deleted_at, Time.current)  
   end  

@@ -58,6 +58,6 @@ class TaxpayersController < ApplicationController
 
   private
     def taxpayer_params
-      params.require(:taxpayer).permit( :name, :unit_id, :cpf, :address, :zipcode, :email, :complement, :phone, :neighborhood, :city_id, :client_id, :cnpj, :origin_code, :employee_id)
+      params.require(:taxpayer).permit( :name, :unit_id, :user_id, :cpf, :address, :zipcode, :email, :complement, :phone, :neighborhood, :city_id, :client_id, :cnpj, :origin_code)
     end
 end

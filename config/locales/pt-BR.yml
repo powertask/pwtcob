@@ -69,7 +69,6 @@ pt-BR:
     deal: Ir para Ambiente de Negociações
     taxpayer: Contribuinte
     name: Nome do Contribuinte
-    employee: Colaborador Responsável
     taxpayer:
       show: Dados Cadastrais
     search:
@@ -146,7 +145,6 @@ pt-BR:
     print_pdf: Termo em PDF
     print_transaction_pdf: Termo de Transação
     bankbillet: Boleto
-    employee: Colaborador Responsável
     status:
       active: ATIVO
       cancel: CANCELADO
@@ -161,7 +159,6 @@ pt-BR:
     ticket_quantity: "Quantidade de Parcelas - %{name}" 
     contract_date: Data do Termo
     taxpayer: Contribuinte
-    employee: Colaborador Responsável
     create_contract: Gerar Parcelamento e Termo
     status:
       active: PROPOSTA ATIVA
@@ -194,16 +191,6 @@ pt-BR:
     fee: Percentual de Cobrança (%)
     fl_correcao: Cálculos com correção de CNA
 
-  employee:
-    title: Cadastro de Colaborador
-    new: Novo Colaborador
-    edit: Editar Dados do Colaborador
-    index: Listar Todos os Colaboradores
-    create: Gravar Dados do Colaborador
-    show: Detalhes do Colaborador
-    name: Nome do Colaborador
-    fee: Percentual de Comissão
-    search: Procurar por Colaborador
 
   taxpayer:
     id: ID do Contribuinte
@@ -222,7 +209,6 @@ pt-BR:
   history:
     new: Cadastro de Históricos
     taxpayer: Contribuinte
-    employee: Colaborador
     description: Histórico a ser gerado
 
   user:
@@ -239,22 +225,6 @@ pt-BR:
       admin:  "ADMINISTRADOR"
       client: "CLIENTE      "
       user:   "COLABORADOR  "
-
-  task:
-    title: Quadro de Tarefas
-    new: Nova Tarefa
-    index: Listar Todas as Tarefas
-    show: Detalhes da Tarefa
-    edit: Editar Tarefa
-    category: Ação a ser executada
-    employee: Quem irá executar a ação
-    taxpayer: Ação executada para
-    description: Descrição
-    task_date: Data da Tarefa
-    panel1: Tarefa a ser executada
-    panel2: Dados do contribuinte
-    panel3: Pendencias
-    panel4: Históricos
 
   category:
     title: Cadastro de Ações
@@ -344,8 +314,6 @@ pt-BR:
           attributes:
             category_id:
               blank: Voce deve definir uma ação.
-            employee_id:
-              blank: Voce deve definir quem irá executar a Tarefa.
             taxpayer_id:
               blank: Voce deve definir para quem a ação será executada.
         taxpayer:

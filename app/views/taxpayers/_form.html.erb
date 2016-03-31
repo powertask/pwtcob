@@ -2,7 +2,7 @@
   <div class='section'>
     <%= f.input :origin_code, :label => t('taxpayer.origin_code'), input_html:{:class => 'form-control'} %>
     <% if current_user.admin? %>
-      <%= f.association :employee, :collection => Employee.list(session[:unit_id]), :prompt => t('choose'), :label => t('employee.name') %>
+      <%= f.association :user, :collection => User.list(session[:unit_id]), :prompt => t('choose'), :label => t('user.name') %>
       <%= f.association :client, :collection => Client.list(session[:unit_id]), :prompt => t('choose'), :label => t('client.name') %>
     <% end %>
     <%= f.input :name, :label => t('taxpayer.name'), input_html:{:class => 'form-control'} %>
