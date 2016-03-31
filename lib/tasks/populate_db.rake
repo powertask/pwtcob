@@ -1,11 +1,5 @@
 namespace :populate_db do
 
-    desc "create users Sidelma Reis"
-    task :create_user => :environment do
-    	e = Employee.create!(:name => 'Sidelma Reis', :email => 'sidelma.reis@gianellimartins.com.br', :phone => '0', :unit_id => 1)
-		u = User.create!(:password => 'SidelmaReis', :email => 'sidelma.reis@gianellimartins.com.br', :password_confirmation => 'SidelmaReis', :unit_id => 1, :profile => 1, :employee_id => e.id)
-	end
-
     desc "create users Claudia Silva"
     task :create_user_claudia_silva => :environment do
     	e = Employee.create!(:name => 'Claudia Silva', :email => 'claudia.silva@gianellimartins.com.br', :phone => '0', :unit_id => 1)

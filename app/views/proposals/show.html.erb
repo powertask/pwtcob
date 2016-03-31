@@ -26,8 +26,8 @@
   <div class='label1 top req'> <%=t("proposal.taxpayer") %>: </div>
   <%= @proposal.taxpayer.origin_code.to_s << " - " << @proposal.taxpayer.name %>
   
-  <div class='label1 top req'> <%=t("proposal.employee") %>: </div>
-  <%= @proposal.employee ? @proposal.employee.name : 'ADMIN'  %>
+  <div class='label1 top req'> <%=t("user.name") %>: </div>
+  <%= @proposal.user ? @proposal.user.name : 'ADMIN'  %>
 	
   <div class='label1 top req'> <%=t("proposal.amount", name: @proposal.unit.name) %>: </div>
   <%= @proposal.unit_amount.real %>

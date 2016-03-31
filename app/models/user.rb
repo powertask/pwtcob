@@ -5,10 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :unit
-  belongs_to :employee
 
   has_many :histories
   has_many :contracts
+  has_many :taxpayers
   
   validates_presence_of :name, :unit_id
   validates_format_of :phone, :with => /\A^[\d]+$\Z/, :message => " - Deve ser um número"

@@ -7,7 +7,6 @@
   	session[:unit_id] = current_user.unit.id
   	session[:unit_name] = current_user.unit.name
     session[:unit_bank_billet_account] = 21
-    session[:employee_id] = current_user.employee_id
     session[:taxpayer_id] = nil
 
     contracts_meter
@@ -33,7 +32,7 @@
       else
         @taxpayers = Taxpayer
                       .joins(:city)
-                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND lower(taxpayers.name) like ? and employee_id = ?", session[:unit_id], true, "%"<< params[:name].downcase << "%", session[:employee_id])
+                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND lower(taxpayers.name) like ? and user_id = ?", session[:unit_id], true, "%"<< params[:name].downcase << "%", current_user.id)
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
       end
@@ -55,7 +54,7 @@
       else
         @taxpayers = Taxpayer
                       .joins(:city)
-                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND taxpayers.cpf = ? and taxpayers.employee_id = ?", session[:unit_id], true, params[:cpf], session[:employee_id])
+                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND taxpayers.cpf = ? and taxpayers.user_id = ?", session[:unit_id], true, params[:cpf], current_user.id)
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
       end
@@ -71,7 +70,7 @@
       else
         @taxpayers = Taxpayer
                       .joins(:city)
-                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND taxpayers.origin_code = ? and taxpayers.employee_id = ?", session[:unit_id], true, params[:cna], session[:employee_id])
+                      .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND taxpayers.origin_code = ? and taxpayers.user_id = ?", session[:unit_id], true, params[:cna], current_user.id)
                       .paginate(:page => params[:page], :per_page => 10)
                       .order('name ASC')
       end

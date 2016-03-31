@@ -7,7 +7,7 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Contribuinte</th>
+      <th>Colaborador</th>
       <th>Valor Realizado</th>
       <th>Comissão</th>
     </tr>
@@ -16,7 +16,7 @@
     <% unless @rels.nil? %>
       <% @rels.each do |rel| %>
         <tr>
-          <td><%= rel.employee_id %> </td>
+          <td><%= rel.user_id %> </td>
           <td><%= rel.name %> </td>
           <td><%= rel.paid_amount.real %> </td>
           <td><%= comissao(rel.paid_amount).real %> </td>

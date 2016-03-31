@@ -8,7 +8,7 @@ class ProposalsController < ApplicationController
     if current_user.admin? || current_user.client?
       @proposals = Proposal.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
     else
-      @proposals = Proposal.where("unit_id = ? AND employee_id = ?", session[:unit_id], current_user.employee_id).paginate(:page => params[:page], :per_page => 20)
+      @proposals = Proposal.where("unit_id = ? AND user_id = ?", session[:unit_id], current_user.id).paginate(:page => params[:page], :per_page => 20)
     end
     respond_with @proposals, :layout => 'application'
   end
@@ -30,8 +30,8 @@ class ProposalsController < ApplicationController
       @proposal = Proposal.new
 
       @proposal.unit_id = session[:unit_id]
+      @proposal.user_id = current_user.id
       @proposal.taxpayer_id = cod
-      @proposal.employee_id = current_user.employee_id
       
       if session[:tickets].count == 2
         unit_amount = session[:total_fee_a_vista].to_f
@@ -90,7 +90,7 @@ class ProposalsController < ApplicationController
 
   private
   def proposal_params
-    params.require(:proposal).permit(:unit_id, :unit_ticket_quantity, :client_ticket_quantity )
+    params.require(:proposal).permit(:unit_id, :user_id, :unit_ticket_quantity, :client_ticket_quantity )
   end
 
 end

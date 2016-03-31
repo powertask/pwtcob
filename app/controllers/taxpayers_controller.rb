@@ -9,7 +9,7 @@ class TaxpayersController < ApplicationController
       @taxpayers = index_class(Taxpayer)
       @taxpayers = @taxpayers
                     .joins(:city)
-                    .where('taxpayers.unit_id = ? AND employee_id = ? AND cities.fl_charge = ?', session[:unit_id], session[:employee_id], true) 
+                    .where('taxpayers.unit_id = ? AND user_id = ? AND cities.fl_charge = ?', session[:unit_id], current_user.id, true) 
                     .paginate(:page => params[:page], :per_page => 20)
                     .order('name ASC')
     else

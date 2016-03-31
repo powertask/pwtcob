@@ -63,8 +63,8 @@ Rails.application.routes.draw do
 
   get 'contract/rel_payment' => 'contracts#rel_payment', as: :rel_payment
 
-  get 'employee/report_fee_filter' => 'employees#report_fee_filter', as: :report_fee_filter
-  get 'employee/report_fee_action' => 'employees#report_fee_action', as: :report_fee_action
+  get 'contract/report_fee_filter' => 'contracts#report_fee_filter', as: :report_fee_filter
+  get 'contract/report_fee_action' => 'contracts#report_fee_action', as: :report_fee_action
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

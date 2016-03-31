@@ -1,10 +1,10 @@
 <div class='subtitle'> <%= t('home.taxpayer.show') %> </div>
 <% unless @taxpayer.nil? %>
   <div class='section'>
-    <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>  <%= @taxpayer.origin_code %>
-    <div class='label1 top req'> <%=t("client.name") %>: </div>       <%= @taxpayer.client.name %>
-    <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>     <%= @taxpayer.name %>
-    <div class='label1 top req'> <%=t("home.employee") %>: </div>      <%= @taxpayer.employee.name if @taxpayer.employee_id %>
+    <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>    <%= @taxpayer.origin_code %>
+    <div class='label1 top req'> <%=t("client.name") %>: </div>             <%= @taxpayer.client.name %>
+    <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>           <%= @taxpayer.name %>
+    <div class='label1 top req'> <%=t("taxpayer.user") %>: </div>           <%= @taxpayer.user.name if @taxpayer.user_id %>
 
     <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
     

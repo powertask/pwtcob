@@ -8,7 +8,7 @@ class ContractsController < ApplicationController
     if current_user.admin? || current_user.client?
       @contracts = Contract.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
     else
-      @contracts = Contract.where("unit_id = ? AND employee_id = ?", session[:unit_id], current_user.employee_id).paginate(:page => params[:page], :per_page => 20)
+      @contracts = Contract.where("unit_id = ? AND user_id = ?", session[:unit_id], current_user.id).paginate(:page => params[:page], :per_page => 20)
     end
     respond_with @contracts, :layout => 'application'
   end
@@ -32,7 +32,6 @@ class ContractsController < ApplicationController
       @contract.unit_id = session[:unit_id]
       @contract.contract_date = Time.now
       @contract.taxpayer_id = cod
-      @contract.employee_id = current_user.employee_id
       @contract.user_id = current_user.id
       
       if session[:tickets].count == 2
@@ -109,7 +108,6 @@ class ContractsController < ApplicationController
       @contract.unit_id = session[:unit_id]
       @contract.contract_date = Time.now
       @contract.taxpayer_id = proposal.taxpayer_id
-      @contract.employee_id = current_user.employee_id
       @contract.user_id = current_user.id
       @contract.status = 0
       @contract.unit_fee = 10
@@ -322,6 +320,18 @@ class ContractsController < ApplicationController
 
   def rel_payment
     @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due from contracts c, tickets t, taxpayers tax, cities where c.unit_id = ? AND paid_amount > ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id order by t.paid_at DESC', session[:unit_id], 0]
+  end
+
+
+  def report_fee_filter
+    @months = [['Janeiro',1],['Fevereiro',2],['Março',3],['Abril',4],['Maio',5],['Junho',6],['Julho',7],['Agosto',8],['Setembro',9],['Outubro',10],['Novembro',11],['Dezembro',12]]
+    @years = [['2016',2016]]
+  end
+
+  def report_fee_action
+    dt_ini = Date.new(params[:year].to_i, params[:month].to_i, 1)
+    dt_fim = ((dt_ini + 1.month))
+    @rels = Contract.find_by_sql(['select user_id, u.name, sum(paid_amount) paid_amount from contracts c, tickets t, users u where c.id = t.contract_id and c.user_id = u.id AND t.ticket_type = 1 and paid_amount > 0 AND t.status = 3  AND paid_at >= ? AND paid_at < ? group by user_id, u.name order by paid_amount DESC', dt_ini, dt_fim])
   end
 
 

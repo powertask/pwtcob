@@ -104,10 +104,8 @@ module ApplicationHelper
   end
 
   def user_name(user_id)
-    u = User.find user_id
-    e = Employee.find u.employee_id if u.employee_id
-
-    e.nil? ? u.email : e.name
+    user = User.find user_id
+    user.name
   end
 
 
