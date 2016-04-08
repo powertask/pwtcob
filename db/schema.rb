@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331021116) do
+ActiveRecord::Schema.define(version: 20160408011520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -281,8 +281,8 @@ ActiveRecord::Schema.define(version: 20160331021116) do
     t.string   "complement"
     t.string   "neighborhood"
     t.integer  "unit_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "client_id"
     t.string   "cnpj"
     t.integer  "origin_code"
@@ -290,6 +290,7 @@ ActiveRecord::Schema.define(version: 20160331021116) do
     t.integer  "city_id"
     t.integer  "employee_id"
     t.integer  "user_id"
+    t.date     "distributed_at"
   end
 
   add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
