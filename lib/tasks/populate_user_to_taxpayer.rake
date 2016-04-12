@@ -34,6 +34,7 @@ namespace :populate_user_to_taxpayer do
               d.save!
 
               t.user_id = users[user_index].id
+              t.distributed_at = Time.current
               t.save!
 
 
