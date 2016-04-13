@@ -275,6 +275,7 @@ pt-BR:
     title: Boletos
     index: Listar Todos os Boletos
     show: Detalhes do Boleto
+    search: Procurar boleto por situação
     customer_person_name: Contribuinte
     bank_billet_account_name: Carteira de Cobrança
     our_name: Nosso Número

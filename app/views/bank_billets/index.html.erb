@@ -2,12 +2,21 @@
 	<span> <%= t('bank_billet.title') %> </span>
 </div>
 
+<p>
+<div class='styled-select1'>
+  <%= form_tag(bank_billets_path, :method=>'get') do |f| %>
+    <%= select_tag :status, options_for_select([ 'Todos', 'Aberto', 'Cancelado', 'Pago', 'Vencido', 'Bloqueado' ]) %>
+    <%= submit_tag t('bank_billet.search') %> ou <%= link_to t('menu.clean'), bank_billets_path %>
+  <% end %>
+</div>
+</p>
+
 <table class="table">
   <thead>
     <tr>
       <th>#</th>
       <th><%= t('status') %></th>
-      <th>Nosso Numero</th>
+      <th>Nosso Número</th>
       <th>Carteira de Cobrança</th>
       <th>Nome/Razão Social</th>
       <th>Valor (R$)</th>
