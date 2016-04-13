@@ -4,7 +4,7 @@ namespace :bank_billet_status_sync do
 
   task :sync => :environment do
     bank_billet_pwt = BankBillet.where('status in (1,4)')
-    bank_billet_pwt = BankBillet.where('status in (3)').last
+    bank_billet_pwt = BankBillet.where('status in (3) AND id = 79')
 
   	bank_billet_pwt.each do |i|
   		bankbillet_api = BoletoSimples::BankBillet.find(i.origin_code)
