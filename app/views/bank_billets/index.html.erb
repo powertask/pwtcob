@@ -1,3 +1,15 @@
+<div class='title_tools'>
+  <button class="btn btn-primary" type="button">
+    Abertos: &nbsp; <span class="badge"> <%= @count_open %> </span>
+  </button>
+  <button class="btn btn-success" type="button">
+    Pagos: &nbsp; <span class="badge"> <%= @count_paid %> </span>
+  </button>
+  <button class="btn btn-danger" type="button">
+    Vencidos: &nbsp; <span class="badge"> <%= @count_overdue %> </span>
+  </button>
+</div>
+
 <div class='title_page'>
 	<span> <%= t('bank_billet.title') %> </span>
 </div>
