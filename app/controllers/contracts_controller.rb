@@ -245,7 +245,7 @@ class ContractsController < ApplicationController
                             customer_address_complement: @taxpayer.complement,
                             customer_city_name: @taxpayer.city.name,
                             customer_cnpj_cpf: cnpj_cpf,
-                            customer_neighborhood: @taxpayer.neighborhood,
+                            customer_neighborhood: @taxpayer.neighborhood.nil? ? ' ' : @taxpayer.neighborhood,
                             customer_person_name: @taxpayer.name,
                             customer_person_type: 'individual',
                             customer_state: @taxpayer.city.state,
