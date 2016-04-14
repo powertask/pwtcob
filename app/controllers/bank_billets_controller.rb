@@ -51,11 +51,13 @@ class BankBilletsController < ApplicationController
     bank_billet = BoletoSimples::BankBillet.find(params[:cod])
 
     if bank_billet.cancel
-      @response_errors = "Cancelado!"
+      flash[:alert] = "Boleto CANCELADO. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
     else
-      @response_errors = bank_billet.response_errors
+      flash[:alert] = "Não foi possível CANCELAR boleto. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
     end
+    respond_with @bank_billet
   end
+
 
   private
     def bank_billet_params
