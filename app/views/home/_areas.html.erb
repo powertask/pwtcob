@@ -16,7 +16,6 @@
   </thead>
   <tbody>
     <% unless @areas.nil? %>
-      <% area_year_old = @areas.first.year %>
       <% @areas.each do |area| %>
         <tr>
           <td><%= area.year %> </td>
@@ -29,20 +28,6 @@
           <td><%= area.degree_of_use.real %></td>
           <td><%= area.usable_area.real %></td>
         </tr>
-        <% if area.year != area_year_old %>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><%= @areas.map{|i|i[:modulo]}.inject(:+).real if @areas && i[:year] == area_year_old %></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <% area_year_old = area.year %>
-        <% end %>
       <% end %>
     <% end %>
   </tbody>
