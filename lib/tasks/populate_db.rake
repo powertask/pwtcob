@@ -10,8 +10,6 @@ namespace :populate_db do
 
       row_number = row_number + 1
 
-      return if row_number > 9
-
       if row_number > 1
 
         name = xls.sheet(0).cell(row_number, 1)
