@@ -1,6 +1,46 @@
 namespace :populate_db do
 
-    desc "create users Claudia Silva"
+	desc "update CNAS"
+	task :cnas_20160420 => :environment do
+    xls = Roo::Spreadsheet.open('cnas.xls', extension: :xlsx)
+
+    row_number = 0
+
+    xls.sheet(0).each_row_streaming do |row|
+
+      row_number = row_number + 1
+
+      return if row_number > 9
+
+      if row_number > 1
+
+        name = xls.sheet(0).cell(row_number, 1)
+        year = xls.sheet(0).cell(row_number, 10)
+        amount = xls.sheet(0).cell(row_number, 13).real.to_f
+
+        taxpayer = Taxpayer.where( 'name = ?', name).first
+
+        if taxpayer.present?
+          cna = Cna.where('taxpayer_id = ? AND year = ?', taxpayer.id, year)
+
+          if cna.empty?
+            c = Cna.new
+            c.unit_id = 1
+            c.taxpayer_id = taxpayer.id
+            c.year = year
+            c.amount = amount
+            c.stage = 1
+            c.status = 0
+            c.fl_charge = false
+            c.save!
+          end
+        end
+      end
+    end
+	end
+
+
+	desc "create users Claudia Silva"
     task :create_user_claudia_silva => :environment do
     	e = Employee.create!(:name => 'Claudia Silva', :email => 'claudia.silva@gianellimartins.com.br', :phone => '0', :unit_id => 1)
 		u = User.create!(:password => 'ClaudiaSilva',  :email => 'claudia.silva@gianellimartins.com.br', :password_confirmation => 'ClaudiaSilva', :unit_id => 1, :profile => 1, :employee_id => e.id)
