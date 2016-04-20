@@ -156,7 +156,6 @@
         <thead>
           <tr>
             <th>Ano</th>
-            <th>Vencimento</th>
             <th>Valor CNA</th>
             <th>Meses</th>
             <th>Multa</th>
@@ -173,7 +172,6 @@
             <% @cnas.each do |cna| %>
               <tr>
                 <td><%= cna.year %> </td>
-                <td><%= cna.due_at.to_date.to_s_br %> </td>
                 <td><%= cna.amount.real %> </td>
                 <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
                 <td><%= calc_multa(cna, nil, nil).real %> </td>
@@ -189,7 +187,6 @@
         </tbody>
         <tfoot>
           <tr>
-            <td></td>
             <td></td>
             <td><%= session[:value_cna].real %></td>
             <td></td>
