@@ -16,7 +16,25 @@
   </thead>
   <tbody>
     <% unless @areas.nil? %>
+      <% year_old = @areas[0].year %>
+      
       <% @areas.each do |area| %>
+        
+        <% if year_old != area.year %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong><%= 'Total para Ano ' << year_old.to_s %> </strong></td>
+            <td><strong><%= @areas.map{|i| i[:year] == year_old ? i[:vtnt] : 0.00 }.inject(:+).real %></strong></td>
+            <td><strong><%= @areas.map{|i| i[:year] == year_old ? i[:area] : 0.00 }.inject(:+).real  %></strong></td>
+            <td><strong><%= @areas.map{|i| i[:year] == year_old ? i[:modulo] : 0.00 }.inject(:+).real %></strong></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <% year_old = area.year %>
+        <% end %>
+
         <tr>
           <td><%= area.year %> </td>
           <td><%= area.nr_document %> </td>
@@ -28,20 +46,38 @@
           <td><%= area.degree_of_use.real %></td>
           <td><%= area.usable_area.real %></td>
         </tr>
+        
       <% end %>
+
+      <% vtnt = @areas.map{|i| i[:year] == year_old ? i[:vtnt] : 0.00 }.inject(:+).real %>
+      <% area = @areas.map{|i| i[:year] == year_old ? i[:area] : 0.00 }.inject(:+).real  %>
+      <% modulo = @areas.map{|i| i[:year] == year_old ? i[:modulo] : 0.00 }.inject(:+).real %>
+
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><strong> <%= 'Total para Ano ' << year_old.to_s %> </strong> </td>
+        <td><strong> <%= vtnt %> </strong> </td>
+        <td><strong> <%= area  %> </strong> </td>
+        <td><strong> <%= modulo %> </strong> </td>
+        <td></td>
+        <td></td>
+      </tr>
     <% end %>
+
   </tbody>
   <tfoot>
     <tr>
       <td></td>
       <td></td>
       <td></td>
+      <td><strong> <%= 'Total GERAL das Áreas' %></strong></td>
+      <td><strong> <%= @areas.map{|i|i[:vtnt]}.inject(:+).real if @areas %></strong> </td>
+      <td><strong> <%= @areas.map{|i|i[:area]}.inject(:+).real if @areas %></strong> </td>
+      <td><strong> <%= @areas.map{|i|i[:modulo]}.inject(:+).real if @areas %></strong> </td>
       <td></td>
-      <td><%= @areas.map{|i|i[:vtnt]}.inject(:+).real if @areas %></td>
-      <td><%= @areas.map{|i|i[:area]}.inject(:+).real if @areas %></td>
-      <td><%= @areas.map{|i|i[:modulo]}.inject(:+).real if @areas %></td>
-      <td></td>
-      <td></td>
+       <td></td>
     </tr>
   </tfoot>  
 </table>
