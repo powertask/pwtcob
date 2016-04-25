@@ -1,0 +1,16 @@
+<%= simple_form_for(@word) do |f| %>
+  <%= f.error_notification %>
+
+	<div class='section'>
+	  <div class="form-inputs">
+	    <%= f.input :unit_id, as: :hidden %>
+	    <%= f.input :name, :label => t('word.description') %>
+	  </div>
+
+	  <div class="form-actions">
+  		<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+  		<%= 'ou' %>
+  		<%= link_to t('menu.cancel'), words_path %>
+	  </div>
+	</div>
+<% end %>

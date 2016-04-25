@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412020133) do
+ActiveRecord::Schema.define(version: 20160425032507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,7 +163,10 @@ ActiveRecord::Schema.define(version: 20160412020133) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "user_id"
+    t.integer  "word_id"
   end
+
+  add_index "histories", ["word_id"], name: "index_histories_on_word_id", using: :btree
 
   create_table "indices", force: :cascade do |t|
     t.integer  "unit_id"
@@ -395,12 +398,22 @@ ActiveRecord::Schema.define(version: 20160412020133) do
   add_index "users", ["employee_id"], name: "index_users_on_employee_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "words", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "words", ["unit_id"], name: "index_words_on_unit_id", using: :btree
+
   add_foreign_key "areas", "taxpayers"
   add_foreign_key "areas", "units"
   add_foreign_key "bank_billet_accounts", "units"
   add_foreign_key "bank_billets", "bank_billet_accounts"
   add_foreign_key "bank_billets", "units"
   add_foreign_key "clients", "bank_billet_accounts"
+  add_foreign_key "histories", "words"
   add_foreign_key "indices", "units"
   add_foreign_key "inpcs", "units"
   add_foreign_key "lawyers", "units"
@@ -410,4 +423,5 @@ ActiveRecord::Schema.define(version: 20160412020133) do
   add_foreign_key "taxpayers", "employees"
   add_foreign_key "taxpayers", "users"
   add_foreign_key "users", "employees"
+  add_foreign_key "words", "units"
 end

@@ -9,6 +9,7 @@
       <th>Data</th>
       <th>Colaborador</th>
       <th>Histórico</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -17,14 +18,9 @@
         <tr>
           <td><%= history.created_at.to_s_br %> </td>
           <td>
-            <% if history.user_id %>
-              <% if history.user_id %>
-                <%= history.user.name %>
-              <% else %>
-                <%= history.user.email %>
-              <% end %>
-            <% end %>
+            <%= history.user.name if history.user.present? %>
           </td>
+          <td><%= history.word.name if history.word.present? %> </td>
           <td><%= history.description %> </td>
         </tr>
       <% end %>

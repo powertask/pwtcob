@@ -1,0 +1,10 @@
+<div class='title_tools'>
+	<a class="btn btn-large btn-warning" <%= link_to(t('word.new'), new_word_path) %> </a>
+	<a class="btn btn-large btn-warning" <%= link_to(t('word.index'), words_path) %> </a>
+</div>
+
+<div class='title_page'> <%= t('word.show') %> </div>
+
+<div class='section'>
+	<div class='label1 top req'> <%=t("word.description") %>: </div>	<%= @word.name %>
+</div>

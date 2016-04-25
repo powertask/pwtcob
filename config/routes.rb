@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :bank_billets
   resources :discharges
   resources :users
+  resources :words
 
   resources :user, :controller => 'users'
 

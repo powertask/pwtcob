@@ -62,6 +62,7 @@ pt-BR:
     bankbillet: Boletos
     discharge: Retornos
     proposal: Propostas
+    word: Histórico Padrão
 
   home:
     title: Home do Colaborador
@@ -131,6 +132,14 @@ pt-BR:
     index: Listar Todas as Cidades
     name: Nome da Cidade
     fl_charge: Liberar cobrança para contribuintes dessa cidade
+
+  word:
+    title: Cadastro de Histórico Padrão
+    new: Novo Histórico
+    edit: Editar Dados do Histórico
+    show: Detalhes do Histórico
+    index: Listar Todos os Históricos
+    description: Histórico Padrão
 
   contract:
     title: Termos Negociados com Contribuintes
@@ -211,6 +220,7 @@ pt-BR:
     new: Cadastro de Históricos
     taxpayer: Contribuinte
     description: Histórico a ser gerado
+    word: Histórico Padrão
 
   user:
     edit: Editar Dados Colaborador

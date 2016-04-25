@@ -1,0 +1,36 @@
+<div class='title_tools'>
+  <a class="btn btn-large btn-warning" <%= link_to(t('word.new'), new_word_path) %> </a>
+</div>
+
+<div class='title_page'>
+  <span> <%= t('word.title') %> </span>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<div class='list1'>
+  <% unless @words.empty? %>
+    <% @words.each do |word| %>
+      <li>
+        
+        <div class='strip green' id='none'> <%= word.id %> </div>
+
+        <div class='tools'>
+          <%= link_to(t('menu.edit'), edit_word_path(word), class: "btn btn-xs btn-default") %>
+        </div>
+ 
+        <div class='indent'>
+          <%= link_to(word.name, word_path(word)) %>
+          <tt></tt>
+          <dt></dt>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
+</div>
+
+<div id='paginate'>
+  <div class="apple_pagination">
+    <%= will_paginate @words, :container => false %>
+  </div>
+</div>

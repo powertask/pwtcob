@@ -10,6 +10,7 @@
     <%= f.input :taxpayer_id, as: :hidden %>
     <%= f.input :user_id, as: :hidden %>
     <%= f.input :history_date, as: :hidden %>
+    <%= f.association :word, :collection => Word.list(session[:unit_id]), :prompt => t('choose'), :label => t('history.word') %>
     <%= f.input :description, :label => t('history.description'), input_html:{:class => 'form-control'} %>
 
   	<div class="actions">
