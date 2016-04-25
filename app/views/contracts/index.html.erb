@@ -23,7 +23,12 @@
           <%= contract.taxpayer.origin_code %>
           &bull;
           <%= link_to(contract.taxpayer.name, contract_path(contract)) %>
-          <tt><%= 'Data: '<<contract.contract_date.to_s_br %></tt>
+          &bull;
+          <tt>
+            <%= 'Data do Contrato: ' << contract.contract_date.to_s_br %>
+            &bull;
+            <%= 'Responsável: ' << contract.user.name %>
+          </tt>
           <dt></dt>
         </div>
       </li>
