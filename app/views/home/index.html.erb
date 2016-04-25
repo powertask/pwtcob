@@ -215,7 +215,9 @@
           </tr>
         </thead>
         <tbody>
-          <% unless @contracts.nil? %>
+          <% if @contracts.nil? %>
+            'Nenhum TERMO gerado para o contribuinte.'
+          <% else %>
             <% @contracts.each do |contract| %>
               <tr>
                 <td><%= contract.id %> </td>
@@ -234,7 +236,8 @@
           <% end %>
         </tbody>
       </table>
-
+      <br>
+      <br>
       <%= render 'histories' %>
       
     </div>

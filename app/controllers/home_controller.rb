@@ -114,6 +114,7 @@
     end
 
     @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
+    @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('created_at DESC')
 
 
     @contract = Contract.new

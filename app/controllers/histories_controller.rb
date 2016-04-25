@@ -27,7 +27,7 @@ class HistoriesController < ApplicationController
   def create
     @history = History.new(history_params)
     @history.save
-    redirect_to( show_path(session[:taxpayer_id]))
+    redirect_to( show_path(session[:taxpayer_id]) )
   end
 
   private

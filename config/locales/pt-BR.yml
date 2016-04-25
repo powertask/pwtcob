@@ -120,6 +120,7 @@ pt-BR:
       contract: Em Cobrança
       pay: Pago
       not_pay: Em Aberto
+      proposal: Em Proposta
     stage:
       normal: Extrajudicial
       lawyer: Judicial

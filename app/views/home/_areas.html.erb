@@ -67,17 +67,4 @@
     <% end %>
 
   </tbody>
-  <tfoot>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td><strong> <%= 'Total GERAL das Áreas' %></strong></td>
-      <td><strong> <%= @areas.map{|i|i[:vtnt]}.inject(:+).real if @areas %></strong> </td>
-      <td><strong> <%= @areas.map{|i|i[:area]}.inject(:+).real if @areas %></strong> </td>
-      <td><strong> <%= @areas.map{|i|i[:modulo]}.inject(:+).real if @areas %></strong> </td>
-      <td></td>
-       <td></td>
-    </tr>
-  </tfoot>  
 </table>
