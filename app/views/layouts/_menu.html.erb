@@ -1,5 +1,4 @@
 <ul class="nav navbar-nav">  			
-  <li><%= link_to(t("menu.home"), root_path ) %></li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros<span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu">
@@ -20,6 +19,11 @@
     <ul class="dropdown-menu" role="menu">
       <li><%= link_to(t("menu.proposal"), proposals_path ) %></li>
       <li><%= link_to(t("menu.contract"), contracts_path ) %></li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cobrança<span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
       <li><%= link_to(t("menu.bankbillet"), bank_billets_path ) %></li>
       <li><%= link_to(t("menu.remittance"), remittances_path ) %></li>
       <li><%= link_to(t("menu.discharge"), discharges_path ) %></li>
