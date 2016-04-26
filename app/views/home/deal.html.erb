@@ -48,7 +48,11 @@
           </table>  
           <div class="actions">
             <div class='buttonbar'>
-              <%= submit_tag(t('menu.tickets'), class: 'btn-primary') if @date_current == Date.current %>
+              <% if @date_current == Date.current %>
+                <%= submit_tag(t('menu.tickets'), class: 'btn-primary') %>
+              <% else %>
+                <%= **Permite Gerar Parcelas somente quando data base de cálculo for igual data de hoje.%>
+              <% end %>
             </div>
           </div>
         </div>
