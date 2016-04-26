@@ -252,19 +252,18 @@
   end
 
   def contracts_meter 
-
-    @count_contracts_day = Contract.list(session[:unit_id]).where('user_id = ? and contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).active.count
-
     dt_ini = Date.new(Date.current.year, Date.current.month, 1).beginning_of_day
     dt_end = Date.current.end_of_day
     @count_contracts_month = Contract.list(session[:unit_id]).where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).active.count
 
     if current_user.admin?
-      @count_contracts_day_master = Contract.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').active.count
-      @histories = History.list(session[:unit_id]).where('history_date is not null').order('history_date DESC').limit(15)
+      @count_contracts_day        = Contract.list(session[:unit_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).count
+      @count_contracts_day_master = Contract.list(session[:unit_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @histories                  = History.list(session[:unit_id]).where('history_date is not null').order('history_date DESC').limit(15)
     else
-      @count_contracts_day_master = Contract.active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
-      @histories = History.list(session[:unit_id]).where('user_id = ? AND history_date is not null', current_user.id).order('history_date DESC').limit(15) if current_user.user?
+      @count_contracts_day        = Contract.list(session[:unit_id]).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
+      @count_contracts_day_master = Contract.list(session[:unit_id]).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @histories                  = History.list(session[:unit_id]).where('user_id = ? AND history_date is not null', current_user.id).order('history_date DESC').limit(15) if current_user.user?
     end
 
     if current_user.admin?
