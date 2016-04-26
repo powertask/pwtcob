@@ -163,6 +163,12 @@
 
     @cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
     @taxpayer = Taxpayer.find @cna.taxpayer.id
+
+    if params[:date_current].nil?
+      @date_current = Date.current
+    else
+      @date_current = Date.new(params[:date_current][:year].to_i, params[:date_current][:month].to_i, params[:date_current][:day].to_i)
+    end
     
     clear_variable_session()
 
