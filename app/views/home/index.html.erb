@@ -69,7 +69,7 @@
 
   <div class='list1'>
     <% unless @taxpayers.nil? %>
-      <div class='subtitle'> <%= @taxpayers.count.to_s << ' Contribuintes Encontrados' %> </div>
+      <div class='subtitle'> <%= @taxpayers.present? ? @taxpayers.count.to_s : '0' << ' Contribuintes Encontrados' %> </div>
 
       <% @taxpayers.each do |taxpayer| %>
         <li>
@@ -107,7 +107,7 @@
 
   <div class="row">
     <div class="col-md-8">
-      <div class='subtitle'> <%= 'Últimos ' << @histories.count.to_s << ' Históricos' %> </div>
+      <div class='subtitle'> <%= 'Últimos ' << @histories.present? ? @histories.count.to_s : '0' << ' Históricos' %> </div>
       <table class="table">
         <thead>
           <tr>
