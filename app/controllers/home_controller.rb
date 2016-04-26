@@ -253,10 +253,10 @@
 
     if current_user.admin?
       @count_contracts_day_master = Contract.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').active.count
-      @histories = History.list(session[:unit_id]).order('history_date DESC').limit(5)
+      @histories = History.list(session[:unit_id]).where('history_date is not null').order('history_date DESC').limit(5)
     else
       @count_contracts_day_master = Contract.active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
-      @histories = History.list(session[:unit_id]).where('user_id = ?', current_user.id).order('history_date DESC').limit(5) if current_user.user?
+      @histories = History.list(session[:unit_id]).where('user_id = ? AND history_date is not null', current_user.id).order('history_date DESC').limit(5) if current_user.user?
     end
 
     if current_user.admin?
