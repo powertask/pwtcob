@@ -7,12 +7,10 @@
 
   		<% if user_signed_in? %>
         
-        <%= render "layouts/menu" %>
-
       	<ul class="nav navbar-nav navbar-right">
           <li>
             <a>
-              <strong><%= current_user.email %></strong>
+              <strong><%= current_user.name %></strong>
               <strong>
                 <% if current_user.admin? %>
                   (ADMIN)
@@ -26,6 +24,9 @@
               </strong>
             </a>
           </li>
+
+          <%= render "layouts/menu" %>
+
       	  <li class='active'><%= link_to t("logout", default: "Logout"), destroy_user_session_path, method: :delete %></li>
         </ul>
   		<% end %>
