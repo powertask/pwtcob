@@ -101,6 +101,19 @@
 
 
   def deal
+
+    if params[:date_current].nil?
+      @date_current = Date.current
+    else
+      @date_current = Date.new(params[:date_current][:year].to_i, params[:date_current][:month].to_i, params[:date_current][:day].to_i)
+    end
+
+    if @date_current < Date.current
+      flash[:alert] = "Data base não pode ser menor que data atual"
+      @date_current = nil
+      redirect_to deal_path(params[:cod]) and return 
+    end
+
     if current_user.client?
       flash[:alert] = "Não permitido acessar Ambiente de Negociações!"
       redirect_to show_path(params[:cod]) and return 
@@ -115,7 +128,6 @@
 
     @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
     @histories = History.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('created_at DESC')
-
 
     @contract = Contract.new
     @contract.unit_ticket_quantity = 1

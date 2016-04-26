@@ -1,4 +1,23 @@
 <div class='subtitle'> <%= t('deal.cnas') %>  </div>
+
+<%= form_tag(deal_path(@taxpayer), method: 'get', :html => { :class => :form }) do |f| %>
+  <table>
+    <tbody>
+      <tr>
+        <td>Data Base de Cálculo:</td>
+        <td>&nbsp;</td>
+        <td>
+          <%= select_date(@date_current, :prefix => 'date_current', :start_year => Date.current.year, :order => [:day, :month, :year], :use_month_names => %w(Janeiro Fevereiro Março Abril Maio Junho Julho Agosto Setembro Outubro Novembro Dezembro)) %>
+        </td>
+        <td>&nbsp;</td>
+        <td>
+          <%= submit_tag('Alterar Data Base de Cálculo', class: 'btn-primary') %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
 <table class="table">
   <thead>
     <tr>
@@ -35,16 +54,16 @@
           </td>
           <td><%= t(cna.stage) %> </td>
           <td><%= t(cna.status) %> </td>
-          <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
+          <td><%= calc_meses_atraso(cna, nil, @date_current) %> </td>
           <td><%= cna.amount.real %> </td>
-          <td><%= calc_correcao(cna, nil, nil).real %> </td>
-          <td><%= calc_multa(cna, nil, nil).real %> </td>
-          <td><%= calc_juros(cna, nil, nil).real %> </td>
+          <td><%= calc_correcao(cna, nil, @date_current).real %> </td>
+          <td><%= calc_multa(cna, nil, @date_current).real %> </td>
+          <td><%= calc_juros(cna, nil, @date_current).real %> </td>
           <td> 
             <% if cna.fl_charge %>
-              <span class="label label-success"><%= calc_cna(cna, nil, nil).real %></span>
+              <span class="label label-success"><%= calc_cna(cna, nil, @date_current).real %></span>
             <% else %>
-              <%= calc_cna(cna, nil, nil).real %>
+              <%= calc_cna(cna, nil, @date_current).real %>
             <% end %>
           </td>
           <td><%= link_to(t('edit'), get_cna_path(cna), class: "btn btn-xs btn-default", remote: true ) %></td>
