@@ -123,7 +123,7 @@
             <% @histories.each do |history| %>
               <tr>
                 <td><%= history.created_at.to_s_br %> </td>
-                <td><%= history.taxpayer.name if history.taxpayer.present? %> </td>
+                <td><%= link_to(history.taxpayer.name, show_path(history.taxpayer)) if history.taxpayer.present? %> </td>
                 <td><%= history.user.name if history.user.present? %> </td>
                 <td><%= history.word.name if history.word.present? %> </td>
                 <td><%= history.description %> </td>
