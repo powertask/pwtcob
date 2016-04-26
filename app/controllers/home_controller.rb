@@ -162,7 +162,8 @@
     @cna.update_attributes(cna_params)
 
     @cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
-
+    @taxpayer = Taxpayer.find @cna.taxpayer.id
+    
     clear_variable_session()
 
   end
