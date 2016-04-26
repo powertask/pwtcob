@@ -9,7 +9,7 @@
 </div>
 
 <div class='title_page'>
-  <span> <%= current_user.client? ? t('home.title_client') : 'Home de ' << current_user.name.upcase << ' - ' << t(current_user.profile) %> </span>
+  <span> <%= current_user.client? ? t('home.title_client') : 'Home de ' << current_user.name.upcase %> </span>
 </div>
 
 <% if current_user.admin? || current_user.user? %>
