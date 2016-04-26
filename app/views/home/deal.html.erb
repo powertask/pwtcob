@@ -48,7 +48,7 @@
           </table>  
           <div class="actions">
             <div class='buttonbar'>
-              <%= submit_tag(t('menu.tickets'), class: 'btn-primary') %>
+              <%= submit_tag(t('menu.tickets'), class: 'btn-primary') if @date_current == Date.current %>
             </div>
           </div>
         </div>
