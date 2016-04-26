@@ -235,8 +235,8 @@ pt-BR:
     profile: Perfil do Colaborador
     status:
       admin:  "ADMINISTRADOR"
-      client: "CLIENTE      "
-      user:   "COLABORADOR  "
+      client: "CLIENTE"
+      user:   "COLABORADOR"
 
   category:
     title: Cadastro de Ações

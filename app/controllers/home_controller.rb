@@ -12,6 +12,7 @@
     contracts_meter
   end
 
+
   def filter_name
     
     contracts_meter
@@ -27,13 +28,13 @@
         @taxpayers = Taxpayer
                       .joins(:city)
                       .where("taxpayers.unit_id = ? AND lower(taxpayers.name) like ?", session[:unit_id], "%"<< params[:name].downcase << "%")
-                      .paginate(:page => params[:page], :per_page => 10)
+                      .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       else
         @taxpayers = Taxpayer
                       .joins(:city)
                       .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND lower(taxpayers.name) like ? and user_id = ?", session[:unit_id], true, "%"<< params[:name].downcase << "%", current_user.id)
-                      .paginate(:page => params[:page], :per_page => 10)
+                      .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       end
 
@@ -49,13 +50,13 @@
         @taxpayers = Taxpayer
                       .joins(:city)
                       .where("taxpayers.unit_id = ? AND taxpayers.cpf = ?", session[:unit_id], params[:cpf])
-                      .paginate(:page => params[:page], :per_page => 10)
+                      .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       else
         @taxpayers = Taxpayer
                       .joins(:city)
                       .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND taxpayers.cpf = ? and taxpayers.user_id = ?", session[:unit_id], true, params[:cpf], current_user.id)
-                      .paginate(:page => params[:page], :per_page => 10)
+                      .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       end
 
@@ -65,13 +66,13 @@
       if current_user.admin?
         @taxpayers = Taxpayer
                       .where("unit_id = ? AND origin_code = ?", session[:unit_id], params[:cna])
-                      .paginate(:page => params[:page], :per_page => 10)
+                      .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       else
         @taxpayers = Taxpayer
                       .joins(:city)
                       .where("taxpayers.unit_id = ? AND cities.fl_charge = ? AND taxpayers.origin_code = ? and taxpayers.user_id = ?", session[:unit_id], true, params[:cna], current_user.id)
-                      .paginate(:page => params[:page], :per_page => 10)
+                      .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       end
     end
@@ -243,6 +244,7 @@
   end
 
   def contracts_meter 
+
     @count_contracts_day = Contract.list(session[:unit_id]).where('user_id = ? and contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).active.count
 
     dt_ini = Date.new(Date.current.year, Date.current.month, 1).beginning_of_day
@@ -251,8 +253,10 @@
 
     if current_user.admin?
       @count_contracts_day_master = Contract.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').active.count
+      @histories = History.list(session[:unit_id]).order('history_date DESC').limit(5)
     else
       @count_contracts_day_master = Contract.active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @histories = History.list(session[:unit_id]).where('user_id = ?', current_user.id).order('history_date DESC').limit(5) if current_user.user?
     end
 
     if current_user.admin?

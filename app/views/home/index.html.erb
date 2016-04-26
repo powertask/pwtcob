@@ -9,7 +9,7 @@
 </div>
 
 <div class='title_page'>
-  <span> <%= current_user.client? ? t('home.title_client') : t('home.title') %> </span>
+  <span> <%= current_user.client? ? t('home.title_client') : 'Home de ' << current_user.name.upcase << ' - ' << t(current_user.profile).humanize %> </span>
 </div>
 
 <% if current_user.admin? || current_user.user? %>
@@ -28,7 +28,7 @@
 
 <% if @taxpayer.nil? %>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
       <div class='subtitle'> <%= t('home.search.title') %> </div>
       <div class='section'>
         <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
@@ -43,8 +43,98 @@
         <% end %>
       </div>
     </div>
-  
+
     <div class="col-md-3">
+      <div class='subtitle'> <%= 'Termos Fechados no MES' %> </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Colaborador</th>
+            <th>Termo(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% unless @count_contracts_month_master.nil? %>
+            <% @count_contracts_month_master.each do |contract| %>
+              <tr>
+                <td><%= user_name contract[0] %> </td>
+                <td><%= contract[1] %> </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class='list1'>
+    <% unless @taxpayers.nil? %>
+      <div class='subtitle'> <%= @taxpayers.count.to_s << ' Contribuintes Encontrados' %> </div>
+
+      <% @taxpayers.each do |taxpayer| %>
+        <li>
+          <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
+
+          <div class='indent'>
+            <%= link_to(taxpayer.name, show_path(taxpayer)) %>
+              &bull;
+            <tt>
+              <%= taxpayer.cpf %>
+              &bull;
+              <%= taxpayer.client.name if taxpayer.client %>
+              &bull;
+              <%= taxpayer.address %>
+              &bull;
+              <%= taxpayer.city.name if taxpayer.city %>
+              &bull;
+              <%= taxpayer.city.state if taxpayer.city %>
+            </tt>
+            <dt>
+            </dt>
+          </div>
+        </li>
+      <% end %>
+
+      <% unless @taxpayers.empty? %>
+        <div class="apple_pagination">
+          <%= will_paginate @taxpayers, :container => false %>
+        </div>
+        <br>
+      <% end %>
+
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class='subtitle'> <%= 'Últimos ' << @histories.count.to_s << ' Históricos' %> </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Contribuinte</th>
+            <th>Colaborador</th>
+            <th>Histórico</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% unless @histories.nil? %>
+            <% @histories.each do |history| %>
+              <tr>
+                <td><%= history.created_at.to_s_br %> </td>
+                <td><%= history.taxpayer.name if history.taxpayer.present? %> </td>
+                <td><%= history.user.name if history.user.present? %> </td>
+                <td><%= history.word.name if history.word.present? %> </td>
+                <td><%= history.description %> </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-4">
       <div class='subtitle'> <%= 'Termos Fechados HOJE' %> </div>
 
        <table class="table">
@@ -66,71 +156,10 @@
           </tbody>
         </table>
       </div>
-
-      <div class="col-md-3">
-        <div class='subtitle'> <%= 'Termos Fechados no MES' %> </div>
-
-         <table class="table">
-            <thead>
-              <tr>
-                <th>Colaborador</th>
-                <th>Termo(s)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% unless @count_contracts_month_master.nil? %>
-                <% @count_contracts_month_master.each do |contract| %>
-                  <tr>
-                    <td><%= user_name contract[0] %> </td>
-                    <td><%= contract[1] %> </td>
-                  </tr>
-                <% end %>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
-
-
   </div>
 <% end  %>
 
-<div class='list1'>
-  <% unless @taxpayers.nil? %>
-    <% @taxpayers.each do |taxpayer| %>
-      <li>
-        <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
-
-        <div class='indent'>
-          <%= link_to(taxpayer.name, show_path(taxpayer)) %>
-            &bull;
-          <tt>
-            <%= taxpayer.cpf %>
-            &bull;
-            <%= taxpayer.client.name if taxpayer.client %>
-            &bull;
-            <%= taxpayer.address %>
-            &bull;
-            <%= taxpayer.city.name if taxpayer.city %>
-            &bull;
-            <%= taxpayer.city.state if taxpayer.city %>
-          </tt>
-          <dt>
-          </dt>
-        </div>
-      </li>
-    <% end %>
-
-    <% unless @taxpayers.empty? %>
-      <div class="apple_pagination">
-        <%= will_paginate @taxpayers, :container => false %>
-      </div>
-      <br>
-    <% end %>
-
-  <% end %>
-</div>
 
 <% if @taxpayer %>
   <div class="row marketing">
