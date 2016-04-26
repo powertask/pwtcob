@@ -27,8 +27,9 @@
 
 
 <% if @taxpayer.nil? %>
+  
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
       <div class='subtitle'> <%= t('home.search.title') %> </div>
       <div class='section'>
         <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
@@ -65,6 +66,31 @@
         </tbody>
       </table>
     </div>
+
+    <div class="col-md-3">
+      <div class='subtitle'> <%= 'Termos Fechados HOJE' %> </div>
+
+       <table class="table">
+          <thead>
+            <tr>
+              <th>Colaborador</th>
+              <th>Termo(s)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @count_contracts_day_master.nil? %>
+              <% @count_contracts_day_master.each do |contract| %>
+                <tr>
+                  <td><%= user_name contract[0] %> </td>
+                  <td><%= contract[1] %> </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
   </div>
 
   <div class='list1'>
@@ -106,7 +132,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div class='subtitle'> <%= 'Últimos Históricos' %> </div>
       <table class="table">
         <thead>
@@ -134,29 +160,6 @@
       </table>
     </div>
 
-    <div class="col-md-4">
-      <div class='subtitle'> <%= 'Termos Fechados HOJE' %> </div>
-
-       <table class="table">
-          <thead>
-            <tr>
-              <th>Colaborador</th>
-              <th>Termo(s)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% unless @count_contracts_day_master.nil? %>
-              <% @count_contracts_day_master.each do |contract| %>
-                <tr>
-                  <td><%= user_name contract[0] %> </td>
-                  <td><%= contract[1] %> </td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
 <% end  %>
 
