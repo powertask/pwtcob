@@ -159,6 +159,7 @@ pt-BR:
     status:
       active: ATIVO
       cancel: CANCELADO
+      paid: PAGO
 
   proposal:
     title: Propostas Negociados com Contribuintes

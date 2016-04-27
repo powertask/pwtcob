@@ -14,8 +14,12 @@
         <div class='indent'>
           <% if contract.cancel? %>
             <span class="label label-danger"><%= 'CANCELADO' %> </span> 
+          <% elsif contract.active? %>
+            <span class="label label-primary"><%= 'ATIVO' %> </span> 
+          <% elsif contract.paid %>
+            <span class="label label-success"><%= 'PAGO' %> </span> 
           <% else %>
-            <span class="label label-success"><%= 'ATIVO' %> </span> 
+            <span><%= 'NAO DEFINIDO' %> </span> 
           <% end %>
           &nbsp;
           &bull;
