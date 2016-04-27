@@ -3,7 +3,8 @@ namespace :bank_billet_status_sync do
   desc "bank billet status sync"
 
   task :sync => :environment do
-    bank_billet_pwt = BankBillet.where('status in (1,4)')
+#    bank_billet_pwt = BankBillet.where('status in (0,1,4)')
+    bank_billet_pwt = BankBillet.all)
 
   	bank_billet_pwt.each do |i|
   		bankbillet_api = BoletoSimples::BankBillet.find(i.origin_code)
@@ -26,7 +27,14 @@ namespace :bank_billet_status_sync do
             ticket.status = bankbillet_api.status
             ticket.paid_at = bankbillet_api.paid_at
             ticket.paid_amount = bankbillet_api.paid_amount
+
+            if ticket.paid_amount > 0
+              ticket_not_paid = Ticket.where('contract_id = ? AND status in (0,1,4)', ticket.contract_id)
+              ticket.paid! if ticket_not_paid.nil?
+            end
+
             ticket.save!
+
 
             if bankbillet.paid_amount > 0
               history = History.new
