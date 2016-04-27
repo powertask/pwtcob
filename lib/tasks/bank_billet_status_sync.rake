@@ -11,28 +11,31 @@ namespace :bank_billet_status_sync do
   		if bankbillet_api.present?
         bankbillet = BankBillet.find(i.id)
         ticket     = Ticket.where('bank_billet_id = ?', i.id).first
-        contract   = Contract.find ticket.contract_id
+        
+        if ticket.present?
+          contract   = Contract.find ticket.contract_id
 
-        ActiveRecord::Base.transaction do
-          bankbillet.status = bankbillet_api.status
-          bankbillet.paid_at = bankbillet_api.paid_at
-          bankbillet.paid_amount = bankbillet_api.paid_amount
-          bankbillet.fine_for_delay = bankbillet_api.fine_for_delay
-          bankbillet.late_payment_interest = bankbillet_api.late_payment_interest
-          bankbillet.save!
+          ActiveRecord::Base.transaction do
+            bankbillet.status = bankbillet_api.status
+            bankbillet.paid_at = bankbillet_api.paid_at
+            bankbillet.paid_amount = bankbillet_api.paid_amount
+            bankbillet.fine_for_delay = bankbillet_api.fine_for_delay
+            bankbillet.late_payment_interest = bankbillet_api.late_payment_interest
+            bankbillet.save!
 
-          ticket.status = bankbillet_api.status
-          ticket.paid_at = bankbillet_api.paid_at
-          ticket.paid_amount = bankbillet_api.paid_amount
-          ticket.save!
+            ticket.status = bankbillet_api.status
+            ticket.paid_at = bankbillet_api.paid_at
+            ticket.paid_amount = bankbillet_api.paid_amount
+            ticket.save!
 
-          if bankbillet.paid_amount > 0
-            history = History.new
-            history.description = 'Boleto ' << bankbillet.our_number.to_s << ' pago no valor de R$ ' << bankbillet.paid_amount.to_s
-            history.history_date = Time.current
-            history.unit_id = 1
-            history.taxpayer_id = contract.taxpayer_id
-            history.save!
+            if bankbillet.paid_amount > 0
+              history = History.new
+              history.description = 'Boleto ' << bankbillet.our_number.to_s << ' pago no valor de R$ ' << bankbillet.paid_amount.to_s
+              history.history_date = Time.current
+              history.unit_id = 1
+              history.taxpayer_id = contract.taxpayer_id
+              history.save!
+            end
           end
         end
   		end
