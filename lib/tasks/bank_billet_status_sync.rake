@@ -30,7 +30,9 @@ namespace :bank_billet_status_sync do
 
             if ticket.paid_amount > 0
               ticket_not_paid = Ticket.where('contract_id = ? AND status in (0,1,4)', ticket.contract_id)
-              ticket.paid! if ticket_not_paid.nil?
+              if ticket_not_paid.empty?
+                ticket.paid! 
+              end
             end
 
             ticket.save!
