@@ -57,7 +57,7 @@
           <td><%= ticket.due.to_date.to_s_br %> </td>
           <td><%= ticket.amount.real if ticket.unit? %> </td>
           <td><%= ticket.amount.real if ticket.client? %> </td>
-          <td><%= t('bank_billet.status.' << ticket.status)  %> </td>
+          <td><%= t('bank_billet.status.' << ticket.status if ticket.status.present? )  %> </td>
           <td><%= ticket.paid_at.nil? ? '0.00' : ticket.paid_at.to_s_br %></td>
         </tr>
       <% end %>
