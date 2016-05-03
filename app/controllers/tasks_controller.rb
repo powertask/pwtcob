@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   load_and_authorize_resource
   respond_to :html, :js, :json
   layout 'window'
-require 'pry'
+
   def get_tasks
     
     @tasks = Task.where("unit_id = ? AND user_id = ?", session[:unit_id], current_user.id)
@@ -16,7 +16,6 @@ require 'pry'
   end
 
   def get_click
-    binding.pry;
     taxpayer = Taxpayer.find( params[:id] )
     show_path(taxpayer)
   end
