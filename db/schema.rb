@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425032507) do
+ActiveRecord::Schema.define(version: 20160430033130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -261,7 +261,10 @@ ActiveRecord::Schema.define(version: 20160425032507) do
     t.integer  "category_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
+
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "taxpayer_contacts", force: :cascade do |t|
     t.integer  "taxpayer_id"
@@ -417,6 +420,7 @@ ActiveRecord::Schema.define(version: 20160425032507) do
   add_foreign_key "indices", "units"
   add_foreign_key "inpcs", "units"
   add_foreign_key "lawyers", "units"
+  add_foreign_key "tasks", "users"
   add_foreign_key "taxpayer_contacts", "taxpayers"
   add_foreign_key "taxpayer_phones", "taxpayers"
   add_foreign_key "taxpayers", "clients"

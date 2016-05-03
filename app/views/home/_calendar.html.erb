@@ -9,17 +9,14 @@
               center: 'title',
               right: 'month,agendaWeek,agendaDay'
           },
-		  lang: 'pt-br',
-          defaultView: 'agendaWeek',
+      lang: 'pt-br',
+          defaultView: 'agendaDay',
           height: 10,
           slotMinutes: 15,
-          events: "",
+          events: "/tasks/get_tasks",
           dragOpacity: "1.5",
-		color: 'red',
-		textcolor: 'blue',
-          eventClick: function(event, jsEvent, view){
-              showEventDetails(event);
-          },
+    color: 'red',
+    textcolor: 'blue',
       });
   });
 </script>
