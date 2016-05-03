@@ -41,10 +41,10 @@
   <thead>
     <tr>
       <th>#</th>
+      <th>Status</th>
       <th>Vencimento</th>
       <th>Valor de Parcela GMA</th>
       <th>Valor de Parcela Cliente</th>
-      <th>Situação do Boleto</th>
       <th>Data do Pagamento</th>
       <th></th>
     </tr>
@@ -54,15 +54,25 @@
       <% @tickets.each do |ticket| %>
         <tr>
           <td><%= ticket.ticket_number %> </td>
+          <td>
+            <% if ticket.opened? %>
+              <span class="label label-primary"><%= t('bank_billet.status.opened') %></span>
+            <% elsif ticket.canceled? %>
+              <span class="label label-warning"><%= t('bank_billet.status.canceled') %></span>
+            <% elsif ticket.paid? %>
+              <span class="label label-success"><%= t('bank_billet.status.paid') %></span>
+            <% elsif ticket.overdue? %>
+              <span class="label label-danger"><%= t('bank_billet.status.overdue') %></span>
+            <% else %>
+              <%= t('bank_billet.status.'<< ticket.status) if ticket.status.present?%>
+            <% end %>
+          </td>
           <td><%= ticket.due.to_date.to_s_br %> </td>
           <td><%= ticket.amount.real if ticket.unit? %> </td>
           <td><%= ticket.amount.real if ticket.client? %> </td>
-          <td><%= t('bank_billet.status.' << ticket.status) if ticket.status.present?  %> </td>
           <td><%= ticket.paid_at.nil? ? '0.00' : ticket.paid_at.to_s_br %></td>
           <td>
-            <% if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %>
-              <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.bank_billet.origin_code), class: "btn btn-xs btn-danger") %> 
-            <% end %>
+            <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.id), class: "btn btn-xs btn-danger") if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?)%> 
           </td>
         </tr>
       <% end %>

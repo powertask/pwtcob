@@ -48,14 +48,21 @@ class BankBilletsController < ApplicationController
   end
 
   def bank_billet_cancel
-    bank_billet = BoletoSimples::BankBillet.find(params[:cod])
+    ticket = Ticket.find params[:cod]
 
-    if bank_billet.cancel
-      flash[:alert] = "Boleto CANCELADO. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
+    if ticket.present?
+      
+      bank_billet = BoletoSimples::BankBillet.find(ticket.bank_billet.origin_code)
+
+      if bank_billet.cancel
+        flash[:alert] = "Boleto CANCELADO. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
+      else
+        flash[:alert] = "Não foi possível CANCELAR boleto. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
+      end
     else
-      flash[:alert] = "Não foi possível CANCELAR boleto. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
+      flash[:alert] = "Parcela não encontrada."      
     end
-    respond_with :back
+    respond_with contract_path(ticket.contract_id)
   end
 
 
