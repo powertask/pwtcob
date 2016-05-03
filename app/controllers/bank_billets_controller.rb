@@ -55,6 +55,9 @@ class BankBilletsController < ApplicationController
       bank_billet = BoletoSimples::BankBillet.find(ticket.bank_billet.origin_code)
 
       if bank_billet.cancel
+        ticket.canceled!
+        ticket.bank_billet.canceled!
+        
         flash[:alert] = "Boleto CANCELADO. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
       else
         flash[:alert] = "Não foi possível CANCELAR boleto. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
