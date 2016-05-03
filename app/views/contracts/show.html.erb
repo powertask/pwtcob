@@ -61,7 +61,7 @@
           <td><%= ticket.paid_at.nil? ? '0.00' : ticket.paid_at.to_s_br %></td>
           <td>
             <% if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %>
-              <%= link_to(t('ticket.cancel'), bank_billet_cancel_path, :cod => ticket.bank_billet.origin_code, class: "btn btn-xs btn-danger") %> 
+              <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.bank_billet.origin_code), class: "btn btn-xs btn-danger") %> 
             <% end %>
           </td>
         </tr>
@@ -70,4 +70,3 @@
   </tbody>
 </table>
 
-https://pwt-cobraseguro.herokuapp.com/contracts/bank_billet#bank_billet_cancel
