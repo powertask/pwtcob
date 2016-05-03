@@ -161,6 +161,9 @@ pt-BR:
       cancel: CANCELADO
       paid: PAGO
 
+  ticket:
+    cancel: Cancelar Boleto
+
   proposal:
     title: Propostas Negociados com Contribuintes
     show: Detalhes da Proposta

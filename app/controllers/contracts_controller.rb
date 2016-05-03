@@ -166,9 +166,14 @@ class ContractsController < ApplicationController
     cnas     = Cna.where('contract_id = ?', contract)
     tickets  = Ticket.where('contract_id = ?', contract)
 
+    tickets.each  do |ticket|
+      unless ticket.canceled?
+        flash[:alert] = "Existem boletos emitidos. Termo não pode ser CANCELADO."
+        redirect_to contract_path(contract) and return
+      end
+    end
 
     ActiveRecord::Base.transaction do
-
       cnas.each do  |cna|
         cna.contract_id = nil
         cna.not_pay!
@@ -176,7 +181,6 @@ class ContractsController < ApplicationController
       end
 
       contract.cancel!
-
     end
 
     redirect_to(controller: 'contracts', action:'index')
