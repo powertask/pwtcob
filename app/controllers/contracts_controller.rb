@@ -182,7 +182,7 @@ class ContractsController < ApplicationController
     tickets  = Ticket.where('contract_id = ?', contract)
 
     tickets.each  do |ticket|
-      unless ticket.canceled?
+      unless ticket.canceled? || ticket.generating?
         flash[:alert] = "Existem boletos emitidos. Termo não pode ser CANCELADO."
         redirect_to contract_path(contract) and return
       end
