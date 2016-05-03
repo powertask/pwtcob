@@ -55,7 +55,7 @@ class BankBilletsController < ApplicationController
     else
       flash[:alert] = "Não foi possível CANCELAR boleto. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
     end
-    respond_with @bank_billet
+    respond_with :back
   end
 
 
