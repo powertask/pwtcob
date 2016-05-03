@@ -1,6 +1,7 @@
  class HomeController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :html, :js
+  respond_to :html, :js, :json
+
   layout 'application'
 
   def index
@@ -259,6 +260,7 @@
       @count_contracts_day        = Contract.list(session[:unit_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).count
       @count_contracts_month      = Contract.list(session[:unit_id]).active.where('contract_date between ? AND ?', dt_ini, dt_end ).count
       @count_contracts_day_master = Contract.list(session[:unit_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      
       @histories                  = History.list(session[:unit_id]).where('history_date is not null').order('history_date DESC').limit(15)
     else
       @count_contracts_day        = Contract.list(session[:unit_id]).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count

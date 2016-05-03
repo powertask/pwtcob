@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   resources :clients
   resources :taxpayers
   resources :categories
-  resources :tasks
   resources :lawyers
   resources :contracts
   resources :proposals
@@ -33,6 +32,14 @@ Rails.application.routes.draw do
       get 'filter_name' => 'home#filter_name'
     end
   end
+
+  resources :tasks do 
+    collection do 
+      get :get_tasks
+      get :get_click
+    end
+  end
+
 
   get 'home/:cod/show' => 'home#show', as: :show
   get 'home/:cod/deal' => 'home#deal', as: :deal

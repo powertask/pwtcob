@@ -17,6 +17,8 @@ class Ability
 
     can :manage, Home if user.user?
 
+    can :manage, Task if user.user?
+
     can :manage, History if user.user?
 
     can :manage, Remittance if user.user?
