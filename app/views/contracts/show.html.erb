@@ -72,7 +72,7 @@
           <td><%= ticket.amount.real if ticket.client? %> </td>
           <td><%= ticket.paid_at.nil? ? '0.00' : ticket.paid_at.to_s_br %></td>
           <td>
-            <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.id), class: "btn btn-xs btn-danger") if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?)%> 
+            <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.id), class: "btn btn-xs btn-danger") if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %> 
           </td>
         </tr>
       <% end %>

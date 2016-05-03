@@ -88,6 +88,21 @@ class ContractsController < ApplicationController
 
   end
 
+  def create_ticket
+
+    t = Ticket.find params[:cod]
+
+    ticket = Ticket.new
+    ticket.unit_id = t.unid_id
+    ticket.contract_id = t.contract_id
+    ticket.ticket_type = t.ticket_type
+    ticket.amount = t.amount
+    ticket.due = t.due
+    ticket.ticket_number = t.ticket_number
+    ticket.save!
+
+  end
+
 
   def create_contract_from_proposal
     cod = params[:cod]
