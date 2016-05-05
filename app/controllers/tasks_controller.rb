@@ -4,21 +4,8 @@ class TasksController < ApplicationController
   respond_to :html, :js, :json
   layout 'window'
 
-  def get_tasks
-    
-    @tasks = Task.where("unit_id = ? AND user_id = ?", session[:unit_id], current_user.id)
 
-    tasks = []
-    @tasks.each do |task|
-      tasks << {:id => task.id, :title => task.description, :start => "#{task.task_date.to_date}", :end => "#{task.task_date.to_date}", :allDay => true, :recurring => false }
-    end
-    render :text => tasks.to_json
-  end
 
-  def get_click
-    taxpayer = Taxpayer.find( params[:id] )
-    show_path(taxpayer)
-  end
 
 
   private

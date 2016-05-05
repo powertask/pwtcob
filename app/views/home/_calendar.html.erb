@@ -1,24 +1,24 @@
 
 <script>
-   
   $(document).ready(function(){
       $('#calendar').fullCalendar({
-          editable: true,
+          editable: false,
+          slotEventOverlap: false,
           header: {
               left: 'prev next today',
               center: 'title',
               right: 'month,agendaWeek,agendaDay'
           },
-      lang: 'pt-br',
+          lang: 'pt-br',
           defaultView: 'agendaDay',
-          height: 10,
-          slotMinutes: 15,
-          events: "/tasks/get_tasks",
-          dragOpacity: "1.5",
-    color: 'red',
-    textcolor: 'blue',
+          height: 500,
+          events: "/home/get_tasks",
+          dragOpacity: "0.5",
+          allDaySlot: true,
       });
   });
 </script>
 
 <div id='calendar'></div>
+
+

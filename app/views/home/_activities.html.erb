@@ -1,0 +1,26 @@
+<div id='list_activities' class='list_activities'>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Atividade</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% unless @activities.nil? %>
+        <% @activities.each do |act| %>
+          <tr>
+            <td><%= act.description %> </td>
+            <td>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

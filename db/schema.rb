@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160430033130) do
+ActiveRecord::Schema.define(version: 20160504025118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.integer  "task_id"
+    t.integer  "taxpayer_id"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "activities", ["task_id"], name: "index_activities_on_task_id", using: :btree
+  add_index "activities", ["taxpayer_id"], name: "index_activities_on_taxpayer_id", using: :btree
 
   create_table "areas", force: :cascade do |t|
     t.integer "unit_id"
@@ -262,6 +273,7 @@ ActiveRecord::Schema.define(version: 20160430033130) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "user_id"
+    t.integer  "status"
   end
 
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
@@ -410,6 +422,8 @@ ActiveRecord::Schema.define(version: 20160430033130) do
 
   add_index "words", ["unit_id"], name: "index_words_on_unit_id", using: :btree
 
+  add_foreign_key "activities", "tasks"
+  add_foreign_key "activities", "taxpayers"
   add_foreign_key "areas", "taxpayers"
   add_foreign_key "areas", "units"
   add_foreign_key "bank_billet_accounts", "units"

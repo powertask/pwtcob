@@ -30,11 +30,6 @@ Rails.application.routes.draw do
   resources :home do
     collection do
       get 'filter_name' => 'home#filter_name'
-    end
-  end
-
-  resources :tasks do 
-    collection do 
       get :get_tasks
       get :get_click
     end

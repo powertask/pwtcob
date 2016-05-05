@@ -89,6 +89,12 @@
 
   def show
     @taxpayer = Taxpayer.find(params[:cod])
+
+    if @taxpayer.user_id != current_user.id
+      flash[:alert] = "Contribuinte não pertence a sua lista."
+      redirect_to :root and return
+    end 
+
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
     @contracts = Contract.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
     
@@ -124,6 +130,11 @@
 
     @taxpayer = Taxpayer.find(params[:cod])
 
+    if @taxpayer.user_id != current_user.id
+      flash[:alert] = "Contribuinte não pertence a sua lista."
+      redirect_to :root and return
+    end 
+
     unless Taxpayer.chargeble? @taxpayer
       flash[:alert] = "Cidade não liberada para negociações!"
       redirect_to show_path(params[:cod]) and return 
@@ -143,6 +154,7 @@
 
     respond_with @taxpayer, :layout => 'application'     
   end
+
 
   def get_cna
     @cna = Cna.find(params[:cod])
@@ -209,6 +221,27 @@
     end
   end
 
+  
+  def get_tasks
+    
+    @tasks = Task.where("unit_id = ? AND user_id = ?", session[:unit_id], current_user.id).order('id ASC')
+
+    tasks = []
+    @tasks.each do |task|
+      tasks << {:id => task.id, 
+                :title => task.description, 
+                :start => "#{task.task_date.to_date}", 
+                :end => "#{task.task_date.to_date}", 
+                :allDay => true, 
+                :recurring => false,
+                :url => Rails.application.routes.url_helpers.show_path(task.taxpayer_id),
+                :color => "green"
+              }
+    end
+    render :text => tasks.to_json
+  end
+
+
   def get_taxpayer
     @taxpayer = Taxpayer.find(params[:cod])
   end
@@ -260,7 +293,6 @@
       @count_contracts_day        = Contract.list(session[:unit_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).count
       @count_contracts_month      = Contract.list(session[:unit_id]).active.where('contract_date between ? AND ?', dt_ini, dt_end ).count
       @count_contracts_day_master = Contract.list(session[:unit_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
-      
       @histories                  = History.list(session[:unit_id]).where('history_date is not null').order('history_date DESC').limit(15)
     else
       @count_contracts_day        = Contract.list(session[:unit_id]).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
