@@ -90,11 +90,13 @@
   def show
     @taxpayer = Taxpayer.find(params[:cod])
 
-    if @taxpayer.user_id != current_user.id
-      flash[:alert] = "Contribuinte não pertence a sua lista."
-      redirect_to :root and return
-    end 
-
+    unless current_user.admin?
+     if @taxpayer.user_id != current_user.id
+       flash[:alert] = "Contribuinte não pertence a sua lista."
+       redirect_to :root and return
+     end 
+    end
+    
     @cnas = Cna.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
     @contracts = Contract.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod])
     
@@ -130,11 +132,13 @@
 
     @taxpayer = Taxpayer.find(params[:cod])
 
-    if @taxpayer.user_id != current_user.id
-      flash[:alert] = "Contribuinte não pertence a sua lista."
-      redirect_to :root and return
-    end 
-
+    unless current_user.admin?
+      if @taxpayer.user_id != current_user.id
+        flash[:alert] = "Contribuinte não pertence a sua lista."
+        redirect_to :root and return
+      end
+    end
+ 
     unless Taxpayer.chargeble? @taxpayer
       flash[:alert] = "Cidade não liberada para negociações!"
       redirect_to show_path(params[:cod]) and return 
