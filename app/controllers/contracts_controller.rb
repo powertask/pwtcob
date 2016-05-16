@@ -73,6 +73,7 @@ class ContractsController < ApplicationController
         
         @ticket.due = tic['due'].to_date
         @ticket.ticket_number = n
+        @ticket.status = 0
 
         @ticket.save!
       end
