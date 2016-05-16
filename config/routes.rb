@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :discharges
   resources :users
   resources :words
+  resources :tickets
 
   resources :user, :controller => 'users'
 
@@ -55,6 +56,8 @@ Rails.application.routes.draw do
   get 'contract/:cod/contract_pdf' => 'contracts#contract_pdf', as: :contract_pdf
   get 'contract/:cod/contract_transaction_pdf' => 'contracts#contract_transaction_pdf', as: :contract_transaction_pdf
   get 'contract/:cod/create_bank_billet' => 'contracts#create_bank_billet', as: :create_bank_billet
+
+  get 'ticket/:cod/create_new_expire_at' => 'tickets#create_new_expire_at', as: :create_new_expire_at
   
   post 'remittance/remittance_create' => 'remittances#remittance_create', as: :remittance_create
   get 'remittance/remittance_new' => 'remittances#remittance_new', as: :remittance_new

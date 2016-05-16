@@ -1,3 +1,19 @@
+
+$(function() {
+    $( '#due_at' ).datepicker({
+      	showOtherMonths: true,
+		formatDate: "dd/mm/yyyy",
+      	selectOtherMonths: true,
+		changeMonth: true,
+		changeYear: true,
+		closeText: "Fechar",
+		currentText: "Hoje",
+		maxDate: new Date(2020, 1, 1),
+		showButtonPanel: true,
+		minDate: '0'
+    });
+  });
+
 $(function() {
     $( '#datepicker1' ).datepicker({
       	showOtherMonths: true,

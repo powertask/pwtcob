@@ -163,6 +163,12 @@ pt-BR:
 
   ticket:
     cancel: Cancelar Boleto
+    new: Gerar Novo Vencimento
+    ticket_type: Tipo Boleto
+    ticket_number: Numero da Parcela
+    amount: Valor do Boleto
+    due: Novo Vencimento
+    
 
   proposal:
     title: Propostas Negociados com Contribuintes

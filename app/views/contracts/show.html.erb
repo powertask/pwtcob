@@ -42,9 +42,9 @@
     <tr>
       <th>#</th>
       <th>Status</th>
+      <th>Nosso Número</th>
       <th>Vencimento</th>
-      <th>Valor de Parcela GMA</th>
-      <th>Valor de Parcela Cliente</th>
+      <th>Valor de Parcela</th>
       <th>Data do Pagamento</th>
       <th></th>
     </tr>
@@ -64,14 +64,16 @@
             <% elsif ticket.overdue? %>
               <span class="label label-danger"><%= t('bank_billet.status.overdue') %></span>
             <% else %>
-              <%= t('bank_billet.status.'<< ticket.status) if ticket.status.present?%>
+              <span class="label label-default"><%= t('bank_billet.status.'<< ticket.status) if ticket.status.present? %></span>
             <% end %>
           </td>
+          <td><%= ticket.bank_billet.our_number unless ticket.bank_billet.nil? %> </td>
           <td><%= ticket.due.to_date.to_s_br %> </td>
-          <td><%= ticket.amount.real if ticket.unit? %> </td>
-          <td><%= ticket.amount.real if ticket.client? %> </td>
-          <td><%= ticket.paid_at.nil? ? '0.00' : ticket.paid_at.to_s_br %></td>
+          <td><%= ticket.amount.real %> </td>
+          <td><%= ticket.paid_at.nil? ? '' : ticket.paid_at.to_s_br %></td>
           <td>
+            <%= link_to('Ver Boleto', ticket.bank_billet.shorten_url, class: "btn btn-xs btn-default") if ticket.bank_billet.present?  %> 
+            <%= link_to('Novo Vencimento', create_new_expire_at_path(ticket.id), class: "btn btn-xs btn-default")  %> 
             <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.id), class: "btn btn-xs btn-danger") if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %> 
           </td>
         </tr>
