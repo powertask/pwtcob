@@ -1,6 +1,8 @@
 class Client < ActiveRecord::Base
   belongs_to :unit
   belongs_to :bank_billet_account
+
+  has_many :contracts
   
   validates_presence_of :name, :unit_id
 

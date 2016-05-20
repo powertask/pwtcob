@@ -3,6 +3,7 @@ class Contract < ActiveRecord::Base
   belongs_to :taxpayer
   belongs_to :proposal
   belongs_to :user
+  belongs_to :contract
   
   has_many :tickets
   has_many :cnas

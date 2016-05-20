@@ -4,57 +4,82 @@ namespace :import do
   desc "Taxpayers"
   task :taxpayers => :environment do
 
+	require 'pry'
+
   	db = Mdb.open('gma.mdb')
 
-  	data = db[:a_termo_b]
+  	a_termo_b = db[:a_termo_b]
 
-  	data.each do |d|
+  	a_termo_b.each do |data|
 
-  		name_city  = d[:C_CIDADE]
-  		state = d[:C_UF]
-  		cpf = d[:CPFCGC]
-  		name = d[:NOME_SAC]
-  		address = d[:C_ENDSAC]
-  		zipcode = d[:C_CEP]
+  		name_city  = data[:C_CIDADE]
+  		state = data[:C_UF]
+  		cnpj_cpf = data[:CPFCGC]
+  		name = data[:NOME_SAC]
+  		address = data[:C_ENDSAC]
+  		zipcode = data[:C_CEP]
+  		origin_code = data[:CODIGO]
+
+			_cpf = nil
+			_cnpj = nil
+
 
   		ActiveRecord::Base.transaction do
-  			city = City.where('name = ? AND state = ?', name_city, state)[0]
 
-	  		unless city
-	  			city = City.new
-	  			city.name = name_city
-	  			city.state = state
-	  			city.unit_id = 1
-	  			city.fl_charge = false
+  			city_id = import_city(name_city, state)
 
-	  			city.save!
-	  		end
+	  		t = Taxpayer.new(:cpf => cnpj_cpf, :cnpj => cnpj_cpf)
 
-	  		taxpayer1 = Taxpayer.where('cpf = ?', cpf)
-	  		taxpayer2 = Taxpayer.where('cnpj = ?', cpf)
-	  		
-	  		if taxpayer1.count == 0 and taxpayer2.count == 0
+	  		if t.cpf.valido?
+		  		_cpf = t.cpf.numero
+		  		taxpayer = Taxpayer.where('cpf = ?', _cpf)
+		  	end
+
+		  	if t.cnpj.valido?
+		  		_cnpj = t.cnpj.numero
+		  		taxpayer = Taxpayer.where('cnpj = ?', _cnpj)
+		  	end
+
+	  		if taxpayer.size == 0 
 
 	  			taxpayer = Taxpayer.new
 					taxpayer.name = name
-					
-					if cpf.size == 11
-						taxpayer.cpf = cpf
-					end
-
-					if cpf.size == 14
-						taxpayer.cnpj = cpf
-					end
-
+					taxpayer.cpf = _cpf
+					taxpayer.cnpj = _cnpj
 					taxpayer.zipcode = zipcode
 					taxpayer.state = state
 					taxpayer.address = address
 					taxpayer.unit_id = 1
 					taxpayer.client_id = 2
-					taxpayer.city_id = city.id
+					taxpayer.city_id = city_id
+					taxpayer.complement = ''
+					taxpayer.neighborhood = ''
+					taxpayer.origin_code = origin_code
+
 					taxpayer.save!
 				end
 	  	end
   	end
+
 	end
+
+
+	private
+	def import_city(_name, _state)
+
+		city = City.where('name = ? AND state = ?', _name, _state)[0]
+
+		unless city
+			city = City.new
+			city.name = name_city
+			city.state = state
+			city.unit_id = 1
+			city.fl_charge = false
+			city.save!
+		end
+
+		city.id
+
+	end
+
 end
