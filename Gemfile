@@ -29,6 +29,7 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'rubyzip'
 gem 'roo'
+gem 'mdb'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'

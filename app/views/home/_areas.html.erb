@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    <% unless @areas.nil? %>
+    <% if @areas.present? %>
       <% year_old = @areas[0].year %>
       
       <% @areas.each do |area| %>
