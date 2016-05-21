@@ -3,6 +3,7 @@ class Client < ActiveRecord::Base
   belongs_to :bank_billet_account
 
   has_many :contracts
+  has_many :cnas
   
   validates_presence_of :name, :unit_id
 

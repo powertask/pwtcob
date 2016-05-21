@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520140434) do
+ActiveRecord::Schema.define(version: 20160520204802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,7 +132,10 @@ ActiveRecord::Schema.define(version: 20160520140434) do
     t.boolean  "fl_charge"
     t.integer  "contract_id"
     t.integer  "proposal_id"
+    t.integer  "client_id"
   end
+
+  add_index "cnas", ["client_id"], name: "index_cnas_on_client_id", using: :btree
 
   create_table "contracts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -152,6 +155,7 @@ ActiveRecord::Schema.define(version: 20160520140434) do
     t.integer  "proposal_id"
     t.integer  "user_id"
     t.integer  "client_id"
+    t.integer  "origin_code"
   end
 
   add_index "contracts", ["client_id"], name: "index_contracts_on_client_id", using: :btree
@@ -433,6 +437,7 @@ ActiveRecord::Schema.define(version: 20160520140434) do
   add_foreign_key "bank_billets", "bank_billet_accounts"
   add_foreign_key "bank_billets", "units"
   add_foreign_key "clients", "bank_billet_accounts"
+  add_foreign_key "cnas", "clients"
   add_foreign_key "contracts", "clients"
   add_foreign_key "histories", "words"
   add_foreign_key "indices", "units"
