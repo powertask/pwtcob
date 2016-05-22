@@ -136,6 +136,7 @@ pt-BR:
     index: Listar Todas as Cidades
     name: Nome da Cidade
     fl_charge: Liberar cobrança para contribuintes dessa cidade
+    search: Procurar pela cidade
 
   word:
     title: Cadastro de Histórico Padrão

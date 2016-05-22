@@ -6,6 +6,13 @@
   <span> <%= t('city.title') %> </span>
 </div>
 
+<p>
+  <%= form_tag(cities_path, :method=>'get') do |f| %>
+    <%= text_field_tag 'name', params[:name], :size => 80 %>
+    <%= submit_tag t('city.search') %> ou <%= link_to t('menu.clean'), cities_path %>
+  <% end %>
+</p>
+
 <p id="notice"><%= notice %></p>
 
 <div class='list1'>
