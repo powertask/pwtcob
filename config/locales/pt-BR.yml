@@ -1,6 +1,7 @@
 pt-BR:
   sign_in_now: "Por favor, informe seus dados de acesso"
   sign_in: Acessar minha conta
+  sign_in_client: Acessar a Federação
   log_in: Acessar Sistema de Cobrança
   corporation: Powertask
 
@@ -36,6 +37,7 @@ pt-BR:
   client: Cliente
   Yes: Sim
   origin: Origem
+  define_client: Definir a Federação
 
   menu:
     home: Home
@@ -197,7 +199,7 @@ pt-BR:
     index: Listar Todas as Federações
     create: Gravar Dados da Federação
     show: Detalhes da Federação
-    name: Razão Social da Federação
+    name: Nome da Federação
     fee: Taxa de Intermediação
     search: Procurar por Federação
 

@@ -2,11 +2,10 @@
   <div class="navbar-inner">
     <div class="container">
   		<div class="navbar-header">
-  			<%= link_to(session[:unit_name].present? ? session[:unit_name] : t("corporation"), root_path, class: "navbar-brand") %>
+  			<%= link_to(session[:unit_name].present? ? session[:unit_name] + (session[:client_name] ? ' - ' + session[:client_name].upcase + ' - ' : '') : t("corporation"), root_path, class: "navbar-brand") %>
   		</div>
 
   		<% if user_signed_in? %>
-        
       	<ul class="nav navbar-nav navbar-right">
           <li>
             <a>
@@ -25,7 +24,7 @@
             </a>
           </li>
 
-          <%= render "layouts/menu" %>
+          <%= render "layouts/menu" if session[:client_id] %>
 
       	  <li class='active'><%= link_to t("logout", default: "Logout"), destroy_user_session_path, method: :delete %></li>
         </ul>

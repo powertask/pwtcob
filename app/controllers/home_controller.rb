@@ -5,12 +5,20 @@
   layout 'application'
 
   def index
+
+
   	session[:unit_id] = current_user.unit.id
   	session[:unit_name] = current_user.unit.name
     session[:unit_bank_billet_account] = 21
     session[:taxpayer_id] = nil
 
     contracts_meter
+
+    if session[:client_id].nil?
+      redirect_to(:controller => 'clients', :action => 'index_admin_pwt')
+      return
+    end
+
   end
 
 
@@ -254,6 +262,24 @@
     @taxpayer = Taxpayer.find(params[:cod])
     @taxpayer.update_attributes(taxpayer_params)
   end
+
+
+  def get_client_session
+    @clients = Client.all.select('id', 'name')
+  end
+
+  def set_client
+    session[:client_id] = params[:client][:client_id]
+    redirect_to root_path
+  end
+
+  def get_new_unit
+    flash[:alert] = nil
+    session[:unit_profile] = params[:profile]
+    respond_with(@unit, layout: "unit")
+  end
+
+
 
   private
   def cna_params

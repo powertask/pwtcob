@@ -36,6 +36,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'define_clent' => 'clients#index_admin_pwt'
+  post 'set_client' => 'clients#set_client'
+
 
   get 'home/:cod/show' => 'home#show', as: :show
   get 'home/:cod/deal' => 'home#deal', as: :deal
