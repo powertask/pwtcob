@@ -24,7 +24,7 @@ class TaxpayersController < ApplicationController
   end
 
   def show
-    @taxpayer = Taxpayer.where('id = ? AND unit_id = ?, client_id ?', params[:id], session[:unit_id], session[:client_id]).first
+    @taxpayer = Taxpayer.where('id = ? AND unit_id = ? AND client_id = ?', params[:id].to_i, session[:unit_id], session[:client_id]).first
     @taxpayer_contacts = TaxpayerContact.where('taxpayer_id = ?', @taxpayer.id)
     @cnas = Cna.where('taxpayer_id = ?', @taxpayer.id).order('year ASC')
 
@@ -37,7 +37,7 @@ class TaxpayersController < ApplicationController
   end
 
   def edit
-    @taxpayer = Taxpayer.where('id = ? AND unit_id = ?, client_id ?', params[:id], session[:unit_id], session[:client_id]).first
+    @taxpayer = Taxpayer.where('id = ? AND unit_id = ? AND client_id = ?', params[:id].to_i, session[:unit_id], session[:client_id]).first
   end
 
   def create
@@ -52,7 +52,7 @@ class TaxpayersController < ApplicationController
   end
 
   def update
-    @taxpayer = Taxpayer.where('id = ? AND unit_id = ?, client_id ?', params[:id], session[:unit_id], session[:client_id]).first
+    @taxpayer = Taxpayer.where('id = ? AND unit_id = ? AND client_id = ?', params[:id].to_i, session[:unit_id], session[:client_id]).first
     @taxpayer.update_attributes(taxpayer_params)
     respond_with @taxpayer
   end
