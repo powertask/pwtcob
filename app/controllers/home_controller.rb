@@ -12,12 +12,12 @@
     session[:unit_bank_billet_account] = 21
     session[:taxpayer_id] = nil
 
-    contracts_meter
-
     if session[:client_id].nil?
       redirect_to(:controller => 'clients', :action => 'index_admin_pwt')
       return
     end
+    
+    contracts_meter
 
   end
 
