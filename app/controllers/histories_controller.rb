@@ -16,6 +16,7 @@ class HistoriesController < ApplicationController
   def new
     @history = History.new
     @history.unit_id = session[:unit_id]
+    @history.client_id = session[:client_id]
     @history.taxpayer_id = session[:taxpayer_id]
     @history.user_id = current_user.id
     @history.history_date = Time.current
@@ -37,6 +38,6 @@ class HistoriesController < ApplicationController
     end
 
     def history_params
-      params.require(:history).permit(:description, :history_date, :unit_id, :taxpayer_id, :user_id, :word_id)
+      params.require(:history).permit(:description, :history_date, :unit_id, :client_id, :taxpayer_id, :user_id, :word_id)
     end
 end

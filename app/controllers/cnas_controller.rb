@@ -46,6 +46,6 @@ class CnasController < ApplicationController
 
   private
     def cna_params
-      params.require(:cna).permit(:fl_charge, :amount, :status, :stage, :nr_document, :taxpayer_id, :unit_id, :year)
+      params.require(:cna).permit(:fl_charge, :amount, :status, :stage, :nr_document, :taxpayer_id, :unit_id, :year, :client_id)
     end
 end

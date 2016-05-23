@@ -4,6 +4,7 @@ class Client < ActiveRecord::Base
 
   has_many :contracts
   has_many :cnas
+  has_many :histories
   
   validates_presence_of :name, :unit_id
 
