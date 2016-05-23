@@ -6,15 +6,15 @@ class ContractsController < ApplicationController
 
   def index
     if current_user.admin? || current_user.client?
-      @contracts = Contract.where("unit_id = ?", session[:unit_id]).order('contract_date DESC').paginate(:page => params[:page], :per_page => 20)
+      @contracts = Contract.where("unit_id = ? AND client_id = ?", session[:unit_id], session[:client_id]).order('contract_date DESC').paginate(:page => params[:page], :per_page => 20)
     else
-      @contracts = Contract.where("unit_id = ? AND user_id = ?", session[:unit_id], current_user.id).order('contract_date DESC').paginate(:page => params[:page], :per_page => 20)
+      @contracts = Contract.where("unit_id = ? AND client_id = ? AND user_id = ?", session[:unit_id], session[:client_id], current_user.id).order('contract_date DESC').paginate(:page => params[:page], :per_page => 20)
     end
     respond_with @contracts, :layout => 'application'
   end
 
   def show
-    @contract = Contract.find(params[:id])
+    @contract = Contract.where('id = ? AND unit_id = ? AND client_id = ?', params[:id].to_i, session[:unit_id], session[:client_id]).first
     @tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:id]).order('ticket_number')
     respond_with @contract
   end
@@ -23,13 +23,14 @@ class ContractsController < ApplicationController
     cod = params[:cod]
 
     taxpayer = Taxpayer.find(cod)
-    cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
+    cnas = Cna.list(session[:unit_id], session[:client_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
     unit = Unit.find(session[:unit_id])
 
     ActiveRecord::Base.transaction do
       @contract = Contract.new
 
       @contract.unit_id = session[:unit_id]
+      @contract.client_id = session[:client_id]
       @contract.contract_date = Time.now
       @contract.taxpayer_id = cod
       @contract.user_id = current_user.id
@@ -114,7 +115,7 @@ class ContractsController < ApplicationController
       redirect_to :proposals and return
     end 
 
-    cnas = Cna.list(session[:unit_id]).where('proposal_id = ?', cod)
+    cnas = Cna.list(session[:unit_id], session[:client_id]).where('proposal_id = ?', cod)
     unit = Unit.find(session[:unit_id])
     tickets = ProposalTicket.where('proposal_id = ?', cod)
 
@@ -122,6 +123,7 @@ class ContractsController < ApplicationController
       @contract = Contract.new
 
       @contract.unit_id = session[:unit_id]
+      @contract.client_id = session[:client_id]
       @contract.contract_date = Time.now
       @contract.taxpayer_id = proposal.taxpayer_id
       @contract.user_id = current_user.id
@@ -208,7 +210,7 @@ class ContractsController < ApplicationController
     unit = Unit.find(session[:unit_id])
     contract = Contract.find(params[:cod])
     tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('due')
-    cnas = Cna.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('year')
+    cnas = Cna.list(session[:unit_id], session[:client_id]).where("contract_id = ?", params[:cod]).order('year')
 
     respond_to do |format|
       format.pdf do
@@ -224,7 +226,7 @@ class ContractsController < ApplicationController
     unit = Unit.find(session[:unit_id])
     contract = Contract.find(params[:cod])
     tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('due')
-    cnas = Cna.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('year')
+    cnas = Cna.list(session[:unit_id], session[:client_id]).where("contract_id = ?", params[:cod]).order('year')
 
     respond_to do |format|
       format.pdf do

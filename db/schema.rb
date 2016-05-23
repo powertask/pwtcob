@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520204802) do
+ActiveRecord::Schema.define(version: 20160523021841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,8 +182,10 @@ ActiveRecord::Schema.define(version: 20160520204802) do
     t.datetime "updated_at",   null: false
     t.integer  "user_id"
     t.integer  "word_id"
+    t.integer  "client_id"
   end
 
+  add_index "histories", ["client_id"], name: "index_histories_on_client_id", using: :btree
   add_index "histories", ["word_id"], name: "index_histories_on_word_id", using: :btree
 
   create_table "indices", force: :cascade do |t|
@@ -439,6 +441,7 @@ ActiveRecord::Schema.define(version: 20160520204802) do
   add_foreign_key "clients", "bank_billet_accounts"
   add_foreign_key "cnas", "clients"
   add_foreign_key "contracts", "clients"
+  add_foreign_key "histories", "clients"
   add_foreign_key "histories", "words"
   add_foreign_key "indices", "units"
   add_foreign_key "inpcs", "units"

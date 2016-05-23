@@ -9,8 +9,8 @@ class Cna < ActiveRecord::Base
 
 #  usar_como_dinheiro :amount
 
-  def self.list(unit)
-    self.where("unit_id = ?", unit)
+  def self.list(unit, client)
+    self.where("unit_id = ? AND client_id = ?", unit, client)
   end
   
 end

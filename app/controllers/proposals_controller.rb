@@ -23,7 +23,7 @@ class ProposalsController < ApplicationController
     cod = params[:cod]
 
     taxpayer = Taxpayer.find(cod)
-    cnas = Cna.list(session[:unit_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
+    cnas = Cna.list(session[:unit_id], session[:client_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
     unit = Unit.find(session[:unit_id])
 
     ActiveRecord::Base.transaction do

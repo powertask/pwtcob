@@ -4,16 +4,17 @@ class Contract < ActiveRecord::Base
   belongs_to :proposal
   belongs_to :user
   belongs_to :contract
+  belongs_to :client
   
   has_many :tickets
   has_many :cnas
   
-  validates_presence_of :unit_id, :taxpayer_id
+  validates_presence_of :unit_id, :taxpayer_id, :client_id
 
 	enum status: [:active, :cancel, :paid]
 
-  def self.list(unit)
-    self.where("unit_id = ?", unit)
+  def self.list(unit, client)
+    self.where("unit_id = ? AND client_id = ?", unit, client)
   end
   
 end
