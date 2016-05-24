@@ -6,15 +6,15 @@ class ProposalsController < ApplicationController
 
   def index
     if current_user.admin? || current_user.client?
-      @proposals = Proposal.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
+      @proposals = Proposal.where("unit_id = ? and client_id = ?", session[:unit_id], session[:client_id]).paginate(:page => params[:page], :per_page => 20)
     else
-      @proposals = Proposal.where("unit_id = ? AND user_id = ?", session[:unit_id], current_user.id).paginate(:page => params[:page], :per_page => 20)
+      @proposals = Proposal.where("unit_id = ? and client_id = ? AND user_id = ?", session[:unit_id], session[:client_id], current_user.id).paginate(:page => params[:page], :per_page => 20)
     end
     respond_with @proposals, :layout => 'application'
   end
 
   def show
-    @proposal = Proposal.find(params[:id])
+    @proposal = Proposal.where('id = ? and unit_id = ? and client_id = ?', params[:id].to_i, session[:unit_id], session[:client_id]).first
     @tickets = ProposalTicket.list(params[:id]).order('ticket_number')
     respond_with @proposal
   end
@@ -30,6 +30,7 @@ class ProposalsController < ApplicationController
       @proposal = Proposal.new
 
       @proposal.unit_id = session[:unit_id]
+      @proposal.client_id = session[:client_id]
       @proposal.user_id = current_user.id
       @proposal.taxpayer_id = cod
       
@@ -90,7 +91,7 @@ class ProposalsController < ApplicationController
 
   private
   def proposal_params
-    params.require(:proposal).permit(:unit_id, :user_id, :unit_ticket_quantity, :client_ticket_quantity )
+    params.require(:proposal).permit(:unit_id, :client_id, :user_id, :unit_ticket_quantity, :client_ticket_quantity )
   end
 
 end

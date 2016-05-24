@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523021841) do
+ActiveRecord::Schema.define(version: 20160524012812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,7 +259,10 @@ ActiveRecord::Schema.define(version: 20160523021841) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "contract_id"
+    t.integer  "client_id"
   end
+
+  add_index "proposals", ["client_id"], name: "index_proposals_on_client_id", using: :btree
 
   create_table "redistributeds", force: :cascade do |t|
     t.integer  "taxpayer_id"
@@ -446,6 +449,7 @@ ActiveRecord::Schema.define(version: 20160523021841) do
   add_foreign_key "indices", "units"
   add_foreign_key "inpcs", "units"
   add_foreign_key "lawyers", "units"
+  add_foreign_key "proposals", "clients"
   add_foreign_key "tasks", "users"
   add_foreign_key "taxpayer_contacts", "taxpayers"
   add_foreign_key "taxpayer_phones", "taxpayers"
