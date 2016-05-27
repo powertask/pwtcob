@@ -157,6 +157,7 @@ class ContractsController < ApplicationController
         ticket.amount = tic['amount'].to_f
         ticket.due = tic['due_at'].to_date
         ticket.ticket_number = tic['ticket_number']
+        ticket.status = 0
 
         ticket.save!
       end
