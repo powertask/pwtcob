@@ -159,6 +159,7 @@ pt-BR:
     print_pdf: Termo em PDF
     print_transaction_pdf: Termo de Transação
     bankbillet: Boleto
+    create_ticket: Gerar Boletos
     status:
       active: ATIVO
       cancel: CANCELADO
