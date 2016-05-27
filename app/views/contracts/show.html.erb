@@ -21,7 +21,7 @@
 
   <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>          <%= @contract.contract_date.to_s_br %>
   <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>               <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name.upcase %>
-  <div class='label1 top req'> <%=t("user.name") %>: </div> <%= @contract.user ? @contract.user.name : 'ADMIN'  %>
+  <div class='label1 top req'> <%=t("user.name") %>: </div> <%= @contract.user ? @contract.user.name.upcase : 'ADMIN'  %>
 	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>: </div>           <%= @contract.unit_amount.real %>
 	<div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>			    <%= @contract.client_amount.real %>
 </div>
