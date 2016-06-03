@@ -1,7 +1,7 @@
 pt-BR:
   sign_in_now: "Por favor, informe seus dados de acesso"
   sign_in: Acessar minha conta
-  sign_in_client: Acessar a Federação
+  sign_in_client: Acessar o Cliente
   log_in: Acessar Sistema de Cobrança
   corporation: Powertask
 
@@ -37,13 +37,13 @@ pt-BR:
   client: Cliente
   Yes: Sim
   origin: Origem
-  define_client: Definir a Federação
+  define_client: Definir o Cliente
 
   menu:
     home: Home
     main: Cadastros
     unit: Empresa
-    client: Federações
+    client: Clientes
     taxpayer: Contribuintes
     user: Colaboradores
     myuser: Meus Dados
@@ -195,15 +195,15 @@ pt-BR:
     amount: Valor da Parcela a Alterar
 
   client:
-    title: Cadastro de Federações
-    new: Nova Federação
-    edit: Editar Dados da Federação
-    index: Listar Todas as Federações
-    create: Gravar Dados da Federação
-    show: Detalhes da Federação
-    name: Nome da Federação
+    title: Cadastro de Clientes
+    new: Novo Cliente
+    edit: Editar Dados do Cliente
+    index: Listar Todas os Clientes
+    create: Gravar Dados do Cliente
+    show: Detalhes do Cliente
+    name: Nome do Cliente
     fee: Taxa de Intermediação
-    search: Procurar por Federação
+    search: Procurar por Cliente
 
   unit:
     title: Cadastro do Empresa
