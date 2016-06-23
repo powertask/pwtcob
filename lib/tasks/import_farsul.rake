@@ -32,7 +32,6 @@ namespace :import do
 				city_id     = import_city(name_city, state)
 				taxpayer_id = import_taxpayer(cnpj_cpf, name, zipcode, state, address, city_id, origin_code_taxpayer)
 				contract_id = import_contract(origin_code_contract, taxpayer_id, amount_farsul, amount_gma, parc_farsul, parc_gma, contract_date)
-				ticket_id   = import_ticket() 
 
 	  	end
 
@@ -48,11 +47,46 @@ namespace :import do
 	  		cna_id = import_cna(origin_code_taxpayer, exercicio, numero_doc, valor)
 
 	  	end
+
+	  	a_termo_p_gma = db[:a_termo_p_gma]
+
+	  	a_termo_p_gma.each do |data|
+
+	  		origin_code_contract	=	data[:CODIGO]
+	  		dt_criacao						=	data[:DATA]
+	  		dt_vencimento					=	 data[:VENCIMENTO]
+	  		valor 								= data[:VALOR]
+
+	  		ticket_id = import_ticket(origin_code_contract, dt_criacao, dt_vencimento, valor)
+
+	  	end
+
 	  end
 	end
 
 
 	private
+
+
+	def import_ticket(origin_code, dt_criacao, dt_vencimento, valor)
+
+		ticket = Ticket.where('unit_id = ? and client_id = ? and contract_id = ? and due = ?', 1, 2, origin_code.to_i, dt_vencimento.to_date)
+
+		if ticket.size == 0
+			ticket = Ticket.new
+			ticket.unit_id = 1
+			ticket.contract_id = origin_code.to_i
+    	ticket.ticket_type = 1
+    	ticket.amount = valor.to_f
+    	ticket.ticket_number = 1
+    	ticket.due = dt_vencimento.to_date
+    	ticket.status = 1
+    	ticket.save!
+    	return ticket.id
+    end
+
+    return ticket.first.id
+	end
 
 
 	def import_cna(origin_code, year, numero_doc, amount)
@@ -84,27 +118,6 @@ namespace :import do
 			raise	
 		end
   end
-
-
-	def import_ticket
-
-
-
-    #             :id => :integer,
-    #        :unit_id => :integer,
-    #    :contract_id => :integer,
-    #    :ticket_type => :integer,
-    #         :amount => :float,
-    #  :ticket_number => :integer,
-    #            :due => :datetime,
-    #     :created_at => :datetime,
-    #     :updated_at => :datetime,
-    # :bank_billet_id => :integer,
-    #         :status => :integer,
-    #        :paid_at => :date,
-    #    :paid_amount => :float
-
-	end
 
 
 	def import_contract(origin_code_contract, taxpayer_id, amount_farsul, amount_gma, parc_farsul, parc_gma, contract_date)

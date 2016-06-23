@@ -18,6 +18,9 @@
 <div class='styled-select1'>
   <%= form_tag(bank_billets_path, :method=>'get') do |f| %>
     <%= select_tag :status, options_for_select([ 'Todos', 'Aberto', 'Cancelado', 'Pago', 'Vencido', 'Bloqueado' ]) %>
+    &nbsp;
+    <%= search_field_tag :name, nil, placeholder: 'Procure pelo nome...', size: 60 %>
+    &nbsp;
     <%= submit_tag t('bank_billet.search') %> ou <%= link_to t('menu.clean'), bank_billets_path %>
   <% end %>
 </div>
