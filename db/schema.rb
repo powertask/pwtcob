@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524012812) do
+ActiveRecord::Schema.define(version: 20160626192455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -381,7 +381,10 @@ ActiveRecord::Schema.define(version: 20160524012812) do
     t.integer  "status"
     t.date     "paid_at"
     t.float    "paid_amount"
+    t.integer  "client_id"
   end
+
+  add_index "tickets", ["client_id"], name: "index_tickets_on_client_id", using: :btree
 
   create_table "units", force: :cascade do |t|
     t.string   "name"
@@ -456,6 +459,7 @@ ActiveRecord::Schema.define(version: 20160524012812) do
   add_foreign_key "taxpayers", "clients"
   add_foreign_key "taxpayers", "employees"
   add_foreign_key "taxpayers", "users"
+  add_foreign_key "tickets", "clients"
   add_foreign_key "users", "employees"
   add_foreign_key "words", "units"
 end
