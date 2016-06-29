@@ -254,13 +254,13 @@ class ContractsController < ApplicationController
         cna = Cna.select('year').where('contract_id = ?', ticket.contract_id)
 
         if @taxpayer.cpf.present?
-          if @taxpayer.cpf.size > 0
+          if @taxpayer.cpf.count > 0
             cnpj_cpf = @taxpayer.cpf.to_s
           end
         end
 
         if @taxpayer.cnpj.present?
-          if @taxpayer.cnpj.size > 0
+          if @taxpayer.cnpj.count > 0
             cnpj_cpf = @taxpayer.cnpj.to_s
           end
         end
