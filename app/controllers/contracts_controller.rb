@@ -254,15 +254,11 @@ class ContractsController < ApplicationController
         cna = Cna.select('year').where('contract_id = ?', ticket.contract_id)
 
         if @taxpayer.cpf.present?
-          if @taxpayer.cpf.count > 0
-            cnpj_cpf = @taxpayer.cpf.to_s
-          end
+          cnpj_cpf = @taxpayer.cpf.to_s
         end
 
         if @taxpayer.cnpj.present?
-          if @taxpayer.cnpj.count > 0
-            cnpj_cpf = @taxpayer.cnpj.to_s
-          end
+          cnpj_cpf = @taxpayer.cnpj.to_s
         end
 
         ActiveRecord::Base.transaction do
