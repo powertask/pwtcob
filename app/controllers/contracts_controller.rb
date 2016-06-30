@@ -257,9 +257,9 @@ class ContractsController < ApplicationController
           cnpj_cpf = @taxpayer.cpf.to_s
         end
 
-        if @taxpayer.cnpj.present?
-          cnpj_cpf = @taxpayer.cnpj.to_s
-        end
+        #if @taxpayer.cnpj.present?
+        #  cnpj_cpf = @taxpayer.cnpj.to_s
+        #end
 
         logger.info "******* CNPJ CPF *******".inspect
         logger.info cnpj_cpf.inspect
