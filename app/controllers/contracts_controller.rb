@@ -253,7 +253,11 @@ class ContractsController < ApplicationController
         bank_billet_account_unit = BankBilletAccount.find_by(bank_billet_account: session[:unit_bank_billet_account])
         cna = Cna.select('year').where('contract_id = ?', ticket.contract_id)
 
-        if @taxpayer.cpf.present?
+        t = Taxpayer.new(:cnpj => @taxpayer.cnpj)
+
+        if t.cnpj.valido?
+          cnpj_cpf = @taxpayer.cnpj.to_s
+        else
           cnpj_cpf = @taxpayer.cpf.to_s
         end
 
