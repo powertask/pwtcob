@@ -134,6 +134,7 @@ namespace :import do
 			contract.client_ticket_quantity = parc_gma.to_i
 			contract.contract_date = contract_date.to_date
 			contract.status = 0
+			contract.user_id = 3
 			contract.client_id = 2
 			contract.origin_code = origin_code_contract.to_i
 
@@ -155,7 +156,7 @@ namespace :import do
 			city.name = name
 			city.state = state
 			city.unit_id = 1
-			city.fl_charge = false
+			city.fl_charge = true
 
 			city.save!
 		end
