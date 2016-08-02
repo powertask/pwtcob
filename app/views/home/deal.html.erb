@@ -32,31 +32,26 @@
     <div id='table-ticket'>
       <div class='subtitle'> <%= t('deal.ticket') %> </div>
 
-      <%= form_tag(get_tickets_path, method: 'get', remote: true) do |f| %>
-        <div class='section'>
-          <table style="width:100%">
-            <tr>
-              <td><%= label_tag(:unit_ticket_quantity, t('deal.ticket_quantity')) %></td>
-              <td><%= label_tag(:unit_ticket_due, t('deal.unit_ticket_due')) %></td>
-              <td><%= label_tag(:client_ticket_due, t('deal.client_ticket_due')) %></td>
-            </tr>
-            <tr>
-              <td><%= text_field_tag(:unit_ticket_quantity) %></td>
-              <td><%= text_field_tag(:unit_ticket_due) %></td>
-              <td><%= text_field_tag(:client_ticket_due) %></td>
-            </tr>
-          </table>  
-          <div class="actions">
-            <div class='buttonbar'>
-              <% if @date_current == Date.current %>
-                <%= submit_tag(t('menu.tickets'), class: 'btn-primary') %>
-              <% else %>
-                <%= '**Permite Gerar Parcelas somente quando data base de cálculo for igual data de hoje.' %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+      <%= bootstrap_form_tag url: get_tickets_path, method: 'get', remote: true, layout: :inline do |f| %>
+        <br>
+        <%= f.form_group :value_type, label: { text: "Cobrar Valor:" } do %>
+          <%= f.radio_button :value_type, 0, label: "À Vista", checked: false, inline: true %>
+          <%= f.radio_button :value_type, 1, label: "Parcelado", checked: true, inline: true %>
+        <% end %>
+
+        <%= f.number_field :unit_ticket_quantity, label: t('deal.ticket_quantity') %>
+        <%= f.date_field :unit_ticket_due, label: t('deal.unit_ticket_due') %>
+        <%= f.date_field :client_ticket_due, label: t('deal.client_ticket_due') %>
+
+        <%= f.form_group do %>
+          <% if @date_current == Date.current %>
+            <%= f.submit t('menu.tickets') %>
+          <% else %>
+            <%= '**Permite Gerar Parcelas somente quando data base de cálculo for igual data de hoje.' %>
+          <% end %>
+        <% end %>
       <% end %>
+
     </div>
 
     <div id='table-tickets' style="display:none;">
