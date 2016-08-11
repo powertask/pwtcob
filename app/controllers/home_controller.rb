@@ -6,7 +6,6 @@
 
   def index
 
-
   	session[:unit_id] = current_user.unit.id
   	session[:unit_name] = current_user.unit.name
     session[:unit_bank_billet_account] = 21
@@ -200,12 +199,13 @@
 
   end
 
+
   def get_tickets
     unit_ticket_quantity  =  params[:unit_ticket_quantity].to_i
     unit_ticket_due       =  params[:unit_ticket_due].to_date
     client_ticket_due     =  params[:client_ticket_due].to_date
 
-    if unit_ticket_quantity == 1
+    if params[:value_type].to_i == 0
       total_cna_a_vista = session[:total_cna_a_vista].to_f
       total_fee = session[:total_fee_a_vista].to_f.round(2)
       total_cna = total_cna_a_vista - total_fee      
@@ -221,7 +221,6 @@
     unit_ticket_quantity  = unit_ticket_quantity + 1
 
     (1..unit_ticket_quantity).each  do |tic|
-      
       unit_due = unit_ticket_due if tic == 1
       client_due = client_ticket_due if tic == 2
       client_due = client_ticket_due + (tic - 2).month if tic > 2

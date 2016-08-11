@@ -16,4 +16,6 @@
 !/log/.keep
 /tmp
 *.dump
+*.sql
 *.mdb
+

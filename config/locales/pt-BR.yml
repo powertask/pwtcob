@@ -99,10 +99,11 @@ pt-BR:
     cnas: CNAS - Exercícios
     ticket: "Simulação de Pagamentos À Vista ou Parcelados"
     pay: Cobrar
-    ticket_quantity: Quantidade de Parcelas do Cliente
+    ticket_quantity: Quant Parcelas do Cliente
     unit_ticket_due: Vencimento Inicial GMA
     client_ticket_due: Vencimento Inicial Cliente
     unit_perc: Percentual GMA (%)
+    type_value: A Vista/Parcelado
     value_charge: "Valor a Ser Cobrado: "
     recalculate: Recalcular Parcelas
     create_contract: Gravar Parcelamento e Gerar Termo

@@ -56,6 +56,7 @@ GEM
       faraday-http-cache (~> 1.2.0)
       faraday_middleware (~> 0.10.0)
       her (~> 0.7.5)
+    bootstrap_form (2.4.0)
     brI18n (3.3.0)
       actionpack (>= 3.0.0)
       activerecord (>= 3.0.0)
@@ -262,6 +263,7 @@ DEPENDENCIES
   awesome_print
   boletosimples
   bootstrap!
+  bootstrap_form
   brazilian-rails
   byebug
   cancancan (~> 1.10)

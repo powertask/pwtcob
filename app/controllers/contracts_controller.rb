@@ -253,14 +253,21 @@ class ContractsController < ApplicationController
         bank_billet_account_unit = BankBilletAccount.find_by(bank_billet_account: session[:unit_bank_billet_account])
         cna = Cna.select('year').where('contract_id = ?', ticket.contract_id)
 
-        t = Taxpayer.new(:cnpj => @taxpayer.cnpj)
+        t = Taxpayer.new(:cnpj => @taxpayer.cnpj, :cpf => @taxpayer.cpf)
+        
 
-        if t.cnpj.valido?
-          cnpj_cpf = @taxpayer.cnpj.to_s
-        else
-          cnpj_cpf = @taxpayer.cpf.to_s
+        unless t.cnpj.nil?
+          if t.cnpj.valido?
+            cnpj_cpf = @taxpayer.cnpj.to_s
+          end
         end
-
+        
+        unless t.cpf.nil?
+          if t.cpf.valido?
+            cnpj_cpf = @taxpayer.cpf.to_s
+          end
+        end
+  
         #if @taxpayer.cnpj.present?
         #  cnpj_cpf = @taxpayer.cnpj.to_s
         #end
