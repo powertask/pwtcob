@@ -10,13 +10,29 @@ class BankBilletsController < ApplicationController
     name = ''
     name = params[:name].upcase unless params[:name].nil?
 
-    if params[:status].nil? or params[:status].downcase == 'todos'
+    filter_dates = ''
+
+    if params[:due_at].present?
+      filter_dates << ' AND expire_at = ?'
+    else
+      filter_dates << ' AND expire_at > ?'
+      params[:due_at] = '01/01/2000'.to_date
+    end
+
+    if params[:paid_at].present?
+      filter_dates << ' AND paid_at = ?'
+    else
+      filter_dates << ' AND paid_at > ?'
+      params[:paid_at] = '01/01/2000'.to_date
+    end
+
+    if params[:status].nil? or params[:status].downcase == 'todos status...'
       if current_user.client?
         @bank_billets = BankBillet.where("unit_id = ? AND bank_billet_account_id = ?", session[:unit_id], 2).order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
       elsif current_user.user?
-        @bank_billets = BankBillet.paginate_by_sql(['select b.* from contracts c, tickets t, bank_billets b where c.id = t.contract_id and t.bank_billet_id = b.id and c.user_id = ? AND customer_person_name like ?', current_user.id, "%"<< name << "%"], :page => params[:page], :per_page => 20)
+        @bank_billets = BankBillet.paginate_by_sql(['select b.* from contracts c, tickets t, bank_billets b where c.id = t.contract_id and t.bank_billet_id = b.id and c.user_id = ? AND customer_person_name like ? ' + filter_dates, current_user.id, "%"<< name << "%", params[:due_at].to_date, params[:paid_at].to_date], :page => params[:page], :per_page => 20)
       elsif current_user.admin?
-        @bank_billets = BankBillet.where("unit_id = ? AND customer_person_name like ?", session[:unit_id], "%"<< name << "%").order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
+        @bank_billets = BankBillet.where("unit_id = ? AND customer_person_name like ? " + filter_dates, session[:unit_id], "%"<< name << "%", params[:due_at].to_date, params[:paid_at].to_date).order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
         status_counter
       end
 
