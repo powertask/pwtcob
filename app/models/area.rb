@@ -1,4 +1,4 @@
-class Area < ApplicationRecord
+class Area < ActiveRecord::Base
   belongs_to :unit
   
 
