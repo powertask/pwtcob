@@ -1,6 +1,7 @@
  class HomeController < ApplicationController
   before_filter :authenticate_user!
   respond_to :html, :js, :json
+require 'pry'
 
   layout 'application'
 
@@ -10,6 +11,12 @@
   	session[:unit_name] = current_user.unit.name
     session[:unit_bank_billet_account] = 21
     session[:taxpayer_id] = nil
+
+
+    if current_user.id == 93 or current_user.id == 94
+      session[:client_id] = 1
+      session[:client_name] = 'FAESC'
+    end
 
     if session[:client_id].nil?
       redirect_to(:controller => 'clients', :action => 'index_admin_pwt')
