@@ -11,8 +11,7 @@
     session[:unit_bank_billet_account] = 21
     session[:taxpayer_id] = nil
 
-
-    if current_user.id == 93 or current_user.id == 94
+    if current_user.profile == 'client'
       session[:client_id] = 1
       session[:client_name] = 'FAESC'
     end
