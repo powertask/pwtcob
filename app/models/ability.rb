@@ -11,6 +11,9 @@ class Ability
     can :read, Taxpayer  if user.client?
 
     can :manage, Contract if user.user?
+    
+    can :manage, Contract if user.email == 'andreia@faesc.com.br'
+    
     can :read, Contract if user.client?
 
     can :read, City if user.client?
@@ -30,6 +33,6 @@ class Ability
     can :manage, BankBillet if user.client?
 
     can :manage, BankBillet if user.user?
-    
+
   end
 end
