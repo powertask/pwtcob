@@ -27,22 +27,82 @@
 
 
 <% if @taxpayer.nil? %>
-  
-  <div class="row">
-    <div class="col-md-6">
-      <div class='subtitle'> <%= t('home.search.title') %> </div>
-      <div class='section'>
-        <%= form_tag(filter_name_home_index_path, :method=>'get') do |f| %>
-          <div class='label1 top req'> <%= t("home.search.name") %>: 
-          <%= text_field_tag 'name', params[:name], :size => 80 %></div>
-          <div class='label1 top req'> <%= t('home.search.cod_contribuinte') %>:
-          <%= text_field_tag 'cna', params[:cna], :size => 20 %> </div>
-          <div class='label1 top req'> <%= t('home.search.cpf') %>: 
-          <%= text_field_tag 'cpf', params[:cpf], :size => 20 %> </div>
 
-          <%= submit_tag t('menu.search') %> ou <%= link_to t('menu.clean'), root_path %>
-        <% end %>
-      </div>
+  <div class='subtitle'> <%= t('home.search.title') %> </div>
+  <div class='section'>
+    <%= bootstrap_form_tag url: filter_name_home_index_path, method: 'get', layout: :inline do |f| %>
+      <%= f.search_field :name, placeholder: 'Procure pelo nome do contribuinte...', size: 100, skip_label: true %>
+      <%= f.search_field :cna, placeholder: 'Procure pelo CNA...', size: 20, skip_label: true %> 
+      <%= f.search_field :cpf, placeholder: 'Procure pelo CPF...', size: 20, skip_label: true %> 
+
+      <%= f.primary t('menu.search') %>
+    <% end %>
+  </div>
+
+  <div class='list1'>
+    <% unless @taxpayers.nil? %>
+      <div class='subtitle'> <%= 'Contribuintes Encontrados' %> </div>
+
+      <% @taxpayers.each do |taxpayer| %>
+        <li>
+          <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
+
+          <div class='indent'>
+            <%= link_to(taxpayer.name, show_path(taxpayer)) %>
+              &bull;
+            <tt>
+              <%= taxpayer.cpf %>
+              &bull;
+              <%= taxpayer.client.name if taxpayer.client %>
+              &bull;
+              <%= taxpayer.address %>
+              &bull;
+              <%= taxpayer.city.name if taxpayer.city %>
+              &bull;
+              <%= taxpayer.city.state if taxpayer.city %>
+            </tt>
+            <dt>
+            </dt>
+          </div>
+        </li>
+      <% end %>
+
+      <% unless @taxpayers.empty? %>
+        <div class="apple_pagination">
+          <%= will_paginate @taxpayers, :container => false %>
+        </div>
+        <br>
+      <% end %>
+
+    <% end %>
+  </div>
+
+
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class='subtitle'> <%= 'Lista de CNAs' %> </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Colaborador</th>
+            <th>CNAS em Aberto</th>
+            <th>Valores em Aberto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% unless @resume.nil? %>
+            <% @resume.each do |r| %>
+              <tr>
+                <td><%= r.name %> </td>
+                <td><%= r.count %> </td>
+                <td><%= r.sum.real %> </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
     <div class="col-md-3">
@@ -90,45 +150,7 @@
         </table>
       </div>
     </div>
-    
-  </div>
-
-  <div class='list1'>
-    <% unless @taxpayers.nil? %>
-      <div class='subtitle'> <%= 'Contribuintes Encontrados' %> </div>
-
-      <% @taxpayers.each do |taxpayer| %>
-        <li>
-          <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
-
-          <div class='indent'>
-            <%= link_to(taxpayer.name, show_path(taxpayer)) %>
-              &bull;
-            <tt>
-              <%= taxpayer.cpf %>
-              &bull;
-              <%= taxpayer.client.name if taxpayer.client %>
-              &bull;
-              <%= taxpayer.address %>
-              &bull;
-              <%= taxpayer.city.name if taxpayer.city %>
-              &bull;
-              <%= taxpayer.city.state if taxpayer.city %>
-            </tt>
-            <dt>
-            </dt>
-          </div>
-        </li>
-      <% end %>
-
-      <% unless @taxpayers.empty? %>
-        <div class="apple_pagination">
-          <%= will_paginate @taxpayers, :container => false %>
-        </div>
-        <br>
-      <% end %>
-
-    <% end %>
+  
   </div>
 
   <div class="row">
