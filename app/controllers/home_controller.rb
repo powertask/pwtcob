@@ -329,7 +329,7 @@
       @count_contracts_day_master = Contract.list(session[:unit_id],session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
       @histories                  = History.list(session[:unit_id], session[:client_id]).where('history_date is not null').order('history_date DESC').limit(30)
 
-      @resume = Cna.find_by_sql(['select count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = u.id and c.status = 0 and t.city_id = ct.id and ct.fl_charge = ? group by u.name', true])
+      @resume = Cna.find_by_sql(['select count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = u.id and c.status = 0 and t.city_id = ct.id and ct.fl_charge = ? group by u.name order by u.name', true])
 
     else
       @count_contracts_day        = Contract.list(session[:unit_id],session[:client_id]).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
