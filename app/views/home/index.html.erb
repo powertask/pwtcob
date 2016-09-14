@@ -31,7 +31,7 @@
   <div class='subtitle'> <%= t('home.search.title') %> </div>
   <div class='section'>
     <%= bootstrap_form_tag url: filter_name_home_index_path, method: 'get', layout: :inline do |f| %>
-      <%= f.search_field :name, placeholder: 'Procure pelo nome do contribuinte...', size: 100, skip_label: true %>
+      <%= f.search_field :name, placeholder: 'Procure pelo nome do contribuinte...', size: 70, skip_label: true %>
       <%= f.search_field :cna, placeholder: 'Procure pelo CNA...', size: 20, skip_label: true %> 
       <%= f.search_field :cpf, placeholder: 'Procure pelo CPF...', size: 20, skip_label: true %> 
 
