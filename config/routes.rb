@@ -70,7 +70,8 @@ Rails.application.routes.draw do
   get 'discharge/sent_discharge' => 'discharges#sent_discharge', as: :sent_discharge
   post 'discharge/create_discharge' => 'discharges#create_discharge', as: :create_discharge
 
-  get 'contract/rel_payment' => 'contracts#rel_payment', as: :rel_payment
+  get 'contract/report_payment_filter' => 'contracts#report_payment_filter', as: :report_payment_filter
+  get 'contract/report_payment_action' => 'contracts#report_payment_action', as: :report_payment_action
 
   get 'contract/report_fee_filter' => 'contracts#report_fee_filter', as: :report_fee_filter
   get 'contract/report_fee_action' => 'contracts#report_fee_action', as: :report_fee_action

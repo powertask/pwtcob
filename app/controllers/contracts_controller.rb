@@ -348,9 +348,11 @@ class ContractsController < ApplicationController
           file = Tempfile.new
           file.binmode
           file.write open(image_url).read
+
           Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
             zipfile.add(filename + '.pdf', file)
           end
+          
           file.close!
         end
         send_file zipfile_name, filename: "boletos_do_contribuinte_" + @taxpayer.origin_code.to_s + ".zip", :type=>"application/zip", :disposition => "attachment", :x_sendfile=>true 
@@ -359,8 +361,13 @@ class ContractsController < ApplicationController
   end
 
 
-  def rel_payment
-    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due from contracts c, tickets t, taxpayers tax, cities where c.unit_id = ? AND paid_amount > ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id order by t.paid_at DESC', session[:unit_id], 0]
+  def report_payment_filter
+    @months = [['Janeiro',1],['Fevereiro',2],['Março',3],['Abril',4],['Maio',5],['Junho',6],['Julho',7],['Agosto',8],['Setembro',9],['Outubro',10],['Novembro',11],['Dezembro',12]]
+    @years = [[2016,'2016']]
+  end
+
+  def report_payment_action
+    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due, t.ticket_type from contracts c, tickets t, taxpayers tax, cities where c.unit_id = ? AND paid_amount > ? and paid_at between ? and ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id AND t.ticket_type = ? order by t.paid_at ASC', session[:unit_id], 0, params[:paid_ini_at].to_date, params[:paid_end_at].to_date, params[:type]]
   end
 
 

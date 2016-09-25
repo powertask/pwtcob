@@ -1,0 +1,20 @@
+<%= bootstrap_form_tag url: 'report_payment_action', method: :get  do |f| %>
+  <div class='title'> Relatório de Pagamentos </div>
+  
+  <div class='section'>
+    
+    <%= f.form_group :type, label: { text: "Tipo de Taxa" } do %>
+      <%= f.radio_button :type, 0, label: "FAESC", checked: true %>
+      <%= f.radio_button :type, 1, label: "GMA" %>
+    <% end %>
+
+    <%= f.text_field :paid_ini_at, readonly: true, placeholder: 'Data Inicial', id: 'datepicker1', skip_label: true %>
+    <%= f.text_field :paid_end_at, readonly: true, placeholder: 'Data Final', id: 'datepicker2', skip_label: true %>
+
+    <div class='buttonbar'>
+      <%= f.primary 'Gerar Relatório' %>
+      <%= 'ou' %>
+      <%= link_to t('menu.cancel'), root_path %>
+    </div>
+  </div>
+<% end %>
