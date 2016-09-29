@@ -367,7 +367,7 @@ class ContractsController < ApplicationController
   end
 
   def report_payment_action
-    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due, t.ticket_type from contracts c, tickets t, taxpayers tax, cities where c.unit_id = ? AND paid_amount > ? and paid_at between ? and ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id AND t.ticket_type = ? order by t.paid_at ASC', session[:unit_id], 0, params[:paid_ini_at].to_date, params[:paid_end_at].to_date, params[:type]]
+    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due, t.ticket_type, cnas.year, c.client_ticket_quantity, t.ticket_number from contracts c, tickets t, taxpayers tax, cities, cnas where c.unit_id = ? AND paid_amount > ? and paid_at between ? and ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id AND t.ticket_type = ? AND c.id = cnas.contract_id order by tname, year, t.paid_at ASC', session[:unit_id], 0, params[:paid_ini_at].to_date, params[:paid_end_at].to_date, params[:type]]
   end
 
 

@@ -6,16 +6,23 @@
   <span> <%= 'Relatório de Pagamentos Efetuados' %> </span>
 </div>
 
+<div class='section'>
+  <div class='label1 top req'> <%= 'Data Inicial' %>: </div>    <%= params[:paid_ini_at] %>
+  <div class='label1 top req'> <%= 'Data Final' %>: </div>      <%= params[:paid_end_at] %>
+  <div class='label1 top req'> <%= 'Tipo Pagamento' %>: </div>      <%= params[:type] == '0' ? 'FAESC' : 'GMA' %>
+</div>
+
 <table class="table" border="0">
   <thead>
     <tr>
       <th>Contribuinte</th>
-      <th>CNA</th>
       <th>Cidade</th>
       <th>CPF</th>
+      <th>Exercício</th>
+      <th>Parcela</th>
       <th>Valor</th>
-      <th>Data Pagamento</th>
       <th>Data Vencimento</th>
+      <th>Data Pagamento</th>
     </tr>
   </thead>
   <tbody>
@@ -23,12 +30,17 @@
       <% @rels.each do |rel| %>
         <tr>
           <td><%= rel.tname %> </td>
-          <td><%= rel.origin_code %> </td>
           <td><%= rel.cname %></td>
           <td><%= rel.cpf %> </td>
+          <td><%= rel.year %> </td>
+          <% if rel.ticket_type == 'client' %>
+            <td><%= rel.ticket_number - 1 %>/<%= rel.client_ticket_quantity %> </td>
+          <% else %>
+            <td><%= '1/1' %> </td>
+          <% end %>            
           <td><%= rel.paid_amount.real %> </td>
-          <td><%= rel.paid_at.to_s_br %> </td>
           <td><%= rel.due.to_date.to_s_br %> </td>
+          <td><%= rel.paid_at.to_s_br %> </td>
         </tr>
       <% end %>
     <% end %>
@@ -36,6 +48,7 @@
   <tfoot>
     <tr>
       <td>TOTAIS PAGOS</td>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
