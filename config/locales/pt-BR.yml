@@ -290,7 +290,7 @@ pt-BR:
   remittance:
     title: Remessas
     index: Listar Todas as Remessas
-    new: Gerar Remessa Santander
+    new: Gerar Arquivos de Remessa
     bank_billet_account: Carteira de Cobrança
     status:
       unprocessed: Pendente
