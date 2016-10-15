@@ -24,8 +24,17 @@ class ContractsController < ApplicationController
     cod = params[:cod]
 
     taxpayer = Taxpayer.find(cod)
-    cnas = Cna.list(session[:unit_id], session[:client_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
+    cnas = Cna.list(session[:unit_id], session[:client_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true).order('year')
     unit = Unit.find(session[:unit_id])
+
+
+    description = ''
+
+    cnas.each do |c|
+      description << '-' unless description.empty?
+      description << c.year.to_s
+    end
+
 
     ActiveRecord::Base.transaction do
       @contract = Contract.new
@@ -59,25 +68,27 @@ class ContractsController < ApplicationController
       @contract.unit_fee = 10
       @contract.status = 0
 
+      @contract.description = description
+
       @contract.save!
 
       n = 0
       session[:tickets].each  do |tic|
         n = n + 1
-        @ticket = Ticket.new
-        @ticket.unit_id = session[:unit_id]
-        @ticket.contract_id = @contract.id
-        @ticket.ticket_type = 0 if tic['unit_amount'].to_f == 0
-        @ticket.ticket_type = 1 if tic['unit_amount'].to_f > 0
+        ticket = Ticket.new
+        ticket.unit_id = session[:unit_id]
+        ticket.contract_id = @contract.id
+        ticket.ticket_type = 0 if tic['unit_amount'].to_f == 0
+        ticket.ticket_type = 1 if tic['unit_amount'].to_f > 0
         
-        @ticket.amount = tic['client_amount'].to_f if tic['client_amount'].to_f > 0
-        @ticket.amount = tic['unit_amount'].to_f if tic['unit_amount'].to_f > 0
+        ticket.amount = tic['client_amount'].to_f if tic['client_amount'].to_f > 0
+        ticket.amount = tic['unit_amount'].to_f if tic['unit_amount'].to_f > 0
         
-        @ticket.due = tic['due'].to_date
-        @ticket.ticket_number = n
-        @ticket.status = 0
+        ticket.due = tic['due'].to_date
+        ticket.ticket_number = n
+        ticket.status = 0
 
-        @ticket.save!
+        ticket.save!
       end
 
       cnas.each do  |cna|
@@ -367,7 +378,7 @@ class ContractsController < ApplicationController
   end
 
   def report_payment_action
-    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due, t.ticket_type, 0, c.client_ticket_quantity, t.ticket_number from contracts c, tickets t, taxpayers tax, cities where c.unit_id = ? AND paid_amount > ? and paid_at between ? and ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id AND t.ticket_type = ? order by tname, t.paid_at ASC', session[:unit_id], 0, params[:paid_ini_at].to_date, params[:paid_end_at].to_date, params[:type]]
+    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due, t.ticket_type, c.description, c.client_ticket_quantity, t.ticket_number from contracts c, tickets t, taxpayers tax, cities where c.unit_id = ? AND paid_amount > ? and paid_at between ? and ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id AND t.ticket_type = ? order by tname, t.paid_at ASC', session[:unit_id], 0, params[:paid_ini_at].to_date, params[:paid_end_at].to_date, params[:type]]
   end
 
 
