@@ -8,14 +8,11 @@
   </head>
 
 	<body>
-
 		<% unless user_signed_in?  %>
 			<%= render "layouts/tabless" %>
 		<% else %>
 			<%= render 'layouts/header' %>
 			<%= render "layouts/tabbed" %>
 		<% end %>
-
 	</body>
-
 </html>
