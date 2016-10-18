@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -22,10 +21,9 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["task_id"], name: "index_activities_on_task_id", using: :btree
+    t.index ["taxpayer_id"], name: "index_activities_on_taxpayer_id", using: :btree
   end
-
-  add_index "activities", ["task_id"], name: "index_activities_on_task_id", using: :btree
-  add_index "activities", ["taxpayer_id"], name: "index_activities_on_taxpayer_id", using: :btree
 
   create_table "areas", force: :cascade do |t|
     t.integer "unit_id"
@@ -41,10 +39,9 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.float   "modulo"
     t.float   "degree_of_use"
     t.float   "usable_area"
+    t.index ["taxpayer_id"], name: "index_areas_on_taxpayer_id", using: :btree
+    t.index ["unit_id"], name: "index_areas_on_unit_id", using: :btree
   end
-
-  add_index "areas", ["taxpayer_id"], name: "index_areas_on_taxpayer_id", using: :btree
-  add_index "areas", ["unit_id"], name: "index_areas_on_unit_id", using: :btree
 
   create_table "bank_billet_accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -52,9 +49,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.integer  "bank_billet_account"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["unit_id"], name: "index_bank_billet_accounts_on_unit_id", using: :btree
   end
-
-  add_index "bank_billet_accounts", ["unit_id"], name: "index_bank_billet_accounts_on_unit_id", using: :btree
 
   create_table "bank_billets", force: :cascade do |t|
     t.integer  "unit_id"
@@ -75,10 +71,9 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.float    "document_amount"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.index ["bank_billet_account_id"], name: "index_bank_billets_on_bank_billet_account_id", using: :btree
+    t.index ["unit_id"], name: "index_bank_billets_on_unit_id", using: :btree
   end
-
-  add_index "bank_billets", ["bank_billet_account_id"], name: "index_bank_billets_on_bank_billet_account_id", using: :btree
-  add_index "bank_billets", ["unit_id"], name: "index_bank_billets_on_unit_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -113,9 +108,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
     t.integer  "bank_billet_account_id"
+    t.index ["bank_billet_account_id"], name: "index_clients_on_bank_billet_account_id", using: :btree
   end
-
-  add_index "clients", ["bank_billet_account_id"], name: "index_clients_on_bank_billet_account_id", using: :btree
 
   create_table "cnas", force: :cascade do |t|
     t.integer  "unit_id"
@@ -133,9 +127,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.integer  "contract_id"
     t.integer  "proposal_id"
     t.integer  "client_id"
+    t.index ["client_id"], name: "index_cnas_on_client_id", using: :btree
   end
-
-  add_index "cnas", ["client_id"], name: "index_cnas_on_client_id", using: :btree
 
   create_table "contracts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -157,9 +150,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.integer  "client_id"
     t.integer  "origin_code"
     t.string   "description"
+    t.index ["client_id"], name: "index_contracts_on_client_id", using: :btree
   end
-
-  add_index "contracts", ["client_id"], name: "index_contracts_on_client_id", using: :btree
 
   create_table "employees", force: :cascade do |t|
     t.string   "name"
@@ -184,10 +176,9 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.integer  "user_id"
     t.integer  "word_id"
     t.integer  "client_id"
+    t.index ["client_id"], name: "index_histories_on_client_id", using: :btree
+    t.index ["word_id"], name: "index_histories_on_word_id", using: :btree
   end
-
-  add_index "histories", ["client_id"], name: "index_histories_on_client_id", using: :btree
-  add_index "histories", ["word_id"], name: "index_histories_on_word_id", using: :btree
 
   create_table "indices", force: :cascade do |t|
     t.integer  "unit_id"
@@ -197,9 +188,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.decimal  "change",     precision: 10, scale: 4
+    t.index ["unit_id"], name: "index_indices_on_unit_id", using: :btree
   end
-
-  add_index "indices", ["unit_id"], name: "index_indices_on_unit_id", using: :btree
 
   create_table "inpcs", force: :cascade do |t|
     t.integer  "unit_id"
@@ -209,9 +199,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.date     "idx_date"
+    t.index ["unit_id"], name: "index_inpcs_on_unit_id", using: :btree
   end
-
-  add_index "inpcs", ["unit_id"], name: "index_inpcs_on_unit_id", using: :btree
 
   create_table "lawyers", force: :cascade do |t|
     t.string   "name"
@@ -229,9 +218,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "unit_id"
+    t.index ["unit_id"], name: "index_lawyers_on_unit_id", using: :btree
   end
-
-  add_index "lawyers", ["unit_id"], name: "index_lawyers_on_unit_id", using: :btree
 
   create_table "proposal_tickets", force: :cascade do |t|
     t.integer  "unit_id"
@@ -261,9 +249,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.datetime "updated_at",             null: false
     t.integer  "contract_id"
     t.integer  "client_id"
+    t.index ["client_id"], name: "index_proposals_on_client_id", using: :btree
   end
-
-  add_index "proposals", ["client_id"], name: "index_proposals_on_client_id", using: :btree
 
   create_table "redistributeds", force: :cascade do |t|
     t.integer  "taxpayer_id"
@@ -287,9 +274,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.datetime "updated_at",  null: false
     t.integer  "user_id"
     t.integer  "status"
+    t.index ["user_id"], name: "index_tasks_on_user_id", using: :btree
   end
-
-  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "taxpayer_contacts", force: :cascade do |t|
     t.integer  "taxpayer_id"
@@ -299,18 +285,16 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.string   "email"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["taxpayer_id"], name: "index_taxpayer_contacts_on_taxpayer_id", using: :btree
   end
-
-  add_index "taxpayer_contacts", ["taxpayer_id"], name: "index_taxpayer_contacts_on_taxpayer_id", using: :btree
 
   create_table "taxpayer_phones", force: :cascade do |t|
     t.integer  "taxpayer_id"
     t.string   "phone"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["taxpayer_id"], name: "index_taxpayer_phones_on_taxpayer_id", using: :btree
   end
-
-  add_index "taxpayer_phones", ["taxpayer_id"], name: "index_taxpayer_phones_on_taxpayer_id", using: :btree
 
   create_table "taxpayers", force: :cascade do |t|
     t.string   "name"
@@ -332,11 +316,10 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.integer  "employee_id"
     t.integer  "user_id"
     t.date     "distributed_at"
+    t.index ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
+    t.index ["employee_id"], name: "index_taxpayers_on_employee_id", using: :btree
+    t.index ["user_id"], name: "index_taxpayers_on_user_id", using: :btree
   end
-
-  add_index "taxpayers", ["client_id"], name: "index_taxpayers_on_client_id", using: :btree
-  add_index "taxpayers", ["employee_id"], name: "index_taxpayers_on_employee_id", using: :btree
-  add_index "taxpayers", ["user_id"], name: "index_taxpayers_on_user_id", using: :btree
 
   create_table "temp_cna", force: :cascade do |t|
     t.integer "cod_proprietario"
@@ -383,9 +366,8 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.date     "paid_at"
     t.float    "paid_amount"
     t.integer  "client_id"
+    t.index ["client_id"], name: "index_tickets_on_client_id", using: :btree
   end
-
-  add_index "tickets", ["client_id"], name: "index_tickets_on_client_id", using: :btree
 
   create_table "units", force: :cascade do |t|
     t.string   "name"
@@ -423,20 +405,18 @@ ActiveRecord::Schema.define(version: 20161014231214) do
     t.string   "phone"
     t.datetime "deleted_at"
     t.boolean  "fl_taxpayer"
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["employee_id"], name: "index_users_on_employee_id", using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["employee_id"], name: "index_users_on_employee_id", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "words", force: :cascade do |t|
     t.integer  "unit_id"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["unit_id"], name: "index_words_on_unit_id", using: :btree
   end
-
-  add_index "words", ["unit_id"], name: "index_words_on_unit_id", using: :btree
 
   add_foreign_key "activities", "tasks"
   add_foreign_key "activities", "taxpayers"

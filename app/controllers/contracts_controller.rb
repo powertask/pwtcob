@@ -267,7 +267,6 @@ class ContractsController < ApplicationController
 
         t = Taxpayer.new(:cnpj => @taxpayer.cnpj, :cpf => @taxpayer.cpf)
         
-
         unless t.cnpj.nil?
           if t.cnpj.valido?
             cnpj_cpf = @taxpayer.cnpj.to_s
@@ -286,6 +285,10 @@ class ContractsController < ApplicationController
 
         logger.info "******* CNPJ CPF *******".inspect
         logger.info cnpj_cpf.inspect
+        logger.info "bank_billet_account -> ".inspect
+        logger.info bank_billet_account.inspect
+        logger.info "bank_billet_account_unit -> ".inspect
+        logger.info bank_billet_account_unit.inspect
 
         ActiveRecord::Base.transaction do
           bank_billet = BoletoSimples::BankBillet.create({
