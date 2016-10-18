@@ -286,9 +286,10 @@ class ContractsController < ApplicationController
         logger.info "******* CNPJ CPF *******".inspect
         logger.info cnpj_cpf.inspect
         logger.info "bank_billet_account -> ".inspect
-        logger.info bank_billet_account.inspect
+        logger.info bank_billet_account.bank_billet_account.inspect
         logger.info "bank_billet_account_unit -> ".inspect
-        logger.info bank_billet_account_unit.inspect
+        logger.info bank_billet_account_unit.bank_billet_account.inspect
+        logger.info ticket.ticket_type.inspect
 
         ActiveRecord::Base.transaction do
           bank_billet = BoletoSimples::BankBillet.create({
