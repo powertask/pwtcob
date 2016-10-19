@@ -23,6 +23,7 @@
       <th>Valor</th>
       <th>Data Vencimento</th>
       <th>Data Pagamento</th>
+      <th>Colaborador(a)</th>
     </tr>
   </thead>
   <tbody>
@@ -41,6 +42,7 @@
           <td><%= rel.paid_amount.real %> </td>
           <td><%= rel.due.to_date.to_s_br %> </td>
           <td><%= rel.paid_at.to_s_br %> </td>
+          <td><%= rel.name %> </td>
         </tr>
       <% end %>
     <% end %>
@@ -53,6 +55,7 @@
       <td></td>
       <td></td>
       <td><%= @rels.map{|i|i[:paid_amount]}.inject(:+).real if @rels %></td>
+      <td></td>
       <td></td>
       <td></td>
     </tr>
