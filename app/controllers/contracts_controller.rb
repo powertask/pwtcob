@@ -332,7 +332,7 @@ class ContractsController < ApplicationController
             ticket.status = 0  # Gerando
             ticket.save!
 
-#            @values.push([bank_billet.customer_person_name << '_' << bank_billet_pwt.our_number, bank_billet_pwt.shorten_url])
+            @values << [bank_billet.customer_person_name << '_' << bank_billet_pwt.our_number, bank_billet_pwt.shorten_url]
 
           else
             puts "Erro :("
