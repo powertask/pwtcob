@@ -332,7 +332,7 @@ class ContractsController < ApplicationController
             ticket.status = 0  # Gerando
             ticket.save!
 
-            @values.push([bank_billet.customer_person_name << '_' << bank_billet_pwt.our_number, bank_billet_pwt.shorten_url])
+#            @values.push([bank_billet.customer_person_name << '_' << bank_billet_pwt.our_number, bank_billet_pwt.shorten_url])
 
           else
             puts "Erro :("
@@ -343,7 +343,7 @@ class ContractsController < ApplicationController
         @contract = Contract.find(ticket.contract_id)
         @taxpayer = Taxpayer.find(@contract.taxpayer_id)
         bank_billet = BankBillet.find(ticket.bank_billet_id)
-        @values.push([bank_billet.customer_person_name << '_' << bank_billet.our_number, bank_billet.shorten_url]) if bank_billet.status == 'opened'
+#        @values.push([bank_billet.customer_person_name << '_' << bank_billet.our_number, bank_billet.shorten_url]) if bank_billet.status == 'opened'
       end
     end
 
