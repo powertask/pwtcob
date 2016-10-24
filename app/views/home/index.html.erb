@@ -96,7 +96,7 @@
               <tr>
                 <td><%= r.name %> </td>
                 <td><%= r.count %> </td>
-                <td><%= r.count_histories_today if count_histories_today.isvalid? %> </td>
+                <td><%= r.count_histories_today if r.count_histories_today.isvalid? %> </td>
                 <td><%= r.sum.real %> </td>
               </tr>
             <% end %>
