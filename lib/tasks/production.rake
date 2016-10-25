@@ -90,9 +90,9 @@ namespace :production do
 
   
   
-  desc "Update ticket status"
+  desc "Update ticket status 0"
   task :update_ticket_status_generated => :environment do
-    bank_billet_pwt = BankBillet.where('status = 0')
+    bank_billet_pwt = BankBillet.where('status = ?', 0)
 
     bank_billet_pwt.each do |i|
       bankbillet_api = BoletoSimples::BankBillet.find(i.origin_code)
@@ -102,8 +102,6 @@ namespace :production do
         ticket     = Ticket.where('bank_billet_id = ?', i.id).first
         
         if ticket.present?
-          contract   = Contract.find ticket.contract_id
-
           ActiveRecord::Base.transaction do
             bankbillet.status = bankbillet_api.status
             bankbillet.save!
