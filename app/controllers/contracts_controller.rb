@@ -279,18 +279,6 @@ class ContractsController < ApplicationController
           end
         end
   
-        #if @taxpayer.cnpj.present?
-        #  cnpj_cpf = @taxpayer.cnpj.to_s
-        #end
-
-        logger.info "******* CNPJ CPF *******".inspect
-        logger.info cnpj_cpf.inspect
-        logger.info "bank_billet_account -> ".inspect
-        logger.info bank_billet_account.bank_billet_account.inspect
-        logger.info "bank_billet_account_unit -> ".inspect
-        logger.info bank_billet_account_unit.bank_billet_account.inspect
-        logger.info ticket.ticket_type.inspect
-
         ActiveRecord::Base.transaction do
           bank_billet = BoletoSimples::BankBillet.create({
                             amount: ticket.amount,
@@ -319,7 +307,7 @@ class ContractsController < ApplicationController
                                               :expire_at => bank_billet.expire_at, 
                                               :customer_person_name => bank_billet.customer_person_name,
                                               :customer_cnpj_cpf => bank_billet.customer_cnpj_cpf,
-                                              :status => (bank_billet.status == 'generating' ? 1 : bank_billet.status), 
+                                              :status => (bank_billet.status == 'generating' ? 0 : bank_billet.status), 
                                               :shorten_url => bank_billet.formats["pdf"], 
                                               :fine_for_delay => bank_billet.fine_for_delay, 
                                               :late_payment_interest => bank_billet.late_payment_interest, 
@@ -331,8 +319,6 @@ class ContractsController < ApplicationController
             ticket.bank_billet_id = bank_billet_pwt.id
             ticket.status = 0  # Gerando
             ticket.save!
-
-#            @values << [bank_billet.customer_person_name << '_' << bank_billet_pwt.our_number, bank_billet_pwt.shorten_url]
 
           else
             puts "Erro :("
