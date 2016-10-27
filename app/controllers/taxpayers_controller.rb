@@ -26,7 +26,7 @@ class TaxpayersController < ApplicationController
   def show
     @taxpayer = Taxpayer.where('id = ? AND unit_id = ? AND client_id = ?', params[:id].to_i, session[:unit_id], session[:client_id]).first
     @taxpayer_contacts = TaxpayerContact.where('taxpayer_id = ?', @taxpayer.id)
-    @cnas = Cna.where('taxpayer_id = ?', @taxpayer.id).order('year ASC')
+    @cnas = Cna.list(session[:unit_id], session[:client_id]).where('taxpayer_id = ?', @taxpayer.id).order('year ASC')
 
     respond_with @taxpayer
   end
