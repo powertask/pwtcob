@@ -17,6 +17,7 @@ class CnasController < ApplicationController
   def new
     @cna = Cna.new
     @cna.unit_id = session[:unit_id]
+    @cna.client_id = session[:client_id]
     @cna.taxpayer_id = params[:format]
   end
 
@@ -27,6 +28,7 @@ class CnasController < ApplicationController
   def create
     @cna = Cna.new(cna_params)
     @cna.unit_id = session[:unit_id]
+    @cna.client_id = session[:client_id]
     @cna.stage = 1
     @cna.status = 0
     @cna.fl_charge = 0
