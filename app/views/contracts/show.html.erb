@@ -76,7 +76,8 @@
           <td>
             <%= link_to('Ver Boleto', ticket.bank_billet.shorten_url, class: "btn btn-xs btn-default") if ticket.bank_billet.present?  %> 
             <%= link_to('Novo Vencimento', create_new_expire_at_path(ticket.id), class: "btn btn-xs btn-default")  %> 
-            <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.id), class: "btn btn-xs btn-danger") if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %> 
+            <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.id), class: "btn btn-xs btn-danger", remote: true, id: 'delete_ticket') if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %> 
+            <%= link_to('Teste', '#', class: "btn btn-xs btn-danger", remote: true, id: 'cancel_ticket') if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %> 
           </td>
         </tr>
       <% end %>
@@ -100,6 +101,26 @@
 			    },
 			    cancel: function(){
 
+			    }
+			});
+			return false;
+		});
+});
+  
+	$(function() {
+		$('#cancel_ticket').click(function (event) {
+			var targetUrl = $(this).attr("href");
+			$.confirm({
+			    title: 'CANCELAR boleto??',
+			    content: 'Deseja realmente CANCELAR o boleto?',
+				confirmButton: 'Sim',
+				cancelButton: 'Não',
+				confirmButtonClass: 'btn-danger',
+				theme: 'supervan',
+			    confirm: function(){
+			        window.location.href = targetUrl;
+			    },
+			    cancel: function(){
 			    }
 			});
 			return false;
