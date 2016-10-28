@@ -3,7 +3,7 @@
   <div class='section'>
     <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>    <%= @taxpayer.origin_code %>
     <div class='label1 top req'> <%=t("client.name") %>: </div>             <%= @taxpayer.client.name %>
-    <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>           <%= @taxpayer.name %>
+    <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>           <%= link_to(@taxpayer.name, taxpayer_path(@taxpayer.id)) %>
     <div class='label1 top req'> <%=t("taxpayer.user") %>: </div>           <%= @taxpayer.user.name if @taxpayer.user_id %>
     <div class='label1 top req'> <%=t("taxpayer.distributed_at") %>: </div> <%= @taxpayer.distributed_at.to_s_br %>
 
