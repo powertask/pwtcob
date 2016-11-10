@@ -240,7 +240,7 @@
   
   def get_tasks
     
-    @tasks = Task.where("unit_id = ? AND user_id = ?", session[:unit_id], current_user.id).order('id ASC')
+    @tasks = Task.where("unit_id = ? AND user_id = ? AND task_date >= ?", session[:unit_id], current_user.id, Date.current - 1.day).order('id ASC')
 
     tasks = []
     @tasks.each do |task|
