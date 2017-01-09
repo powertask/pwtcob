@@ -73,6 +73,8 @@ pt-BR:
     deal: Ir para Ambiente de Negociações
     taxpayer: Contribuinte
     name: Nome do Contribuinte
+    calendar:
+      title: Agenda do dia
     taxpayer:
       show: Dados Cadastrais
     search:

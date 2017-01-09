@@ -22,7 +22,7 @@
 <% if @taxpayer.nil? %>
   <% if current_user.admin? || current_user.user? %>
     <br>
-    <%= render "calendar" %>
+    <%= render "new_calendar" %>
     <br>
   <% end %>
 
