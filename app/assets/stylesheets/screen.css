@@ -250,6 +250,9 @@ tt {
     background: orange;
     color: white;
   }
+    .large{
+      width: 150px;
+    }
 
 .filters, .panel {
   background: snow;

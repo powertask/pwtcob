@@ -3,7 +3,7 @@
 	<% unless @calendar.empty? %>
 		<% @calendar.each do |cal| %>
 			<li>
-				<div class='strip' id='none'> <%= cal.category.name if cal.category_id %> </div>
+				<div class='strip green large' id='none'> <%= cal.category.name if cal.category_id %> </div>
 
 				<div class='indent'>
           <%= cal.description %>

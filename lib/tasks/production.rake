@@ -14,11 +14,12 @@ namespace :production do
         taxpayers.each do |taxpayer|
           t = Task.new
           t.task_date = Date.current
-          t.description = 'Entrar em contato com -- ' << taxpayer.name.upcase << ' -- Valor CNAs R$ ' << taxpayer.amount.real.to_s
+          t.description = 'Entrar em contato com ' << taxpayer.name.upcase << '. Valor CNAs em aberto R$ ' << taxpayer.amount.real.to_s
           t.unit_id = user.unit_id
           t.user_id = user.id
           t.taxpayer_id = taxpayer.id
           t.status = 0  # Call
+          t.category_id = 1 ## Colaboradores sem contato
           t.save!
         end
       end
