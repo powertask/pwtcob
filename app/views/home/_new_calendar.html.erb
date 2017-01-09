@@ -6,9 +6,9 @@
 				<div class='strip green large' id='none'> <%= cal.category.name if cal.category_id %> </div>
 
 				<div class='indent'>
-          <%= cal.description %>
-          &bull;
           <%= link_to(cal.taxpayer.name, Rails.application.routes.url_helpers.show_path(cal.taxpayer_id)) if cal.taxpayer_id %>
+          &bull;
+          <%= cal.description %>
 					<tt></tt>
 					<dt></dt>
 				</div>
