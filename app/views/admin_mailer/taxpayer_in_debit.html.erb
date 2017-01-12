@@ -1,0 +1,53 @@
+<html>
+  <head>
+   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+   <style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 95%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+
+
+  </head>
+
+  <body>
+    <h1><%= "Contribuintes FAESC em atraso" %></h1>
+
+		<table border="2">
+			<tr>
+        <th>Contribuinte</th>
+        <th>Telefone</th>
+				<th>Contrato</th>
+				<th>Cobrador</th>
+				<th>Valor</th>
+				<th>Parcela</th>
+				<th>Vencimento</th>
+			</tr>
+			<% @tickets_overdue.each do |t| %>
+				<tr>
+          <td><%= t.name %></td>
+          <td><%= t.phone %></td>
+			    <td><%= t.id %></td>
+					<td><%= t.ticket_type == 'unit' ? 'GMA' : 'FAESC' %></td>
+					<td><%= t.amount %></td>
+			  	<td><%= t.ticket_number %></td>
+					<td><%= t.due.to_date.to_s_br %></td>
+				</tr>
+			<% end %>
+		</table>
+
+   </body>
+ </html>
+ 

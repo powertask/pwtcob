@@ -30,6 +30,7 @@
 
   def filter_name
     
+    @calendar = Task.where("unit_id = ? AND user_id = ? AND task_date >= ?", session[:unit_id], current_user.id, Date.current - 1.day).paginate(:page => params[:page], :per_page => 10).order('id ASC')
     contracts_meter
 
     if params[:name].present?

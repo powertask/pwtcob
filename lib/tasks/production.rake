@@ -26,6 +26,13 @@ namespace :production do
     end
   end
 
+
+  desc "email_taxpayer_in_debit"
+  task :email_taxpayer_in_debit => :environment do
+    AdminMailer.taxpayer_in_debit().deliver_now
+    puts 'Email sending!'
+  end
+
   desc "Clears Rails tmp"
   task :clear_tmp => :environment do
      Dir["tmp/*.zip"].each do |i|
