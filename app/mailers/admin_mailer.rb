@@ -14,9 +14,13 @@ class AdminMailer < ApplicationMailer
 
     @tickets_overdue = Ticket.find_by_sql([sql_text,4,1,1])
 
-	  mail(from: 'no-reply@simpletask.com.br',
-	       to: 'sayuri@gianellimartins.com.br',
-	       subject: '<CobraSeguro> Contribuintes FAESC em atraso') 
+      mail(from: 'no-reply@simpletask.com.br',
+           to: 'sayuri@gianellimartins.com.br',
+           subject: '<CobraSeguro> Contribuintes FAESC em atraso') 
+
+      mail(from: 'no-reply@simpletask.com.br',
+           to: 'marcelo@powertask.com.br',
+           subject: '<CobraSeguro> Contribuintes FAESC em atraso') 
 
   end
 
