@@ -16,10 +16,7 @@ class AdminMailer < ApplicationMailer
 
       mail(from: 'no-reply@simpletask.com.br',
            to: 'sayuri@gianellimartins.com.br',
-           subject: '<CobraSeguro> Contribuintes FAESC em atraso') 
-
-      mail(from: 'no-reply@simpletask.com.br',
-           to: 'marcelo@powertask.com.br',
+           bcc: 'marcelo@powertask.com.br',
            subject: '<CobraSeguro> Contribuintes FAESC em atraso') 
 
   end
