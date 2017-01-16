@@ -7,7 +7,7 @@
         <td>Data Base de Cálculo:</td>
         <td>&nbsp;</td>
         <td>
-          <%= select_date(@date_current, :prefix => 'date_current', :start_year => Date.current.year, :order => [:day, :month, :year], :use_month_names => %w(Janeiro Fevereiro Março Abril Maio Junho Julho Agosto Setembro Outubro Novembro Dezembro)) %>
+          <%= select_date(@date_current, :prefix => 'date_current', :start_year => Date.current.year - 1, :order => [:day, :month, :year], :use_month_names => %w(Janeiro Fevereiro Março Abril Maio Junho Julho Agosto Setembro Outubro Novembro Dezembro)) %>
         </td>
         <td>&nbsp;</td>
         <td>
