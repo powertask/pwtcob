@@ -364,7 +364,7 @@ class ContractsController < ApplicationController
 
   def report_payment_filter
     @months = [['Janeiro',1],['Fevereiro',2],['Março',3],['Abril',4],['Maio',5],['Junho',6],['Julho',7],['Agosto',8],['Setembro',9],['Outubro',10],['Novembro',11],['Dezembro',12]]
-    @years = [[2016,'2016']]
+    @years = [[2016,'2016'],[2017,'2017']]
   end
 
   def report_payment_action
@@ -374,7 +374,7 @@ class ContractsController < ApplicationController
 
   def report_fee_filter
     @months = [['Janeiro',1],['Fevereiro',2],['Março',3],['Abril',4],['Maio',5],['Junho',6],['Julho',7],['Agosto',8],['Setembro',9],['Outubro',10],['Novembro',11],['Dezembro',12]]
-    @years = [[2016,'2016']]
+    @years = [[2016,'2016'],[2017,'2017']]
   end
 
   def report_fee_action
