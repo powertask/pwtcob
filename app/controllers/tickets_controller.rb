@@ -15,13 +15,17 @@ class TicketsController < ApplicationController
     @ticket.ticket_type = ticket.ticket_type
     @ticket.amount = ticket.amount
     @ticket.ticket_number = ticket.ticket_number
-    @ticket.status = 0
+    @ticket.status = :generating
 
     respond_with @ticket
   end
 
   def create
+
+    require 'pry';
+    binding.pry;
     @ticket = Ticket.new(ticket_params)
+
     @ticket.save!
     respond_with @ticket
   end
