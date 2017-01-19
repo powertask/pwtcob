@@ -21,9 +21,6 @@ class TicketsController < ApplicationController
   end
 
   def create
-
-    require 'pry';
-    binding.pry;
     @ticket = Ticket.new(ticket_params)
 
     @ticket.save!
