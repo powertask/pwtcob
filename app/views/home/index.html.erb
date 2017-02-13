@@ -48,6 +48,11 @@
           <div class='indent'>
             <%= link_to(taxpayer.name, show_path(taxpayer)) %>
               &bull;
+            <% if Taxpayer.chargeble? taxpayer %>
+              <a class="btn btn-success btn-xs"> <%= "Liberado para cobrança" %> </a>
+            <% else %>
+              <a class="btn btn-danger btn-xs"> <%= "Cidade não liberada para cobrança" %> </a>
+            <% end %>
             <tt>
               <%= taxpayer.cpf %>
               &bull;
@@ -200,7 +205,7 @@
         <% if Taxpayer.chargeble? @taxpayer %>
           <a class="btn btn-large btn-warning" <%= link_to(t('home.deal'), deal_url(cod: @taxpayer.id)) %> </a>
         <% else %>
-          <a class="btn btn-large btn-danger"> <%= "Cidade não liberado para cobrança" %> </a>
+          <a class="btn btn-large btn-danger"> <%= "Cidade não liberada para cobrança" %> </a>
         <% end %>
       </div>
       
