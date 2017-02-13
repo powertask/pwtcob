@@ -22,5 +22,9 @@ class Taxpayer < ActiveRecord::Base
   def self.chargeble?(taxpayer)
     taxpayer.city.present? and taxpayer.city.fl_charge ? true : false 
   end
+
+  def self.debtor?(taxpayer)
+    Cna.list_open(taxpayer).empty? ? false : true 
+  end
   
 end

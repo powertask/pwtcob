@@ -42,11 +42,36 @@ namespace :production do
      puts 'task completed with sucess!'
   end
 
+  
+  ## Executar apos a atualizaco dos tickets
+  desc "Update contract status"
+  task :update_contract_status => :environment do
+    
+    contracts = Contract.active
+
+    contracts.each do |contract|
+      tickets_open = Ticket.where('contract_id = ? AND status in (0,1,4)', contract.id)
+
+      ActiveRecord::Base.transaction do
+
+        if tickets_open.empty?
+          contract.status = :paid
+          contract.save!
+
+          cnas = Cna.where('contract_id = ?', contract.id)
+          cnas.each do |cna|
+            cna.status = :pay
+            cna.save!
+          end
+        end
+      end
+    end
+  end
+
 
   desc "Update ticket status"
   task :update_ticket_status => :environment do
     bank_billet_pwt = BankBillet.where('status in (1,4)')
-#    bank_billet_pwt = BankBillet.all
 
     bank_billet_pwt.each do |i|
       bankbillet_api = BoletoSimples::BankBillet.find(i.origin_code)
@@ -70,16 +95,15 @@ namespace :production do
             ticket.paid_at = bankbillet_api.paid_at
             ticket.paid_amount = bankbillet_api.paid_amount
 
-            if ticket.paid_amount > 0
+            ticket.save!
+
+            if bankbillet_api.paid_amount > 0
               ticket_not_paid = Ticket.where('contract_id = ? AND status in (0,1,4)', ticket.contract_id)
               if ticket_not_paid.empty?
-                contract.status = 2 #Paid 
+                contract.status = :paid
                 contract.save!
               end
             end
-
-            ticket.save!
-
 
             if bankbillet.paid_amount > 0
               history = History.new

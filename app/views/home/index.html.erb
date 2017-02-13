@@ -47,11 +47,14 @@
 
           <div class='indent'>
             <%= link_to(taxpayer.name, show_path(taxpayer)) %>
-              &bull;
-            <% if Taxpayer.chargeble? taxpayer %>
-              <a class="btn btn-success btn-xs"> <%= "Liberado para cobrança" %> </a>
-            <% else %>
+            &bull;
+            <% unless Taxpayer.chargeble? taxpayer %>
               <a class="btn btn-danger btn-xs"> <%= "Cidade não liberada para cobrança" %> </a>
+            <% end %>
+            <% unless Taxpayer.debtor? taxpayer %>
+              &bull;
+              <a class="btn btn-success btn-xs"> <%= "Sem débitos" %> </a>
+              &bull;
             <% end %>
             <tt>
               <%= taxpayer.cpf %>
