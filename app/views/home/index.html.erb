@@ -283,11 +283,7 @@
             <% @contracts.each do |contract| %>
               <tr>
                 <td><%= contract.id %> </td>
-                <% if contract.active? %>
-                  <td><%= link_to(t('contract.status.' << contract.status) << ' - Ver Termo', contract_path(contract)) %> </td>
-                <% else %>
-                  <td><%= t('contract.status.' << contract.status) %></td>
-                <% end %>
+                <td><%= link_to(t('contract.status.' << contract.status) << ' - Ver Termo', contract_path(contract)) %> </td>
                 <td><%= contract.contract_date.to_s_br %> </td>
                 <td><%= contract.unit_ticket_quantity %> </td>
                 <td><%= contract.unit_amount.real %> </td>
