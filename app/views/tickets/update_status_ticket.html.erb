@@ -1,0 +1,44 @@
+
+<div class='title_page'> <%= t('ticket.payment_info') %> </div>
+
+<div class='section'>
+  <div class='label1 top req'> <%=t("contract.id") %>: </div>        <%= @contract.id %>
+
+  <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>    <%= @contract.contract_date.to_s_br %>
+  <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>   <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name %>
+  <div class='label1 top req'> <%=t("user.name") %>: </div> <%= @contract.user ? @contract.user.name : 'ADMIN'  %>
+	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>: </div>           <%= @contract.unit_amount.real %>
+	<div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>			    <%= @contract.client_amount.real %>
+</div>
+
+
+<div class='title_page'> <%= 'Parcela a ser Paga' %> </div>
+
+<div class='section'>
+  <div class='label1 top req'> <%=t("ticket.id") %>: </div> <%= @ticket.id %>
+  <div class='label1 top req'> <%=t("ticket.ticket_type") %>: </div><%= t('ticket.type.'<<@ticket.ticket_type) %>
+  <div class='label1 top req'> <%=t("ticket.ticket_number") %>: </div><%= @ticket.ticket_number %>
+  <div class='label1 top req'> <%=t("ticket.amount") %>: </div><%= @ticket.amount.real %>
+  <div class='label1 top req'> <%=t("ticket.due_at") %>: </div><%= @ticket.due.to_s_br %>
+  <div class='label1 top req'> <%=t("ticket.paid_at") %>: </div><%= @ticket.paid_at.to_s_br %>
+  <div class='label1 top req'> <%=t("ticket.paid_amount") %>: </div><%= @ticket.paid_amount.real %>
+</div>
+
+<%= simple_form_for(@ticket) do |f| %>
+	<div class='section'>
+		<%= f.input :unit_id, as: :hidden %>
+		<%= f.input :contract_id, as: :hidden %>
+		<%= f.input :ticket_type, as: :hidden %>
+		<%= f.input :amount, as: :hidden %>
+		<%= f.input :ticket_number, as: :hidden %>
+		<%= f.input :status, as: :hidden %>
+
+		<div class="actions">
+			<div class='buttonbar'>
+				<%= f.button :submit, t('menu.save_payment'), class: 'btn-success' %>
+				<%= 'ou' %>
+				<%= link_to t('menu.cancel'), contracts_path %>
+			</div>
+		</div>
+	</div>
+<% end %>

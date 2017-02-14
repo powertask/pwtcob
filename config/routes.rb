@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   get 'contract/:cod/create_bank_billet' => 'contracts#create_bank_billet', as: :create_bank_billet
 
   get 'ticket/:cod/create_new_expire_at' => 'tickets#create_new_expire_at', as: :create_new_expire_at
+  get 'ticket/:cod/update_status_ticket' => 'tickets#update_status_ticket', as: :update_status_ticket
   
   post 'remittance/remittance_create' => 'remittances#remittance_create', as: :remittance_create
   get 'remittance/remittance_new' => 'remittances#remittance_new', as: :remittance_new
