@@ -73,6 +73,7 @@ Rails.application.routes.draw do
 
   get 'contract/report_payment_filter' => 'contracts#report_payment_filter', as: :report_payment_filter
   get 'contract/report_payment_action' => 'contracts#report_payment_action', as: :report_payment_action
+  get 'contract/report_payment_action_pdf' => 'contracts#report_payment_action_pdf', as: :report_payment_action_pdf
 
   get 'contract/report_fee_filter' => 'contracts#report_fee_filter', as: :report_fee_filter
   get 'contract/report_fee_action' => 'contracts#report_fee_action', as: :report_fee_action
