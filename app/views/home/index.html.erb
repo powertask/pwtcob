@@ -9,13 +9,13 @@
 </div>
 
 <div class='title_page'>
-  <span> <%= current_user.client? ? t('home.title_client') : 'Dashboard de ' << current_user.name.upcase %> </span>
+  <span> <%= current_user.client? ? t('home.title_client') : 'Dashboard de ' << current_user.name %> </span>
 </div>
 
 <% if @taxpayer %>
   <div class='title'>
     <br>
-    <span> <%= 'Informações sobre Contribuinte - ' << @taxpayer.name.upcase %> </span>
+    <span> <%= 'Informações sobre Contribuinte - ' << @taxpayer.name %> </span>
   </div>
 <% end %>
 
