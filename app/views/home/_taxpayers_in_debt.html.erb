@@ -1,0 +1,32 @@
+<div class='subtitle'> <%= t('home.taxpayers_in_debt_title') %> </div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Contribuinte</th>
+      <th>Valor das CNAs</th>
+      <th>Último Histórico</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @taxpayers_in_debt.each do |tax| %>
+      <tr>
+        <td><%= tax.id %> </td>
+        <td><%= link_to(tax.name, Rails.application.routes.url_helpers.show_path(tax.id)) %> </td>
+        <td><%= tax.amount.real %> </td>
+        <td><%= tax.last_history %> </td>
+        <td><%= link_to(t('home.show_path'), Rails.application.routes.url_helpers.show_path(tax.id), class: "btn btn-xs btn-warning") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id='paginate'>
+  <div class="apple_pagination">
+    <%= will_paginate @taxpayers_in_debt, :container => false %>
+  </div>
+</div>
+<br>
+<br>

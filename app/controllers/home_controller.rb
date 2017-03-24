@@ -1,5 +1,5 @@
  class HomeController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   respond_to :html, :js, :json
 
   layout 'application'
@@ -21,8 +21,6 @@
       return
     end
     
-    @calendar = Task.where("unit_id = ? AND user_id = ? AND task_date >= ?", session[:unit_id], current_user.id, Date.current - 1.day).paginate(:page => params[:page], :per_page => 10).order('id ASC')
-
     contracts_meter
 
   end
@@ -30,9 +28,6 @@
 
   def filter_name
     
-    @calendar = Task.where("unit_id = ? AND user_id = ? AND task_date >= ?", session[:unit_id], current_user.id, Date.current - 1.day).paginate(:page => params[:page], :per_page => 10).order('id ASC')
-    contracts_meter
-
     if params[:name].present?
 
       if params[:name].size < 3
@@ -91,13 +86,19 @@
                       .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       end
-    end
+
+    else
+
+      flash[:alert] = "Nenhum filtro preenchido."
+      redirect_to :root and return
+    end 
 
     if @taxpayers.count == 0
       flash[:alert] = "Não encontrado contribuinte."
       redirect_to :root and return
     end 
-  
+
+    contracts_meter
 
     render "index", :layout => 'application'
   end
@@ -351,6 +352,29 @@
 
     @count_contracts_day_master = @count_contracts_day_master.map{|z|z}
     @count_contracts_month_master = @count_contracts_month_master.map{|z|z}
+
+
+    @taxpayers_in_debt = Taxpayer.paginate_by_sql(['select t.id, ' + 
+                              '       t.name, ' + 
+                              '       sum(c.amount) amount, ' + 
+                              "       '' last_history "+
+                              'from   cnas c, taxpayers t, cities ct ' +
+                              'where c.taxpayer_id = t.id ' +
+                              'AND t.client_id = 1' +
+                              'AND t.city_id = ct.id ' + 
+                              'AND t.user_id = ?'  + 
+                              'AND c.status = 0 ' + 
+                              'AND ct.fl_charge = ? ' +
+                              'group by t.id, t.name ' + 
+                              'order by 3 DESC', current_user.id, true], :page => params[:page], :per_page => 10) 
+    @taxpayers_in_debt.each do |tax|
+      
+      h = History.where('taxpayer_id = ?', tax.id).last
+      
+      if h.present?
+        tax.last_history = h.history_date.to_s_br << ' - ' << h.description
+      end
+    end
 
   end
 end

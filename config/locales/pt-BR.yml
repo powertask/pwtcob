@@ -95,6 +95,9 @@ pt-BR:
       title: Termos
     area:
       title: Áreas do Contribuinte
+    taxpayers_in_debt_title: Contribuintes por Ordem de Valor Devido
+    show_path: Ver mais dados
+
 
   deal:
     title: Ambiente de Negociações

@@ -7,6 +7,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '5.0.2'
+gem 'puma', '~> 3.0'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -20,7 +21,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
 gem 'simple_form'
-gem 'unicorn'
 gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'cancancan', '~> 1.10'
@@ -44,7 +44,6 @@ end
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'awesome_print', :require => false
-  gem 'thin'
 end
 
 group :development do

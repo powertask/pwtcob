@@ -12,21 +12,9 @@
   <span> <%= current_user.client? ? t('home.title_client') : 'Dashboard de ' << current_user.name %> </span>
 </div>
 
-<% if @taxpayer %>
-  <div class='title'>
-    <br>
-    <span> <%= 'Informações sobre Contribuinte - ' << @taxpayer.name %> </span>
-  </div>
-<% end %>
 
 <% if @taxpayer.nil? %>
-  <% if current_user.admin? || current_user.user? %>
-    <br>
-    <%= render "new_calendar" %>
-    <br>
-  <% end %>
 
-  <div class='subtitle'> <%= t('home.search.title') %> </div>
   <div class='section'>
     <%= bootstrap_form_tag url: filter_name_home_index_path, method: 'get', layout: :inline do |f| %>
       <%= f.search_field :name, placeholder: 'Procure pelo nome do contribuinte...', size: 70, skip_label: true %>
@@ -35,58 +23,62 @@
 
       <%= f.primary t('menu.search') %>
     <% end %>
-  </div>
 
-  <div class='list1'>
-    <% unless @taxpayers.nil? %>
-      <div class='subtitle'> <%= 'Contribuintes Encontrados' %> </div>
+    <div class='list1'>
+      <% unless @taxpayers.nil? %>
+        <div class='subtitle'> <%= 'Contribuintes Encontrados' %> </div>
 
-      <% @taxpayers.each do |taxpayer| %>
-        <li>
-          <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
+        <% @taxpayers.each do |taxpayer| %>
+          <li>
+            <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
 
-          <div class='indent'>
-            <%= link_to(taxpayer.name, show_path(taxpayer)) %>
-            &bull;
-            <% unless Taxpayer.chargeble? taxpayer %>
-              <a class="btn btn-danger btn-xs"> <%= "Cidade não liberada para cobrança" %> </a>
-            <% end %>
-            <% unless Taxpayer.debtor? taxpayer %>
+            <div class='indent'>
+              <%= link_to(taxpayer.name, show_path(taxpayer)) %>
               &bull;
-              <a class="btn btn-success btn-xs"> <%= "Sem débitos" %> </a>
-              &bull;
-            <% end %>
-            <tt>
-              <%= taxpayer.cpf %>
-              &bull;
-              <%= taxpayer.client.name if taxpayer.client %>
-              &bull;
-              <%= taxpayer.address %>
-              &bull;
-              <%= taxpayer.city.name if taxpayer.city %>
-              &bull;
-              <%= taxpayer.city.state if taxpayer.city %>
-            </tt>
-            <dt>
-            </dt>
+              <% unless Taxpayer.chargeble? taxpayer %>
+                <a class="btn btn-danger btn-xs"> <%= "Cidade não liberada para cobrança" %> </a>
+              <% end %>
+              <% unless Taxpayer.debtor? taxpayer %>
+                &bull;
+                <a class="btn btn-success btn-xs"> <%= "Sem débitos" %> </a>
+                &bull;
+              <% end %>
+              <tt>
+                <%= taxpayer.cpf %>
+                &bull;
+                <%= taxpayer.client.name if taxpayer.client %>
+                &bull;
+                <%= taxpayer.address %>
+                &bull;
+                <%= taxpayer.city.name if taxpayer.city %>
+                &bull;
+                <%= taxpayer.city.state if taxpayer.city %>
+              </tt>
+              <dt>
+              </dt>
+            </div>
+          </li>
+        <% end %>
+
+        <% unless @taxpayers.empty? %>
+          <div class="apple_pagination">
+            <%= will_paginate @taxpayers, :container => false %>
           </div>
-        </li>
-      <% end %>
+          <br>
+        <% end %>
 
-      <% unless @taxpayers.empty? %>
-        <div class="apple_pagination">
-          <%= will_paginate @taxpayers, :container => false %>
-        </div>
-        <br>
       <% end %>
-
-    <% end %>
+    </div>
   </div>
 
+  <% if current_user.admin? || current_user.user? %>
+    <%= render "taxpayers_in_debt" %>
+    <br>
+    <br>
+  <% end %>
 
 
   <div class="row">
-
     <div class="col-md-6">
       <div class='subtitle'> <%= 'Lista de CNAs' %> </div>
       <table class="table">
@@ -161,6 +153,7 @@
   
   </div>
 
+
   <div class="row">
     <div class="col-md-12">
       <div class='subtitle'> <%= 'Últimos Históricos' %> </div>
@@ -195,6 +188,12 @@
 
 
 <% if @taxpayer %>
+
+  <div class='title'>
+    <br>
+    <span> <%= 'Informações sobre Contribuinte - ' << @taxpayer.name %> </span>
+  </div>
+
   <div class="row marketing">
     <div class="col-sm-6 col-md-3">
       <div class="panel panel-primary">
