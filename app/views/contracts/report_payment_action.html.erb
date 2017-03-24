@@ -1,4 +1,5 @@
 <div class='title_tools'>
+  <a class="btn btn-large btn-warning" <%= link_to t('Relatório em PDF'), :action => "report_payment_action_pdf", :cod => @params_pdf, :format => "pdf" %> </a>
   <a class="btn btn-large btn-default" <%= link_to('Voltar para Filtros', report_payment_filter_path) %> </a>
 </div>
 

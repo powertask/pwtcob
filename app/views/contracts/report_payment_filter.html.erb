@@ -4,8 +4,8 @@
   <div class='section'>
     
     <%= f.form_group :type, label: { text: "Tipo de Taxa" } do %>
-      <%= f.radio_button :type, 0, label: "FAESC", checked: true %>
-      <%= f.radio_button :type, 1, label: "GMA" %>
+      <%= f.radio_button :type, 0, label: "FAESC", inline: true, checked: true %>
+      <%= f.radio_button :type, 1, label: "GMA", inline: true %>
     <% end %>
 
     <%= f.text_field :paid_ini_at, readonly: true, placeholder: 'Data Inicial', id: 'datepicker1', skip_label: true %>
