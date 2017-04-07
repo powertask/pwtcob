@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'define_clent' => 'clients#index_admin_pwt'
+  get 'get_client' => 'clients#get_client'
   get 'set_client' => 'clients#set_client'
 
 

@@ -8,7 +8,7 @@ pt-BR:
   id: ID
   zipcode: CEP
   state: Estado
-  city: Cidade
+  city_name: Cidade
   cities: Cidade
   address: Logradouro
   complement: Complemento
@@ -38,6 +38,9 @@ pt-BR:
   Yes: Sim
   origin: Origem
   define_client: Definir o Cliente
+
+  unauthorized:
+    default: Usuário não autorizado a acessar a página.
 
   menu:
     home: Home
@@ -220,6 +223,7 @@ pt-BR:
     name: Nome do Cliente
     fee: Taxa de Intermediação
     search: Procurar por Cliente
+    bank_billet_account: Carteira de cobrança
 
   unit:
     title: Cadastro do Empresa

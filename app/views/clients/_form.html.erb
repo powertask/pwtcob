@@ -1,23 +1,33 @@
-<%= simple_form_for(@client) do |f| %>
-	<div class='section'>
-		<%= f.input :name, :label => t('client.name'), input_html:{:class => 'form-control'} %>
-		<%= f.input :cnpj, :label => t('cnpj'), input_html:{:class => 'form-control'} %>
-	    <%= f.input :zipcode, :label => t('zipcode'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :address, :label => t('address'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :complement, :label => t('complement'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :neighborhood, :label => t('neighborhood'), input_html: { :class => 'form-control' } %>
-		<%= f.input :city, :label => t('city'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :state, :label => t('state'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :phone, :label => t('phone'), input_html: { :class => 'form-control' } %>
-		<%= f.input :email, :label => t('email'), input_html: { :class => 'form-control' }%>
-		<%= f.association :bank_billet_account, :collection => BankBilletAccount.list(session[:unit_id]), :prompt => t('choose'), :label => t('bank_billet_account.name') %>
+<%= simple_form_for(
+    @client, 
+    html: { class: 'form-horizontal' }, 
+    wrapper: :horizontal_form,
+    wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  }) do |f| %>
 
-		<div class="actions">
-			<div class='buttonbar'>
-				<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
-				<%= 'ou' %>
-				<%= link_to t('menu.cancel'), clients_path %>
-			</div>
+  <%= f.error_notification %>
+
+	<div class='section'>
+		<%= f.input :name, :label => t('client.name') %>
+		<%= f.input :cnpj, :label => t('cnpj') %>
+    <%= f.input :zipcode, :label => t('zipcode') %>
+		<%= f.input :address, :label => t('address') %>
+		<%= f.input :complement, :label => t('complement') %>
+		<%= f.input :neighborhood, :label => t('neighborhood') %>
+		<%= f.input :city, :label => t('city_name') %>
+		<%= f.input :state, :label => t('state') %>
+		<%= f.input :phone, :label => t('phone') %>
+		<%= f.input :email, :label => t('email') %>
+		<%= f.association :bank_billet_account, :collection => BankBilletAccount.list(current_user.unit_id), :prompt => t('choose'), :label => t('client.bank_billet_account') %>
+
+		<div class='buttonbar'>
+			<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+			<%= 'ou' %>
+			<%= link_to t('menu.cancel'), clients_path %>
 		</div>
 	</div>
 <% end %>
