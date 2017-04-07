@@ -22,17 +22,22 @@ class Ability
 
     can :manage, Task if user.user?
     
-    can :manage, Client if user.user?
-
     can :manage, History if user.user?
 
     can :manage, Remittance if user.user?
     can :manage, Remittance if user.client?
 
     can :manage, Discharge if user.client?
-    can :manage, BankBillet if user.client?
 
+    can :manage, BankBillet if user.client?
     can :manage, BankBillet if user.user?
+
+    ## Client permissions
+    can :manage, Client if user.admin?
+    can :manage, Client if user.user?
+
+    cannot :insert, Client unless user.id == 1
+    cannot :new, Client unless user.id == 1
 
   end
 end

@@ -3,7 +3,7 @@
 <div class='section'>
 	<p>
 	  <%= bootstrap_form_for :client, url: 'set_client', method: 'get', layout: :inline do |f| %>
-  		<%= f.select :client_id, @clients.collect {|p| [ p.name, p.id ] }, hide_label: true %>
+  			<%= f.select :client_id, @clients.collect {|p| [ p.name, p.id ] }, hide_label: true %>
 		 	<%= f.primary t("sign_in_client") %>
 		<% end %>
 	</p>

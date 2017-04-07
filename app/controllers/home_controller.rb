@@ -5,7 +5,6 @@
   layout 'application'
 
   def index
-
   	session[:unit_id] = current_user.unit.id
   	session[:unit_name] = current_user.unit.name
     session[:unit_bank_billet_account] = 21
@@ -17,12 +16,10 @@
     end
 
     if session[:client_id].nil?
-      redirect_to(:controller => 'clients', :action => 'index_admin_pwt')
-      return
+      redirect_to(controller: :clients, action: :get_client)  and return
     end
     
     contracts_meter
-
   end
 
 
@@ -38,13 +35,13 @@
       if current_user.admin?
         @taxpayers = Taxpayer
                       .joins(:city)
-                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND lower(taxpayers.name) like ?", session[:unit_id], session[:client_id], "%"<< params[:name].downcase << "%")
+                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND lower(taxpayers.name) like ?", current_user.unit_id, session[:client_id], "%"<< params[:name].downcase << "%")
                       .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       else
         @taxpayers = Taxpayer
                       .joins(:city)
-                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND cities.fl_charge = ? AND lower(taxpayers.name) like ? and user_id = ?", session[:unit_id], session[:client_id], true, "%"<< params[:name].downcase << "%", current_user.id)
+                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND cities.fl_charge = ? AND lower(taxpayers.name) like ? and user_id = ?", current_user.unit_id, session[:client_id], true, "%"<< params[:name].downcase << "%", current_user.id)
                       .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       end
@@ -60,13 +57,13 @@
       if current_user.admin?
         @taxpayers = Taxpayer
                       .joins(:city)
-                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND taxpayers.cpf = ?", session[:unit_id], session[:client_id], params[:cpf])
+                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND taxpayers.cpf = ?", current_user.unit_id, session[:client_id], params[:cpf])
                       .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       else
         @taxpayers = Taxpayer
                       .joins(:city)
-                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND cities.fl_charge = ? AND taxpayers.cpf = ? and taxpayers.user_id = ?", session[:unit_id], session[:client_id], true, params[:cpf], current_user.id)
+                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND cities.fl_charge = ? AND taxpayers.cpf = ? and taxpayers.user_id = ?", current_user.unit_id, session[:client_id], true, params[:cpf], current_user.id)
                       .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       end
@@ -76,13 +73,13 @@
 
       if current_user.admin?
         @taxpayers = Taxpayer
-                      .where("unit_id = ? AND origin_code = ?", session[:unit_id], params[:cna])
+                      .where("unit_id = ? AND origin_code = ?", current_user.unit_id, params[:cna])
                       .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       else
         @taxpayers = Taxpayer
                       .joins(:city)
-                      .where("taxpayers.unit_id = ? and taxpayers.client_id = ? AND cities.fl_charge = ? AND taxpayers.origin_code = ? and taxpayers.user_id = ?", session[:unit_id], session[:client_id], true, params[:cna], current_user.id)
+                      .where("taxpayers.unit_id = ? and taxpayers.client_id = ? AND cities.fl_charge = ? AND taxpayers.origin_code = ? and taxpayers.user_id = ?", current_user.unit_id, session[:client_id], true, params[:cna], current_user.id)
                       .paginate(:page => params[:page], :per_page => 5)
                       .order('name ASC')
       end
@@ -103,6 +100,7 @@
     render "index", :layout => 'application'
   end
 
+
   def show
     @taxpayer = Taxpayer.find(params[:cod])
 
@@ -113,13 +111,13 @@
      end 
     end
     
-    @cnas = Cna.list(session[:unit_id], session[:client_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
-    @contracts = Contract.list(session[:unit_id], session[:client_id]).where('taxpayer_id = ?', params[:cod])
+    @cnas = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
+    @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod])
     
     clear_variable_session()
     contracts_meter
 
-    @histories = History.list(session[:unit_id], session[:client_id]).where('taxpayer_id = ?', params[:cod]).order('created_at DESC')
+    @histories = History.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod]).order('created_at DESC')
 
     session[:taxpayer_id] = params[:cod]
 
@@ -160,14 +158,14 @@
       redirect_to show_path(params[:cod]) and return 
     end
 
-    @areas = Area.list(session[:unit_id]).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
-    @histories = History.list(session[:unit_id], session[:client_id]).where('taxpayer_id = ?', params[:cod]).order('created_at DESC')
+    @areas = Area.list(current_user.unit_id).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
+    @histories = History.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod]).order('created_at DESC')
 
     @contract = Contract.new
     @contract.unit_ticket_quantity = 1
     @contract.client_ticket_quantity = 1
 
-    @cnas = Cna.list(session[:unit_id], session[:client_id]).not_pay.where('taxpayer_id = ?', params[:cod]).order(:year)
+    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ?', params[:cod]).order(:year)
     @cna = Cna.new
 
     clear_variable_session()
@@ -195,7 +193,7 @@
     @cna = Cna.find(params[:cod])
     @cna.update_attributes(cna_params)
 
-    @cnas = Cna.list(session[:unit_id], session[:client_id]).not_pay.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
+    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
     @taxpayer = Taxpayer.find @cna.taxpayer.id
 
     if params[:date_current].nil?
@@ -244,7 +242,7 @@
   
   def get_tasks
     
-    @tasks = Task.where("unit_id = ? AND user_id = ? AND task_date >= ?", session[:unit_id], current_user.id, Date.current - 1.day).order('id ASC')
+    @tasks = Task.where("unit_id = ? AND user_id = ? AND task_date >= ?", current_user.unit_id, current_user.id, Date.current - 1.day).order('id ASC')
 
     tasks = []
     @tasks.each do |task|
@@ -269,22 +267,6 @@
   def set_taxpayer
     @taxpayer = Taxpayer.find(params[:cod])
     @taxpayer.update_attributes(taxpayer_params)
-  end
-
-
-  def get_client_session
-    @clients = Client.all.select('id', 'name')
-  end
-
-  def set_client
-    session[:client_id] = params[:client][:client_id]
-    redirect_to root_path
-  end
-
-  def get_new_unit
-    flash[:alert] = nil
-    session[:unit_profile] = params[:profile]
-    respond_with(@unit, layout: "unit")
   end
 
 
@@ -328,26 +310,26 @@
     dt_end = Date.current.end_of_day
 
     if current_user.admin?
-      @count_contracts_day        = Contract.list(session[:unit_id],session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).count
-      @count_contracts_month      = Contract.list(session[:unit_id],session[:client_id]).active.where('contract_date between ? AND ?', dt_ini, dt_end ).count
-      @count_contracts_day_master = Contract.list(session[:unit_id],session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
-      @histories                  = History.list(session[:unit_id], session[:client_id]).where('history_date is not null').order('history_date DESC').limit(30)
+      @count_contracts_day        = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).count
+      @count_contracts_month      = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', dt_ini, dt_end ).count
+      @count_contracts_day_master = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @histories                  = History.list(current_user.unit_id, session[:client_id]).where('history_date is not null').order('history_date DESC').limit(30)
 
       @resume = Cna.find_by_sql(['select u.id, (select count(1) from histories where histories.history_date between ? AND ? AND histories.user_id = u.id) count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = u.id and c.status = 0 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id order by u.name', Date.current.beginning_of_day, Date.current.end_of_day, true, session[:client_id]])
 
     else
-      @count_contracts_day        = Contract.list(session[:unit_id],session[:client_id]).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
-      @count_contracts_month      = Contract.list(session[:unit_id],session[:client_id]).active.where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).count
-      @count_contracts_day_master = Contract.list(session[:unit_id],session[:client_id]).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
-      @histories                  = History.list(session[:unit_id], session[:client_id]).where('user_id = ? AND history_date is not null', current_user.id).order('history_date DESC').limit(30) if current_user.user?
+      @count_contracts_day        = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
+      @count_contracts_month      = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).count
+      @count_contracts_day_master = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @histories                  = History.list(current_user.unit_id, session[:client_id] ).where('user_id = ? AND history_date is not null', current_user.id).order('history_date DESC').limit(30) if current_user.user?
 
       @resume = Cna.find_by_sql(['select u.id, 0 count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = ? and t.user_id = u.id and c.status = 0 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id', current_user.id, true, session[:client_id] ])
     end
 
     if current_user.admin?
-      @count_contracts_month_master = Contract.active.where('unit_id = ? AND client_id = ? AND contract_date between ? AND ?', session[:unit_id], session[:client_id], dt_ini, dt_end).group('user_id').count
+      @count_contracts_month_master = Contract.active.where('unit_id = ? AND client_id = ? AND contract_date between ? AND ?', current_user.unit_id, session[:client_id], dt_ini, dt_end).group('user_id').count
     else
-      @count_contracts_month_master = Contract.active.where('unit_id = ? AND client_id = ? AND user_id = ? AND contract_date between ? AND ?', session[:unit_id], session[:client_id], current_user.id, dt_ini, dt_end).group('user_id').count
+      @count_contracts_month_master = Contract.active.where('unit_id = ? AND client_id = ? AND user_id = ? AND contract_date between ? AND ?', current_user.unit_id, session[:client_id], current_user.id, dt_ini, dt_end).group('user_id').count
     end      
 
     @count_contracts_day_master = @count_contracts_day_master.map{|z|z}
@@ -360,13 +342,13 @@
                               "       '' last_history "+
                               'from   cnas c, taxpayers t, cities ct ' +
                               'where c.taxpayer_id = t.id ' +
-                              'AND t.client_id = 1' +
                               'AND t.city_id = ct.id ' + 
                               'AND t.user_id = ?'  + 
+                              'AND t.client_id = ?' +
                               'AND c.status = 0 ' + 
                               'AND ct.fl_charge = ? ' +
                               'group by t.id, t.name ' + 
-                              'order by 3 DESC', current_user.id, true], :page => params[:page], :per_page => 10) 
+                              'order by 3 DESC', current_user.id, session[:client_id], true], :page => params[:page], :per_page => 10) 
     @taxpayers_in_debt.each do |tax|
       
       h = History.where('taxpayer_id = ?', tax.id).last

@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :unit_id
   validates_format_of :phone, :with => /\A^[\d]+$\Z/, :message => " - Deve ser um número"
 
-  enum profile: [:admin, :user, :client]
+  enum profile: [:admin, :user, :client, :pwt]
 
   def self.list(unit)
     self.where("unit_id = ? AND fl_taxpayer = true", unit ).order("name ASC")

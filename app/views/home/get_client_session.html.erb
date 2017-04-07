@@ -1,8 +1,0 @@
-
-<div class='title'> <%= t("define_client") %> </div>
-<div class='section'>
-	<%= simple_form_for( :client, :url => 'set_client' ) do |f| %>
-		<p><%=t("client.name_new")%>:  <%= f.collection_select :client_id, @clients, 'id', 'name' %></p>
-  	<p><%= f.button :submit, t("sign_in"), class: 'btn-primary' %></p>
-  <% end %>
-</div>
