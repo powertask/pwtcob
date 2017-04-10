@@ -113,7 +113,7 @@
     
 #    @cnas = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
 
-    @cnas_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status = 0', params[:cod]).order(:year)
+    @cnas_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status = 0', params[:cod]).order(:year, :due_at)
     @cnas_not_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status in (1,2,3)', params[:cod]).order(:year)
 
     @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod])
@@ -169,7 +169,7 @@
     @contract.unit_ticket_quantity = 1
     @contract.client_ticket_quantity = 1
 
-    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ?', params[:cod]).order(:year)
+    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ?', params[:cod]).order(:year, :due_at)
     @cna = Cna.new
 
     clear_variable_session()

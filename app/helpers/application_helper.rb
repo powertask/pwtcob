@@ -26,8 +26,21 @@ module ApplicationHelper
   end
 
 
+  def initial_date(_cna, _dt_ini)
+    if _dt_ini.nil?
+      if session[:client_id] == 1 ## FAESC
+        _dt_ini = Date.new(_cna.year,5,22)
+      else
+        _dt_ini = _cna.due_at.to_date
+      end
+    end
+    _dt_ini
+  end
+
+
   def calc_meses_atraso(cna, _dt_ini, _dt_end)
-    _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
+    
+    _dt_ini = initial_date(cna, _dt_ini)
     _dt_end = Date.current if _dt_end.nil?
 
     (_dt_end.year * 12 + _dt_end.month) - (_dt_ini.year * 12 + _dt_ini.month) + 1
@@ -38,7 +51,7 @@ module ApplicationHelper
   
     return 0 unless current_user.unit.fl_correcao
     
-    _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
+    _dt_ini = initial_date(cna, _dt_ini)
     _dt_end = Date.current if _dt_end.nil?
 
     _dt_ini = Date.new(_dt_ini.year, _dt_ini.month, 1)
@@ -59,7 +72,8 @@ module ApplicationHelper
 
 
   def calc_multa(cna, _dt_ini, _dt_end)
-    _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
+
+    _dt_ini = initial_date(cna, _dt_ini)
     _dt_end = Date.current if _dt_end.nil?
     _value = cna.amount + calc_correcao(cna, _dt_ini, _dt_end).to_f
 
@@ -70,7 +84,8 @@ module ApplicationHelper
 
 
   def calc_juros(cna, _dt_ini, _dt_end)
-    _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
+
+    _dt_ini = initial_date(cna, _dt_ini)
     _dt_end = Date.current if _dt_end.nil?
     _value = cna.amount + calc_correcao(cna, _dt_ini, _dt_end).to_f
 
@@ -81,7 +96,8 @@ module ApplicationHelper
 
 
   def calc_cna(cna, _dt_ini, _dt_end)
-    _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
+
+    _dt_ini = initial_date(cna, _dt_ini)
     _dt_end = Date.current if _dt_end.nil?
     
     _correcao = calc_correcao(cna, _dt_ini, _dt_end)
