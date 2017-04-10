@@ -81,6 +81,7 @@ pt-BR:
       title: Agenda do dia
     taxpayer:
       show: Dados Cadastrais
+      contact: Contatos
     search:
       title: Procurar por Contribuinte
       name: Nome do Contribuinte

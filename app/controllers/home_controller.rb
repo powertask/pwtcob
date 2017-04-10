@@ -110,8 +110,8 @@
        redirect_to :root and return
      end 
     end
-    
-#    @cnas = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
+
+    @contacts = TaxpayerContact.where('taxpayer_id = ?', params[:cod])
 
     @cnas_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status = 0', params[:cod]).order(:year, :due_at)
     @cnas_not_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status in (1,2,3)', params[:cod]).order(:year)

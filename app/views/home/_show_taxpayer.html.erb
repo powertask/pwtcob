@@ -1,29 +1,44 @@
 <div class='subtitle'> <%= t('home.taxpayer.show') %> </div>
-<% unless @taxpayer.nil? %>
+
   <div class='section'>
-    <div class='label1 top req'> <%="ID" %>: </div>    <%= @taxpayer.id %>
-    <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>    <%= @taxpayer.origin_code %>
-    <div class='label1 top req'> <%=t("client.name") %>: </div>             <%= @taxpayer.client.name %>
-    <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>           <%= link_to(@taxpayer.name, taxpayer_path(@taxpayer.id)) %>
-    <div class='label1 top req'> <%=t("taxpayer.user") %>: </div>           <%= @taxpayer.user.name if @taxpayer.user_id %>
-    <div class='label1 top req'> <%=t("taxpayer.distributed_at") %>: </div> <%= @taxpayer.distributed_at.to_s_br %>
+  <% unless @taxpayer.nil? %>
+  <div class='label1 top req'> <%="ID" %>: </div>    <%= @taxpayer.id %>
+  <div class='label1 top req'> <%=t("taxpayer.origin_code") %>: </div>
+    <%= @taxpayer.origin_code %>
+  <div class='label1 top req'> <%=t("client.name") %>: </div>    <%= @taxpayer.client.name %>
+  <div class='label1 top req'> <%=t("taxpayer.name") %>: </div>  <%= link_to(@taxpayer.name, taxpayer_path(@taxpayer.id)) %>
+  <div class='label1 top req'> <%=t("taxpayer.user") %>: </div>  <%= @taxpayer.user.name if @taxpayer.user_id %>
+  <div class='label1 top req'> <%=t("taxpayer.distributed_at") %>: </div> <%= @taxpayer.distributed_at.to_s_br %>
 
-    <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
-    
-    <%= link_to(t('edit'), get_taxpayer_path(@taxpayer), class: "btn btn-xs btn-default", remote: true ) %>
+  <div class='label1 top req'> <%=t("phone") %>: </div>         <%= @taxpayer.phone %>
+  
+  <%= link_to(t('edit'), get_taxpayer_path(@taxpayer), class: "btn btn-xs btn-default", remote: true ) %>
 
-    <div class="row">
-      <div class="col-md-6 col-md-offset-2" id="task-phone" style="display:none;">
-        <%= render 'taxpayer' %>
-      </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-2" id="task-phone" style="display:none;">
+      <%= render 'taxpayer' %>
     </div>
-
-    <div class='label1 top req'> <%=t("cnpj_cpf") %>: </div>      <%= @taxpayer.cpf.present? ? @taxpayer.cpf : @taxpayer.cnpj %>
-    <div class='label1 top req'> <%=t("address") %>: </div>       <%= @taxpayer.address %>
-    <div class='label1 top req'> <%=t("complement") %>: </div>    <%= @taxpayer.complement %>
-    <div class='label1 top req'> <%=t("neighborhood") %>: </div>  <%= @taxpayer.neighborhood %>
-    <div class='label1 top req'> <%=t("zipcode") %>: </div>       <%= @taxpayer.zipcode %>
-    <div class='label1 top req'> <%=t("taxpayer.city") %>: </div> <%= @taxpayer.city.name if @taxpayer.city %>
-    <div class='label1 top req'> <%=t("state") %>: </div>         <%= @taxpayer.city.state if @taxpayer.city %>
   </div>
+
+  <div class='label1 top req'> <%=t("cnpj_cpf") %>: </div>      <%= @taxpayer.cpf.present? ? @taxpayer.cpf : @taxpayer.cnpj %>
+  <div class='label1 top req'> <%=t("address") %>: </div>       <%= @taxpayer.address %>
+  <div class='label1 top req'> <%=t("complement") %>: </div>    <%= @taxpayer.complement %>
+  <div class='label1 top req'> <%=t("neighborhood") %>: </div>  <%= @taxpayer.neighborhood %>
+  <div class='label1 top req'> <%=t("zipcode") %>: </div>       <%= @taxpayer.zipcode %>
+  <div class='label1 top req'> <%=t("taxpayer.city") %>: </div> <%= @taxpayer.city.name if @taxpayer.city %>
+  <div class='label1 top req'> <%=t("state") %>: </div>         <%= @taxpayer.city.state if @taxpayer.city %>
 <% end %> 
+
+<div class='subtitle'> <%= t('home.taxpayer.contact') %> </div>
+  <table class="table">
+    <tbody>
+      <% @contacts.each do |contact| %>
+        <tr>
+          <td><%= contact.description %> </td>
+          <td><%= contact.phone %> </td>
+          <td><%= contact.email %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
