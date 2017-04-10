@@ -111,7 +111,11 @@
      end 
     end
     
-    @cnas = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
+#    @cnas = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod]).order(:year)
+
+    @cnas_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status = 0', params[:cod]).order(:year)
+    @cnas_not_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status in (1,2,3)', params[:cod]).order(:year)
+
     @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod])
     
     clear_variable_session()

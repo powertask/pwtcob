@@ -1,0 +1,65 @@
+<div class='title_page'> <%= t('home.cna.not_negociables') %> </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Documento</th>
+      <th>Ano</th>
+      <th>Vencimento</th>
+      <th>Atraso (Meses)</th>
+      <th>Valor Principal</th>
+      <th>Multa</th>
+      <th>Juros</th>
+      <th>Valor Total</th>
+      <th><%= t('status') %></th>
+      <th><%= t('stage') %></th>
+      <th>Termo</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% clear_variables %>
+    <% @cnas_not_negotiables.each do |cna| %>
+      <tr>
+        <td><%= cna.id %> </td>
+        <td><%= cna.nr_document %> </td>
+        <td><%= cna.year %> </td>
+        <td><%= cna.due_at.to_date.to_s_br if cna.due_at %> </td>
+        <td><%= calc_meses_atraso(cna, nil, (cna.contract ? cna.contract.contract_date : nil)) %> </td>
+        <td><%= cna.amount.real %> </td>
+        <td><%= calc_multa(cna, nil, (cna.contract ? cna.contract.contract_date : nil)).real %> </td>
+        <td><%= calc_juros(cna, nil, (cna.contract ? cna.contract.contract_date : nil)).real %> </td>
+        <td><%= calc_cna(cna, nil, (cna.contract ? cna.contract.contract_date : nil)).real %> </td>
+        
+        <td>
+          <% if cna.pay? %>
+            <a class="label label-success"><%= t('cna.status.pay') %> </a>
+          <% else %>
+            <%= t('cna.status.'<<cna.status) %>
+          <% end %>
+        </td>
+
+        <td><%= t('cna.stage.'<<cna.stage) %> </td>
+        <td><%= link_to(cna.contract_id, contract_path(cna.contract_id)) if cna.contract %> </td>
+        <td><%= link_to('Marcar Pago', pay_cna_path(cna), method: :patch) if current_user.id == 1 and cna.not_pay? %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td> <%= session[:value_cna].real %></td>
+      <td> <%= session[:total_multa].real %> </td>
+      <td> <%= session[:total_juros].real %> </td>
+      <td> <%= session[:total_cna].real %></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>  
+</table>

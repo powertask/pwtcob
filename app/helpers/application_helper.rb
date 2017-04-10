@@ -1,7 +1,32 @@
 module ApplicationHelper
 
+  def clear_variables
+
+    session[:value_cna] = 0
+    session[:total_multa] = 0
+    session[:total_juros] = 0
+    session[:total_correcao] = 0
+    session[:total_cna] = 0
+
+    session[:value_cna_cobrado] = 0
+    session[:total_multa_cobrado] = 0
+    session[:total_juros_cobrado] = 0
+    session[:total_correcao_cobrado] = 0
+    session[:total_cna_cobrado] = 0
+    session[:total_cna_sem_fee_cobrado] = 0
+    session[:total_fee_cobrado] = 0
+
+    session[:value_cna_a_vista] = 0
+    session[:total_multa_a_vista] = 0
+    session[:total_juros_a_vista] = 0
+    session[:total_correcao_a_vista] = 0
+    session[:total_cna_a_vista] = 0
+    session[:total_fee_a_vista] = 0
+
+  end
+
+
   def calc_meses_atraso(cna, _dt_ini, _dt_end)
-    
     _dt_ini = Date.new(cna.year,5,22) if _dt_ini.nil?
     _dt_end = Date.current if _dt_end.nil?
 
@@ -18,6 +43,8 @@ module ApplicationHelper
 
     _dt_ini = Date.new(_dt_ini.year, _dt_ini.month, 1)
     _dt_end = Date.new(_dt_end.year, _dt_end.month, 1) + 1.month - 1.day
+
+    
     _value = cna.amount
 
     inpcs = Inpc.where("idx_date between ? AND ?", _dt_ini, _dt_end)

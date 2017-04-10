@@ -89,6 +89,8 @@ pt-BR:
       cod_contribuinte: Código Contribuinte
     cna:
       title: CNAs do Contribuinte
+      negociables: Valores em ABERTO
+      not_negociables: Valores Pagos ou Negociados
     history:
       title: Históricos do Contribuinte
       new: Cadastrar Novo Histórico
