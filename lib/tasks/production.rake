@@ -144,6 +144,7 @@ namespace :production do
           end
         end
       end
+      sleep(1.second)
     end
   end
 
