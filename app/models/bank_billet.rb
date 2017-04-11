@@ -4,7 +4,7 @@ class BankBillet < ActiveRecord::Base
 
   has_many :tickets
   
-  enum status: [:generating, :opened, :canceled, :paid, :overdue, :blocked, :chargeback]
+  enum status: [:generating, :opened, :canceled, :paid, :overdue, :blocked, :chargeback, :generation_failed]
 
   def list(unit)
     self.where("unit_id = ?", unit)
