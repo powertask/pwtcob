@@ -162,6 +162,8 @@
       redirect_to show_path(params[:cod]) and return 
     end
 
+    @contacts = TaxpayerContact.where('taxpayer_id = ?', params[:cod])
+
     @areas = Area.list(current_user.unit_id).where('taxpayer_id = ?', params[:cod]).order('year DESC, nr_document')
     @histories = History.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod]).order('created_at DESC')
 
