@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'no-reply@simpletask.com.br'
+  default from: 'no-reply@powertask.com.br'
   layout 'mailer'
 end
