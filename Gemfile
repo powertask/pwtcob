@@ -33,6 +33,8 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'rubyzip'
 gem 'roo'
+gem 'newrelic_rpm'
+
 
 gem 'bootstrap_form'
 
