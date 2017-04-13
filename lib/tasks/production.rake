@@ -14,7 +14,7 @@ namespace :production do
         taxpayers.each do |taxpayer|
           t = Task.new
           t.task_date = Date.current
-          t.description = 'Valor CNAs em aberto R$ ' << taxpayer.amount.real.to_s
+          t.description = 'Valor em aberto R$ ' << taxpayer.amount.real.to_s
           t.unit_id = user.unit_id
           t.user_id = user.id
           t.taxpayer_id = taxpayer.id

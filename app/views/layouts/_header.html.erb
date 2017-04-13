@@ -21,10 +21,11 @@
               </strong>
             </a>
           </li>
-
+          
+          <li class='active'><%= link_to "Início", root_path %></li>
           <%= render "layouts/menu" if session[:client_id] %>
-
       	  <li class='active'><%= link_to t("logout", default: "Logout"), destroy_user_session_path, method: :delete %></li>
+
         </ul>
   		<% end %>
     </div>

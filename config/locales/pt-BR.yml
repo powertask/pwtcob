@@ -108,7 +108,7 @@ pt-BR:
   deal:
     title: Ambiente de Negociações
     root: Sair do Ambiente de Negociações
-    cnas: CNAS - Exercícios
+    cnas: Valores em ABERTO
     ticket: "Simulação de Pagamentos À Vista ou Parcelados"
     pay: Cobrar
     ticket_quantity: Quant Parcelas do Cliente
@@ -128,7 +128,7 @@ pt-BR:
     edit: Editar Dados da CNA
     new: Cadastrar Nova CNA
     year: Exercício
-    amount: Valor CNA
+    amount: Valor Principal
     due_at: Vencimento
     nr_document: Num Doc
     charge: Cobrar CNA
