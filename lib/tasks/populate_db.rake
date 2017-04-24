@@ -57,13 +57,7 @@ namespace :populate_db do
 
 
     ## Lista sem colaborador definido FAESC
-    lists = Cna.find_by_sql(' select c.taxpayer_id, count(*), sum(c.amount)
-                              from cnas c, taxpayers t 
-                              where c.taxpayer_id = t.id 
-                              and t.user_id is null 
-                              and t.client_id = 1
-                              group by taxpayer_id 
-                              order by 3 DESC')
+    lists = Cna.find_by_sql(' select c.taxpayer_id, count(*), sum(c.amount) from cnas c, taxpayers t where c.taxpayer_id = t.id and t.user_id is null and t.client_id = 1 group by taxpayer_id order by 3 DESC')
 
 
 		## Escolher colaboradores para distribuir a lista
