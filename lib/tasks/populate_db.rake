@@ -69,7 +69,7 @@ namespace :populate_db do
 		begin
       ActiveRecord::Base.transaction do
         lists.each do |list|
-          taxpayer = Taxpayer.find_by(unit_id: 1, id: list.id)
+          taxpayer = Taxpayer.find_by(unit_id: 1, id: list.taxpayer_id)
   
           if taxpayer.present?
             user = users[row]
