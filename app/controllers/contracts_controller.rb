@@ -1,5 +1,5 @@
 class ContractsController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   load_and_authorize_resource
   
   respond_to :html
@@ -7,16 +7,16 @@ class ContractsController < ApplicationController
 
   def index
     if current_user.admin? || current_user.client?
-      @contracts = Contract.where("unit_id = ? AND client_id = ?", session[:unit_id], session[:client_id]).order('contract_date DESC').paginate(:page => params[:page], :per_page => 20)
+      @contracts = Contract.where("unit_id = ? AND client_id = ?", current_user.unit_id, session[:client_id]).order('contract_date DESC').paginate(:page => params[:page], :per_page => 20)
     else
-      @contracts = Contract.where("unit_id = ? AND client_id = ? AND user_id = ?", session[:unit_id], session[:client_id], current_user.id).order('contract_date DESC').paginate(:page => params[:page], :per_page => 20)
+      @contracts = Contract.where("unit_id = ? AND client_id = ? AND user_id = ?", current_user.unit_id, session[:client_id], current_user.id).order('contract_date DESC').paginate(:page => params[:page], :per_page => 20)
     end
     respond_with @contracts, :layout => 'application'
   end
 
   def show
-    @contract = Contract.where('id = ? AND unit_id = ? AND client_id = ?', params[:id].to_i, session[:unit_id], session[:client_id]).first
-    @tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:id]).order('ticket_number')
+    @contract = Contract.where('id = ? AND unit_id = ? AND client_id = ?', params[:id].to_i, current_user.unit_id, session[:client_id]).first
+    @tickets = Ticket.list(current_user.unit_id).where("contract_id = ?", params[:id]).order('ticket_number')
     respond_with @contract
   end
 
@@ -24,8 +24,8 @@ class ContractsController < ApplicationController
     cod = params[:cod]
 
     taxpayer = Taxpayer.find(cod)
-    cnas = Cna.list(session[:unit_id], session[:client_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true).order('year')
-    unit = Unit.find(session[:unit_id])
+    cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true).order('year')
+    unit = Unit.find(current_user.unit_id)
 
 
     description = ''
@@ -35,36 +35,28 @@ class ContractsController < ApplicationController
       description << c.year.to_s
     end
 
-
     ActiveRecord::Base.transaction do
       @contract = Contract.new
 
-      @contract.unit_id = session[:unit_id]
+      @contract.unit_id = current_user.unit_id
       @contract.client_id = session[:client_id]
-      @contract.contract_date = Time.now
+      @contract.contract_date = Time.current
       @contract.taxpayer_id = cod
       @contract.user_id = current_user.id
       
-      if session[:tickets].count == 2
-        unit_amount = session[:total_fee_a_vista].to_f
-        @contract.unit_amount = unit_amount.round(2)
 
-        client_amount = session[:total_cna_a_vista].to_f - session[:total_fee_a_vista].to_f
-        @contract.client_amount = client_amount.round(2)
-        
-        @contract.client_ticket_quantity = 1
-
-      else
-        unit_amount = session[:total_fee_cobrado].to_f
-        @contract.unit_amount = unit_amount.round(2)
-
-        client_amount = session[:total_cna_cobrado].to_f - session[:total_fee_cobrado].to_f
-        @contract.client_amount = client_amount.round(2)
-        
-        @contract.client_ticket_quantity = session[:tickets].count - 1
+      client_amount = 0
+      unit_amount   = 0
+      session[:tickets].each  do |tic|
+        client_amount = client_amount + tic['client_amount'].to_f if tic['client_amount'].to_f > 0
+        unit_amount   = unit_amount + tic['unit_amount'].to_f if tic['unit_amount'].to_f
       end
-      
+
+      @contract.unit_amount = unit_amount.round(2)
+      @contract.client_amount = client_amount.round(2)
+      @contract.client_ticket_quantity = session[:tickets].count - 1
       @contract.unit_ticket_quantity = 1
+
       @contract.unit_fee = 10
       @contract.status = 0
 
@@ -76,7 +68,7 @@ class ContractsController < ApplicationController
       session[:tickets].each  do |tic|
         n = n + 1
         ticket = Ticket.new
-        ticket.unit_id = session[:unit_id]
+        ticket.unit_id = current_user.unit_id
         ticket.contract_id = @contract.id
         ticket.ticket_type = 0 if tic['unit_amount'].to_f == 0
         ticket.ticket_type = 1 if tic['unit_amount'].to_f > 0
@@ -127,16 +119,16 @@ class ContractsController < ApplicationController
       redirect_to :proposals and return
     end 
 
-    cnas = Cna.list(session[:unit_id], session[:client_id]).where('proposal_id = ?', cod)
-    unit = Unit.find(session[:unit_id])
+    cnas = Cna.list(current_user.unit_id, session[:client_id]).where('proposal_id = ?', cod)
+    unit = Unit.find(current_user.unit_id)
     tickets = ProposalTicket.where('proposal_id = ?', cod)
 
     ActiveRecord::Base.transaction do
       @contract = Contract.new
 
-      @contract.unit_id = session[:unit_id]
+      @contract.unit_id = current_user.unit_id
       @contract.client_id = session[:client_id]
-      @contract.contract_date = Time.now
+      @contract.contract_date = Time.current
       @contract.taxpayer_id = proposal.taxpayer_id
       @contract.user_id = current_user.id
       @contract.status = 0
@@ -162,7 +154,7 @@ class ContractsController < ApplicationController
 
       tickets.each  do |tic|
         ticket = Ticket.new
-        ticket.unit_id = session[:unit_id]
+        ticket.unit_id = current_user.unit_id
         ticket.contract_id = @contract.id
 
         ticket.ticket_type = tic['ticket_type']
@@ -220,10 +212,10 @@ class ContractsController < ApplicationController
 
 
   def contract_pdf
-    unit = Unit.find(session[:unit_id])
+    unit = Unit.find(current_user.unit_id)
     contract = Contract.find(params[:cod])
-    tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('due')
-    cnas = Cna.list(session[:unit_id], session[:client_id]).where("contract_id = ?", params[:cod]).order('year')
+    tickets = Ticket.list(current_user.unit_id).where("contract_id = ?", params[:cod]).order('due')
+    cnas = Cna.list(current_user.unit_id, session[:client_id]).where("contract_id = ?", params[:cod]).order('year')
 
     respond_to do |format|
       format.pdf do
@@ -236,10 +228,10 @@ class ContractsController < ApplicationController
   end
 
   def contract_transaction_pdf
-    unit = Unit.find(session[:unit_id])
+    unit = Unit.find(current_user.unit_id)
     contract = Contract.find(params[:cod])
-    tickets = Ticket.list(session[:unit_id]).where("contract_id = ?", params[:cod]).order('due')
-    cnas = Cna.list(session[:unit_id], session[:client_id]).where("contract_id = ?", params[:cod]).order('year')
+    tickets = Ticket.list(current_user.unit_id).where("contract_id = ?", params[:cod]).order('due')
+    cnas = Cna.list(current_user.unit_id, session[:client_id]).where("contract_id = ?", params[:cod]).order('year')
 
     respond_to do |format|
       format.pdf do
@@ -300,7 +292,7 @@ class ContractsController < ApplicationController
 
           if bank_billet.persisted?
             
-            bank_billet_pwt = BankBillet.new( :unit_id => session[:unit_id], 
+            bank_billet_pwt = BankBillet.new( :unit_id => current_user.unit_id, 
                                               :bank_billet_account_id => (ticket.ticket_type == 'client' ? bank_billet_account.id : bank_billet_account_unit.id), 
                                               :origin_code => bank_billet.id, 
                                               :our_number => bank_billet.our_number, 
@@ -400,7 +392,7 @@ class ContractsController < ApplicationController
                                     AND tax.city_id = cities.id 
                                     AND t.ticket_type = ? 
                                     AND c.client_id = ? 
-                                order by tname, t.paid_at ASC', session[:unit_id], 0, params[:cod][0].to_date, params[:cod][1].to_date, params[:cod][2], session[:client_id]]
+                                order by tname, t.paid_at ASC', current_user.unit_id, 0, params[:cod][0].to_date, params[:cod][1].to_date, params[:cod][2], session[:client_id]]
 
     respond_to do |format|
       format.pdf do

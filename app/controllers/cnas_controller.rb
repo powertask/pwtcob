@@ -1,11 +1,11 @@
 class CnasController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   load_and_authorize_resource
   respond_to :html
   layout 'window'
 
   def index
-    @cnas = Cna.where("unit_id = ?", session[:unit_id]).paginate(:page => params[:page], :per_page => 20)
+    @cnas = Cna.where("unit_id = ?", current_user.unit_id).paginate(:page => params[:page], :per_page => 20)
     respond_with @cnas, :layout => 'application'
   end
 
@@ -16,7 +16,7 @@ class CnasController < ApplicationController
 
   def new
     @cna = Cna.new
-    @cna.unit_id = session[:unit_id]
+    @cna.unit_id = current_user.unit_id
     @cna.client_id = session[:client_id]
     @cna.taxpayer_id = params[:format]
   end
@@ -27,7 +27,7 @@ class CnasController < ApplicationController
 
   def create
     @cna = Cna.new(cna_params)
-    @cna.unit_id = session[:unit_id]
+    @cna.unit_id = current_user.unit_id
     @cna.client_id = session[:client_id]
     @cna.stage = 1
     @cna.status = 0
