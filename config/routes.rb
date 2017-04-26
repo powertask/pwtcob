@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   get 'home/:cod/get_cna' => 'home#get_cna', as: :get_cna
   patch 'home/:cod/pay_cna' => 'home#pay_cna', as: :pay_cna
   patch 'home/:cod/set_cna' => 'home#set_cna', as: :set_cna
+  get 'home/:cod/set_charge_cna' => 'home#set_charge_cna', as: :set_charge_cna
   get 'home/:cod/get_tickets' => 'home#get_tickets', as: :get_tickets
   get 'home/:cod/set_tickets' => 'home#set_tickets', as: :set_tickets
   get 'home/:cod/get_taxpayer' => 'home#get_taxpayer', as: :get_taxpayer

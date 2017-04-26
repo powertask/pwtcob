@@ -22,6 +22,7 @@ module ApplicationHelper
     session[:total_correcao_a_vista] = 0
     session[:total_cna_a_vista] = 0
     session[:total_fee_a_vista] = 0
+    session[:total_cna_sem_fee_a_vista] = 0
 
   end
 

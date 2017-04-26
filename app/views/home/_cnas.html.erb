@@ -23,7 +23,6 @@
     <tr>
       <th>#</th>
       <th>Ano</th>
-      <th><%= t('stage') %></th>
       <th><%= t('status') %></th>
       <th>Meses</th>
       <th>Valor Principal</th>
@@ -40,9 +39,9 @@
         <tr>
           <td>
             <% if cna.fl_charge %>
-              <div class='strip green'> <%= 'Cobrar' %> </div>
+              <div class='strip green'> <%= 'COBRAR' %> </div>
             <% else %>
-              <div class='strip red' id='none'> <%= 'Não Cobrar' %> </div>
+              <div class='strip red' id='none'> <%= 'NÃO COBRAR' %> </div>
             <% end %> 
           </td>    
           <td>
@@ -52,7 +51,6 @@
               <%= cna.year %> 
             <% end %> 
           </td>
-          <td><%= t(cna.stage) %> </td>
           <td><%= t(cna.status) %> </td>
           <td><%= calc_meses_atraso(cna, nil, @date_current) %> </td>
           <td><%= cna.amount.real %> </td>
@@ -66,14 +64,13 @@
               <%= calc_cna(cna, nil, @date_current).real %>
             <% end %>
           </td>
-          <td><%= link_to(t('edit'), get_cna_path(cna), class: "btn btn-xs btn-default", remote: true ) %></td>
+          <td><%= link_to(cna.fl_charge ? 'Marcar para NÃO cobrar valor' : 'Marcar para cobrar valor', set_charge_cna_path(cna), class: "btn btn-xs btn-default", remote: true ) %></td>
         </tr>
       <% end %>
     <% end %>
   </tbody>
   <tfoot>
     <tr>
-      <td></td>
       <td></td>
       <td></td>
       <td></td>

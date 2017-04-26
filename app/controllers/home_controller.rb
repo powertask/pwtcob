@@ -185,16 +185,6 @@
   end
 
   
-  def pay_cna
-    if current_user.id == 1
-      @cna = Cna.find(params[:cod])
-      @cna.pay!
-
-      redirect_to show_path(@cna.taxpayer_id) and return
-    end
-  end
-
-
   def set_cna
     @cna = Cna.find(params[:cod])
     @cna.update_attributes(cna_params)
@@ -210,6 +200,35 @@
     
     clear_variable_session()
 
+  end
+
+
+  def set_charge_cna
+    @cna = Cna.find(params[:cod])
+    @cna.fl_charge = @cna.fl_charge == true ? false : true
+    @cna.save!
+
+    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
+    @taxpayer = Taxpayer.find @cna.taxpayer.id
+
+    if params[:date_current].nil?
+      @date_current = Date.current
+    else
+      @date_current = Date.new(params[:date_current][:year].to_i, params[:date_current][:month].to_i, params[:date_current][:day].to_i)
+    end
+    
+    clear_variable_session()
+
+  end
+
+
+  def pay_cna
+    if current_user.id == 1
+      @cna = Cna.find(params[:cod])
+      @cna.pay!
+
+      redirect_to show_path(@cna.taxpayer_id) and return
+    end
   end
 
 
@@ -306,6 +325,7 @@
     session[:total_multa_a_vista] = 0
     session[:total_juros_a_vista] = 0
     session[:total_correcao_a_vista] = 0
+    session[:total_cna_sem_fee_a_vista] = 0
     session[:total_cna_a_vista] = 0
     session[:total_fee_a_vista] = 0
 
