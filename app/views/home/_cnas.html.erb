@@ -1,22 +1,29 @@
-<div class='subtitle'> <%= t('deal.cnas') %>  </div>
 
-<%= form_tag(deal_path(@taxpayer), method: 'get', :html => { :class => :form }) do |f| %>
-  <table>
-    <tbody>
-      <tr>
-        <td>Data Base de Cálculo:</td>
-        <td>&nbsp;</td>
-        <td>
-          <%= select_date(@date_current, :prefix => 'date_current', :start_year => Date.current.year - 1, :order => [:day, :month, :year], :use_month_names => %w(Janeiro Fevereiro Março Abril Maio Junho Julho Agosto Setembro Outubro Novembro Dezembro)) %>
-        </td>
-        <td>&nbsp;</td>
-        <td>
-          <%= submit_tag('Alterar Data Base de Cálculo', class: 'btn-primary') %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<%= simple_form_for(
+    :data_base,
+    url: deal_path(@taxpayer),
+    method: :get,
+    html: { class: 'form-horizontal' }, 
+    wrapper: :horizontal_form,
+    wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  }) do |f| %>
+
+  <%= f.error_notification %>
+
+  <div class='section'>
+    <%= f.input :date_current, as: :string, label: 'Data base para efetuar os cálculos: ' << @date_current.to_s_br, hint: 'Clique aqui para informar outra data base ou digite a data no formato "' << Date.current.to_s_br << '"' %>
+
+    <div class='buttonbar'>
+      <%= f.button :submit, 'Atualizar data base de cálculo', class: 'btn-primary' %>
+    </div>
+  </div>
 <% end %>
+
+<div class='subtitle'> <%= t('deal.cnas', data_base: @date_current.to_s_br) %>  </div>
 
 <table class="table">
   <thead>

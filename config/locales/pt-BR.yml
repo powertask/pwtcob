@@ -108,7 +108,7 @@ pt-BR:
   deal:
     title: Ambiente de Negociações
     root: Sair do Ambiente de Negociações
-    cnas: Valores em ABERTO
+    cnas: "Valores em ABERTO - Cálculos para a data base %{data_base}" 
     ticket: "Simulação de Pagamentos À Vista ou Parcelados"
     pay: Cobrar
     ticket_quantity: Quant Parcelas do Cliente

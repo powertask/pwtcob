@@ -1,3 +1,15 @@
+$(function() {
+    $( '#data_base_date_current' ).datepicker({
+    dateFormat: "dd/mm/yy",
+        autoclose: true,
+        showButtonPanel: true,
+        numberOfMonths: 3,
+        minDate: 0,
+        showWeek: true,
+      firstDay: 1
+    });
+  });
+
 
 $(function() {
     $( '#due_at' ).datepicker({

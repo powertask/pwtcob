@@ -137,6 +137,12 @@
       @date_current = Date.new(params[:date_current][:year].to_i, params[:date_current][:month].to_i, params[:date_current][:day].to_i)
     end
 
+    if params[:data_base].present? && params[:data_base][:date_current].present?
+      @date_current = params[:data_base][:date_current].to_date
+    else
+      @date_current = Date.current
+    end
+
     if @date_current < Date.current
       flash[:alert] = "Data base não pode ser menor que data atual"
       @date_current = nil
