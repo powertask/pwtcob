@@ -31,27 +31,31 @@
     <br>
     <div id='table-ticket'>
       <div class='subtitle'> <%= t('deal.ticket') %> </div>
+      <br>
+      <%= simple_form_for( :ticket, url: get_tickets_path, method: :get, remote: true, layout: :inline, 
+          html: { class: 'form-inline' }, 
+          wrapper: :inline_form,
+          wrapper_mappings: {
+          check_boxes: :horizontal_radio_and_checkboxes,
+          radio_buttons: :horizontal_radio_and_checkboxes,
+          file: :horizontal_file_input,
+          boolean: :horizontal_boolean
+        }) do |f| %>
 
-      <%= bootstrap_form_tag url: get_tickets_path, method: 'get', remote: true, layout: :inline do |f| %>
-        <br>
-        <%= f.form_group :value_type, label: { text: "Cobrar Valor:" } do %>
-          <%= f.radio_button :value_type, 0, label: "À Vista", checked: false, inline: true %>
-          <%= f.radio_button :value_type, 1, label: "Parcelado", checked: true, inline: true %>
-        <% end %>
+        <%= f.error_notification %>
 
-        <%= f.number_field :unit_ticket_quantity, label: t('deal.ticket_quantity') %>
-        <%= f.date_field :unit_ticket_due, label: t('deal.unit_ticket_due') %>
-        <%= f.date_field :client_ticket_due, label: t('deal.client_ticket_due') %>
+        <%= f.input :value_type, as: :select, label: 'Cobrar Valor', collection: [["Cobrar valor à Vista", 0],["Cobrar valor parcelado",1]], default: 0 %>
 
-        <%= f.form_group do %>
+        <%= f.input :unit_ticket_quantity, placeholder: t('deal.ticket_quantity'), input_html: {size: 30 } %>
+        <%= f.input :unit_ticket_due, as: :string, placeholder: t('deal.unit_ticket_due'), input_html: {size: 27 } %>
+        <%= f.input :client_ticket_due, as: :string, placeholder: t('deal.client_ticket_due'), input_html: {size: 27 } %>
+
           <% if @date_current == Date.current %>
-            <%= f.submit t('menu.tickets') %>
+            <%= f.button :submit, t('menu.tickets'), class: 'btn-primary' %>
           <% else %>
             <%= '**Permite Gerar Parcelas somente quando data base de cálculo for igual data de hoje.' %>
-          <% end %>
         <% end %>
       <% end %>
-
     </div>
 
     <div id='table-tickets' style="display:none;">

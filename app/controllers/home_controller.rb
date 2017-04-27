@@ -239,11 +239,11 @@
 
 
   def get_tickets
-    unit_ticket_quantity  =  params[:unit_ticket_quantity].to_i
-    unit_ticket_due       =  params[:unit_ticket_due].to_date
-    client_ticket_due     =  params[:client_ticket_due].to_date
+    unit_ticket_quantity  =  params[:ticket][:unit_ticket_quantity].to_i
+    unit_ticket_due       =  params[:ticket][:unit_ticket_due].to_date
+    client_ticket_due     =  params[:ticket][:client_ticket_due].to_date
 
-    if params[:value_type].to_i == 0
+    if params[:ticket][:value_type].to_i == 0
       total_cna_a_vista = session[:total_cna_a_vista].to_f
       total_fee = session[:total_fee_a_vista].to_f.round(2)
       total_cna = total_cna_a_vista - total_fee      

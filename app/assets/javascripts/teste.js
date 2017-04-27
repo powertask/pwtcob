@@ -12,6 +12,30 @@ $(function() {
 
 
 $(function() {
+    $( '#ticket_unit_ticket_due' ).datepicker({
+    dateFormat: "dd/mm/yy",
+        autoclose: true,
+        showButtonPanel: true,
+        numberOfMonths: 2,
+        minDate: 0,
+        showWeek: true,
+      firstDay: 1
+    });
+  });
+
+$(function() {
+    $( '#ticket_client_ticket_due' ).datepicker({
+    dateFormat: "dd/mm/yy",
+        autoclose: true,
+        showButtonPanel: true,
+        numberOfMonths: 2,
+        minDate: 0,
+        showWeek: true,
+      firstDay: 1
+    });
+  });
+
+$(function() {
     $( '#due_at' ).datepicker({
       	showOtherMonths: true,
 		formatDate: "dd/mm/yyyy",
