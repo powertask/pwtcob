@@ -8,86 +8,96 @@
 
 <div class='title_page'> <%= t('contract.show') %> </div>
 
-<div class='section'>
-  <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
-  <div class='label1 top req'> <%=t("status") %>: </div>      <%= t('contract.status.' << @contract.status) %>
-  
-  <div class='label1 top req'> <%=t("origin") %>:</div>
-  <% if @contract.proposal_id %> 
-    <%= link_to( 'PROPOSTA NRO ' << @contract.proposal_id.to_s, proposal_path(@contract.proposal_id)) %>
-  <% else %>
-    ÁREA DE NEGOCIAÇÕES
-  <% end  %>
+<div class="row marketing">
 
-  <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>
-      <%= @contract.contract_date.to_s_br %>
-  <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>
-      <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name.upcase %>
-  <div class='label1 top req'> <%=t("user.name") %>: </div>
-      <%= @contract.user ? @contract.user.name.upcase : 'ADMIN'  %>
-	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>:</div>
-      <%= @contract.unit_amount.real %>
-	<div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>
-      <%= @contract.client_amount.real %>
-</div>
+  <div class="col-sm-6 col-md-3">
 
-<div class='title_tools'>
-  <% if @contract.active? %>
-    <a class="btn btn-large btn-default" <%= link_to(t('contract.create_ticket'), :action => "create_bank_billet", :cod => @contract.id) %></a>
-  <% end %>
-</div>
+<div class='subtitle_page'> <%= 'Dados do Termo ' %> </div>
+    <div class='section'>
+      <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
+      <div class='label1 top req'> <%=t("status") %>: </div>      <%= t('contract.status.' << @contract.status) %>
+      
+      <div class='label1 top req'> <%=t("origin") %>:</div>
+      <% if @contract.proposal_id %> 
+        <%= link_to( 'PROPOSTA NRO ' << @contract.proposal_id.to_s, proposal_path(@contract.proposal_id)) %>
+      <% else %>
+        ÁREA DE NEGOCIAÇÕES
+      <% end  %>
 
-<div class='title_page'> <%= 'Parcelas' %> </div>
+      <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>
+          <%= @contract.contract_date.to_s_br %>
+      <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>
+          <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name.upcase %>
+      <div class='label1 top req'> <%=t("user.name") %>: </div>
+          <%= @contract.user ? @contract.user.name.upcase : 'ADMIN'  %>
+    	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>:</div>
+          <%= @contract.unit_amount.real %>
+    	<div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>
+          <%= @contract.client_amount.real %>
+    </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>ID</th>
-      <th>Status</th>
-      <th>Nosso Número</th>
-      <th>Vencimento</th>
-      <th>Valor de Parcela</th>
-      <th>Data do Pagamento</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% unless @tickets.nil? %>
-      <% @tickets.each do |ticket| %>
-        <tr>
-          <td><%= ticket.ticket_number %> </td>
-          <td><%= ticket.id %> </td>
-          <td>
-            <% if ticket.opened? %>
-              <a class="label label-primary"><%= t('bank_billet.status.opened') %></a>
-            <% elsif ticket.canceled? %>
-              <span class="label label-warning"><%= t('bank_billet.status.canceled') %></span>
-            <% elsif ticket.paid? %>
-              <a class="label label-success"><%= t('bank_billet.status.paid') %></a>
-            <% elsif ticket.overdue? %>
-              <a class="label label-danger"><%= t('bank_billet.status.overdue') %></a>
-            <% else %>
-              <span class="label label-default"><%= t('bank_billet.status.'<< ticket.status) if ticket.status.present? %></span>
-            <% end %>
-          </td>
-          <td><%= ticket.bank_billet.our_number unless ticket.bank_billet.nil? %> </td>
-          <td><%= ticket.due.to_date.to_s_br %> </td>
-          <td><%= ticket.amount.real %> </td>
-          <td><%= ticket.paid_at.nil? ? '' : ticket.paid_at.to_s_br %></td>
-          <td>
-            <%= link_to('Boleto', ticket.bank_billet.shorten_url, class: "btn btn-xs btn-default") if ticket.bank_billet.present? %> 
+  </div>
 
-            <%= link_to('Novo Vencimento', create_new_expire_at_path(ticket.id), class: "btn btn-xs btn-default") unless ticket.paid?  %> 
-            <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.id), class: "btn btn-xs btn-danger", remote: true, id: 'cancel_ticket') if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %> 
-
-            <%= link_to(t('ticket.paid'), update_status_ticket_path(ticket.id), class: "btn btn-xs btn-success") if ticket.overdue? %> 
-          </td>
-        </tr>
+  <div class="col-sm-6 col-md-9">
+    <div class='title_tools'>
+      <% if @contract.active? %>
+        <a class="btn btn-large btn-default" <%= link_to(t('contract.create_ticket'), :action => "create_bank_billet", :cod => @contract.id) %></a>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </div>
+
+    <div class='subtitle_page'> <%= 'Boletos Gerados' %> </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>ID</th>
+          <th>Status</th>
+          <th>Nosso Número</th>
+          <th>Vencimento</th>
+          <th>Valor de Parcela</th>
+          <th>Data do Pagamento</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% unless @tickets.nil? %>
+          <% @tickets.each do |ticket| %>
+            <tr>
+              <td><%= ticket.ticket_number %> </td>
+              <td><%= ticket.id %> </td>
+              <td>
+                <% if ticket.opened? %>
+                  <a class="label label-primary"><%= t('bank_billet.status.opened') %></a>
+                <% elsif ticket.canceled? %>
+                  <span class="label label-warning"><%= t('bank_billet.status.canceled') %></span>
+                <% elsif ticket.paid? %>
+                  <a class="label label-success"><%= t('bank_billet.status.paid') %></a>
+                <% elsif ticket.overdue? %>
+                  <a class="label label-danger"><%= t('bank_billet.status.overdue') %></a>
+                <% else %>
+                  <span class="label label-default"><%= t('bank_billet.status.'<< ticket.status) if ticket.status.present? %></span>
+                <% end %>
+              </td>
+              <td><%= ticket.bank_billet.our_number unless ticket.bank_billet.nil? %> </td>
+              <td><%= ticket.due.to_date.to_s_br %> </td>
+              <td><%= ticket.amount.real %> </td>
+              <td><%= ticket.paid_at.nil? ? '' : ticket.paid_at.to_s_br %></td>
+              <td>
+                <%= link_to('Boleto', ticket.bank_billet.shorten_url, class: "btn btn-xs btn-default") if ticket.bank_billet.present? %> 
+
+                <%= link_to('Novo Vencimento', create_new_expire_at_path(ticket.id), class: "btn btn-xs btn-default") unless ticket.paid?  %> 
+                <%= link_to(t('ticket.cancel'), bank_billet_cancel_path(ticket.id), class: "btn btn-xs btn-danger", remote: true, id: 'cancel_ticket') if ticket.bank_billet_id.present? & (ticket.opened? || ticket.overdue?) %> 
+
+                <%= link_to(t('ticket.paid'), update_status_ticket_path(ticket.id), class: "btn btn-xs btn-success") if ticket.overdue? %> 
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <script>
 	$(function() {
