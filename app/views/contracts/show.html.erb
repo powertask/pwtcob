@@ -18,7 +18,7 @@
       <div class='label1 top req'> <%=t("status") %>: </div> 
 
       <% if @contract.active? %>
-        <a class="label label-default"><%= t('contract.status.active') %></a>
+        <a class="label label-primary"><%= t('contract.status.active') %></a>
       <% elsif @contract.cancel? %>
         <a class="label label-danger"><%= t('contract.status.cancel') %></a>
       <% elsif @contract.paid? %>

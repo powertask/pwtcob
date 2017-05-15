@@ -360,8 +360,10 @@
 
     if current_user.admin?
       @count_contracts_month_master = Contract.active.where('unit_id = ? AND client_id = ? AND contract_date between ? AND ?', current_user.unit_id, session[:client_id], dt_ini, dt_end).group('user_id').count
+      @contracts = Contract.list(current_user.unit_id, session[:client_id]).order('contract_date DESC').limit(5)
     else
       @count_contracts_month_master = Contract.active.where('unit_id = ? AND client_id = ? AND user_id = ? AND contract_date between ? AND ?', current_user.unit_id, session[:client_id], current_user.id, dt_ini, dt_end).group('user_id').count
+      @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('user_id = ?', current_user.id).order('contract_date DESC').limit(5)
     end      
 
     @count_contracts_day_master = @count_contracts_day_master.map{|z|z}

@@ -73,7 +73,7 @@
 
   <% if current_user.admin? || current_user.user? %>
     <%= render "taxpayers_in_debt" %>
-    <br>
+    <%= render "index_last_contracts" %>
     <br>
   <% end %>
 

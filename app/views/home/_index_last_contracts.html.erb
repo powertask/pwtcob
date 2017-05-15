@@ -1,0 +1,37 @@
+<div class='subtitle'> <%= 'Últimos 5 Contratos Fechados' %> </div>
+
+<div class='list1'>
+  <% unless @contracts.empty? %>
+    <% @contracts.each do |contract| %>
+      <li>
+        <div class='strip' id='none'> <%= contract.id %> </div>
+
+        <div class='indent'>
+          <% if contract.cancel? %>
+            <span class="label label-danger"><%= 'CANCELADO' %> </span> 
+          <% elsif contract.active? %>
+            <span class="label label-primary"><%= 'ATIVO' %> </span> 
+          <% elsif contract.paid? %>
+            <span class="label label-success"><%= 'PAGO' %> </span> 
+          <% else %>
+            <span><%= 'NAO DEFINIDO' %> </span> 
+          <% end %>
+          &nbsp;
+          &bull;
+          <%= contract.taxpayer.origin_code %>
+          &bull;
+          <%= link_to(contract.taxpayer.name, contract_path(contract)) %>
+          &bull;
+          <tt>
+            <%= 'Data do Contrato: ' << contract.contract_date.to_s_br %>
+            &bull;
+            <%= 'Responsável: ' << contract.user.name %>
+          </tt>
+          <dt></dt>
+        </div>
+      </li>
+    <% end %>
+  <% else %>
+    Colaborador não tem termos gerados.
+  <% end %>
+</div>
