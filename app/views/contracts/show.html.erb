@@ -14,9 +14,19 @@
 
 <div class='subtitle_page'> <%= 'Dados do Termo ' %> </div>
     <div class='section'>
-      <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
-      <div class='label1 top req'> <%=t("status") %>: </div>      <%= t('contract.status.' << @contract.status) %>
-      
+      <div class='label1 top req'> <%=t("id") %>: </div>     <%= @contract.id %>
+      <div class='label1 top req'> <%=t("status") %>: </div> 
+
+      <% if @contract.active? %>
+        <a class="label label-default"><%= t('contract.status.active') %></a>
+      <% elsif @contract.cancel? %>
+        <a class="label label-danger"><%= t('contract.status.cancel') %></a>
+      <% elsif @contract.paid? %>
+        <a class="label label-success"><%= t('contract.status.paid') %></a>
+      <% else %>
+        <%= t('contract.status.' << @contract.status) %>
+      <% end %>
+
       <div class='label1 top req'> <%=t("origin") %>:</div>
       <% if @contract.proposal_id %> 
         <%= link_to( 'PROPOSTA NRO ' << @contract.proposal_id.to_s, proposal_path(@contract.proposal_id)) %>
@@ -27,7 +37,7 @@
       <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>
           <%= @contract.contract_date.to_s_br %>
       <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>
-          <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name.upcase %>
+          <%= link_to(@contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name.upcase, taxpayer_path(@contract.taxpayer_id)) %>
       <div class='label1 top req'> <%=t("user.name") %>: </div>
           <%= @contract.user ? @contract.user.name.upcase : 'ADMIN'  %>
     	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>:</div>
