@@ -371,6 +371,8 @@ pt-BR:
           attributes:
             client_id:
               blank: Voce deve definir uma Federação
+            neighborhood:
+              blank: Você deve definir o bairro
 
   will_paginate:
     next_label: Próximos &#8594;

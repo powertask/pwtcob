@@ -1,26 +1,36 @@
-<%= simple_form_for(@taxpayer) do |f| %>
-  <div class='section'>
-    <%= f.input :origin_code, :label => t('taxpayer.origin_code'), input_html:{:class => 'form-control'} %>
-    <% if current_user.admin? %>
-      <%= f.association :user, :collection => User.list(session[:unit_id]), :prompt => t('choose'), :label => t('user.name') %>
-      <%= f.association :client, :collection => Client.list(session[:unit_id]), :prompt => t('choose'), :label => t('client.name') %>
-    <% end %>
-    <%= f.input :name, :label => t('taxpayer.name'), input_html:{:class => 'form-control'} %>
-    <%= f.input :cpf, :label => t('cpf'), input_html:{:class => 'form-control'} %>
-    <%= f.input :cnpj, :label => t('cnpj'), input_html:{:class => 'form-control'} %>
-    <%= f.input :zipcode, :label => t('zipcode'), input_html: { :class => 'form-control' }  %>
-    <%= f.association :city, :collection => City.list(session[:unit_id]), :prompt => t('choose'), :label => t('city.name')  %>
-    <%= f.input :address, :label => t('address'), input_html: { :class => 'form-control' }  %>
-    <%= f.input :complement, :label => t('complement'), input_html: { :class => 'form-control' }  %>
-    <%= f.input :neighborhood, :label => t('neighborhood'), input_html: { :class => 'form-control' }  %>
-    <%= f.input :phone, :label => t('phone'), input_html: { :class => 'form-control' }  %>
+<%= simple_form_for(
+    @taxpayer, 
+    html: { class: 'form-horizontal' }, 
+    wrapper: :horizontal_form,
+    wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  }) do |f| %>
 
-    <div class="actions">
-      <div class='buttonbar'>
-        <%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
-        <%= 'ou' %>
-        <%= link_to t('menu.cancel'), taxpayers_path %>
-      </div>
+  <%= f.error_notification %>
+
+  <div class='section'>
+    <%= f.input :origin_code, :label => t('taxpayer.origin_code') %>
+    <% if current_user.admin? %>
+      <%= f.association :user, :collection => User.list(current_user.unit_id), :prompt => t('choose'), :label => t('user.name') %>
+      <%= f.association :client, :collection => Client.list(current_user.unit_id), :prompt => t('choose'), :label => t('client.name') %>
+    <% end %>
+    <%= f.input :name, :label => t('taxpayer.name') %>
+    <%= f.input :cpf, :label => t('cpf') %>
+    <%= f.input :cnpj, :label => t('cnpj') %>
+    <%= f.input :zipcode, :label => t('zipcode')  %>
+    <%= f.association :city, :collection => City.list(current_user.unit_id), :prompt => t('choose'), :label => t('city.name')  %>
+    <%= f.input :address, :label => t('address') %>
+    <%= f.input :complement, :label => t('complement') %>
+    <%= f.input :neighborhood, :label => t('neighborhood') %>
+    <%= f.input :phone, :label => t('phone') %>
+
+    <div class='buttonbar'>
+      <%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+      <%= 'ou' %>
+      <%= link_to t('menu.cancel'), taxpayers_path %>
     </div>
   </div>
 <% end %>
