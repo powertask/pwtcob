@@ -1,4 +1,14 @@
-<%= simple_form_for(@city) do |f| %>
+<%= simple_form_for(
+        @city,
+        html: { class: 'form-horizontal' }, 
+        wrapper: :horizontal_form,
+        wrapper_mappings: {
+        check_boxes: :horizontal_radio_and_checkboxes,
+        radio_buttons: :horizontal_radio_and_checkboxes,
+        file: :horizontal_file_input,
+        boolean: :horizontal_boolean
+      }) do |f| %>
+
   <%= f.error_notification %>
 
 	<div class='section'>
@@ -6,10 +16,10 @@
 	    <%= f.input :unit_id, as: :hidden %>
 	    <%= f.input :name, :label => t('city.name') %>
       <%= f.input :state, :label => t('state') %>
-      <%= f.input :fl_charge, as: :radio_buttons, :label => t('city.fl_charge') %>
+      <%= f.input :fl_charge, as: :boolean, :label => t('city.fl_charge') %>
 	  </div>
 
-	  <div class="form-actions">
+	  <div class="buttonbar">
   		<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
   		<%= 'ou' %>
   		<%= link_to t('menu.cancel'), cities_path %>

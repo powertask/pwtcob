@@ -1,8 +1,9 @@
 //= require modernizr
-//= require jquery
+//= require jquery3
 //= require jquery_ujs
+//= require jquery-ui
+//= require tether
 //= require moment
-//= require fullcalendar
 //= require_tree .
 //= require jquery.turbolinks
 

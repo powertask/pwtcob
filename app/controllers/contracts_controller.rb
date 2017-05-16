@@ -361,8 +361,8 @@ class ContractsController < ApplicationController
   end
 
   def report_payment_action
-    @params_pdf = [params[:paid_ini_at], params[:paid_end_at], params[:type]]
-    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due, t.ticket_type, c.description, c.client_ticket_quantity, t.ticket_number, users.name from contracts c, tickets t, taxpayers tax, cities, users where c.user_id = users.id AND c.unit_id = ? AND paid_amount > ? and paid_at between ? and ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id AND t.ticket_type = ? AND c.client_id = ? order by tname, t.paid_at ASC', current_user.unit_id, 0, params[:paid_ini_at].to_date, params[:paid_end_at].to_date, params[:type], session[:client_id]]
+    @params_pdf = [params[:report][:paid_ini_at], params[:report][:paid_end_at], params[:report][:type]]
+    @rels = Ticket.find_by_sql ['select tax.name tname, tax.origin_code, cities.name cname, tax.cpf, t.paid_amount, t.paid_at, t.due, t.ticket_type, c.description, c.client_ticket_quantity, t.ticket_number, users.name from contracts c, tickets t, taxpayers tax, cities, users where c.user_id = users.id AND c.unit_id = ? AND paid_amount > ? and paid_at between ? and ? and c.id = t.contract_id and c.taxpayer_id = tax.id AND tax.city_id = cities.id AND t.ticket_type = ? AND c.client_id = ? order by tname, t.paid_at ASC', current_user.unit_id, 0, params[:report][:paid_ini_at].to_date, params[:report][:paid_end_at].to_date, params[:report][:type], session[:client_id]]
   end
 
   def report_payment_action_pdf
@@ -410,8 +410,8 @@ class ContractsController < ApplicationController
   end
 
   def report_fee_action
-    dt_ini = Date.new(params[:year].to_i, params[:month].to_i, 1)
-    dt_fim = ((dt_ini + 1.month))
+    dt_ini = (params[:report][:paid_ini_at]).to_date
+    dt_fim = (params[:report][:paid_end_at]).to_date
     @rels = Contract.find_by_sql(['select user_id, u.name, sum(paid_amount) paid_amount from contracts c, tickets t, users u where c.id = t.contract_id and c.user_id = u.id AND t.ticket_type = 1 and paid_amount > 0 AND t.status = 3  AND paid_at >= ? AND paid_at < ? group by user_id, u.name order by paid_amount DESC', dt_ini, dt_fim])
   end
 

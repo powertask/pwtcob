@@ -2,9 +2,25 @@
 
 <div class='section'>
 	<p>
-	  <%= bootstrap_form_for :client, url: 'set_client', method: 'get', layout: :inline do |f| %>
-  			<%= f.select :client_id, @clients.collect {|p| [ p.name, p.id ] }, hide_label: true %>
-		 	<%= f.primary t("sign_in_client") %>
-		<% end %>
+    <%= simple_form_for(
+        :client, url: 'set_client', method: :get,
+        html: { class: 'form-horizontal' }, 
+        wrapper: :horizontal_form,
+        wrapper_mappings: {
+        check_boxes: :horizontal_radio_and_checkboxes,
+        radio_buttons: :horizontal_radio_and_checkboxes,
+        file: :horizontal_file_input,
+        boolean: :horizontal_boolean
+      }) do |f| %>
+
+      <%= f.error_notification %>
+	  
+  		<%= f.input :client_id, collection: @clients.collect, label: false, default: 2 %>
+      
+      <div class="buttonbar">
+		 	  <%= f.button :submit, t("sign_in_client"), class: 'btn-primary'  %>
+      </div>
+
+    <% end %>
 	</p>
 </div>

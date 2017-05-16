@@ -16,12 +16,12 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'jquery-turbolinks'
+gem 'jquery-ui-rails'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
 gem 'simple_form'
-gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'cancancan', '~> 1.10'
 gem 'responders'
@@ -34,10 +34,6 @@ gem 'prawn-table'
 gem 'rubyzip'
 gem 'roo'
 gem 'newrelic_rpm'
-
-
-gem 'bootstrap_form'
-
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'

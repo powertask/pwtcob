@@ -3,7 +3,13 @@
 </div>
 
 <div class='title_page'> <%= 'Relatório de Comissões' %>  </div>
-<table class="table">
+
+<div class='section'>
+  <div class='label1 top req'> <%= 'Data Inicial' %>: </div>    <%= params[:report][:paid_ini_at] %>
+  <div class='label1 top req'> <%= 'Data Final' %>: </div>      <%= params[:report][:paid_end_at] %>
+</div>
+
+<table class="table" border="0">
   <thead>
     <tr>
       <th>ID</th>

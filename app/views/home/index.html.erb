@@ -16,12 +16,22 @@
 <% if @taxpayer.nil? %>
 
   <div class='section'>
-    <%= bootstrap_form_tag url: filter_name_home_index_path, method: 'get', layout: :inline do |f| %>
-      <%= f.search_field :name, placeholder: 'Procure pelo nome do contribuinte...', size: 70, skip_label: true %>
-      <%= f.search_field :cna, placeholder: 'Procure pelo CNA...', size: 20, skip_label: true %> 
-      <%= f.search_field :cpf, placeholder: 'Procure pelo CPF...', size: 20, skip_label: true %> 
+    
+    <%= simple_form_for(
+        :filter, url: filter_name_home_index_path, method: 'get',
+        html: { class: 'form-inline' }, 
+        wrapper: :inline_form,
+        wrapper_mappings: {
+        check_boxes: :horizontal_radio_and_checkboxes,
+        radio_buttons: :horizontal_radio_and_checkboxes,
+        file: :horizontal_file_input,
+        boolean: :horizontal_boolean
+      }) do |f| %>
 
-      <%= f.primary t('menu.search') %>
+      <%= f.input :name, placeholder: 'Procure pelo nome...', input_html: {size: 80}, skip_label: true %>
+      <%= f.input :cna, placeholder: 'Procure pela CNA...', input_html: {size: 40}, skip_label: true %> 
+      <%= f.input :cpf, placeholder: 'Procure pelo CPF...', input_html: {size: 40}, skip_label: true %> 
+      <%= f.button :submit, t('menu.search'), class: 'btn-primary' %>
     <% end %>
 
     <div class='list1'>

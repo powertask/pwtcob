@@ -1,5 +1,5 @@
 class BankBilletsController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   load_and_authorize_resource
   respond_to :html
 
@@ -8,54 +8,46 @@ class BankBilletsController < ApplicationController
   def index
 
     name = ''
-    name = params[:name].upcase unless params[:name].nil?
+    filter_status = 'todos status...'
 
-    filter_dates = ''
+    if params[:filter].present?
+      if params[:filter][:name].present?
+        name = params[:filter][:name].upcase
+      end
 
-    if params[:due_at].present?
-      filter_dates << ' AND expire_at = ?'
-    else
-      filter_dates << ' AND expire_at > ?'
-      params[:due_at] = '01/01/2000'.to_date
-    end
-
-    if params[:paid_at].present?
-      filter_dates << ' AND bank_billets.paid_at = ?'
-    else
-      filter_dates << ' AND bank_billets.paid_at > ?'
-      params[:paid_at] = '01/01/2000'.to_date
+      if params[:filter][:status].present?
+        filter_status = params[:filter][:status].downcase
+      end
     end
 
 
-
-    if params[:status].nil? or params[:status].downcase == 'todos status...'
+    if filter_status == 'todos status...'
       
       if current_user.client?
         @bank_billets = BankBillet.joins(:tickets).where("bank_billets.unit_id = ? AND tickets.client_id = ? AND bank_billets.bank_billet_account_id = ?", current_user.unit_id, session[:client_id], 2).order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
       
       elsif current_user.user?
-        @bank_billets = BankBillet.paginate_by_sql(['select bank_billets.* from contracts, tickets, bank_billets where contracts.id = tickets.contract_id and tickets.bank_billet_id = bank_billets.id and contracts.user_id = ? AND tickets.client_id = ? AND customer_person_name like ? ' + filter_dates, current_user.id, session[:client_id], "%"<< name << "%", params[:due_at].to_date, params[:paid_at].to_date], :page => params[:page], :per_page => 20)
+        @bank_billets = BankBillet.paginate_by_sql(['select bank_billets.* from contracts, tickets, bank_billets where contracts.id = tickets.contract_id and tickets.bank_billet_id = bank_billets.id and contracts.user_id = ? AND tickets.client_id = ? AND customer_person_name like ?', current_user.id, session[:client_id], "%"<< name << "%"], :page => params[:page], :per_page => 20)
       
       elsif current_user.admin?
-        @bank_billets = BankBillet.joins(:tickets).where("bank_billets.unit_id = ? AND tickets.client_id = ? AND bank_billets.customer_person_name like ? " + filter_dates, current_user.unit_id, session[:client_id], "%"<< name << "%", params[:due_at].to_date, params[:paid_at].to_date).order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
+        @bank_billets = BankBillet.joins(:tickets).where("bank_billets.unit_id = ? AND tickets.client_id = ? AND bank_billets.customer_person_name like ?", current_user.unit_id, session[:client_id], "%"<< name << "%").order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
         status_counter
       end
 
     else
-      status = 0 if params[:status].downcase == 'gerando'
-      status = 1 if params[:status].downcase == 'aberto'
-      status = 2 if params[:status].downcase == 'cancelado'
-      status = 3 if params[:status].downcase == 'pago'
-      status = 4 if params[:status].downcase == 'vencido'
-      status = 5 if params[:status].downcase == 'bloqueado'
-      status = 6 if params[:status].downcase == 'devolucao'
+      status = 0 if filter_status == 'gerando'
+      status = 1 if filter_status == 'aberto'
+      status = 2 if filter_status == 'cancelado'
+      status = 3 if filter_status == 'pago'
+      status = 4 if filter_status == 'vencido'
+      status = 5 if filter_status == 'bloqueado'
+      status = 6 if filter_status == 'devolucao'
 
       if current_user.client?
         @bank_billets = BankBillet.joins(:tickets).where("unit_id = ? AND bank_billet_account_id = ? AND status = ?", current_user.unit_id, 2, status).order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
       
       elsif current_user.user?
-#        @bank_billets = BankBillet.paginate_by_sql(['select bank_billets.* from contracts, tickets, bank_billets where contracts.id = tickets.contract_id and tickets.bank_billet_id = bank_billets.id and contracts.user_id = ? AND tickets.client_id = ? AND customer_person_name like ? ' + filter_dates, current_user.id, session[:client_id], "%"<< name << "%", params[:due_at].to_date, params[:paid_at].to_date], :page => params[:page], :per_page => 20)
-        @bank_billets = BankBillet.paginate_by_sql(['select bank_billets.* from contracts, tickets, bank_billets where contracts.id = tickets.contract_id and tickets.bank_billet_id = bank_billets.id and contracts.user_id = ? AND tickets.client_id = ? AND tickets.status = ? AND customer_person_name like ? ' + filter_dates, current_user.id, session[:client_id], status, "%"<< name << "%", params[:due_at].to_date, params[:paid_at].to_date], :page => params[:page], :per_page => 20)
+        @bank_billets = BankBillet.paginate_by_sql(['select bank_billets.* from contracts, tickets, bank_billets where contracts.id = tickets.contract_id and tickets.bank_billet_id = bank_billets.id and contracts.user_id = ? AND tickets.client_id = ? AND tickets.status = ? AND customer_person_name like ? ', current_user.id, session[:client_id], status, "%"<< name << "%"], :page => params[:page], :per_page => 20)
       
       elsif current_user.admin?
         @bank_billets = BankBillet.joins(:tickets).where("bank_billets.unit_id = ? AND tickets.client_id = ? AND bank_billets.status = ? AND customer_person_name like ?", current_user.unit_id, session[:client_id], status, "%"<< name << "%").order('bank_billets.expire_at DESC').paginate(:page => params[:page], :per_page => 20)

@@ -1,3 +1,4 @@
+
 $(function() {
     $( '#data_base_date_current' ).datepicker({
     dateFormat: "dd/mm/yy",
@@ -63,29 +64,23 @@ $(function() {
   });
 
 $(function() {
-    $( '#datepicker1' ).datepicker({
-      	showOtherMonths: true,
-		formatDate: "dd/mm/yyyy",
-      	selectOtherMonths: true,
-		changeMonth: true,
-		changeYear: true,
-		closeText: "Fechar",
-		currentText: "Hoje",
-		showButtonPanel: true,
-		minDate: new Date(1900, 1, 1)
+    $( '#report_paid_ini_at' ).datepicker({
+      dateFormat: "dd/mm/yy",
+      autoclose: true,
+      showButtonPanel: true,
+      numberOfMonths: 3,
+      showWeek: true,
+      firstDay: 1
     });
   });
 
 $(function() {
-    $( '#datepicker2' ).datepicker({
-      	showOtherMonths: true,
-		formatDate: "dd/mm/yyyy",
-      	selectOtherMonths: true,
-		changeMonth: true,
-		changeYear: true,
-		closeText: "Fechar",
-		currentText: "Hoje",
-		showButtonPanel: true,
-		minDate: new Date(1900, 1, 1)
+    $( '#report_paid_end_at' ).datepicker({
+      dateFormat: "dd/mm/yy",
+      autoclose: true,
+      showButtonPanel: true,
+      numberOfMonths: 3,
+      showWeek: true,
+      firstDay: 1
     });
   });

@@ -15,12 +15,23 @@
 </div>
 
 <p>
-  <%= bootstrap_form_tag url: bank_billets_path, method: 'get', layout: :inline do |f| %>
-    <%= f.select :status, options_for_select([ 'Todos Status...', 'Gerando', 'Aberto', 'Cancelado', 'Pago', 'Vencido', 'Bloqueado' ]), skip_label: true %>
-    <%= f.search_field :name, placeholder: 'Procure pelo nome do contribuinte...', size: 60, skip_label: true %>
-    <%= f.text_field :due_at, readonly: true, placeholder: 'Vencimento', id: 'due_at', skip_label: true %>
-    <%= f.text_field :paid_at, readonly: true, placeholder: 'Pagamento', id: 'paid_at', skip_label: true %>
-    <%= f.submit t('bank_billet.search'), class: "btn btn-large btn-success" %> ou <%= link_to t('menu.clean'), bank_billets_path %>
+  <%= simple_form_for(
+        :filter, url: bank_billets_path, method: 'get',
+        html: { class: 'form-inline' }, 
+        wrapper: :inline_form,
+        wrapper_mappings: {
+        check_boxes: :horizontal_radio_and_checkboxes,
+        radio_buttons: :horizontal_radio_and_checkboxes,
+        file: :horizontal_file_input,
+        boolean: :horizontal_boolean
+      }) do |f| %>
+
+    <%= f.input :status, collection: [ 'Todos Status...', 'Gerando', 'Aberto', 'Cancelado', 'Pago', 'Vencido', 'Bloqueado' ], skip_label: true, default: 'Todos Status...' %>
+    <%= f.input :name, placeholder: 'Procure pelo nome do contribuinte...', input_html: {size: 80}, skip_label: true  %>
+  
+    <%= f.button :submit, t('bank_billet.search'), class: "btn btn-large btn-success" %>
+    ou 
+    <%= link_to t('menu.clean'), bank_billets_path %>
   <% end %>
 </p>
 

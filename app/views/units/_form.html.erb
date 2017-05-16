@@ -1,24 +1,34 @@
-<%= simple_form_for(@unit) do |f| %>
+<%= simple_form_for(
+        @unit,
+        html: { class: 'form-horizontal' }, 
+        wrapper: :horizontal_form,
+        wrapper_mappings: {
+        check_boxes: :horizontal_radio_and_checkboxes,
+        radio_buttons: :horizontal_radio_and_checkboxes,
+        file: :horizontal_file_input,
+        boolean: :horizontal_boolean
+      }) do |f| %>
+
+  <%= f.error_notification %>
+
 	<div class='section'>
-		<%= f.input :name, :label => t('unit.name'), input_html: { :class => 'form-control' } %>
-		<%= f.input :cnpj, :label => t('cnpj'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :zipcode, :label => t('zipcode'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :address, :label => t('address'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :complement, :label => t('complement'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :neighborhood, :label => t('neighborhood'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :city, :label => t('cities'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :state, :label => t('state'), input_html: { :class => 'form-control' }  %>
-		<%= f.input :email, :label => t('email'), input_html: { :class => 'form-control' }%>
-		<%= f.input :unit_fee, :label => t('unit.fee'), input_html: { :class => 'form-control' }%>
-		<%= f.input :fl_correcao, :label => t('unit.fl_correcao'), input_html: { :class => 'form-control' }%>
+		<%= f.input :name, :label => t('unit.name') %>
+		<%= f.input :cnpj, :label => t('cnpj') %>
+		<%= f.input :zipcode, :label => t('zipcode')  %>
+		<%= f.input :address, :label => t('address') %>
+		<%= f.input :complement, :label => t('complement') %>
+		<%= f.input :neighborhood, :label => t('neighborhood')  %>
+		<%= f.input :city, :label => t('cities')  %>
+		<%= f.input :state, :label => t('state') %>
+		<%= f.input :email, :label => t('email') %>
+		<%= f.input :unit_fee, :label => t('unit.fee') %>
+		<%= f.input :fl_correcao, as: :boolean, :label => t('unit.fl_correcao') %>
 	</div>
 
-	 <div class="actions">
-		<div class='buttonbar'>
-			<%= f.button :submit, t('menu.save'), class: 'btn-primary'%>
-			<%= 'ou' %>
-			<%= link_to t('menu.cancel'), units_path %>
-		</div>
+	<div class='buttonbar'>
+		<%= f.button :submit, t('menu.save'), class: 'btn-primary'%>
+		<%= 'ou' %>
+		<%= link_to t('menu.cancel'), unit_path(@unit) %>
 	</div>
 
 <% end %>
