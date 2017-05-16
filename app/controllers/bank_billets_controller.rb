@@ -99,6 +99,8 @@ class BankBilletsController < ApplicationController
       @count_open = BankBillet.joins(:tickets).opened.where("bank_billets.unit_id = ? AND tickets.client_id = ?", current_user.unit_id, session[:client_id]).count
       @count_overdue = BankBillet.joins(:tickets).overdue.where("bank_billets.unit_id = ? AND tickets.client_id = ?", current_user.unit_id, session[:client_id]).count
       @count_paid = BankBillet.joins(:tickets).paid.where("bank_billets.unit_id = ? AND tickets.client_id = ?", current_user.unit_id, session[:client_id]).count
+      @count_canceled = BankBillet.joins(:tickets).canceled.where("bank_billets.unit_id = ? AND tickets.client_id = ?", current_user.unit_id, session[:client_id]).count
+      @count_generating = BankBillet.joins(:tickets).generating.where("bank_billets.unit_id = ? AND tickets.client_id = ?", current_user.unit_id, session[:client_id]).count
     end
 
 end

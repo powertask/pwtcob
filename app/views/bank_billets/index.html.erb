@@ -1,4 +1,7 @@
 <div class='title_tools'>
+  <button class="btn btn-default" type="button">
+    Gerando &nbsp; <span class="badge"> <%= @count_generating %> </span>
+  </button>
   <button class="btn btn-primary" type="button">
     Abertos &nbsp; <span class="badge"> <%= @count_open %> </span>
   </button>
@@ -7,6 +10,9 @@
   </button>
   <button class="btn btn-danger" type="button">
     Vencidos &nbsp; <span class="badge"> <%= @count_overdue %> </span>
+  </button>
+  <button class="btn btn-warning" type="button">
+    Cancelados &nbsp; <span class="badge"> <%= @count_canceled %> </span>
   </button>
 </div>
 
