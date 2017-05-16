@@ -13,7 +13,7 @@
   
   <div class='section'>
 
-    <%= f.input :type, as: :select, label: 'Tipo do Relatório', collection: [['Cliente', 0], ['GMA', 1]], default: 0 %>
+    <%= f.input :type, as: :select, label: 'Tipo do Relatório', collection: [['FAESC', 0], ['GMA', 1]], default: 0 %>
     <%= f.input :paid_ini_at, readonly: true, label: 'Data Inicial', skip_label: true %>
     <%= f.input :paid_end_at, readonly: true, label: 'Data Final', skip_label: true %>
 
