@@ -7,6 +7,8 @@ class Ability
 
     can :manage, :all if user.admin?
 
+    can :manage, Ticket  if user.user?
+
     can :manage, Taxpayer  if user.user?
     can :read, Taxpayer  if user.client?
 
