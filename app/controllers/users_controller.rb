@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       redirect_to :back, :alert => "Acesso permitido somente para ADMINISTADOR."
     end
 
-    @users = User.where("unit_id = ? AND id not in (1,2)", session[:unit_id]).order('profile').paginate(:page => params[:page], :per_page => 20)
+    @users = User.where("unit_id = ? AND id not in (1,2) AND deleted_at is null", current_user.unit_id).order('name').paginate(:page => params[:page], :per_page => 20)
     respond_with @users, :layout => 'application'
   end
 

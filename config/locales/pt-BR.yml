@@ -183,7 +183,7 @@ pt-BR:
     cancel: Cancelar Boleto
     new: Gerar Novo Vencimento
     ticket_type: Tipo Boleto
-    ticket_number: Numero da Parcela
+    ticket_number: Número da Parcela
     amount: Valor do Boleto
     due: Novo Vencimento
     due_at: Vencimento

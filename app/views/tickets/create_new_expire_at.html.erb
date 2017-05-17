@@ -1,41 +1,58 @@
 
 <div class='title_page'> <%= t('ticket.new') %> </div>
 
-<div class='section'>
-  <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
+<div class="row marketing">
 
-  <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>          <%= @contract.contract_date.to_s_br %>
-  <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>               <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name %>
-  <div class='label1 top req'> <%=t("user.name") %>: </div> <%= @contract.user ? @contract.user.name : 'ADMIN'  %>
-	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>: </div>           <%= @contract.unit_amount.real %>
-	<div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>			    <%= @contract.client_amount.real %>
+  <div class="col-sm-6 col-md-3">
+
+    <div class='subtitle_page'> <%= 'Dados do Termo ' %> </div>
+
+    <div class='section'>
+      <div class='label1 top req'> <%=t("id") %>: </div>          <%= @contract.id %>
+      <div class='label1 top req'> <%=t("contract.contract_date") %>: </div>  <%= @contract.contract_date.to_s_br %>
+      <div class='label1 top req'> <%=t("contract.taxpayer") %>: </div>       <%= @contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name %>
+      <div class='label1 top req'> <%=t("user.name") %>: </div> <%= @contract.user ? @contract.user.name : 'ADMIN'  %>
+      <div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>: </div>           <%= @contract.unit_amount.real %>
+      <div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>         <%= @contract.client_amount.real %>
+    </div>
+
+  </div>
+  <div class="col-sm-6 col-md-9">
+
+    <div class='subtitle_page'> <%= 'Novo Vencimento para Parcela' %> </div>
+
+    <div class='section'>
+      <div class='label1 top req'> <%=t("ticket.ticket_type") %>: </div>
+        <%= @ticket_original.ticket_type == 'client' ? 'FAESC' : 'GMA' %>
+      <div class='label1 top req'> <%=t("ticket.id") %>:
+        </div><%= @ticket_original.id %>
+      <div class='label1 top req'> <%=t("ticket.ticket_number") %>:
+        </div><%= @ticket_original.ticket_number %>
+      <div class='label1 top req'> <%= 'Nosso Número' %>:
+        </div><%= @ticket_original.bank_billet.our_number if @ticket_original.bank_billet.present? %>
+      <div class='label1 top req'> <%= 'Vencimento' %>:
+        </div><%= @ticket_original.due.to_date.to_s_br %>
+      <div class='label1 top req'> <%=t("ticket.amount") %>: 
+        </div><%= @ticket_original.amount.real %>
+    </div>
+
+    <%= simple_form_for(@ticket) do |f| %>
+      <div class='section'>
+        <%= f.input :unit_id, as: :hidden %>
+        <%= f.input :contract_id, as: :hidden %>
+        <%= f.input :ticket_type, as: :hidden %>
+        <%= f.input :amount, as: :hidden %>
+        <%= f.input :ticket_number, as: :hidden %>
+        <%= f.input :status, as: :hidden %>
+        <%= f.input :due, :label => t('ticket.due'), as: :string, readonly: true, placeholder: 'DD/MM/YYYY - Clique para definir data.', input_html: { :class => 'form-input', id: "due_at" } %>
+
+        <div class='buttonbar'>
+          <%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+          <%= 'ou' %>
+          <%= link_to t('menu.cancel'), contract_path(@contract) %>
+        </div>
+
+      </div>
+    <% end %>
+  </div>
 </div>
-
-
-<div class='title_page'> <%= 'Parcelas' %> </div>
-
-<div class='section'>
-  <div class='label1 top req'> <%=t("ticket.ticket_type") %>: </div><%= @ticket.ticket_type %>
-  <div class='label1 top req'> <%=t("ticket.ticket_number") %>: </div><%= @ticket.ticket_number %>
-  <div class='label1 top req'> <%=t("ticket.amount") %>: </div><%= @ticket.amount %>
-</div>
-
-<%= simple_form_for(@ticket) do |f| %>
-	<div class='section'>
-		<%= f.input :unit_id, as: :hidden %>
-		<%= f.input :contract_id, as: :hidden %>
-		<%= f.input :ticket_type, as: :hidden %>
-		<%= f.input :amount, as: :hidden %>
-		<%= f.input :ticket_number, as: :hidden %>
-		<%= f.input :status, as: :hidden %>
-		<%= f.input :due, :label => t('ticket.due'), as: :string, readonly: true, placeholder: 'DD/MM/YYYY - Clique para definir data.', input_html: { :class => 'form-input', id: "due_at" } %>
-
-		<div class="actions">
-			<div class='buttonbar'>
-				<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
-				<%= 'ou' %>
-				<%= link_to t('menu.cancel'), contracts_path %>
-			</div>
-		</div>
-	</div>
-<% end %>

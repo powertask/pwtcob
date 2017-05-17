@@ -1,20 +1,20 @@
 class TicketsController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   load_and_authorize_resource
   respond_to :html
   layout 'window'
 
   def create_new_expire_at
-    ticket = Ticket.find(params[:cod])
+    @ticket_original = Ticket.find(params[:cod])
 
-    @contract = Contract.find ticket.contract_id
+    @contract = Contract.find @ticket_original.contract_id
     
     @ticket = Ticket.new
-    @ticket.unit_id = ticket.unit_id
-    @ticket.contract_id = ticket.contract_id
-    @ticket.ticket_type = ticket.ticket_type
-    @ticket.amount = ticket.amount
-    @ticket.ticket_number = ticket.ticket_number
+    @ticket.unit_id = @ticket_original.unit_id
+    @ticket.contract_id = @ticket_original.contract_id
+    @ticket.ticket_type = @ticket_original.ticket_type
+    @ticket.amount = @ticket_original.amount
+    @ticket.ticket_number = @ticket_original.ticket_number
     @ticket.status = :generating
 
     respond_with @ticket
@@ -31,11 +31,11 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(ticket_params)
 
     @ticket.save!
-    respond_with @ticket
+    redirect_to(contract_path(@ticket.contract_id))
   end
 
   def show
-    redirect_to( contracts_path)
+    redirect_to(contracts_path)
   end
 
   def update

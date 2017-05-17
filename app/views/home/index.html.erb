@@ -94,20 +94,28 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Colaborador</th>
-            <th>Quantidade</th>
+            <th>ID</th>
+            <th>Colaborador(a)</th>
             <th>Históricos Hoje</th>
             <th>Valores em Aberto</th>
+            <th>Quantidade</th>
           </tr>
         </thead>
         <tbody>
           <% unless @resume.nil? %>
             <% @resume.each do |r| %>
               <tr>
-                <td><%= r.name %> </td>
-                <td><%= r.count %> </td>
+                <td><%= r.id %> </td>
+                
+                <% if r.count_histories_today > 0 %>
+                  <td><span class="label label-warning"><%= r.name %> </span></td>
+                <% else %>
+                  <td><%= r.name %></td>
+                <% end %>
+
                 <td><%= r.count_histories_today %> </td>
                 <td><%= r.sum.real %> </td>
+                <td><%= r.count %> </td>
               </tr>
             <% end %>
           <% end %>
@@ -116,20 +124,22 @@
     </div>
 
     <div class="col-md-3">
-      <div class='subtitle'> <%= 'Termos Fechados no MES' %> </div>
+      <div class='subtitle'> <%= 'Termos Fechados no MÊS corrente' %> </div>
       <table class="table">
         <thead>
           <tr>
-            <th>Colaborador</th>
+            <th>ID</th>
+            <th>Colaborador(a)</th>
             <th>Termo(s)</th>
           </tr>
         </thead>
         <tbody>
-          <% unless @count_contracts_month_master.nil? %>
-            <% @count_contracts_month_master.each do |contract| %>
+          <% unless @count_contracts_deal_month.nil? %>
+            <% @count_contracts_deal_month.each do |contract| %>
               <tr>
-                <td><%= user_name contract[0] %> </td>
-                <td><%= contract[1] %> </td>
+                <td><%= contract.id %> </td>
+                <td><%= contract.name %> </td>
+                <td><%= contract.contract_count %> </td>
               </tr>
             <% end %>
           <% end %>
@@ -143,7 +153,7 @@
        <table class="table">
           <thead>
             <tr>
-              <th>Colaborador</th>
+              <th>Colaborador(a)</th>
               <th>Termo(s)</th>
             </tr>
           </thead>
