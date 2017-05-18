@@ -1,6 +1,5 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
   respond_to :html
   layout 'window'
 
@@ -31,6 +30,9 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(ticket_params)
 
     @ticket.save!
+    
+    #Ticket.create_ticket(@ticket.id)
+
     redirect_to(contract_path(@ticket.contract_id))
   end
 
@@ -61,7 +63,6 @@ class TicketsController < ApplicationController
     else
       flash[:alert] = "Não foi possível PAGAR manualmente boleto. Numero: " << bank_billet.our_number.to_s << ' Contribuinte: ' << bank_billet.customer_person_name
     end
-
 
     respond_with @ticket
   end

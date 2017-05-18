@@ -24,13 +24,21 @@ class BankBilletsController < ApplicationController
     if filter_status == 'todos status...'
       
       if current_user.client?
-        @bank_billets = BankBillet.joins(:tickets).where("bank_billets.unit_id = ? AND tickets.client_id = ? AND bank_billets.bank_billet_account_id = ?", current_user.unit_id, session[:client_id], 2).order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
+        @bank_billets = BankBillet
+                        .joins(:tickets)
+                        .where("bank_billets.unit_id = ? AND tickets.client_id = ? AND bank_billets.bank_billet_account_id = ?", current_user.unit_id, session[:client_id], 2)
+                        .order('expire_at DESC')
+                        .paginate(:page => params[:page], :per_page => 20)
       
       elsif current_user.user?
         @bank_billets = BankBillet.paginate_by_sql(['select bank_billets.* from contracts, tickets, bank_billets where contracts.id = tickets.contract_id and tickets.bank_billet_id = bank_billets.id and contracts.user_id = ? AND tickets.client_id = ? AND customer_person_name like ?', current_user.id, session[:client_id], "%"<< name << "%"], :page => params[:page], :per_page => 20)
       
       elsif current_user.admin?
-        @bank_billets = BankBillet.joins(:tickets).where("bank_billets.unit_id = ? AND tickets.client_id = ? AND bank_billets.customer_person_name like ?", current_user.unit_id, session[:client_id], "%"<< name << "%").order('expire_at DESC').paginate(:page => params[:page], :per_page => 20)
+        @bank_billets = BankBillet
+                        .joins(:tickets)
+                        .where("bank_billets.unit_id = ? AND tickets.client_id = ? AND bank_billets.customer_person_name like ?", current_user.unit_id, session[:client_id], "%"<< name << "%")
+                        .order('expire_at DESC')
+                        .paginate(:page => params[:page], :per_page => 20)
         status_counter
       end
 
