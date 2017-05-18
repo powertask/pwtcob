@@ -360,10 +360,10 @@
 
     if current_user.admin?
       @count_contracts_deal_month = Contract.find_by_sql(['select u.id, u.name, count(1) contract_count from contracts c, users u where c.user_id = u.id AND c.unit_id = ? AND client_id = ? AND contract_date between ? AND ? AND status in (0,2) group by u.id, u.name order by contract_count DESC', current_user.unit_id, session[:client_id], dt_ini, dt_end])
-      #@contracts = Contract.list(current_user.unit_id, session[:client_id]).where('status in (0,2)').order('contract_date DESC').limit(5)
+      @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('status in (0,2)').order('contract_date DESC').limit(5)
     else
       @count_contracts_deal_month = Contract.find_by_sql(['select u.id, u.name, count(1) contract_count from contracts c, users u where c.user_id = ? AND c.user_id = u.id AND c.unit_id = ? AND client_id = ? AND contract_date between ? AND ? AND status in (0,2) group by u.id, u.name order by contract_count DESC', current_user.id, current_user.unit_id, session[:client_id], dt_ini, dt_end])
-      #@contracts = Contract.list(current_user.unit_id, session[:client_id]).where('user_id = ? AND status in (0,2)', current_user.id).order('contract_date DESC').limit(5)
+      @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('user_id = ? AND status in (0,2)', current_user.id).order('contract_date DESC').limit(5)
     end      
 
     @count_contracts_day_master = @count_contracts_day_master.map{|z|z}
