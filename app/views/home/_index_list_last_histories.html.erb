@@ -1,13 +1,9 @@
-<br>
-<div class='title_tools'>
-    <a class="btn btn-large btn-default" <%= link_to(t('home.history.new'), new_history_path) %> </a>
-</div>
-
-<div class='title_page'> <%= t('home.history.title') %> </div>
+<div class='subtitle_page'> <%= 'Últimos Históricos' %> </div>
 <table class="table">
   <thead>
     <tr>
       <th>Data</th>
+      <th>Contribuinte</th>
       <th>Colaborador</th>
       <th>Histórico</th>
       <th></th>
@@ -17,10 +13,9 @@
     <% unless @histories.nil? %>
       <% @histories.each do |history| %>
         <tr>
-          <td><%= history.history_date.to_s_br %> </td>
-          <td>
-            <%= history.user.name if history.user.present? %>
-          </td>
+          <td><%= history.created_at.to_s_br %> </td>
+          <td><%= link_to(history.taxpayer.name, show_path(history.taxpayer)) if history.taxpayer.present? %> </td>
+          <td><%= history.user.name if history.user.present? %> </td>
           <td><%= history.word.name if history.word.present? %> </td>
           <td><%= history.description %> </td>
         </tr>

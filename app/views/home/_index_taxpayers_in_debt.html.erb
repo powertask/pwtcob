@@ -1,0 +1,49 @@
+<div class='subtitle_page'> <%= 'Maiores Contribuintes Devedores' %> </div>
+
+<div class="row marketing">
+  <div class="col-sm-6 col-md-9">
+    <div class='subtitle'> <%= 'Sem contatos nos últimos 30 dias' %> </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Contribuinte</th>
+          <th>Valor Devido</th>
+          <th>Último Contato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @list_taxpayers_in_debt_without_histories_last_30_days.each do |tax| %>
+          <tr>
+            <td><%= link_to(tax.name, Rails.application.routes.url_helpers.show_path(tax.id)) %> </td>
+            <td><%= tax.amount.real %> </td>
+            <td><%= tax.last_history %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class='subtitle'> <%= 'Nunca contatados' %> </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Contribuinte</th>
+          <th>Valor Devido</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @list_taxpayers_in_debt_without_histories.each do |tax| %>
+          <tr>
+            <td><%= link_to(tax.name, Rails.application.routes.url_helpers.show_path(tax.id)) %> </td>
+            <td><%= tax.amount.real %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+

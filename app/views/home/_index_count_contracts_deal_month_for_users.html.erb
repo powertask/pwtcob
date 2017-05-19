@@ -1,0 +1,21 @@
+<div class='subtitle_page'> <%= 'Termos Fechados no MÊS corrente' %> </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Colaborador(a)</th>
+      <th>Termo(s)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @count_contracts_deal_month_for_users.nil? %>
+      <% @count_contracts_deal_month_for_users.each do |contract| %>
+        <tr>
+          <td><%= contract.id %> </td>
+          <td><%= contract.name %> </td>
+          <td><%= contract.contract_count %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

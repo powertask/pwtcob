@@ -12,10 +12,10 @@
     </tr>
   </thead>
   <tbody>
-    <% if @contracts.nil? %>
+    <% if @contracts_for_taxpayer.nil? %>
       'Nenhum TERMO gerado para o contribuinte.'
     <% else %>
-      <% @contracts.each do |contract| %>
+      <% @contracts_for_taxpayer.each do |contract| %>
         <tr>
           <td><%= contract.id %> </td>
           <td><%= link_to(t('contract.status.' << contract.status) << ' - Ver Termo', contract_path(contract)) %> </td>

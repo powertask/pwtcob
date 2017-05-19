@@ -1,15 +1,15 @@
 <div class='title_tools'>
+  <a class="btn btn-large btn-default" <%= link_to('Procurar Novo Contribuinte', root_path ) %> </a>
   <button class="btn btn-success" type="button">
-    Termos Fechados Hoje: &nbsp; <span class="badge"> <%= @count_contracts_day %> </span>
+    Termos Fechados Hoje: &nbsp; <span class="badge"> <%= @count_contracts_deal_day %> </span>
   </button>
   <button class="btn btn-primary" type="button">
-    Termos Fechados no MES: &nbsp; <span class="badge"> <%= @count_contracts_month %> </span>
+    Termos Fechados no MES: &nbsp; <span class="badge"> <%= @count_contracts_deal_month %> </span>
   </button>
-  <a class="btn btn-large btn-default" <%= link_to(t('menu.search'), root_path ) %> </a>
 </div>
 
 <div class='title_page'>
-  <span> <%= current_user.client? ? t('home.title_client') : 'Dashboard de ' << current_user.name %> </span>
+  <span> <%= current_user.client? ? t('home.title_client') : 'Tela Inicial de ' << current_user.name %> </span>
 </div>
 
 
@@ -28,10 +28,10 @@
         boolean: :horizontal_boolean
       }) do |f| %>
 
-      <%= f.input :name, placeholder: 'Procure pelo nome...', input_html: {size: 80}, skip_label: true %>
-      <%= f.input :cna, placeholder: 'Procure pela CNA...', input_html: {size: 40}, skip_label: true %> 
-      <%= f.input :cpf, placeholder: 'Procure pelo CPF...', input_html: {size: 40}, skip_label: true %> 
-      <%= f.button :submit, t('menu.search'), class: 'btn-primary' %>
+      <%= f.input :name, placeholder: 'Digite o nome do contribuinte', input_html: {size: 80}, skip_label: true %>
+      <%= f.input :cna, placeholder: 'Digite o número da CNA', input_html: {size: 40}, skip_label: true %> 
+      <%= f.input :cpf, placeholder: 'Digite  número do CPF', input_html: {size: 40}, skip_label: true %> 
+      <%= f.button :submit, 'Pesquisar', class: 'btn-primary' %>
     <% end %>
 
     <div class='list1'>
@@ -82,128 +82,31 @@
   </div>
 
   <% if current_user.admin? || current_user.user? %>
-    <%= render "taxpayers_in_debt" %>
-    <%= render "index_last_contracts" %>
+    <%= render "index_taxpayers_in_debt" %>
+    <%= render "index_list_last_contracts" %>
     <br>
   <% end %>
 
 
   <div class="row">
     <div class="col-md-6">
-      <div class='subtitle'> <%= 'Lista por Colaborador' %> </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Colaborador(a)</th>
-            <th>Históricos Hoje</th>
-            <th>Valores em Aberto</th>
-            <th>Quantidade</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% unless @resume.nil? %>
-            <% @resume.each do |r| %>
-              <tr>
-                <td><%= r.id %> </td>
-                
-                <% if r.count_histories_today > 0 %>
-                  <td><span class="label label-warning"><%= r.name %> </span></td>
-                <% else %>
-                  <td><%= r.name %></td>
-                <% end %>
-
-                <td><%= r.count_histories_today %> </td>
-                <td><%= r.sum.real %> </td>
-                <td><%= r.count %> </td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render 'index_list_users_list' %>
     </div>
-
     <div class="col-md-3">
-      <div class='subtitle'> <%= 'Termos Fechados no MÊS corrente' %> </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Colaborador(a)</th>
-            <th>Termo(s)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% unless @count_contracts_deal_month.nil? %>
-            <% @count_contracts_deal_month.each do |contract| %>
-              <tr>
-                <td><%= contract.id %> </td>
-                <td><%= contract.name %> </td>
-                <td><%= contract.contract_count %> </td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render 'index_count_contracts_deal_month_for_users' %>
     </div>
-
     <div class="col-md-3">
-      <div class='subtitle'> <%= 'Termos Fechados HOJE' %> </div>
-
-       <table class="table">
-          <thead>
-            <tr>
-              <th>Colaborador(a)</th>
-              <th>Termo(s)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% unless @count_contracts_day_master.nil? %>
-              <% @count_contracts_day_master.each do |contract| %>
-                <tr>
-                  <td><%= user_name contract[0] %> </td>
-                  <td><%= contract[1] %> </td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  
+      <%= render 'index_count_contracts_deal_day_for_users' %>
+    </div>  
   </div>
 
 
   <div class="row">
     <div class="col-md-12">
-      <div class='subtitle'> <%= 'Últimos Históricos' %> </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Contribuinte</th>
-            <th>Colaborador</th>
-            <th>Histórico</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% unless @histories.nil? %>
-            <% @histories.each do |history| %>
-              <tr>
-                <td><%= history.created_at.to_s_br %> </td>
-                <td><%= link_to(history.taxpayer.name, show_path(history.taxpayer)) if history.taxpayer.present? %> </td>
-                <td><%= history.user.name if history.user.present? %> </td>
-                <td><%= history.word.name if history.word.present? %> </td>
-                <td><%= history.description %> </td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render 'index_list_last_histories' %>
     </div>
-
   </div>
+  
 <% end  %>
 
 
@@ -236,7 +139,7 @@
       
       <%= render 'index_cnas_negotiables' if @cnas_negotiables.present? %>
       <%= render 'index_cnas_not_negotiables' if @cnas_not_negotiables.present? %>
-      <%= render 'index_contracts' if @contracts.present? %>
+      <%= render 'index_contracts_for_taxpayer' if @contracts_for_taxpayer.present? %>
       <%= render 'histories' %>
       
     </div>

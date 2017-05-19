@@ -1,0 +1,31 @@
+<div class='subtitle_page'> <%= 'Lista por Colaborador' %> </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Colaborador(a)</th>
+      <th>Históricos Hoje</th>
+      <th>Valores em Aberto</th>
+      <th>Quantidade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @resume.nil? %>
+      <% @resume.each do |r| %>
+        <tr>
+          <td><%= r.id %> </td>
+          
+          <% if r.count_histories_today > 0 %>
+            <td><span class="label label-warning"><%= r.name %> </span></td>
+          <% else %>
+            <td><%= r.name %></td>
+          <% end %>
+
+          <td><%= r.count_histories_today %> </td>
+          <td><%= r.sum.real %> </td>
+          <td><%= r.count %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

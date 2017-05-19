@@ -116,7 +116,7 @@
     @cnas_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status = 0', params[:cod]).order(:year, :due_at)
     @cnas_not_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status in (1,2,3)', params[:cod]).order(:year)
 
-    @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod])
+    @contracts_for_taxpayer = Contract.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod])
     
     clear_variable_session()
     contracts_meter
@@ -342,52 +342,96 @@
     dt_end = Date.current.end_of_day
 
     if current_user.admin?
-      @count_contracts_day        = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).count
-      @count_contracts_month      = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', dt_ini, dt_end ).count
-      @count_contracts_day_master = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @count_contracts_deal_day   = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).count
+      @count_contracts_deal_month = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', dt_ini, dt_end ).count
       @histories                  = History.list(current_user.unit_id, session[:client_id]).where('history_date is not null').order('history_date DESC').limit(30)
 
       @resume = Cna.find_by_sql(['select u.id, (select count(1) from histories where histories.history_date between ? AND ? AND histories.user_id = u.id) count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = u.id and c.status = 0 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id order by count_histories_today DESC, u.name', Date.current.beginning_of_day, Date.current.end_of_day, true, session[:client_id]])
 
     else
-      @count_contracts_day        = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
-      @count_contracts_month      = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).count
-      @count_contracts_day_master = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @count_contracts_deal_day   = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
+      @count_contracts_deal_month = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).count
       @histories                  = History.list(current_user.unit_id, session[:client_id] ).where('user_id = ? AND history_date is not null', current_user.id).order('history_date DESC').limit(30) if current_user.user?
 
       @resume = Cna.find_by_sql(['select u.id, 0 count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = ? and t.user_id = u.id and c.status = 0 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id', current_user.id, true, session[:client_id] ])
     end
 
     if current_user.admin?
-      @count_contracts_deal_month = Contract.find_by_sql(['select u.id, u.name, count(1) contract_count from contracts c, users u where c.user_id = u.id AND c.unit_id = ? AND client_id = ? AND contract_date between ? AND ? AND status in (0,2) group by u.id, u.name order by contract_count DESC', current_user.unit_id, session[:client_id], dt_ini, dt_end])
-      @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('status in (0,2)').order('contract_date DESC').limit(5)
+      @count_contracts_deal_day_for_users = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @count_contracts_deal_month_for_users = Contract.find_by_sql(['select u.id, u.name, count(1) contract_count from contracts c, users u where c.user_id = u.id AND c.unit_id = ? AND client_id = ? AND contract_date between ? AND ? AND status in (0,2) group by u.id, u.name order by contract_count DESC', current_user.unit_id, session[:client_id], dt_ini, dt_end])
+      @list_last_contracts = Contract.list(current_user.unit_id, session[:client_id]).where('status in (0,2)').order('contract_date DESC').limit(5)
     else
-      @count_contracts_deal_month = Contract.find_by_sql(['select u.id, u.name, count(1) contract_count from contracts c, users u where c.user_id = ? AND c.user_id = u.id AND c.unit_id = ? AND client_id = ? AND contract_date between ? AND ? AND status in (0,2) group by u.id, u.name order by contract_count DESC', current_user.id, current_user.unit_id, session[:client_id], dt_ini, dt_end])
-      @contracts = Contract.list(current_user.unit_id, session[:client_id]).where('user_id = ? AND status in (0,2)', current_user.id).order('contract_date DESC').limit(5)
+      @count_contracts_deal_day_for_users = Contract.list(current_user.unit_id, session[:client_id] ).active.where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
+      @count_contracts_deal_month_for_users = Contract.find_by_sql(['select u.id, u.name, count(1) contract_count from contracts c, users u where c.user_id = ? AND c.user_id = u.id AND c.unit_id = ? AND client_id = ? AND contract_date between ? AND ? AND status in (0,2) group by u.id, u.name order by contract_count DESC', current_user.id, current_user.unit_id, session[:client_id], dt_ini, dt_end])
+      @list_last_contracts = Contract.list(current_user.unit_id, session[:client_id]).where('user_id = ? AND status in (0,2)', current_user.id).order('contract_date DESC').limit(5)
     end      
 
-    @count_contracts_day_master = @count_contracts_day_master.map{|z|z}
+    @count_contracts_deal_day_for_users = @count_contracts_deal_day_for_users.map{|z|z}
 
+    dt_base = Date.current - 30.days
 
-    @taxpayers_in_debt = Taxpayer.paginate_by_sql(['select t.id, ' + 
-                              '       t.name, ' + 
-                              '       sum(c.amount) amount, ' + 
-                              "       '' last_history "+
-                              'from   cnas c, taxpayers t, cities ct ' +
-                              'where c.taxpayer_id = t.id ' +
-                              'AND t.city_id = ct.id ' + 
-                              'AND t.user_id = ?'  + 
-                              'AND t.client_id = ?' +
-                              'AND c.status = 0 ' + 
-                              'AND ct.fl_charge = ? ' +
-                              'group by t.id, t.name ' + 
-                              'order by 3 DESC', current_user.id, session[:client_id], true], :page => params[:page], :per_page => 10) 
-    @taxpayers_in_debt.each do |tax|
-      
-      h = History.where('taxpayer_id = ?', tax.id).last
-      
-      if h.present?
-        tax.last_history = h.history_date.to_s_br << ' - ' << h.description
+    if current_user.admin?
+      @list_taxpayers_in_debt_without_histories_last_30_days = 
+        Taxpayer.find_by_sql(['select t.id, t.name, sum(c.amount) amount, ' +
+                                      "'' last_history " +
+                                  'from cnas c, taxpayers t, cities ct ' +
+                                  'where c.taxpayer_id = t.id ' +
+                                  'AND t.client_id = ? ' +
+                                  'AND t.city_id = ct.id ' +
+                                  'AND c.status = 0 ' +
+                                  'AND ct.fl_charge = ? ' +
+                                  'AND exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
+                                  'AND not exists(select 1 from histories h where h.taxpayer_id = t.id AND history_date > ?) ' +
+                                  'group by t.id, t.name ' +
+                                  'order by 3 DESC LIMIT 10', session[:client_id], true, dt_base])
+
+      @list_taxpayers_in_debt_without_histories = 
+        Taxpayer.find_by_sql(['select t.id, t.name, sum(c.amount) amount ' +
+                                  'from cnas c, taxpayers t, cities ct ' +
+                                  'where c.taxpayer_id = t.id  ' +
+                                  'AND t.client_id = ? ' +
+                                  'AND t.city_id = ct.id  ' +
+                                  'AND c.status = 0 ' +
+                                  'AND ct.fl_charge = ? ' +
+                                  'AND not exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
+                                  'group by t.id, t.name ' +
+                                  'order by 3 DESC LIMIT 10', session[:client_id], true])
+
+    else
+      @list_taxpayers_in_debt_without_histories_last_30_days = 
+        Taxpayer.find_by_sql(['select t.id, t.name, sum(c.amount) amount, ' +
+                                          "'' last_history " +
+                                  'from cnas c, taxpayers t, cities ct ' +
+                                  'where c.taxpayer_id = t.id  ' +
+                                  'AND t.user_id = ? ' +
+                                  'AND t.client_id = ? ' +
+                                  'AND t.city_id = ct.id  ' +
+                                  'AND c.status = 0 ' +
+                                  'AND ct.fl_charge = ? ' +
+                                  'AND exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
+                                  'AND not exists(select 1 from histories h where h.taxpayer_id = t.id AND history_date > ?) ' +
+                                  'group by t.id, t.name ' +
+                                  'order by 3 DESC LIMIT 10', current_user.id, session[:client_id], true, dt_base])
+
+      @list_taxpayers_in_debt_without_histories = 
+        Taxpayer.find_by_sql(['select t.id, t.name, sum(c.amount) amount ' +
+                                  'from cnas c, taxpayers t, cities ct ' +
+                                  'where c.taxpayer_id = t.id  ' +
+                                  'AND t.user_id = ? ' +
+                                  'AND t.client_id = ? ' +
+                                  'AND t.city_id = ct.id  ' +
+                                  'AND c.status = 0 ' +
+                                  'AND ct.fl_charge = ? ' +
+                                  'AND not exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
+                                  'group by t.id, t.name ' +
+                                  'order by 3 DESC LIMIT 10', current_user.id, session[:client_id], true])
+
+    end
+
+    @list_taxpayers_in_debt_without_histories_last_30_days.each do |taxpayer|
+      history = History.where('taxpayer_id = ? AND history_date <= ?', taxpayer.id, dt_base).last
+      if history.present?
+        taxpayer.last_history = history.user.name << ' em ' << history.history_date.to_s_br << ' - '  << history.description
       end
     end
 

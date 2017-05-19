@@ -1,0 +1,21 @@
+<div class='subtitle_page'> <%= 'Termos Fechados HOJE' %> </div>
+
+ <table class="table">
+    <thead>
+      <tr>
+        <th>Colaborador(a)</th>
+        <th>Termo(s)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% unless @count_contracts_deal_day_for_users.nil? %>
+        <% @count_contracts_deal_day_for_users.each do |contract| %>
+          <tr>
+            <td><%= user_name contract[0] %> </td>
+            <td><%= contract[1] %> </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

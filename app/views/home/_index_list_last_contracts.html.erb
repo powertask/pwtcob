@@ -1,8 +1,8 @@
-<div class='subtitle'> <%= 'Últimos 5 Contratos Fechados' %> </div>
+<div class='subtitle_page'> <%= 'Últimos 5 Contratos Fechados' %> </div>
 
 <div class='list1'>
-  <% unless @contracts.empty? %>
-    <% @contracts.each do |contract| %>
+  <% unless @list_last_contracts.empty? %>
+    <% @list_last_contracts.each do |contract| %>
       <li>
         <div class='strip' id='none'> <%= contract.id %> </div>
 
