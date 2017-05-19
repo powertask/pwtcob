@@ -10,6 +10,7 @@ class TicketsController < ApplicationController
     
     @ticket = Ticket.new
     @ticket.unit_id = @ticket_original.unit_id
+    @ticket.client_id = @ticket_original.client_id
     @ticket.contract_id = @ticket_original.contract_id
     @ticket.ticket_type = @ticket_original.ticket_type
     @ticket.amount = @ticket_original.amount

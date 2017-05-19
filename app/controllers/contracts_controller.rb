@@ -70,6 +70,7 @@ class ContractsController < ApplicationController
         ticket = Ticket.new
         ticket.unit_id = current_user.unit_id
         ticket.contract_id = @contract.id
+        ticket.client_id = @contract.client_id
         ticket.ticket_type = 0 if tic['unit_amount'].to_f == 0
         ticket.ticket_type = 1 if tic['unit_amount'].to_f > 0
         
@@ -94,6 +95,7 @@ class ContractsController < ApplicationController
 
   end
 
+
   def create_ticket
 
     t = Ticket.find params[:cod]
@@ -101,6 +103,7 @@ class ContractsController < ApplicationController
     ticket = Ticket.new
     ticket.unit_id = t.unid_id
     ticket.contract_id = t.contract_id
+    ticket.client_id = t.client_id
     ticket.ticket_type = t.ticket_type
     ticket.amount = t.amount
     ticket.due = t.due
@@ -156,6 +159,7 @@ class ContractsController < ApplicationController
         ticket = Ticket.new
         ticket.unit_id = current_user.unit_id
         ticket.contract_id = @contract.id
+        ticket.client_id = @contract.client_id
 
         ticket.ticket_type = tic['ticket_type']
         ticket.amount = tic['amount'].to_f
