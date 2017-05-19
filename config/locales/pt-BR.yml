@@ -257,9 +257,12 @@ pt-BR:
 
   history:
     new: Cadastro de Históricos
+    edit: Editar dados do Históricos
     taxpayer: Contribuinte
     description: Histórico a ser gerado
     word: Histórico Padrão
+    history_date: Data do Histórico
+    user: Colaborador
 
   user:
     edit: Editar Dados Colaborador

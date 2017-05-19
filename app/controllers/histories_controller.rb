@@ -1,5 +1,5 @@
 class HistoriesController < ApplicationController
-  before_action :set_history, only: [:show, :edit, :update, :destroy]
+  before_action :set_history, only: [:show, :edit, :update]
   before_action :authenticate_user!
   load_and_authorize_resource
   respond_to :html
@@ -23,12 +23,23 @@ class HistoriesController < ApplicationController
   end
 
   def edit
+    if @history.user_id != current_user.id
+      flash[:alert] = 'Você não pode editar histórico de outros colaboradores!'
+      redirect_to( show_path(session[:taxpayer_id])) and return
+    end
   end
 
   def create
     @history = History.new(history_params)
     @history.save
     redirect_to( show_path(session[:taxpayer_id]) )
+  end
+
+  def update
+    @history.update_attributes(history_params)
+
+    flash[:notice] = 'Histórico atualizado com sucesso.'
+    redirect_to show_path(@history.taxpayer_id)
   end
 
   private

@@ -1,25 +1,36 @@
 <div class='section'>
   <div class='label1 top req'> <%=t("history.taxpayer") %>: </div> <%= @history.taxpayer.name if @history.taxpayer %>
   <div class='label1 top req'> <%=t("history.user") %>: </div>     <%= @history.user.name if @history.user %>
+  <div class='label1 top req'> <%=t("history.history_date") %>: </div>     <%= @history.history_date.to_s_br %>
 </div>
 
-<%= simple_form_for(@history) do |f| %>
-	<div class='section'>
+<%= simple_form_for(
+    @history, 
+    html: { class: 'form-horizontal' }, 
+    wrapper: :horizontal_form,
+    wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  }) do |f| %>
+
+  <%= f.error_notification %>
+
+  <div class='section'>
     <%= f.input :unit_id, as: :hidden %>
     <%= f.input :user_id, as: :hidden %>
     <%= f.input :client_id, as: :hidden %>
     <%= f.input :taxpayer_id, as: :hidden %>
     <%= f.input :user_id, as: :hidden %>
     <%= f.input :history_date, as: :hidden %>
-    <%= f.association :word, :collection => Word.list(session[:unit_id]), :prompt => t('choose'), :label => t('history.word') %>
+    <%= f.association :word, :collection => Word.list(current_user.unit_id), :prompt => t('choose'), :label => t('history.word') %>
     <%= f.input :description, :label => t('history.description'), input_html:{:class => 'form-control'} %>
 
-  	<div class="actions">
-  		<div class='buttonbar'>
-  			<%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
-  			<%= 'ou' %>
-  			<%= link_to t('menu.cancel'), :back %>
-  		</div>
-  	</div>
+    <div class='buttonbar'>
+      <%= f.button :submit, t('menu.save'), class: 'btn-primary' %>
+      <%= 'ou' %>
+      <%= link_to t('menu.cancel'), :back %>
+    </div>
   </div>
 <% end %>
