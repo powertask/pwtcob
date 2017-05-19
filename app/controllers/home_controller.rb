@@ -405,7 +405,8 @@
     @list_taxpayers_in_debt_without_histories_last_30_days.each do |taxpayer|
       history = History.where('taxpayer_id = ? AND history_date <= ?', taxpayer.id, dt_base).last
       if history.present?
-        taxpayer.last_history = history.user ? history.user.name : 'N/D' << ' em ' << history.history_date.to_s_br << ' - '  << history.description
+        user = history.user ? history.user.name : 'N/D'
+        taxpayer.last_history = user << ' em ' << history.history_date.to_s_br << ' - '  << history.description
       end
     end
 
