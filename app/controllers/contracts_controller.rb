@@ -286,6 +286,7 @@ class ContractsController < ApplicationController
                             customer_person_type: 'individual',
                             customer_state: @taxpayer.city.state,
                             customer_zipcode: @taxpayer.zipcode,
+                            document_number: ticket.id,
                             bank_billet_account_id: (ticket.ticket_type == 'client' ? bank_billet_account.bank_billet_account : bank_billet_account_unit.bank_billet_account),
                             instructions: 'Parcela ' << ticket.ticket_number.to_s << ' referente ao(s) ano(s) de ' << cna.collect {|i| i.year}.sort.join(',')
                           })
