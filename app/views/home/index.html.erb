@@ -34,29 +34,38 @@
       <%= f.button :submit, 'Pesquisar', class: 'btn-primary' %>
     <% end %>
 
-    <div class='list1'>
-      <% unless @taxpayers.nil? %>
-        <div class='subtitle'> <%= 'Contribuintes Encontrados' %> </div>
+    <% unless @taxpayers.nil? %>
+      <div class='list1'>
+        <div class='subtitle_page'> <%= 'Contribuinte(s) Encontrado(s)' %> </div>
 
         <% @taxpayers.each do |taxpayer| %>
           <li>
-            <div class='strip' id='none'> <%= taxpayer.origin_code %> </div>
+            <div class='strip' id='none'> <%= taxpayer.id %> </div>
 
             <div class='indent'>
-              <%= link_to(taxpayer.name, show_path(taxpayer)) %>
-              &bull;
-              <% unless Taxpayer.chargeble? taxpayer %>
-                <a class="btn btn-danger btn-xs"> <%= "Cidade não liberada para cobrança" %> </a>
-              <% end %>
               <% unless Taxpayer.debtor? taxpayer %>
+                <span class="btn btn-success btn-xs"> <%= "Sem débitos" %> </span>
                 &bull;
-                <a class="btn btn-success btn-xs"> <%= "Sem débitos" %> </a>
-                &bull;
+              <% else %>
+
+                <% unless Taxpayer.chargeble? taxpayer %>
+                  <a class="btn btn-danger btn-xs"> <%= "Cidade não liberada para cobrança" %> </a>
+                  &bull;
+                <% end %>
               <% end %>
+
+              <% if current_user.user? && current_user.id != taxpayer.user_id %>
+                <%= taxpayer.name %>                
+              <% else %>
+                <%= link_to(taxpayer.name, show_path(taxpayer)) %>
+              <% end %>
+
+              &bull;
+              <b><%= taxpayer.user.name %></b>
+              &bull;
+
               <tt>
                 <%= taxpayer.cpf %>
-                &bull;
-                <%= taxpayer.client.name if taxpayer.client %>
                 &bull;
                 <%= taxpayer.address %>
                 &bull;
@@ -77,8 +86,8 @@
           <br>
         <% end %>
 
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 
   <% if current_user.admin? || current_user.user? %>

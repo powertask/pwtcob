@@ -32,20 +32,11 @@
         redirect_to :root and return
       end 
 
-      if current_user.admin?
-        @taxpayers = Taxpayer
-                      .joins(:city)
-                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND lower(taxpayers.name) like ?", current_user.unit_id, session[:client_id], "%"<< params[:filter][:name].downcase << "%")
-                      .paginate(:page => params[:page], :per_page => 5)
-                      .order('name ASC')
-      else
-        @taxpayers = Taxpayer
-                      .joins(:city)
-                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND cities.fl_charge = ? AND lower(taxpayers.name) like ? and user_id = ?", current_user.unit_id, session[:client_id], true, "%"<< params[:filter][:name].downcase << "%", current_user.id)
-                      .paginate(:page => params[:page], :per_page => 5)
-                      .order('name ASC')
-      end
-
+      @taxpayers = Taxpayer
+                    .joins(:city)
+                    .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND lower(taxpayers.name) like ?", current_user.unit_id, session[:client_id], "%"<< params[:filter][:name].downcase << "%")
+                    .paginate(:page => params[:page], :per_page => 5)
+                    .order('name ASC')
 
     elsif params[:filter][:cpf].present?
 
@@ -54,35 +45,18 @@
         redirect_to :root and return
       end 
 
-      if current_user.admin?
-        @taxpayers = Taxpayer
-                      .joins(:city)
-                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND taxpayers.cpf = ?", current_user.unit_id, session[:client_id], params[:filter][:cpf])
-                      .paginate(:page => params[:page], :per_page => 5)
-                      .order('name ASC')
-      else
-        @taxpayers = Taxpayer
-                      .joins(:city)
-                      .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND cities.fl_charge = ? AND taxpayers.cpf = ? and taxpayers.user_id = ?", current_user.unit_id, session[:client_id], true, params[:filter][:cpf], current_user.id)
-                      .paginate(:page => params[:page], :per_page => 5)
-                      .order('name ASC')
-      end
-
+      @taxpayers = Taxpayer
+                    .joins(:city)
+                    .where("taxpayers.unit_id = ? AND taxpayers.client_id = ? AND taxpayers.cpf = ?", current_user.unit_id, session[:client_id], params[:filter][:cpf])
+                    .paginate(:page => params[:page], :per_page => 5)
+                    .order('name ASC')
 
     elsif params[:filter][:cna].present?
 
-      if current_user.admin?
-        @taxpayers = Taxpayer
-                      .where("unit_id = ? AND origin_code = ?", current_user.unit_id, params[:filter][:cna])
-                      .paginate(:page => params[:page], :per_page => 5)
-                      .order('name ASC')
-      else
-        @taxpayers = Taxpayer
-                      .joins(:city)
-                      .where("taxpayers.unit_id = ? and taxpayers.client_id = ? AND cities.fl_charge = ? AND taxpayers.origin_code = ? and taxpayers.user_id = ?", current_user.unit_id, session[:client_id], true, params[:filter][:cna], current_user.id)
-                      .paginate(:page => params[:page], :per_page => 5)
-                      .order('name ASC')
-      end
+      @taxpayers = Taxpayer
+                    .where("unit_id = ? AND origin_code = ?", current_user.unit_id, params[:filter][:cna])
+                    .paginate(:page => params[:page], :per_page => 5)
+                    .order('name ASC')
 
     else
 
