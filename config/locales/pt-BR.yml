@@ -93,7 +93,7 @@ pt-BR:
       negociables: Valores em ABERTO
       not_negociables: Valores Pagos ou Negociados
     history:
-      title: Históricos do Contribuinte
+      title: Contatos com Contribuinte
       new: Cadastrar Novo Histórico
     filter:
       name: Nome do Contribuinte
