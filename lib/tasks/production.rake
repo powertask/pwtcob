@@ -158,51 +158,60 @@ namespace :production do
     total_distributed = users.count * 100
     user_index = 0
     total      = 0
+    sum_dist = 0
 
     taxpayers = Cna.find_by_sql('select t.id, t.distributed_at, sum(c.amount) from cnas c, taxpayers t where c.taxpayer_id = t.id  group by t.id, t.distributed_at order by 3 DESC')
     
-    ActiveRecord::Base.transaction do
-      taxpayers.each do |taxpayer|
+    begin
+      ActiveRecord::Base.transaction do
+        taxpayers.each do |taxpayer|
+          
+          if total_distributed >= total
+
+            history = History.find_by_sql(['select max(history_date) history_at from histories where taxpayer_id = ?', taxpayer.id ]).first
+
+            last_distributed_at = taxpayer.distributed_at
+            last_distributed_at = Date.new(2000,1,1) if last_distributed_at.nil?
+          
+            if last_distributed_at + 60.days < Date.current
         
-        if total_distributed >= total
-
-          history = History.find_by_sql(['select max(history_date) history_at from histories where taxpayer_id = ?', taxpayer.id ]).first
-
+              if history.history_at.nil? or last_distributed_at.nil? or history.history_at < last_distributed_at
         
-          if taxpayer.distributed_at + 60.days < Date.current
-      
-            if history.history_at.nil? or history.history_at < taxpayer.distributed_at
-      
-              t = Taxpayer.find(taxpayer.id)
+                t = Taxpayer.find(taxpayer.id)
 
-              d = Redistributed.new
-              d.taxpayer_id = taxpayer.id
-              d.distributed_at = Time.current
-              d.user_prev_id = t.user_id
-              d.user_id = users[user_index].id
-              d.unit_id = t.unit_id
-              d.save!
+                d = Redistributed.new
+                d.taxpayer_id = taxpayer.id
+                d.distributed_at = Time.current
+                d.user_prev_id = t.user_id
+                d.user_id = users[user_index].id
+                d.unit_id = t.unit_id
+                d.save!
 
-              t.user_id = users[user_index].id
-              t.distributed_at = Time.current
-              t.save!
+                t.user_id = users[user_index].id
+                t.distributed_at = Time.current
 
+                t.neighborhood = 'ND' if t.neighborhood.nil?
 
-              user_index = user_index + 1
-              total = total + 1
+                t.save!
 
-              if user_index == users.count
-                user_index = 0
+                sum_dist = sum_dist + 1
+
+                user_index = user_index + 1
+                total = total + 1
+
+                if user_index == users.count
+                  user_index = 0
+                end
               end
             end
           end
         end
       end
+
+      rescue ActiveRecord::RecordInvalid => e
+      puts e.record.errors.full_messages      
     end
-
-    rescue ActiveRecord::RecordInvalid => e
-    puts e.record.errors.full_messages      
-
+    puts sum_dist.to_s
   end
 
 end
