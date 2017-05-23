@@ -3,7 +3,7 @@
     <a class="btn btn-large btn-default" <%= link_to(t('home.history.new'), new_history_path) %> </a>
 </div>
 
-<div class='title_page'> <%= t('home.history.title') %> </div>
+<div class='title_page'> <%= 'Históricos do Contribuinte' %> </div>
 <table class="table">
   <thead>
     <tr>
@@ -14,19 +14,17 @@
     </tr>
   </thead>
   <tbody>
-    <% unless @histories.nil? %>
-      <% @histories.each do |history| %>
-        <tr>
-          <td><%= history.history_date.to_s_br %> </td>
-          <td>
-            <%= history.user.name if history.user.present? %>
-          </td>
-          <td><%= history.word.name if history.word.present? %> </td>
-          <td><%= history.description %> </td>
-          <td><%= link_to(t('menu.edit'), edit_history_path(history), class: "btn btn-xs btn-default") %></td>
-        </div>
-        </tr>
-      <% end %>
+    <% @histories.each do |history| %>
+      <tr>
+        <td><%= history.history_date.to_s_br %> </td>
+        <td>
+          <%= history.user.name if history.user.present? %>
+        </td>
+        <td><%= history.word.name if history.word.present? %> </td>
+        <td><%= history.description %> </td>
+        <td><%= link_to(t('menu.edit'), edit_history_path(history), class: "btn btn-xs btn-default") %></td>
+      </div>
+      </tr>
     <% end %>
   </tbody>
 </table>

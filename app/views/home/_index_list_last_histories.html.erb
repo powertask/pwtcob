@@ -10,8 +10,8 @@
     </tr>
   </thead>
   <tbody>
-    <% unless @histories.nil? %>
-      <% @histories.each do |history| %>
+    <% unless @list_last_histories.nil? %>
+      <% @list_last_histories.each do |history| %>
         <tr>
           <td><%= history.created_at.to_s_br %> </td>
           <td><%= link_to(history.taxpayer.name, show_path(history.taxpayer)) if history.taxpayer.present? %> </td>
