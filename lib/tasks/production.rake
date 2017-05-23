@@ -160,7 +160,7 @@ namespace :production do
     total      = 0
     sum_dist = 0
 
-    taxpayers = Cna.find_by_sql('select t.id, t.distributed_at, sum(c.amount) from cnas c, taxpayers t where c.taxpayer_id = t.id  group by t.id, t.distributed_at order by 3 DESC')
+    taxpayers = Cna.find_by_sql(['select t.id, t.distributed_at, sum(c.amount) from cnas c, taxpayers t, cities ct where c.taxpayer_id = t.id AND c.status = 0 AND t.city_id = ct.id AND ct.fl_charge = ? group by t.id, t.distributed_at order by 3 DESC', true])
     
     begin
       ActiveRecord::Base.transaction do
