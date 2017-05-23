@@ -199,6 +199,10 @@ namespace :production do
         end
       end
     end
+
+    rescue ActiveRecord::RecordInvalid => e
+    puts e.record.errors.full_messages      
+
   end
 
 end
