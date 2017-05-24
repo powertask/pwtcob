@@ -13,6 +13,7 @@ class Ability
     can :read, Taxpayer  if user.client?
 
     can :manage, Contract if user.user?
+    can :manage, Proposal if user.user?
     
     can :manage, Contract if user.email == 'andreia@faesc.com.br'
     
