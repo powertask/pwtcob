@@ -310,7 +310,7 @@ class ContractsController < ApplicationController
                                               :fine_for_delay => bank_billet.fine_for_delay, 
                                               :late_payment_interest => bank_billet.late_payment_interest, 
                                               :document_date => bank_billet.document_date, 
-                                              :document_amount => bank_billet.document_amount)
+                                              :document_amount => bank_billet.amount)
 
             bank_billet_pwt.save!
 
