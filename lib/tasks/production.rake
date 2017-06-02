@@ -111,6 +111,8 @@ namespace :production do
                 history.description = 'Boleto ' << bankbillet.our_number.to_s << ' pago no valor de R$ ' << bankbillet.paid_amount.to_s
                 history.history_date = Time.current
                 history.unit_id = 1
+                history.user_id = 1
+                history.client_id = ticket.client_id
                 history.taxpayer_id = contract.taxpayer_id
                 history.save!
               end
