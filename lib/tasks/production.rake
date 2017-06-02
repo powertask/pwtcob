@@ -83,33 +83,16 @@ namespace :production do
         if ticket.present?
           contract   = Contract.find ticket.contract_id
 
-          if bankbillet_api.status == 0
-            api_status = :generating 
-          elsif bankbillet_api.status == 1
-            api_status = :opened 
-          elsif bankbillet_api.status == 2
-            api_status = :canceled 
-          elsif bankbillet_api.status == 3
-            api_status = :paid 
-          elsif bankbillet_api.status == 4
-            api_status = :overdue 
-          elsif bankbillet_api.status == 5
-            api_status = :blocked 
-          elsif bankbillet_api.status == 6
-            api_status = :chargeback 
-          elsif bankbillet_api.status == 7
-            api_status = :generation_failed 
-          end
-
+          begin
           ActiveRecord::Base.transaction do
-            bankbillet.status = api_status
+            bankbillet.status = bankbillet_api.status
             bankbillet.paid_at = bankbillet_api.paid_at
             bankbillet.paid_amount = bankbillet_api.paid_amount
             bankbillet.fine_for_delay = bankbillet_api.fine_for_delay
             bankbillet.late_payment_interest = bankbillet_api.late_payment_interest
             bankbillet.save!
 
-            ticket.status = api_status
+            ticket.status = bankbillet_api.status
             ticket.paid_at = bankbillet_api.paid_at
             ticket.paid_amount = bankbillet_api.paid_amount
 
@@ -132,6 +115,10 @@ namespace :production do
               history.save!
             end
           end
+          end
+          rescue ActiveRecord::RecordInvalid => e
+          puts e.record.errors.full_messages
+
         end
       end
       sleep(1.second)
