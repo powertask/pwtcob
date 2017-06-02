@@ -84,41 +84,40 @@ namespace :production do
           contract   = Contract.find ticket.contract_id
 
           begin
-          ActiveRecord::Base.transaction do
-            bankbillet.status = bankbillet_api.status
-            bankbillet.paid_at = bankbillet_api.paid_at
-            bankbillet.paid_amount = bankbillet_api.paid_amount
-            bankbillet.fine_for_delay = bankbillet_api.fine_for_delay
-            bankbillet.late_payment_interest = bankbillet_api.late_payment_interest
-            bankbillet.save!
+            ActiveRecord::Base.transaction do
+              bankbillet.status = bankbillet_api.status
+              bankbillet.paid_at = bankbillet_api.paid_at
+              bankbillet.paid_amount = bankbillet_api.paid_amount
+              bankbillet.fine_for_delay = bankbillet_api.fine_for_delay
+              bankbillet.late_payment_interest = bankbillet_api.late_payment_interest
+              bankbillet.save!
 
-            ticket.status = bankbillet_api.status
-            ticket.paid_at = bankbillet_api.paid_at
-            ticket.paid_amount = bankbillet_api.paid_amount
+              ticket.status = bankbillet_api.status
+              ticket.paid_at = bankbillet_api.paid_at
+              ticket.paid_amount = bankbillet_api.paid_amount
 
-            ticket.save!
+              ticket.save!
 
-            if bankbillet_api.paid_amount > 0
-              ticket_not_paid = Ticket.where('contract_id = ? AND status in (0,1,4)', ticket.contract_id)
-              if ticket_not_paid.empty?
-                contract.status = :paid
-                contract.save!
+              if bankbillet_api.paid_amount > 0
+                ticket_not_paid = Ticket.where('contract_id = ? AND status in (0,1,4)', ticket.contract_id)
+                if ticket_not_paid.empty?
+                  contract.status = :paid
+                  contract.save!
+                end
+              end
+
+              if bankbillet.paid_amount > 0
+                history = History.new
+                history.description = 'Boleto ' << bankbillet.our_number.to_s << ' pago no valor de R$ ' << bankbillet.paid_amount.to_s
+                history.history_date = Time.current
+                history.unit_id = 1
+                history.taxpayer_id = contract.taxpayer_id
+                history.save!
               end
             end
-
-            if bankbillet.paid_amount > 0
-              history = History.new
-              history.description = 'Boleto ' << bankbillet.our_number.to_s << ' pago no valor de R$ ' << bankbillet.paid_amount.to_s
-              history.history_date = Time.current
-              history.unit_id = 1
-              history.taxpayer_id = contract.taxpayer_id
-              history.save!
-            end
+            rescue ActiveRecord::RecordInvalid => e
+            puts e.record.errors.full_messages
           end
-          end
-          rescue ActiveRecord::RecordInvalid => e
-          puts e.record.errors.full_messages
-
         end
       end
       sleep(1.second)
