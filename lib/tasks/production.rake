@@ -174,7 +174,7 @@ namespace :production do
           
           if total_distributed >= total
 
-            if taxpayer.user_id > 0
+            unless taxpayer.user_id.nil?
               history = History.find_by_sql(['select max(history_date) history_at from histories where taxpayer_id = ?', taxpayer.id ]).first
 
               last_distributed_at = taxpayer.distributed_at
