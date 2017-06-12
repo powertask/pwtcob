@@ -174,12 +174,10 @@ namespace :production do
           
           if total_distributed >= total
 
-            unless taxpayer.user_id.nil?
-              history = History.find_by_sql(['select max(history_date) history_at from histories where taxpayer_id = ?', taxpayer.id ]).first
+            history = History.find_by_sql(['select max(history_date) history_at from histories where taxpayer_id = ?', taxpayer.id ]).first
 
-              last_distributed_at = taxpayer.distributed_at
-              last_distributed_at = Date.new(2000,1,1) if last_distributed_at.nil?
-            end
+            last_distributed_at = taxpayer.distributed_at
+            last_distributed_at = Date.new(2000,1,1) if last_distributed_at.nil?
 
             if (last_distributed_at + 60.days < Date.current) or taxpayer.user_id.nil?
         
