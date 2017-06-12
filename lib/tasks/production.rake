@@ -161,12 +161,12 @@ namespace :production do
 
     users = User.user.where('fl_taxpayer = ?', true)
 
-    total_distributed = users.count * 100
+    total_distributed = users.count * 200
     user_index = 0
     total      = 0
     sum_dist = 0
 
-    taxpayers = Cna.find_by_sql(['select t.id, t.distributed_at, sum(c.amount) from cnas c, taxpayers t, cities ct where c.taxpayer_id = t.id AND c.status = 0 AND t.city_id = ct.id AND ct.fl_charge = ? group by t.id, t.distributed_at order by 3 DESC', true])
+    taxpayers = Cna.find_by_sql(['select t.id, t.distributed_at, sum(c.amount), t.user_id from cnas c, taxpayers t, cities ct where c.taxpayer_id = t.id AND c.status = 0 AND t.city_id = ct.id AND ct.fl_charge = ? group by t.id, t.distributed_at, t.user_id order by 3 DESC', true])
     
     begin
       ActiveRecord::Base.transaction do
@@ -174,21 +174,26 @@ namespace :production do
           
           if total_distributed >= total
 
-            history = History.find_by_sql(['select max(history_date) history_at from histories where taxpayer_id = ?', taxpayer.id ]).first
+            if taxpayer.user_id > 0
+              history = History.find_by_sql(['select max(history_date) history_at from histories where taxpayer_id = ?', taxpayer.id ]).first
 
-            last_distributed_at = taxpayer.distributed_at
-            last_distributed_at = Date.new(2000,1,1) if last_distributed_at.nil?
-          
-            if last_distributed_at + 60.days < Date.current
+              last_distributed_at = taxpayer.distributed_at
+              last_distributed_at = Date.new(2000,1,1) if last_distributed_at.nil?
+            end
+
+            if (last_distributed_at + 60.days < Date.current) or taxpayer.user_id.nil?
         
-              if history.history_at.nil? or last_distributed_at.nil? or history.history_at < last_distributed_at
+              if  history.history_at.nil? or 
+                  last_distributed_at.nil? or 
+                  history.history_at < last_distributed_at or
+                  taxpayer.user_id.nil?
         
                 t = Taxpayer.find(taxpayer.id)
 
                 d = Redistributed.new
                 d.taxpayer_id = taxpayer.id
                 d.distributed_at = Time.current
-                d.user_prev_id = t.user_id
+                d.user_prev_id = t.user_id.nil? ? 1 : t.user_id
                 d.user_id = users[user_index].id
                 d.unit_id = t.unit_id
                 d.save!
