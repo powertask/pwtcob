@@ -1,42 +1,42 @@
 <div class='title_tools'>
-	<a class="btn btn-large btn-warning" <%= link_to(t('client.new'), new_client_path) %> </a>
+    <a class="btn btn-large btn-warning" <%= link_to(t('client.new'), new_client_path) %> </a>
 </div>
 
 <div class='title_page'>
-	<span> <%= t('client.title') %> </span>
+    <span> <%= t('client.title') %> </span>
 </div>
 
 <p>
-	<%= form_tag(clients_path, :method=>'get') do |f| %>
-		<%= text_field_tag 'name', params[:name], :size => 80 %>
-		<%= submit_tag t('client.search') %> ou <%= link_to t('menu.clean'), clients_path %>
-	<% end %>
+    <%= form_tag(clients_path, :method=>'get') do |f| %>
+        <%= text_field_tag 'name', params[:name], :size => 80 %>
+        <%= submit_tag t('client.search') %> ou <%= link_to t('menu.clean'), clients_path %>
+    <% end %>
 </p>
 
 
 <div class='list1'>
-	<% unless @clients.empty? %>
-		<% @clients.each do |client| %>
-			<li>
-				<div class='strip' id='none'> <%= client.id %> </div>
+    <% unless @clients.empty? %>
+        <% @clients.each do |client| %>
+            <li>
+                <div class='strip' id='none'> <%= client.id %> </div>
 
-				<div class='tools'>
-					<%= link_to(t('menu.edit'), edit_client_path(client), class: "btn btn-xs btn-default") %>
-				</div>
+                <div class='tools'>
+                    <%= link_to(t('menu.edit'), edit_client_path(client), class: "btn btn-xs btn-default") %>
+                </div>
  
-				<div class='indent'>
-					<%= link_to(client.name, client_path(client)) %>
-					&ndash;
-					<tt>
-					<%= client.cnpj %>
-					</tt>
-					<dt>
-						<%= client.email %>
-					</dt>
-				</div>
-			</li>
-		<% end %>
-	<% end %>
+                <div class='indent'>
+                    <%= link_to(client.name, client_path(client)) %>
+                    &ndash;
+                    <tt>
+                    <%= client.cnpj %>
+                    </tt>
+                    <dt>
+                        <%= client.email %>
+                    </dt>
+                </div>
+            </li>
+        <% end %>
+    <% end %>
 </div>
 
 <div id='paginate'>

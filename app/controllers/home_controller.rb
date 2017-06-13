@@ -346,7 +346,7 @@
 
     if current_user.admin?
       @list_taxpayers_in_debt_without_histories_last_30_days = 
-        Taxpayer.find_by_sql(['select t.id, t.name, sum(c.amount) amount, ' +
+        Taxpayer.paginate_by_sql(['select t.id, t.name, sum(c.amount) amount, ' +
                                       "'' last_history " +
                                   'from cnas c, taxpayers t, cities ct ' +
                                   'where c.taxpayer_id = t.id ' +
@@ -357,10 +357,10 @@
                                   'AND exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
                                   'AND not exists(select 1 from histories h where h.taxpayer_id = t.id AND history_date > ?) ' +
                                   'group by t.id, t.name ' +
-                                  'order by 3 DESC LIMIT 10', session[:client_id], true, dt_base])
+                                  'order by 3 DESC', session[:client_id], true, dt_base], :page => params[:page], :per_page => 10)
 
       @list_taxpayers_in_debt_without_histories = 
-        Taxpayer.find_by_sql(['select t.id, t.name, sum(c.amount) amount ' +
+        Taxpayer.paginate_by_sql(['select t.id, t.name, sum(c.amount) amount ' +
                                   'from cnas c, taxpayers t, cities ct ' +
                                   'where c.taxpayer_id = t.id  ' +
                                   'AND t.client_id = ? ' +
@@ -369,11 +369,11 @@
                                   'AND ct.fl_charge = ? ' +
                                   'AND not exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
                                   'group by t.id, t.name ' +
-                                  'order by 3 DESC LIMIT 10', session[:client_id], true])
+                                  'order by 3 DESC', session[:client_id], true], :page => params[:page], :per_page => 15)
 
     else
       @list_taxpayers_in_debt_without_histories_last_30_days = 
-        Taxpayer.find_by_sql(['select t.id, t.name, sum(c.amount) amount, ' +
+        Taxpayer.paginate_by_sql(['select t.id, t.name, sum(c.amount) amount, ' +
                                           "'' last_history " +
                                   'from cnas c, taxpayers t, cities ct ' +
                                   'where c.taxpayer_id = t.id  ' +
@@ -385,10 +385,10 @@
                                   'AND exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
                                   'AND not exists(select 1 from histories h where h.taxpayer_id = t.id AND history_date > ?) ' +
                                   'group by t.id, t.name ' +
-                                  'order by 3 DESC LIMIT 10', current_user.id, session[:client_id], true, dt_base])
+                                  'order by 3 DESC', current_user.id, session[:client_id], true, dt_base], :page => params[:page], :per_page => 10)
 
       @list_taxpayers_in_debt_without_histories = 
-        Taxpayer.find_by_sql(['select t.id, t.name, sum(c.amount) amount ' +
+        Taxpayer.paginate_by_sql(['select t.id, t.name, sum(c.amount) amount ' +
                                   'from cnas c, taxpayers t, cities ct ' +
                                   'where c.taxpayer_id = t.id  ' +
                                   'AND t.user_id = ? ' +
@@ -398,7 +398,7 @@
                                   'AND ct.fl_charge = ? ' +
                                   'AND not exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
                                   'group by t.id, t.name ' +
-                                  'order by 3 DESC LIMIT 10', current_user.id, session[:client_id], true])
+                                  'order by 3 DESC', current_user.id, session[:client_id], true], :page => params[:page], :per_page => 15)
 
     end
 
