@@ -17,4 +17,8 @@ class Contract < ActiveRecord::Base
     self.where("unit_id = ? AND client_id = ?", unit, client)
   end
   
+  def self.list_not_cancel(unit, client)
+    self.where("unit_id = ? AND client_id = ? AND status in (0,2)", unit, client)
+  end
+  
 end
