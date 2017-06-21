@@ -1,6 +1,6 @@
 <div class='title_tools'>
   <% if @contract.active? & current_user.admin? %>
-    <a class="btn btn-large btn-danger" <%= link_to(t('contract.delete'), delete_contract_path(@contract), remote: true, id: 'delete_contract') %> </a>
+    <%= link_to(t('contract.delete'), { controller: "contracts", action: "delete_contract", contract: @contract.id }, remote: true, id: 'delete_contract', class: "btn btn-large btn-danger" ) %>
   <% end %>
   <a class="btn btn-large btn-warning" <%= link_to(t('contract.index'), contracts_path) %> </a>
   <a class="btn btn-large btn-warning" <%= link_to t('contract.print_pdf'), :action => "contract_transaction_pdf", :cod => @contract.id, :format => "pdf" %> </a>
@@ -40,9 +40,9 @@
           <%= link_to(@contract.taxpayer.origin_code.to_s << " - " << @contract.taxpayer.name.upcase, taxpayer_path(@contract.taxpayer_id)) %>
       <div class='label1 top req'> <%=t("user.name") %>: </div>
           <%= @contract.user ? @contract.user.name.upcase : 'ADMIN'  %>
-    	<div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>:</div>
+      <div class='label1 top req'> <%=t("contract.amount", name: @contract.unit.name) %>:</div>
           <%= @contract.unit_amount.real %>
-    	<div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>
+      <div class='label1 top req'> <%=t("contract.amount", name: @contract.taxpayer.client.name) %>: </div>
           <%= @contract.client_amount.real %>
     </div>
 
@@ -108,45 +108,44 @@
 </div>
 
 <script>
-	$(function() {
-		$('.title_tools #delete_contract').click(function (event) {
-			var targetUrl = $(this).attr("href");
-			$.confirm({
-			    title: 'CANCELAR Termo??',
-			    content: 'Deseja realmente CANCELAR o termo?',
-				confirmButton: 'Sim',
-				cancelButton: 'Não',
-				confirmButtonClass: 'btn-danger',
-				theme: 'supervan',
-			    confirm: function(){
-			        window.location.href = targetUrl;
-			    },
-			    cancel: function(){
-
-			    }
-			});
-			return false;
-		});
-});
+  $(function() {
+    $('#delete_contract').click(function (event) {
+      var targetUrl = $(this).attr("href");
+      $.confirm({
+          title: 'CANCELAR Termo??',
+          content: 'Deseja realmente CANCELAR o termo?',
+          confirmButton: 'Sim',
+          cancelButton: 'Não',
+          confirmButtonClass: 'btn-danger',
+          theme: 'supervan',
+          confirm: function(){
+            window.location.href = targetUrl;
+          },
+          cancel: function(){
+          }
+        });
+      return false;
+    });
+  });
   
-	$(function() {
-		$('#cancel_ticket').click(function (event) {
-			var targetUrl = $(this).attr("href");
-			$.confirm({
-			    title: 'CANCELAR boleto??',
-			    content: 'Deseja realmente CANCELAR o boleto?',
-				confirmButton: 'Sim',
-				cancelButton: 'Não',
-				confirmButtonClass: 'btn-danger',
-				theme: 'supervan',
-			    confirm: function(){
-			        window.location.href = targetUrl;
-			    },
-			    cancel: function(){
-			    }
-			});
-			return false;
-		});
-});
+  $(function() {
+    $('#cancel_ticket').click(function (event) {
+      var targetUrl = $(this).attr("href");
+      $.confirm({
+          title: 'CANCELAR boleto??',
+          content: 'Deseja realmente CANCELAR o boleto?',
+        confirmButton: 'Sim',
+        cancelButton: 'Não',
+        confirmButtonClass: 'btn-danger',
+        theme: 'supervan',
+          confirm: function(){
+              window.location.href = targetUrl;
+          },
+          cancel: function(){
+          }
+      });
+      return false;
+    });
+  });
 </script>
 

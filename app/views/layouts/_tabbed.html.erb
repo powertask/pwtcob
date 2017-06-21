@@ -1,13 +1,21 @@
 <table class='tabbed' width="98%" height="100%" cellpadding='0' cellspacing='0'>
-	<tr>
-		<div class='message'>
-			<%- flash.each do |name, msg| -%>
-      			<%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
-    		<%- end -%>
-		</div>
+  <tr>
+    <% if notice %>
+      <div class="alert alert-success fade in" data-alert="alert">
+        <a class="close" data-dismiss='alert' href="#">×</a>
+        <p><%= notice %></p>
+      </div>
+    <% end %>
 
-		<td class='main' id='main' valign='top'>
-      		<%= yield %>
-		</td>
-	</tr>
+    <% if alert %>
+      <div class="alert alert-danger fade in" data-alert="alert">
+        <a class="close" data-dismiss='alert' href="#">×</a>
+        <p><%= alert %></p>
+      </div>
+    <% end %>
+
+    <td class='main' id='main' valign='top'>
+      <%= yield %>
+    </td>
+  </tr>
 </table>

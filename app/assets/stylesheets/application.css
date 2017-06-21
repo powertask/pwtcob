@@ -1,10 +1,7 @@
 /*
-	*= require bootstrap
-	*= require base
-	*= require common
-	*= require screen
-	*= require jquery-ui
-	*= require_self
-	*= require_tree .
+  *= require jquery-ui
+  *= require bootstrap
+  *= require_tree .
+  *= require_self
 */
 
