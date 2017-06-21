@@ -2,7 +2,6 @@
   <div class="navbar-inner">
     <div class="container-fluid">
 			<%= link_to(session[:unit_name].present? ? session[:unit_name] + (session[:client_name] ? ' - ' + session[:client_name].upcase + ' - ' : '') : t("corporation"), root_path, class: "navbar-brand") %>
-
   		<% if user_signed_in? %>
       	<ul class="nav navbar-nav navbar-right">
           <li>
