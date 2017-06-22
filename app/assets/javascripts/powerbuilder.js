@@ -62,7 +62,7 @@ $(function() {
   });
 
 $(function() {
-    $( '#report_paid_ini_at' ).datepicker({
+    $( '#report_ini_at' ).datepicker({
       dateFormat: "dd/mm/yy",
       autoclose: true,
       showButtonPanel: true,
@@ -73,7 +73,7 @@ $(function() {
   });
 
 $(function() {
-    $( '#report_paid_end_at' ).datepicker({
+    $( '#report_end_at' ).datepicker({
       dateFormat: "dd/mm/yy",
       autoclose: true,
       showButtonPanel: true,

@@ -1,0 +1,38 @@
+<div class='title_tools'>
+  <%= link_to('Voltar para Filtros', report_count_contacts_filter_path, class: "btn btn-large btn-default") %>
+</div>
+
+<div class='title_page'>
+  <span> <%= 'Relatório de Contatos por Colaborador' %> </span>
+</div>
+
+<div class='section'>
+  <div class='label1 top req'> <%= 'Data Inicial' %>: </div>    <%= params[:report][:ini_at] %>
+  <div class='label1 top req'> <%= 'Data Final' %>: </div>      <%= params[:report][:end_at] %>
+</div>
+
+<table class="table" border="0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Colaborador(a)</th>
+      <th>Quantidade de Contribuintes Contatados</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @result.each do |rel| %>
+      <tr>
+        <td><%= rel[:user_id] %> </td>
+        <td><%= rel[:user_name] %> </td>
+        <td><%= rel[:contacts] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td><b>Total de Contribuintes Contatados --> </b></td>
+      <td><b><%= @result.map{|i|i[:contacts]}.inject(:+) if @result %> </b></td>
+    </tr>
+  </tfoot>  
+</table>

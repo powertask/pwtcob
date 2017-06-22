@@ -1,12 +1,12 @@
 <div class='title_tools'>
-  <a class="btn btn-large btn-default" <%= link_to('Voltar para Filtros', report_fee_filter_path) %> </a>
+  <%= link_to('Voltar para Filtros', report_fee_filter_path, class: "btn btn-large btn-default") %>
 </div>
 
 <div class='title_page'> <%= 'Relatório de Comissões' %>  </div>
 
 <div class='section'>
-  <div class='label1 top req'> <%= 'Data Inicial' %>: </div>    <%= params[:report][:paid_ini_at] %>
-  <div class='label1 top req'> <%= 'Data Final' %>: </div>      <%= params[:report][:paid_end_at] %>
+  <div class='label1 top req'> <%= 'Data Inicial' %>: </div>    <%= params[:report][:ini_at] %>
+  <div class='label1 top req'> <%= 'Data Final' %>: </div>      <%= params[:report][:end_at] %>
 </div>
 
 <table class="table" border="0">

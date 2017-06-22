@@ -1,7 +1,6 @@
 class HistoriesController < ApplicationController
   before_action :set_history, only: [:show, :edit, :update]
   before_action :authenticate_user!
-  load_and_authorize_resource
   respond_to :html
   layout 'window'
 
@@ -41,6 +40,32 @@ class HistoriesController < ApplicationController
     flash[:notice] = 'Histórico atualizado com sucesso.'
     redirect_to show_path(@history.taxpayer_id)
   end
+
+  def report_count_contacts_filter
+  end
+
+  def report_count_contacts_action
+    dt_ini = (params[:report][:ini_at]).to_date
+    dt_end = (params[:report][:end_at]).to_date.end_of_day()
+    
+    @result = Array.new
+
+    users = User.all
+    users.each do |user|
+
+      contacts = History.where('unit_id = ? and client_id = ? and user_id = ? and history_date between ? and ?', current_user.unit_id, session[:client_id], user.id, dt_ini, dt_end).group(:user_id, :taxpayer_id).order(:user_id).count
+
+      if contacts.count > 0
+        h = Hash.new
+        h[:user_id] = user.id
+        h[:user_name] = user.name
+        h[:contacts] = contacts.count
+        @result.push(h)
+      end
+    end
+    @result.sort_by!{|e| -e[:contacts]}
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

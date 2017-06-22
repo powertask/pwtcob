@@ -79,6 +79,9 @@ Rails.application.routes.draw do
   get 'contract/report_fee_filter' => 'contracts#report_fee_filter', as: :report_fee_filter
   get 'contract/report_fee_action' => 'contracts#report_fee_action', as: :report_fee_action
   
+  get 'history/report_count_contacts_filter' => 'histories#report_count_contacts_filter', as: :report_count_contacts_filter
+  get 'history/report_count_contacts_action' => 'histories#report_count_contacts_action', as: :report_count_contacts_action
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

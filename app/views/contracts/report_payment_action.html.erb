@@ -8,9 +8,9 @@
 </div>
 
 <div class='section'>
-  <div class='label1 top req'> <%= 'Data Inicial' %>: </div>    <%= params[:report][:paid_ini_at] %>
-  <div class='label1 top req'> <%= 'Data Final' %>: </div>      <%= params[:report][:paid_end_at] %>
-  <div class='label1 top req'> <%= 'Tipo Pagamento' %>: </div>      <%= params[:report][:type] == '0' ? 'FAESC' : 'GMA' %>
+  <div class='label1 top req'> <%= 'Data Inicial' %>: </div>    <%= params[:report][:ini_at] %>
+  <div class='label1 top req'> <%= 'Data Final' %>: </div>      <%= params[:report][:end_at] %>
+  <div class='label1 top req'> <%= 'Tipo Pagamento' %>: </div>  <%= params[:report][:type] == '0' ? 'FAESC' : 'GMA' %>
 </div>
 
 <table class="table" border="0">

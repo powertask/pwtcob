@@ -1,21 +1,21 @@
 <%= simple_form_for(
-        :report, url: 'report_payment_action', method: :get,
-        html: { class: 'form-horizontal' }, 
-        wrapper: :horizontal_form,
-        wrapper_mappings: {
-        check_boxes: :horizontal_radio_and_checkboxes,
-        radio_buttons: :horizontal_radio_and_checkboxes,
-        file: :horizontal_file_input,
-        boolean: :horizontal_boolean
-      }) do |f| %>
+    :report, url: 'report_payment_action', method: :get,
+    html: { class: 'form-horizontal' }, 
+    wrapper: :horizontal_form,
+    wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  }) do |f| %>
 
   <div class='title'> Relatório de Pagamentos </div>
   
   <div class='section'>
 
     <%= f.input :type, as: :select, label: 'Tipo do Relatório', collection: [['FAESC', 0], ['GMA', 1]], default: 0 %>
-    <%= f.input :paid_ini_at, readonly: true, label: 'Data Inicial', skip_label: true %>
-    <%= f.input :paid_end_at, readonly: true, label: 'Data Final', skip_label: true %>
+    <%= f.input :ini_at, readonly: true, label: 'Data Inicial', skip_label: true %>
+    <%= f.input :end_at, readonly: true, label: 'Data Final', skip_label: true %>
 
     <div class='buttonbar'>
       <%= f.button :submit, 'Gerar Relatório', class: 'btn-primary' %>
