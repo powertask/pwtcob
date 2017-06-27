@@ -30,13 +30,12 @@
     <tr>
       <th>#</th>
       <th>Ano</th>
-      <th><%= t('status') %></th>
       <th>Meses</th>
-      <th>Valor Principal</th>
+      <th>Principal</th>
       <th>Correção</th>
       <th>Multa</th>
       <th>Juros</th>
-      <th>Valor Total</th>
+      <th>Total</th>
       <th></th>
     </tr>
   </thead>
@@ -58,7 +57,6 @@
               <%= cna.year %> 
             <% end %> 
           </td>
-          <td><%= t(cna.status) %> </td>
           <td><%= calc_meses_atraso(cna, nil, @date_current) %> </td>
           <td><%= cna.amount.real %> </td>
           <td><%= calc_correcao(cna, nil, @date_current).real %> </td>
@@ -71,7 +69,10 @@
               <%= calc_cna(cna, nil, @date_current).real %>
             <% end %>
           </td>
-          <td><%= link_to(cna.fl_charge ? 'Marcar para NÃO cobrar valor' : 'Marcar para cobrar valor', set_charge_cna_path(cna), class: "btn btn-xs btn-default", remote: true ) %></td>
+          <td><%= link_to(cna.fl_charge ? 'Marcar NÃO COBRAR' : 'Marcar COBRAR', set_charge_cna_path(cna), class: "btn btn-xs btn-default", remote: true ) %></td>
+          <td>
+            <%= link_to('Marcar AJUIZAR', set_lawyer_to_cna_path(cna), class: "btn btn-xs btn-warning", remote: true, id: 'set_lawyer_to_cna', data: { confirm: 'Essa CNA será marcada como AJUIZADA e irá sair da sua lista de cobrança. Confirma a ação?' } ) %>
+          </td>
         </tr>
       <% end %>
     <% end %>
@@ -81,15 +82,16 @@
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
       <td> <%= session[:value_cna].real %></td>
       <td> <%= session[:total_correcao].real %></td>
       <td> <%= session[:total_multa].real %> </td>
       <td> <%= session[:total_juros].real %> </td>
       <td> <%= session[:total_cna].real %></td>
       <td></td>
+      <td></td>
     </tr>
   </tfoot>  
 </table>
 
 <%= render 'totais' %>
+

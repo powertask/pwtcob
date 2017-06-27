@@ -1,5 +1,5 @@
 <div class='title_tools'>
-  <a class="btn btn-large btn-warning" <%= link_to(t('deal.root'), show_path(@taxpayer)) %> </a>
+  <%= link_to(t('deal.root'), show_path(@taxpayer), class: "btn btn-large btn-warning") %>
 </div>
 
 <div class='title_page'>
@@ -19,7 +19,7 @@
   <div class="col-sm-6 col-md-9">
 
     <div id='table-cna'>
-      <%= render 'cnas' %>
+      <%= render 'deal_cnas' %>
     </div>
 
     <div class="row">

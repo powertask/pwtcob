@@ -1,0 +1,48 @@
+<div class='title_page'> <%= t('home.cna.lawyers') %> </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Documento</th>
+      <th>Ano</th>
+      <th>Vencimento</th>
+      <th>Atraso (Meses)</th>
+      <th>Valor Principal</th>
+      <th>Multa</th>
+      <th>Juros</th>
+      <th>Valor Total</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% clear_variables %>
+    <% @cnas_lawyers.each do |cna| %>
+      <tr>
+        <td><%= cna.id %> </td>
+        <td><%= cna.nr_document %> </td>
+        <td><%= cna.year %> </td>
+        <td><%= cna.due_at.to_date.to_s_br if cna.due_at %> </td>
+        <td><%= calc_meses_atraso(cna, nil, nil) %> </td>
+        <td><%= cna.amount.real %> </td>
+        <td><%= calc_multa(cna, nil, nil).real %> </td>
+        <td><%= calc_juros(cna, nil, nil).real %> </td>
+        <td><%= calc_cna(cna, nil, nil).real %> </td>
+        <td><%= link_to('Marcar Normal', set_cna_to_normal_path(cna), method: :patch, data: {confirm: 'Retirar de AJUIZADO. Confirma?'}) if current_user.id == 1 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td> <%= session[:value_cna].real %></td>
+      <td> <%= session[:total_multa].real %> </td>
+      <td> <%= session[:total_juros].real %> </td>
+      <td> <%= session[:total_cna].real %></td>
+      <td></td>
+    </tr>
+  </tfoot>  
+</table>

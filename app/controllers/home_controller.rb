@@ -87,8 +87,9 @@
 
     @contacts = TaxpayerContact.where('taxpayer_id = ?', params[:cod])
 
-    @cnas_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status = 0', params[:cod]).order(:year, :due_at)
-    @cnas_not_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status in (1,2,3)', params[:cod]).order(:year)
+    @cnas_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status = 0 AND stage = 1', params[:cod]).order(:year, :due_at)
+    @cnas_lawyers = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND stage = 0', params[:cod]).order(:year, :due_at)
+    @cnas_not_negotiables = Cna.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ? AND status in (1,2,3) AND stage = 1', params[:cod]).order(:year)
 
     @contracts_for_taxpayer = Contract.list(current_user.unit_id, session[:client_id]).where('taxpayer_id = ?', params[:cod])
     
@@ -101,6 +102,7 @@
 
     render "index", :layout => 'application'
   end
+
 
 
   def deal
@@ -151,7 +153,7 @@
     @contract.unit_ticket_quantity = 1
     @contract.client_ticket_quantity = 1
 
-    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ?', params[:cod]).order(:year, :due_at)
+    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.normal.where('taxpayer_id = ?', params[:cod]).order(:year, :due_at)
     @cna = Cna.new
 
     clear_variable_session()
@@ -188,7 +190,7 @@
     @cna.fl_charge = @cna.fl_charge == true ? false : true
     @cna.save!
 
-    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
+    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.normal.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
     @taxpayer = Taxpayer.find @cna.taxpayer.id
 
     if params[:date_current].nil?
@@ -196,9 +198,44 @@
     else
       @date_current = Date.new(params[:date_current][:year].to_i, params[:date_current][:month].to_i, params[:date_current][:day].to_i)
     end
-    
     clear_variable_session()
+  end
 
+
+  def set_lawyer_to_cna
+
+    begin
+      ActiveRecord::Base.transaction do
+
+        @cna = Cna.find(params[:cod])
+        @cna.stage = @cna.normal? ? :lawyer : :normal
+        @cna.fl_charge = false
+        @cna.save!
+
+        history = History.new
+        history.unit_id = current_user.unit_id
+        history.client_id = @cna.client_id
+        history.taxpayer_id = @cna.taxpayer_id
+        history.user_id = current_user.id
+        history.word_id = 4 ## Ajuizado
+        history.history_date = Time.current
+        history.description = 'CNA referente ' + @cna.year.to_s + ' marcada para AJUIZAR.'
+        history.save!      
+
+      end
+      rescue ActiveRecord::RecordInvalid => e
+      puts e.record.errors.full_messages
+    end  
+
+    @cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.normal.where('taxpayer_id = ?', @cna.taxpayer.id).order(:year)
+    @taxpayer = Taxpayer.find @cna.taxpayer.id
+
+    if params[:date_current].nil?
+      @date_current = Date.current
+    else
+      @date_current = Date.new(params[:date_current][:year].to_i, params[:date_current][:month].to_i, params[:date_current][:day].to_i)
+    end
+    clear_variable_session()
   end
 
 
@@ -206,6 +243,16 @@
     if current_user.id == 1
       @cna = Cna.find(params[:cod])
       @cna.pay!
+
+      redirect_to show_path(@cna.taxpayer_id) and return
+    end
+  end
+
+
+  def set_cna_to_normal
+    if current_user.id == 1
+      @cna = Cna.find(params[:cod])
+      @cna.normal!
 
       redirect_to show_path(@cna.taxpayer_id) and return
     end
@@ -245,26 +292,6 @@
   end
 
   
-  def get_tasks
-    
-    @tasks = Task.where("unit_id = ? AND user_id = ? AND task_date >= ?", current_user.unit_id, current_user.id, Date.current - 1.day).order('id ASC')
-
-    tasks = []
-    @tasks.each do |task|
-      tasks << {:id => task.id, 
-                :title => task.description, 
-                :start => "#{task.task_date.to_date}", 
-                :end => "#{task.task_date.to_date}", 
-                :allDay => true, 
-                :recurring => false,
-                :url => Rails.application.routes.url_helpers.show_path(task.taxpayer_id),
-                :color => "green"
-              }
-    end
-    render :text => tasks.to_json
-  end
-
-
   def get_taxpayer
     @taxpayer = Taxpayer.find(params[:cod])
   end
@@ -286,7 +313,6 @@
   end
 
   def clear_variable_session
-
     session[:value_cna] = 0
     session[:total_multa] = 0
     session[:total_juros] = 0
@@ -320,14 +346,14 @@
       @count_contracts_deal_month = Contract.list_not_cancel(current_user.unit_id, session[:client_id]).where('contract_date between ? AND ?', dt_ini, dt_end ).count
       @list_last_histories     = History.list(current_user.unit_id, session[:client_id]).where('history_date is not null').order('history_date DESC').limit(30)
 
-      @resume = Cna.find_by_sql(['select u.id, (select count(1) from histories where histories.history_date between ? AND ? AND histories.user_id = u.id) count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = u.id and c.status = 0 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id order by count_histories_today DESC, u.name', Date.current.beginning_of_day, Date.current.end_of_day, true, session[:client_id]])
+      @resume = Cna.find_by_sql(['select u.id, (select count(1) from histories where histories.history_date between ? AND ? AND histories.user_id = u.id) count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = u.id and c.status = 0 and c.stage = 1 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id order by count_histories_today DESC, u.name', Date.current.beginning_of_day, Date.current.end_of_day, true, session[:client_id]])
 
     else
       @count_contracts_deal_day   = Contract.list_not_cancel(current_user.unit_id, session[:client_id] ).where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
       @count_contracts_deal_month = Contract.list_not_cancel(current_user.unit_id, session[:client_id] ).where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).count
       @list_last_histories     = History.list(current_user.unit_id, session[:client_id] ).where('user_id = ? AND history_date is not null', current_user.id).order('history_date DESC').limit(30) if current_user.user?
 
-      @resume = Cna.find_by_sql(['select u.id, 0 count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = ? and t.user_id = u.id and c.status = 0 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id', current_user.id, true, session[:client_id] ])
+      @resume = Cna.find_by_sql(['select u.id, 0 count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = ? and t.user_id = u.id and c.status = 0 and c.stage = 1 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id', current_user.id, true, session[:client_id] ])
     end
 
     if current_user.admin?
@@ -353,6 +379,7 @@
                                   'AND t.client_id = ? ' +
                                   'AND t.city_id = ct.id ' +
                                   'AND c.status = 0 ' +
+                                  'AND c.stage = 1 ' +
                                   'AND ct.fl_charge = ? ' +
                                   'AND exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
                                   'AND not exists(select 1 from histories h where h.taxpayer_id = t.id AND history_date > ?) ' +
@@ -366,6 +393,7 @@
                                   'AND t.client_id = ? ' +
                                   'AND t.city_id = ct.id  ' +
                                   'AND c.status = 0 ' +
+                                  'AND c.stage = 1 ' +
                                   'AND ct.fl_charge = ? ' +
                                   'AND not exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
                                   'group by t.id, t.name ' +
@@ -381,6 +409,7 @@
                                   'AND t.client_id = ? ' +
                                   'AND t.city_id = ct.id  ' +
                                   'AND c.status = 0 ' +
+                                  'AND c.stage = 1 ' +
                                   'AND ct.fl_charge = ? ' +
                                   'AND exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
                                   'AND not exists(select 1 from histories h where h.taxpayer_id = t.id AND history_date > ?) ' +
@@ -395,6 +424,7 @@
                                   'AND t.client_id = ? ' +
                                   'AND t.city_id = ct.id  ' +
                                   'AND c.status = 0 ' +
+                                  'AND c.stage = 1 ' +
                                   'AND ct.fl_charge = ? ' +
                                   'AND not exists(select 1 from histories h where h.taxpayer_id = t.id) ' +
                                   'group by t.id, t.name ' +

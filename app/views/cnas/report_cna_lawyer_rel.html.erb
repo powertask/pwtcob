@@ -1,0 +1,48 @@
+<div class='title_tools'>
+  <%= link_to('Voltar para Filtros', report_cna_lawyer_filter_path, class: "btn btn-large btn-default") %> </a>
+</div>
+
+<div class='title_page'>
+  <span> <%= 'Relatório de CNAs AJUIZADAS' %> </span>
+</div>
+
+<div class='section'>
+  <div class='label1 top req'> <%= 'Data Inicial' %>: </div>    <%= params[:report][:ini_at] %>
+  <div class='label1 top req'> <%= 'Data Final' %>: </div>      <%= params[:report][:end_at] %>
+  <div class='label1 top req'> <%= 'Colaborador(a)' %>: </div>  
+  <%= User.find(params[:report][:user_id]).name if params[:report][:user_id].present? %>
+</div>
+
+<table class="table" border="0">
+  <thead>
+    <tr>
+      <th>Contribuinte</th>
+      <th>CPF</th>
+      <th>Exercício</th>
+      <th>Valor</th>
+      <th>Colaborador(a)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @rels.nil? %>
+      <% @rels.each do |rel| %>
+        <tr>
+          <td><%= link_to(rel.taxpayer.name, show_path(rel.taxpayer_id)) %> </td>
+          <td><%= rel.taxpayer.cpf %> </td>
+          <td><%= rel.year %> </td>
+          <td><%= rel.amount.real %> </td>
+          <td><%= rel.taxpayer.user.name %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>TOTAL em JUIZO</td>
+      <td></td>
+      <td></td>
+      <td><%= @rels.map{|i|i[:amount]}.inject(:+).real if @rels %></td>
+      <td></td>
+    </tr>
+  </tfoot>  
+</table>

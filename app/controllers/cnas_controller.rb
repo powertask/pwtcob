@@ -46,6 +46,18 @@ class CnasController < ApplicationController
     redirect_to( taxpayer_path(@cna.taxpayer.id))
   end
 
+  def report_cna_lawyer_filter
+  end
+
+  def report_cna_lawyer_rel
+    if params[:report][:user_id].empty?
+      @rels = Cna.lawyer.where('unit_id = ? and client_id = ?', current_user.unit_id, session[:client_id])
+    else
+      @rels = Cna.joins(:taxpayer).lawyer.where('cnas.unit_id = ? and cnas.client_id = ? and taxpayers.user_id = ?', current_user.unit_id, session[:client_id], params[:report][:user_id])
+    end 
+  end
+
+
   private
     def cna_params
       params.require(:cna).permit(:fl_charge, :amount, :status, :stage, :nr_document, :taxpayer_id, :unit_id, :year, :client_id)

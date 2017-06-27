@@ -44,12 +44,15 @@ Rails.application.routes.draw do
   get 'home/:cod/deal' => 'home#deal', as: :deal
   get 'home/:cod/get_cna' => 'home#get_cna', as: :get_cna
   patch 'home/:cod/pay_cna' => 'home#pay_cna', as: :pay_cna
+  patch 'home/:cod/set_cna_to_normal' => 'home#set_cna_to_normal', as: :set_cna_to_normal
   patch 'home/:cod/set_cna' => 'home#set_cna', as: :set_cna
   get 'home/:cod/set_charge_cna' => 'home#set_charge_cna', as: :set_charge_cna
   get 'home/:cod/get_tickets' => 'home#get_tickets', as: :get_tickets
   get 'home/:cod/set_tickets' => 'home#set_tickets', as: :set_tickets
   get 'home/:cod/get_taxpayer' => 'home#get_taxpayer', as: :get_taxpayer
   patch 'home/:cod/set_taxpayer' => 'home#set_taxpayer', as: :set_taxpayer
+  get 'home/:cod/set_lawyer_to_cna' => 'home#set_lawyer_to_cna', as: :set_lawyer_to_cna
+
 
   post 'proposal/:cod/create_proposal' => 'proposals#create_proposal', as: :create_proposal
 
@@ -81,53 +84,8 @@ Rails.application.routes.draw do
   
   get 'history/report_count_contacts_filter' => 'histories#report_count_contacts_filter', as: :report_count_contacts_filter
   get 'history/report_count_contacts_action' => 'histories#report_count_contacts_action', as: :report_count_contacts_action
-  
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  get 'cna/report_cna_lawyer_filter' => 'cnas#report_cna_lawyer_filter', as: :report_cna_lawyer_filter
+  get 'cna/report_cna_lawyer_rel' => 'cnas#report_cna_lawyer_rel', as: :report_cna_lawyer_rel
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end

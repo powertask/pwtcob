@@ -92,6 +92,7 @@ pt-BR:
       title: CNAs do Contribuinte
       negociables: Valores em ABERTO
       not_negociables: Valores Pagos ou Negociados
+      lawyers: Valores AJUIZADOS
     history:
       title: Contatos com Contribuinte
       new: Cadastrar Novo Histórico
