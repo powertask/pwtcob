@@ -1,0 +1,31 @@
+<div class='subtitle_page'> <%= 'Lista por Colaborador' %> </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Colaborador(a)</th>
+      <th>Contribuintes</th>
+      <th>Historicos</th>
+      <th>Valor CNAs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @resume_all.nil? %>
+      <% @resume_all.each do |r| %>
+        <tr>
+          <td><%= r[:user_id] %> </td>
+          
+          <% if r[:taxpayers_histories] > 0 %>
+            <td><span class="label label-warning"><%= r[:user_name] %> </span></td>
+          <% else %>
+            <td><%= r[:user_name] %></td>
+          <% end %>
+
+          <td><%= r[:taxpayers_count] %> </td>
+          <td><%= r[:taxpayers_histories] %> </td>
+          <td><%= r[:cnas_amount_total] %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

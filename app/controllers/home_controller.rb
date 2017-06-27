@@ -337,6 +337,7 @@
 
   end
 
+
   def contracts_meter 
     dt_ini = Date.new(Date.current.year, Date.current.month, 1).beginning_of_day
     dt_end = Date.current.end_of_day
@@ -345,16 +346,31 @@
       @count_contracts_deal_day   = Contract.list_not_cancel(current_user.unit_id, session[:client_id]).where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).count
       @count_contracts_deal_month = Contract.list_not_cancel(current_user.unit_id, session[:client_id]).where('contract_date between ? AND ?', dt_ini, dt_end ).count
       @list_last_histories     = History.list(current_user.unit_id, session[:client_id]).where('history_date is not null').order('history_date DESC').limit(30)
-
-      @resume = Cna.find_by_sql(['select u.id, (select count(1) from histories where histories.history_date between ? AND ? AND histories.user_id = u.id) count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = u.id and c.status = 0 and c.stage = 1 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id order by count_histories_today DESC, u.name', Date.current.beginning_of_day, Date.current.end_of_day, true, session[:client_id]])
+      users = User.select(:id, :name).list(current_user.unit_id).where('id > 2')
 
     else
       @count_contracts_deal_day   = Contract.list_not_cancel(current_user.unit_id, session[:client_id] ).where('user_id = ? AND contract_date between ? AND ?', current_user.id, Date.current.beginning_of_day, Date.current.end_of_day).count
       @count_contracts_deal_month = Contract.list_not_cancel(current_user.unit_id, session[:client_id] ).where('user_id = ? and contract_date between ? AND ?', current_user.id, dt_ini, dt_end ).count
       @list_last_histories     = History.list(current_user.unit_id, session[:client_id] ).where('user_id = ? AND history_date is not null', current_user.id).order('history_date DESC').limit(30) if current_user.user?
-
-      @resume = Cna.find_by_sql(['select u.id, 0 count_histories_today, count(1), sum(amount), u.name from cnas c, taxpayers t, cities ct, users u where c.taxpayer_id = t.id and t.user_id = ? and t.user_id = u.id and c.status = 0 and c.stage = 1 and t.city_id = ct.id and ct.fl_charge = ? AND t.client_id = ? group by u.name, u.id', current_user.id, true, session[:client_id] ])
+      users = User.select(:id, :name).list(current_user.unit_id).where('id = ?', current_user.id)
     end
+
+    @resume_all = Array.new
+    users.each do |user|
+      taxpayers_count = Taxpayer.joins(:city).where("taxpayers.unit_id = ? and taxpayers.client_id = ? and taxpayers.user_id = ? and cities.fl_charge = ? ", current_user.unit_id, session[:client_id], user.id, true).count
+      taxpayers_histories = History.where('unit_id = ? and client_id = ? and user_id = ? and history_date between ? and ?', current_user.unit_id, session[:client_id], user.id, Date.current.beginning_of_day, Date.current.end_of_day).group(:user_id, :taxpayer_id).order(:user_id).count.count
+      cnas_amount_total = Cna.find_by_sql(['select sum(amount) amount from taxpayers t, cnas c, cities ct where t.unit_id = ? and t.user_id = ? and t.client_id = ? and t.id = c.taxpayer_id and t.city_id = ct.id and ct.fl_charge = ? and c.status = 0 and c.stage = 1', current_user.unit_id, user.id, session[:client_id], true])
+
+      resume = Hash.new
+      resume[:user_id] = user.id
+      resume[:user_name] = user.name
+      resume[:taxpayers_count] = taxpayers_count
+      resume[:taxpayers_histories] = taxpayers_histories
+      resume[:cnas_amount_total] = cnas_amount_total[0][:amount].real
+      @resume_all.push(resume)
+    end
+    @resume_all.sort_by!{|e| -e[:taxpayers_histories]}
+
 
     if current_user.admin?
       @count_contracts_deal_day_for_users = Contract.list(current_user.unit_id, session[:client_id]).active.where('contract_date between ? AND ?', Date.current.beginning_of_day, Date.current.end_of_day).group('user_id').count
