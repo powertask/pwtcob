@@ -1,10 +1,13 @@
 <div class='title_tools'>
-  <a class="btn btn-large btn-warning" <%= link_to(t('proposal.index'), proposals_path) %> </a>
+  <%= link_to(t('proposal.index'), proposals_path, class: "btn btn-large btn-warning") %>
   
-  <% unless @proposal.contract? %>
-    <a class="btn btn-large btn-success" <%= link_to(t('proposal.create_contract'), create_contract_from_proposal_path(@proposal.id),  method: 'post') %> </a>
+  <% if @proposal.active? %>
+    <%= link_to(t('proposal.create_contract'), create_contract_from_proposal_path(@proposal.id), method: 'post', class: "btn btn-large btn-success") %>
   <% end %>
 
+  <% if @proposal.active? %>
+    <%= link_to(t('proposal.delete_proposal'), cancel_proposal_path(@proposal.id), method: 'post', class: "btn btn-large btn-danger", data: {confirm: 'Você tem certeza de que deseja CANCELAR a proposta gerada?'}) %>
+  <% end %>
 </div>
 
 <div class='title_page'> <%= t('proposal.show') %> </div>
@@ -16,6 +19,8 @@
   <div class='label1 top req'> <%=t("status") %>: </div>
   <% if @proposal.contract? & @proposal.contract_id %>
     <span class="label label-success"><%= link_to( t('proposal.status.'<< @proposal.status, :contract => @proposal.contract_id), contract_path(@proposal.contract_id)) %> </span> 
+  <% elsif @proposal.cancel? %>
+    <span class="label label-danger"><%= t('proposal.status.'<< @proposal.status) %> </span> 
   <% else %>
     <span class="label label-primary"><%= t('proposal.status.'<< @proposal.status) %> </span> 
   <% end %>
@@ -24,7 +29,7 @@
   <%= @proposal.created_at.to_s_br %>
 
   <div class='label1 top req'> <%=t("proposal.taxpayer") %>: </div>
-  <%= @proposal.taxpayer.origin_code.to_s << " - " << @proposal.taxpayer.name %>
+  <%= link_to(@proposal.taxpayer.origin_code.to_s << " - " << @proposal.taxpayer.name, show_path(@proposal.taxpayer_id)) %>
   
   <div class='label1 top req'> <%=t("user.name") %>: </div>
   <%= @proposal.user ? @proposal.user.name : 'ADMIN'  %>

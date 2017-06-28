@@ -13,6 +13,8 @@
         <div class='indent'>
           <% if proposal.contract? %>
             <span class="label label-success"><%= t('proposal.status.'<< proposal.status, :contract => proposal.contract_id ) %> </span> 
+          <% elsif proposal.cancel? %>
+            <span class="label label-danger"><%= t('proposal.status.'<< proposal.status ) %> </span> 
           <% else %>
             <span class="label label-primary"><%= t('proposal.status.'<< proposal.status ) %> </span> 
           <% end %>

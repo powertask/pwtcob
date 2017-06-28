@@ -6,15 +6,15 @@ class ProposalsController < ApplicationController
 
   def index
     if current_user.admin? || current_user.client?
-      @proposals = Proposal.where("unit_id = ? and client_id = ?", session[:unit_id], session[:client_id]).paginate(:page => params[:page], :per_page => 20)
+      @proposals = Proposal.where("unit_id = ? and client_id = ?", current_user.unit_id, session[:client_id]).order('id DESC').paginate(:page => params[:page], :per_page => 20)
     else
-      @proposals = Proposal.where("unit_id = ? and client_id = ? AND user_id = ?", session[:unit_id], session[:client_id], current_user.id).paginate(:page => params[:page], :per_page => 20)
+      @proposals = Proposal.where("unit_id = ? and client_id = ? AND user_id = ?", current_user.unit_id, session[:client_id], current_user.id).order('id DESC').paginate(:page => params[:page], :per_page => 20)
     end
     respond_with @proposals, :layout => 'application'
   end
 
   def show
-    @proposal = Proposal.where('id = ? and unit_id = ? and client_id = ?', params[:id].to_i, session[:unit_id], session[:client_id]).first
+    @proposal = Proposal.where('id = ? and unit_id = ? and client_id = ?', params[:id].to_i, current_user.unit_id, session[:client_id]).first
     @tickets = ProposalTicket.list(params[:id]).order('ticket_number')
     respond_with @proposal
   end
@@ -23,13 +23,13 @@ class ProposalsController < ApplicationController
     cod = params[:cod]
 
     taxpayer = Taxpayer.find(cod)
-    cnas = Cna.list(session[:unit_id], session[:client_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
-    unit = Unit.find(session[:unit_id])
+    cnas = Cna.list(current_user.unit_id, session[:client_id]).not_pay.where('taxpayer_id = ? and fl_charge = ?', cod, true)
+    unit = Unit.find(current_user.unit_id)
 
     ActiveRecord::Base.transaction do
       @proposal = Proposal.new
 
-      @proposal.unit_id = session[:unit_id]
+      @proposal.unit_id = current_user.unit_id
       @proposal.client_id = session[:client_id]
       @proposal.user_id = current_user.id
       @proposal.taxpayer_id = cod
@@ -83,11 +83,38 @@ class ProposalsController < ApplicationController
         cna.save!
       end
     end
-
     respond_with @proposal, notice: 'Proposta criada com sucesso.'
-
   end
 
+
+  def cancel_proposal
+    cod = params[:cod]
+    proposal = Proposal.find(cod)
+
+    if proposal.contract?
+      flash[:alert] = "Ação não permitida. Proposta ja gerou um TERMO NRO " << proposal.contract_id.to_s
+      redirect_to :proposals and return
+    end 
+
+    if proposal.cancel?
+      flash[:alert] = "Ação não permitida. Proposta ja esta cancelada"
+      redirect_to :proposals and return
+    end 
+
+    cnas = Cna.list(current_user.unit_id, session[:client_id]).where('proposal_id = ?', cod)
+
+    ActiveRecord::Base.transaction do
+      cnas.each do  |cna|
+        cna.proposal_id = nil
+        cna.status = :not_pay
+        cna.save!
+      end
+
+      proposal.status = :cancel
+      proposal.save!
+    end
+    respond_with proposal, alert: 'Proposta CANCELADA com sucesso.'
+  end
 
   private
   def proposal_params

@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
 
   post 'proposal/:cod/create_proposal' => 'proposals#create_proposal', as: :create_proposal
+  post 'proposal/:cod/cancel_proposal' => 'proposals#cancel_proposal', as: :cancel_proposal
 
 
   post 'contract/:cod/create_contract_from_proposal' => 'contracts#create_contract_from_proposal', as: :create_contract_from_proposal

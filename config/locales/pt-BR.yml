@@ -208,6 +208,7 @@ pt-BR:
     contract_date: Data do Termo
     taxpayer: Contribuinte
     create_contract: Gerar Parcelamento e Termo
+    delete_proposal: Cancelar Proposta
     status:
       active: PROPOSTA ATIVA
       cancel: PROPOSTA CANCELADA

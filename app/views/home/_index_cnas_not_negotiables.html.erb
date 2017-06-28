@@ -7,13 +7,11 @@
       <th>Ano</th>
       <th>Vencimento</th>
       <th>Atraso (Meses)</th>
-      <th>Valor Principal</th>
+      <th>Principal</th>
       <th>Multa</th>
       <th>Juros</th>
-      <th>Valor Total</th>
+      <th>Total</th>
       <th><%= t('status') %></th>
-      <th><%= t('stage') %></th>
-      <th>Termo</th>
       <th></th>
     </tr>
   </thead>
@@ -34,13 +32,14 @@
         <td>
           <% if cna.pay? %>
             <a class="label label-success"><%= t('cna.status.pay') %> </a>
+          <% elsif cna.contract? %>
+            <%= link_to(t('cna.status.'<<cna.status)<<' '<<cna.contract_id.to_s, contract_path(cna.contract_id)) %>
+          <% elsif cna.proposal? %>
+            <%= link_to(t('cna.status.'<<cna.status)<<' '<<cna.proposal_id.to_s, proposal_path(cna.proposal_id)) %>
           <% else %>
             <%= t('cna.status.'<<cna.status) %>
           <% end %>
         </td>
-
-        <td><%= t('cna.stage.'<<cna.stage) %> </td>
-        <td><%= link_to(cna.contract_id, contract_path(cna.contract_id)) if cna.contract %> </td>
         <td><%= link_to('Marcar Pago', pay_cna_path(cna), method: :patch) if current_user.id == 1 and cna.not_pay? %> </td>
       </tr>
     <% end %>
@@ -56,8 +55,6 @@
       <td> <%= session[:total_multa].real %> </td>
       <td> <%= session[:total_juros].real %> </td>
       <td> <%= session[:total_cna].real %></td>
-      <td></td>
-      <td></td>
       <td></td>
       <td></td>
     </tr>
